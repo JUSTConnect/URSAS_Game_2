@@ -53,4 +53,4 @@ ENV PORT 3000
 
 WORKDIR /
 
-CMD ["sh"]
+CMD ["node", "server.js"]
