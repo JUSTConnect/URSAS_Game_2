@@ -1,0 +1,70 @@
+.sidebarContainer
+{
+    width: max-content;
+    height: 100%;
+}
+
+.sidebarCard
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 24px;
+    background: #293145;
+    padding: 16px;
+    border: 1px solid #384156;
+    height: 100%;
+    text-align: center;
+}
+
+.sidebarSection
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebarLogo
+{
+    width: 44px;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 1060px)
+{
+    .sidebarContainer
+    {
+        order: 2;
+        width: 100%;
+        flex-direction: row;
+        height: auto;
+    }
+
+    .sidebarCard
+    {
+        border-radius: 0 0 24px 24px;
+    }
+
+    .sidebarSection
+    {
+        flex-direction: row;
+    }
+
+    .sidebarLogo
+    {
+        display: none;
+    }
+
+    .sidebarLinks
+    {
+        display: none;
+    }
+}
+
+@media (max-width: 768px)
+{
+    .sidebarCard
+    {
+        padding: 8px;
+        border-radius: 0 0 12px 12px;
+    }
+}

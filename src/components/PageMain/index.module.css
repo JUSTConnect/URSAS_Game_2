@@ -1,0 +1,16 @@
+.pageMain
+{
+    display: flex;
+    flex-direction: column;
+    padding: 30px 16px;
+    height: 100%;
+    overflow: auto;
+}
+
+@media (max-width: 768px)
+{
+    .pageMain
+    {
+        padding: 8px;
+    }
+}

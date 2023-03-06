@@ -1,0 +1,53 @@
+.subHeader
+{
+    border-radius: 24px;
+    background: #293145;
+    padding: 16px;
+    border: 1px solid #384156;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: space-between;
+    color: #4E5E80;
+}
+
+.subHeaderSection
+{
+    display: flex;
+}
+
+.subHeaderButton
+{
+    background: #222A3A;
+    color: #4E5E80;
+    min-width: 140px;
+    text-align: center;
+    padding: 11px 16px;
+    border: none;
+    border-radius: 32px;
+    cursor: pointer;
+}
+
+.subHeaderButtonActive
+{
+    background: #313B52;
+}
+
+.subHeaderButtonActive .subHeaderButtonValue
+{
+    color: #B5C4E3;
+}
+
+.subHeaderButton:hover
+{
+    opacity: .7;
+}
+
+@media (max-width: 768px)
+{
+    .subHeader
+    {
+        border-radius: 12px;
+        padding: 8px;
+    }
+}

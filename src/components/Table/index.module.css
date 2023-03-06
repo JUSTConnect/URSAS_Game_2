@@ -1,0 +1,140 @@
+.table
+{
+    position: relative;
+    width: 100%;
+    border-radius: 150px;
+    background: linear-gradient(0deg, rgba(60,89,130,1) 0%, rgba(52,71,102,1) 13%, rgba(47,58,82,1) 26%, rgba(41,44,60,1) 46%, rgba(40,42,57,1) 67%);
+    padding: 4px;
+    cursor: pointer;
+    user-select: none);
+}
+
+.table:hover
+{
+    opacity: .7;
+}
+
+.table.tableActive
+{
+    background: linear-gradient(180deg, rgba(215,184,46,1) 0%, rgba(216,184,46,1) 13%, rgba(213,178,45,1) 26%, rgba(211,172,44,1) 46%, rgba(245,211,56,1) 67%);
+}
+
+.tableBg
+{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+}
+
+.tableContent
+{
+    position: relative;
+    border-radius: 150px;
+
+    z-index: 1;
+    text-align: center;
+    padding: 4px;
+    color: #4E5E80;
+    background: radial-gradient(118.3% 90.79% at 53.34% 50%, #3A4561 0%, #222E41 100%);
+}
+
+.tableActive .tableContent
+{
+    color: #D4AD2C;
+    background: linear-gradient(180deg, #E7DF36 0%, #EFB23D 100%);
+}
+
+
+.tableContentInner
+{
+    padding: 8px;
+    border-radius: 150px;
+    border: 1px solid #384156;
+}
+
+.tableActive .tableContentInner
+{
+    border: 1px solid #D1AE1E;
+}
+
+
+.tableHeader
+{
+    margin-bottom: 22px;
+}
+
+
+.tableNumber
+{
+    color: #B5C4E3;
+    margin-top: 4px;
+    line-height: 22px;
+}
+
+.tableActive .tableNumber
+{
+    color: #6B560F;
+}
+
+
+.tableBadge
+{
+    background: #374662;
+    margin: 0 auto;
+    width: max-content;
+    border-radius: 50px;
+    padding: 12px 17px;
+}
+
+.tableActive .tableBadge
+{
+    color: #E8D837;
+    background: #D4AD2C;
+}
+
+
+.tableFree
+{
+    color: #B5C4E3;
+    margin-top: 4px;
+}
+
+.tableActive .tableFree
+{
+    color: #6B560F;
+}
+
+@media (max-width: 768px)
+{
+    .table
+    {
+        font-size: 12px;
+        padding: 2px;
+    }
+    .tableContent
+    {
+        padding: 2px;
+    }
+    .tableContentInner
+    {
+        padding: 4px;
+    }
+    .tableHeader
+    {
+        margin-bottom: 4px;
+    }
+    .tableBadge
+    {
+        background: transparent;
+        padding: 0;
+    }
+    .tableActive .tableBadge
+    {
+        background: transparent;
+    }
+    .tableNumber
+    {
+        line-height: 16px;
+    }
+}

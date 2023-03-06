@@ -1,0 +1,35 @@
+.footer
+{
+    color: #4E5E80;
+    width: 100%;
+    display: flex;
+    height: 64px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.mediaIcon
+{
+    background: #313B52;
+    height: 30px;
+    width: 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    margin-left: 8px;
+}
+
+.mediaIcon:hover
+{
+    opacity: .7;
+}
+
+@media (max-width: 1060px)
+{
+    .footer
+    {
+        display: none;
+    }
+}

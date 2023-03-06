@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "Neue Machina";
+  src: url("NeueMachina-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Neue Machina Light";
+  src: url("NeueMachina-Light.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Neue Machina Ultrabold";
+    src: url("NeueMachina-Ultrabold.woff2") format("woff2");
+}

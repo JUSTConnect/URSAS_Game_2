@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "./src/pages/"
+		},
+		{
+			"path": "./src/components/"
+		},
+		{
+			"path": "./src/styles/"
+		},
+		{
+			"path": "./public/assets/"
+		}
+	],
+	"settings": {}
+}

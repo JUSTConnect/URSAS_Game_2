@@ -1,0 +1,40 @@
+.sidebarButton
+{
+    padding: 16px;
+    display: block;
+    margin-bottom: 1em;
+}
+
+.sidebarButton:hover
+{
+    opacity: .6;
+}
+
+.sidebarButton__active
+{
+    background: #222A3A;
+    border-radius: 6px;
+}
+
+
+.sidebarButton__active > svg > path
+{
+    fill: #E7DF36;
+}
+
+@media (max-width: 1060px)
+{
+    .sidebarButton
+    {
+        margin-bottom: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px)
+{
+    .sidebarButton
+    {
+        padding: 8px;
+    }
+}

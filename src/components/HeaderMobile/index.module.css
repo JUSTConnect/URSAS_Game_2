@@ -1,0 +1,71 @@
+.headerMobile
+{
+    display: none;
+}
+
+
+@media (max-width: 1060px)
+{
+    .headerMobile
+    {
+        display: flex;
+        justify-content: space-between;
+        height: 44px;
+        margin-bottom: 16px;
+    }
+    
+    .headerMobileLogo
+    {
+        height: 44px;
+    }
+
+    .burgerButton
+    {
+        border: 1px solid #313B52;
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        border-radius: 14px;
+        background: none;
+        height: 44px;
+        width: 44px;
+    }
+
+    .burgerButtonStick
+    {
+        background: #B5C4E3;
+        border-radius: 2px;
+        height: 1px;
+        width: 16px;
+    }
+}
+
+@media (max-width: 768px)
+{
+
+    .headerMobile
+    {
+        margin-bottom: 12px;
+    }
+
+    .headerMobileLogo
+    {
+        height: 30px;
+    }
+
+    .burgerButton
+    {
+        padding: 8px;
+        border-radius: 6px;
+        width: 30px;
+        height: 30px;
+    }
+
+    .burgerButtonStick
+    {
+        width: 12px;
+    }
+}

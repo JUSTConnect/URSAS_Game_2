@@ -1,0 +1,27 @@
+.walletHash
+{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 260;
+}
+
+@media (max-width: 1060px)
+{
+    .walletHash
+    {
+        width: 120px;
+    }
+}
+
+@media (max-width: 768px)
+{
+    .walletHash
+    {
+        display: none;
+    }
+    .headerWalletButton
+    {
+        margin-right: 4px;
+    }
+}

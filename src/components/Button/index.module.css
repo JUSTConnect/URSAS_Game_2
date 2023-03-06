@@ -1,0 +1,24 @@
+.button
+{
+    padding: 20px 40px;
+    background: linear-gradient(180deg, #E7DF36 0%, #EFB23D 100%);
+    border-radius: 24px;
+    color: #222A3A;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover
+{
+    opacity: .7;
+}
+
+@media (max-width: 769px)
+{
+    .button
+    {
+        padding: 8px;
+        border-radius: 6px;
+    }
+}

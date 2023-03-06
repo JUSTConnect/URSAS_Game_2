@@ -1,0 +1,27 @@
+.tableList
+{
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 16px;
+    height: 100%;
+    overflow-y: h;
+    height: auto;   
+}
+
+@media (max-width: 1060px)
+{
+    .tableList
+    {
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));        
+    }
+}
+
+@media (max-width: 768px)
+{
+    .tableList
+    {
+        grid-template-columns: repeat(auto-fit, minmax(107px, 1fr));        
+        grid-gap: 5px;
+    }
+}
