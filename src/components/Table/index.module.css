@@ -6,7 +6,7 @@
     background: linear-gradient(0deg, rgba(60,89,130,1) 0%, rgba(52,71,102,1) 13%, rgba(47,58,82,1) 26%, rgba(41,44,60,1) 46%, rgba(40,42,57,1) 67%);
     padding: 4px;
     cursor: pointer;
-    user-select: none);
+    user-select: none;
 }
 
 .table:hover
