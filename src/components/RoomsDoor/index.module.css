@@ -1,0 +1,55 @@
+.door
+{
+    display: block;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    user-select: none;
+}
+
+.doorTexture
+{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.doorInfo
+{
+    position: absolute;
+    width: 143px;
+    height: 86px;
+    top: 80px;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+.doorInfoTexture
+{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.doorInfoInner
+{
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+}
+
+.doorInfoPokerRoom
+{
+    position: relative;
+    color: #4E5E80;
+    margin-bottom: 4px;
+}
+
+.doorInfoLevel
+{
+    position: relative;
+    color: #B5C4E3;
+}

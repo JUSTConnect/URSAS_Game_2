@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 import SidebarButton from '@components/SidebarButton'
 
@@ -16,6 +17,7 @@ const Sidebar = () => {
                         className={ css.sidebarLogo }
                     />
                     <SidebarButton
+                        href={'/'}
                         active={true}
                         icon={
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,6 +27,7 @@ const Sidebar = () => {
                         }
                     />
                     <SidebarButton
+                        href={'/tables'}
                         icon={
                             <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M16.0001 2.625C16.0001 1.1775 12.4161 0 8.00012 0C3.58412 0 0.00012207 1.1775 0.00012207 2.625C0.00012207 3.9825 3.16012 5.1075 7.20012 5.235V10.25H5.88012C5.22412 10.25 4.64012 10.625 4.39212 11.195L3.60012 13.0475C3.41612 13.505 3.76812 14 4.29612 14C4.60012 14 4.87212 13.8275 4.98412 13.565L5.76012 11.75H10.2401L11.0161 13.565C11.1281 13.8275 11.4001 14 11.7041 14C12.2321 14 12.5921 13.505 12.3921 13.0475L11.6001 11.195C11.3601 10.625 10.7681 10.25 10.1201 10.25H8.80012V5.235C12.8401 5.1075 16.0001 3.9825 16.0001 2.625Z" fill="#4E5E80"/>
@@ -32,6 +35,7 @@ const Sidebar = () => {
                         }
                     />
                     <SidebarButton
+                        href={'/table'}
                         icon={
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clipPath="url(#clip0_669_5312)">
@@ -46,12 +50,11 @@ const Sidebar = () => {
                             </svg>
                         }
                     />
-
                 </div>
                 <div className={ [css.sidebarSection, css.sidebarLinks].join(' ') }>
-                    <a href="#">Help</a>
+                    <Link href='#'>Help</Link>
                     <br />
-                    <a href="#">Rules</a>
+                    <Link href='#'>Rules</Link>
                 </div>
             </div>
         </div>

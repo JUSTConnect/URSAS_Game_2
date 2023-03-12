@@ -1,0 +1,28 @@
+.pockerTable
+{
+    margin-left: 12px;
+}
+
+@media (max-widtH: 1060px)
+{
+    .pockerTable
+    {
+        display: none;
+    }
+}
+
+@media (max-width: 768px)
+{
+    .filterButton
+    {
+        background: #222A3A;
+        padding: 8px;
+        border-radius: 6px;
+        border: none;
+    }
+
+    .filterButtons
+    {
+        display: none !important;
+    }
+}

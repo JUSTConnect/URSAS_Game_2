@@ -1,0 +1,43 @@
+.theLoby
+{
+    margin-left: 12px;
+}
+
+.totalRooms
+{
+    margin-left: 12px;
+    color: #B5C4E3;
+}
+
+@media (max-widtH: 1060px)
+{
+    
+}
+
+@media (max-width: 768px)
+{
+    .filterButton
+    {
+        background: #222A3A;
+        padding: 8px;
+        border-radius: 6px;
+        border: none;
+    }
+
+    .filterButtons
+    {
+        display: none !important;
+    }
+
+    .theLoby
+    {
+        font-size: 14px;
+        margin-left: 0px;
+    }
+
+    .totalRooms
+    {
+        margin-left: 8px;
+        font-size: 14px;
+    }
+}

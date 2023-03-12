@@ -9,6 +9,7 @@
     gap: 16px;
     justify-content: space-between;
     color: #4E5E80;
+    margin-bottom: 16px;
 }
 
 .subHeaderSection
@@ -49,5 +50,6 @@
     {
         border-radius: 12px;
         padding: 8px;
+        margin-bottom: 8px;
     }
 }
