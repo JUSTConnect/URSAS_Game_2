@@ -15,10 +15,17 @@ interface RoomsDoorSliderProps extends React.HTMLAttributes<HTMLDivElement>
 }
 
 
+type EventWithTarget = {
+  target: {
+    scrollLeft?: number
+  }
+}
+
+
 const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
-  const doorSlider = useRef(0)
-  const doorSliderInner = useRef(0)
-  const door = useRef(0)
+  const doorSlider = useRef<HTMLDivElement>(null)
+  const doorSliderInner = useRef<HTMLDivElement>(null)
+  const door = useRef<HTMLDivElement>(null)
 
   const [doors, setDoors] = useState([1,1,1,1,1,1,1,1,1,1,1])
 
@@ -29,13 +36,15 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
 
   return <div className={ css.container }>
     <div onScroll={ (e)=>{
-      let doorWidth = door.current.offsetWidth
-      let sliderInnerWidth = doorSliderInner.current.offsetWidth 
-      let scrollLeft = e.target.scrollLeft
-      let stage = scrollLeft % doorWidth
+      const target = e.target as HTMLDivElement
+
+      let doorWidth = door?.current?.offsetWidth || 1
+      let sliderInnerWidth = doorSliderInner?.current?.offsetWidth 
+      let scrollLeft = doorSlider?.current?.scrollLeft
+      let stage = (scrollLeft?scrollLeft:1) % (doorWidth?doorWidth:1)
       let stagePercent = stage / doorWidth * 100
-      let currentDoor = Math.floor(scrollLeft / doorWidth)
-      let selectedDoor = Math.floor(scrollLeft / doorWidth + (stage > doorWidth / 2 ? 1 : 0) )
+      let currentDoor = Math.floor(scrollLeft?scrollLeft:1 / doorWidth)
+      let selectedDoor = Math.floor((scrollLeft?scrollLeft:1) / doorWidth + (stage > doorWidth / 2 ? 1 : 0) )
 
       setStagePercent(stagePercent)
       setCurrentDoor(currentDoor)
@@ -76,11 +85,11 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
       className={ [css.prevButton, css.sliderNavigation].join(' ') }
       onClick={
         () => {
-          doorSlider.current.scroll({
+          doorSlider?.current?.scroll({
             left: 
               doorSlider.current.scrollLeft -
               scrollStage -
-              door.current.offsetWidth ,
+              (door?.current?.offsetWidth || 1),
             behavior: "smooth",
           })
         } 
@@ -93,10 +102,10 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
       className={ [css.nextButton, css.sliderNavigation].join(' ') }
       onClick={
         () => {
-          doorSlider.current.scroll({
+          doorSlider?.current?.scroll({
             left: 
-              doorSlider.current.scrollLeft +
-              door.current.offsetWidth -
+              doorSlider?.current?.scrollLeft +
+              (door?.current?.offsetWidth || 1) -
               scrollStage,
             behavior: "smooth",
           })
