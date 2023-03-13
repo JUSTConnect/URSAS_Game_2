@@ -18,8 +18,6 @@ import HeaderMobile from '@components/HeaderMobile'
 import Footer from '@components/Footer'
 import SubHeaderRooms from '@components/SubHeaderRooms'
 
-import TableList from '@components/TableList'
-import RoomsDoor from '@components/RoomsDoor'
 import RoomsDoorSlider from '@components/RoomsDoorSlider'
 
 export default function Home() {

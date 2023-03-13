@@ -1,11 +1,7 @@
+import { useState } from 'react'
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
-
-import FlexBox, { FlexBreak } from '@components/FlexBox'
-
+import Blur from '@components/Blur'
 import PageLayout from '@components/PageLayout'
 import PageContent from '@components/PageContent'
 import PageMain from '@components/PageMain'
@@ -18,21 +14,22 @@ import SubHeaderTables from '@components/SubHeaderTables'
 import TableList from '@components/TableList'
 
 export default function Home() {
+    const [contentBlured, setContentBlured] = useState(false)
+
     return (
         <>
             <Head>
-                <title>Poker Tables</title>
+                <title>Poker Table</title>
             </Head>
             <PageLayout>
                 <HeaderMobile />
                 <Sidebar />
                 <PageContent>
-                    <Header connected={ true }/>
+                    <Header connected={ true } setBlured={ setContentBlured }/>
+                    <SubHeaderTables />
+                    <Blur active={contentBlured}/>
                     <PageMain>
-                        <SubHeaderTables />
-                        <div style={{ height: '100%', overflowY: 'auto' }}>
-                            <TableList />
-                        </div>
+                        <TableList />
                     </PageMain>
                 </PageContent>
             </PageLayout>
