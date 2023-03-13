@@ -17,7 +17,7 @@ const TableView = (props: TableViewProps) => {
             <img className={ css.cocaCola } src="assets/images/texture/table-coca-cola.png" alt="Coca Cola" />
             { [...Array(10)].map((item, index)=> {
                 return (
-                    <>
+                    <div key={index}>
                         <img className={ [css.sofa, css[`sofa${index+1}`]].join(' ') } src="assets/images/texture/table-sofa.png" alt="Sofa" />
                         <div className={ [css.place, css[`place${index+1}`]].join(' ') }>
                             <img className={ css.placeCard } src="assets/images/texture/example-card.png" alt="Card example" />
@@ -27,7 +27,7 @@ const TableView = (props: TableViewProps) => {
                                 <span className={ [css.placeNumber, 'fontSpecial'].join(' ') }>№ { index }</span>
                             </div>
                         </div>
-                    </>
+                    </div>
                 )
             })}
         </div>

@@ -9,6 +9,21 @@
     -moz-user-select: none;
 }
 
+.dropdownBadge
+{
+    background: #313B52;
+    color: #B5C4E3;
+    height: 30px;
+    min-width: 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    padding: 8px;
+    border-radius: 30px;
+    line-height: 1em;
+}
+
 .dropdown__button
 {
     color: #4E5E80;
@@ -70,6 +85,15 @@
         padding: 8px 10px;
         border-radius: 6px;
         gap: 0px;
+    }
+
+    .dropdownBadge
+    {
+        background: none;
+        height: auto;
+        min-width: auto;
+        font-size: 12px;
+        padding: 0 3px;
     }
 
     .dropdown__data{

@@ -57,7 +57,7 @@ const Dropdown = (props: DropdownProps) => {
                 } 
             }>
             { props.text }       
-            <Badge>{ props.badgeValue }</Badge>
+            <div className={ css.dropdownBadge }>{ props.badgeValue }</div>
             <Image
                 src="/assets/images/icons/arrow.png"
                 width={ 8 }
