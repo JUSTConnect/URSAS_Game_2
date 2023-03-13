@@ -14,7 +14,7 @@ const TableList = (props: TableListProps) => {
         <Table isActive={true} tableNumber={0} freePlaces={1}/>
         <Table disabled={true} tableNumber={0} freePlaces={1}/>
         { [...Array(50)].map((item, index)=>{
-            return <Table tableNumber={index+1} freePlaces={1}/>
+            return <Table tableNumber={index+1} freePlaces={1} key={ index }/>
 
         }) }
     </div>
