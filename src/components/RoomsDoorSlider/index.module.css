@@ -1,5 +1,6 @@
 .container
 {
+    margin-top: 16px;
     position: relative;
     height: 100%;
     overflow: hidden;
@@ -129,6 +130,10 @@
 
 @media (max-width: 768px)
 {
+    .container
+    {
+        margin-top: 8px;
+    }
     .doorSlide
     {
         height: 324px;

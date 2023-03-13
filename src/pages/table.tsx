@@ -11,7 +11,7 @@ import HeaderMobile from '@components/HeaderMobile'
 import Footer from '@components/Footer'
 import SubHeaderTable from '@components/SubHeaderTable'
 
-import TableList from '@components/TableList'
+import TableView from '@components/TableView'
 
 export default function Home() {
     const [contentBlured, setContentBlured] = useState(false)
@@ -29,7 +29,7 @@ export default function Home() {
                     <SubHeaderTable />
                     <Blur active={contentBlured}/>
                     <PageMain>
-
+                        <TableView/>
                     </PageMain>
                 </PageContent>
             </PageLayout>

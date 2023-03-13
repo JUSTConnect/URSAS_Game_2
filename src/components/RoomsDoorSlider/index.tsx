@@ -51,8 +51,6 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
 
             setCurrentDoor(current)
             setSelectedDoor(selected)
-
-            console.log(doorWidth)
         }
     }
 

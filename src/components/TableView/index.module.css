@@ -1,0 +1,467 @@
+.tableView
+{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    min-height: 600px;
+    overflow: hidden;
+}
+
+.tableContainer
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 50%;
+    max-width: 1219px;
+    max-height: 500px;
+    width: calc(100% - 100px);
+    transform: translate(-50%, -50%);
+}
+
+.table
+{
+    border-radius: 1000px;
+    background: linear-gradient(0deg, rgba(60,89,130,1) 0%, rgba(52,71,102,1) 13%, rgba(47,58,82,1) 26%, rgba(41,44,60,1) 46%, rgba(40,42,57,1) 67%);
+    padding: 8px;
+    user-select: none;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.tableContent
+{
+    position: relative;
+    border-radius: 1000px;
+    height: 100%;
+    z-index: 1;
+    text-align: center;
+    padding: 8px;
+    color: #4E5E80;
+    background: radial-gradient(118.3% 90.79% at 53.34% 50%, #3A4561 0%, #222E41 100%);
+}
+
+.tableContentInner
+{
+    height: 100%;
+    padding: 8px;
+    border-radius: 1000px;
+    border: 1px solid #384156;
+}
+
+.cocaCola
+{
+    height: 159px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.sofa
+{
+    height: 213px;
+    position: absolute;
+}
+
+/* 1 */
+
+.sofa1
+{
+    top: 0;
+    left: 35%;
+    transform: translate(-50%, calc(-100% - 46px));
+}
+
+.sofa2
+{
+    top: 0;
+    left: 65%;
+    transform: translate(-50%, calc(-100% - 46px));
+}
+
+/* 2 */
+
+.sofa3
+{
+    top: 0;
+    left: 100%;
+    transform: translate(-50%, -100%) rotate(32deg);
+}
+
+.sofa4
+{
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -100%) rotate(-32deg);
+}
+
+/* 3 */
+
+.sofa5
+{
+    top: 50%;
+    left: 0;
+    transform: translate(calc(-100% - 46px), -50%) rotate(-90deg);
+}
+
+.sofa6
+{
+    top: 50%;
+    right: 0;
+    transform: translate(calc(100% + 46px), -50%) rotate(90deg);
+}
+
+/* 4 */
+
+.sofa7
+{
+    bottom: 0;
+    left: 0;
+    transform: translate(-50%, 100%) rotate(-142deg);
+}
+
+.sofa8
+{
+    bottom: 0;
+    right: 0;
+    transform: translate(50%, 100%) rotate(142deg);
+
+}
+
+/* 5 */
+
+.sofa9
+{
+    bottom: 0;
+    left: 35%;
+    transform: translate(-50%, calc(100% + 46px)) rotate(180deg);
+}
+
+.sofa10
+{
+    bottom: 0;
+    left: 65%;
+    transform: translate(-50%, calc(100% + 46px)) rotate(180deg);
+
+}
+
+.place
+{
+    min-width: 140px;
+    position: absolute;
+    background: #313B52;
+    padding: 8px 16px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    z-index: 2;
+}
+
+.placeInfo
+{
+    color: #4E5E80;
+}
+
+.placeNumber
+{
+    margin-top: 4px;
+    color: #B5C4E3;
+}
+
+.placeCard
+{
+    height: 44px;
+    width: 40px;
+}
+
+/* top */
+
+.place1
+{
+    top: 0;
+    left: 65%;
+    transform: translate(-50%, calc(-50% + 16px));
+}
+
+.place2
+{
+    top: 0;
+    left: 35%;
+    transform: translate(-50%, calc(-50% + 16px));
+}
+
+/* bottom */
+
+.place9
+{
+    bottom: 0;
+    left: 65%;
+    transform: translate(-50%, calc(50% - 16px));
+}
+
+.place10
+{
+    bottom: 0;
+    left: 35%;
+    transform: translate(-50%, calc(50% - 16px));
+}
+
+/* middle */
+
+.place5
+{
+    bottom: 50%;
+    left: 0;
+    transform: translate(-30px, 50%);
+}
+
+.place6
+{
+    bottom: 50%;
+    right: 0;
+    transform: translate(30px, 50%);
+}
+
+/* middle top */
+
+.place3
+{
+    top: 0;
+    left: 0;
+    transform: translate(70px, -14px);
+}
+
+.place4
+{
+    top: 0;
+    right: 0;
+    transform: translate(-70px, -14px);
+}
+
+/* middle bottom */
+
+.place7
+{
+    bottom: 0;
+    left: 0;
+    transform: translate(70px, 14px);
+}
+
+.place8
+{
+    bottom: 0;
+    right: 0;
+    transform: translate(-70px, 14px);
+}
+
+@media (max-width: 1060px)
+{
+    .cocaCola
+    {
+        height: auto;
+        width: 100%;
+        max-width: 300px;
+        padding: 16px;
+    }
+    .tableView
+    {
+        min-height: auto;
+        max-height: initial;
+    }
+    .tableContainer
+    {
+        height: calc(100% - 92px);
+        width: calc(100% - 92px);
+        max-height: 800px;
+    }
+    .table
+    {
+        border-radius: 240px;
+    }
+    .tableContent
+    {
+        border-radius: 240px;
+    }
+    .tableContentInner
+    {
+        border-radius: 240px;
+    }
+    .sofa
+    {
+        display: none;
+    }
+
+    
+    /* middle top */
+
+    .place3
+    {
+        top: 10%;
+        left: 0;
+        transform: none;
+    }
+
+    .place4
+    {
+        top: 10%;
+        right: 0;
+        transform: none;
+    }
+
+    /* middle bottom */
+
+    .place7
+    {
+        bottom: 10%;
+        left: 0;
+        transform: none;
+    }
+
+    .place8
+    {
+        bottom: 10%;
+        right: 0;
+        transform: none;
+    }
+}
+
+@media (max-width: 768px)
+{
+    .cocaCola
+    {
+        max-width: 100px;
+    }
+
+    .tableContainer
+    {
+        width: calc(100% - 104px);
+        height: calc(100% - 60px);
+    }
+
+    .table
+    {
+        padding: 4px;
+        border-radius: 100px;
+    }
+
+    .tableContent
+    {
+        padding: 4px;
+        border-radius: 100px;
+    }
+
+    .tableContentInner
+    {
+        border-radius: 100px;
+    }
+
+    .place
+    {
+        font-size: 12px;
+        padding: 6px;
+        min-width: 90px;
+        gap: 4px;
+        border-radius: 12px;
+        display: none;
+        top: initial;
+        bottom: initial;
+        right: initial;
+        left: initial;
+    }
+    .placeCard
+    {
+        height: 33px;
+        width: 30px;
+    }
+
+    /* 1 */
+
+    .place1
+    {
+        top: -22px;
+        left: 50%;
+        transform: translate(-50%);
+        display: flex;
+    }
+
+    .place6
+    {
+        bottom: -22px;
+        left: 50%;
+        transform: translate(-50%);
+        display: flex;
+    }
+
+    /* 3, 4 */
+
+    .place3
+    {
+        top: 37%;
+        right: -45px;
+        transform: translate(0, -50%);
+        display: flex;
+    }
+
+    .place4
+    {
+        bottom: 37%;
+        right: -45px;
+        transform: translate(0, 50%);
+        display: flex;
+    }
+
+    .place8
+    {
+        bottom: 37%;
+        left: -45px;
+        transform: translate(0, 50%);
+        display: flex;
+    }
+
+    .place9
+    {
+        top: 37%;
+        left: -45px;
+        transform: translate(0, -50%);
+        display: flex;
+    }
+
+    /* 2, 5 */
+
+    .place2
+    {
+        top: 10%;
+        right: -29px;
+        transform: translate(0, -50%);
+        display: flex;
+    }
+
+    .place5
+    {
+        bottom: 10%;
+        right: -29px;
+        transform: translate(0, 50%);
+        display: flex;
+    }
+
+    .place7
+    {
+        top: 10%;
+        left: -29px;
+        transform: translate(0, -50%);
+        display: flex;
+    }
+
+    .place10
+    {
+        bottom: 10%;
+        left: -29px;
+        transform: translate(0, 50%);
+        display: flex;
+    }
+
+}
