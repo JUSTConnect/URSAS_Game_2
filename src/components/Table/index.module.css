@@ -19,6 +19,11 @@
     background: linear-gradient(180deg, rgba(215,184,46,1) 0%, rgba(216,184,46,1) 13%, rgba(213,178,45,1) 26%, rgba(211,172,44,1) 46%, rgba(245,211,56,1) 67%);
 }
 
+.table.tableDisabled
+{
+    opacity: .4;
+}
+
 .tableBg
 {
     position: absolute;

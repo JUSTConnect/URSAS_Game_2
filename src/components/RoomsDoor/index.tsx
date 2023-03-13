@@ -10,6 +10,25 @@ interface RoomsDoorProps extends React.HTMLAttributes<HTMLDivElement>
     go: boolean
 }
 
+const RoomsDoorItem = (props: RoomsDoorProps) => {
+    return <div className={ css.doorItem }>
+        {
+            props.active ? 
+            <img className={ css.doorItemBg } src="assets/images/texture/door-item-active-bg.png" alt="Door Item BG" />
+            :
+            <img className={ css.doorItemBg } src="assets/images/texture/door-item-bg.png" alt="Door Item BG" />
+        }
+        <div className={ css.doorItemInfo }>
+            <div className={ css.doorInfoPokerRoom }>
+                poker room
+            </div>
+            <div className={ [css.doorInfoLevel, 'fontSpecial'].join(' ') }>
+                {props.level} level
+            </div>
+        </div>
+    </div>
+}
+
 const RoomsDoor = (props: RoomsDoorProps) => {
     return <div className={ css.door }>
         { props.active ? (
@@ -37,3 +56,4 @@ const RoomsDoor = (props: RoomsDoorProps) => {
 
 
 export default RoomsDoor
+export {RoomsDoorItem}

@@ -4,12 +4,12 @@ interface TableProps extends React.HTMLAttributes<HTMLDivElement>
 {
     tableNumber: number,
     freePlaces: number,
-    isActive: boolean
+    isActive?: boolean,
+    disabled?: boolean
 }
 
 const Table = (props: TableProps) => {
-    return <div className={ [css.table, props.isActive ? css.tableActive : ''].join(' ') }>
-        {/* <img className={ css.tableBg } src="/assets/images/components/table.svg" alt="Table Background" /> */}
+    return <div className={ [css.table, props.isActive ? css.tableActive : '', props.disabled ? css.tableDisabled : ''].join(' ') }>
         <div className={ css.tableContent }>
             <div className={ css.tableContentInner }>
                 <div className={ css.tableHeader }>

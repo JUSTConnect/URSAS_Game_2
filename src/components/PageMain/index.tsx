@@ -2,7 +2,7 @@ import css from './index.module.css'
 
 interface PageMainProps extends React.HTMLAttributes<HTMLDivElement>
 {
-
+    
 }
 
 

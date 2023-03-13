@@ -2,10 +2,10 @@ import css from './index.module.css'
 
 interface SubHeaderProps extends React.HTMLAttributes<HTMLDivElement>
 {
-
+    
 }
 
-interface SubHeaderButtonProps extends React.HTMLAttributes<HTMLDivElement>
+interface SubHeaderButtonProps extends React.HTMLAttributes<HTMLButtonElement>
 {
     active?: boolean,
     keyName?: string,
@@ -13,7 +13,7 @@ interface SubHeaderButtonProps extends React.HTMLAttributes<HTMLDivElement>
 }
 
 const SubHeaderButton = (props: SubHeaderButtonProps) => {
-    return <button className={ [css.subHeaderButton, props.active ? css.subHeaderButtonActive : ''].join(' ') }>
+    return <button onClick={ props.onClick } className={ [css.subHeaderButton, props.active ? css.subHeaderButtonActive : ''].join(' ') }>
         { props.keyName } <span className={ css.subHeaderButtonValue }>{ props.value }</span>
     </button>
 }

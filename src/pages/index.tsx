@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
@@ -6,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 import FlexBox, { FlexBreak } from '@components/FlexBox'
 
-
+import Blur from '@components/Blur'
 import Door from '@components/RoomsDoor'
 import PageLayout from '@components/PageLayout'
 import PageContent from '@components/PageContent'
@@ -22,6 +23,10 @@ import RoomsDoor from '@components/RoomsDoor'
 import RoomsDoorSlider from '@components/RoomsDoorSlider'
 
 export default function Home() {
+
+  const [mode, setMode] = useState('slide')
+  const [contentBlured, setContentBlured] = useState(false)
+
   return (
     <>
       <Head>
@@ -31,12 +36,11 @@ export default function Home() {
         <HeaderMobile/>
         <Sidebar/>
         <PageContent>
-          <Header connected={ true }/>
+          <Header connected={ true } setBlured={ setContentBlured }/>
+          <SubHeaderRooms mode={mode} setMode={setMode}/>     
+          <Blur active={contentBlured}/>
           <PageMain>
-            <SubHeaderRooms/>     
-            <div style={ {height:'100%', overflowY: 'auto'} }>
-              <RoomsDoorSlider/>
-            </div>
+            <RoomsDoorSlider mode={mode}/>
           </PageMain>
         </PageContent>
       </PageLayout>

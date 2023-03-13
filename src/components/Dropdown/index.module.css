@@ -27,18 +27,40 @@
 {
     display: none;
     position: absolute;
-    transform: translateY(calc(100% + 16px));
+    transform: translateY(calc(100% + 15px));
     background: #293145;
-    padding: 15px;
+    padding: 0 15px 16px;
     bottom: 0;
     left: 0;
     width: max-content;
     border-radius: 0 0 24px 24px;
+    z-index: 2;
 }
 
 .dropdown__dataActive
 {
     display: block;
+}
+
+.dataItem
+{
+    margin-bottom: 8px;
+}
+
+.dataAngleLeft
+{
+    position: absolute;
+    left: 0;
+    height: 20px;
+    transform: translate(-100%);
+}
+
+.dataAngleRight
+{
+    position: absolute;
+    right: 0;
+    height: 20px;
+    transform: translate(calc(100% - 1px));    
 }
 
 @media (max-width: 768px)
@@ -48,5 +70,20 @@
         padding: 8px 10px;
         border-radius: 6px;
         gap: 0px;
+    }
+
+    .dropdown__data{
+        transform: translateY(calc(100% + 7px));
+        font-size: 12px;
+        padding: 0 15px 4px;
+        border-radius: 0 0 12px 12px;
+    }
+    .dataAngleRight
+    {
+        height: 15px;
+    }
+    .dataAngleLeft
+    {
+        height: 15px;
     }
 }

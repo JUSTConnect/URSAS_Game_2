@@ -6,7 +6,8 @@ import FlexBox from '@components/FlexBox'
 
 interface SubHeaderRoomsProps
 {
-
+  setMode: Function
+  mode: string
 }
 
 const SubHeaderRooms = (props: SubHeaderRoomsProps) => {
@@ -16,11 +17,17 @@ const SubHeaderRooms = (props: SubHeaderRoomsProps) => {
       <span className={ css.totalRooms }>Table rooms <Badge>16</Badge></span>
     </div>
     <FlexBox gap={ '8px' } className={ css.filterButtons }>
-      <SubHeaderButton active={ true } value={ 'slide' }/>
-      <SubHeaderButton value={ 'list' }/>
+      <SubHeaderButton onClick={ ()=>props.setMode('slide') } active={ props.mode === 'slide' } value={ 'slide' }/>
+      <SubHeaderButton onClick={ ()=>props.setMode('list') } active={ props.mode === 'list' } value={ 'list' }/>
     </FlexBox>
-    <button className={ [css.filterButton, 'd-mobile'].join(' ') }>
-      <img src="/assets/images/icons/rooms-list.svg" alt="Filter Icon" />
+    <button onClick={ ()=>props.setMode(props.mode === 'slide'?'list':'slide') } className={ [css.filterButton, 'd-mobile'].join(' ') }>
+      {
+        props.mode === 'slide'? (
+          <img src="/assets/images/icons/rooms-list.svg" alt="Filter Icon" />
+        ) : (
+          <img src="/assets/images/icons/rooms-slaid.svg" alt="Filter Icon" />
+        )
+      }
     </button>
   </SubHeader>
 }
