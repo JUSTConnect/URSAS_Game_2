@@ -4,13 +4,11 @@ import Badge from '@components/Badge'
 import SubHeader, {SubHeaderButton} from '@components/SubHeader'
 import FlexBox from '@components/FlexBox'
 
-interface SubHeaderRoomsProps
+interface SubHeaderTableProps
 {
-  setMode: Function
-  mode: string
 }
 
-const SubHeaderRooms = (props: SubHeaderRoomsProps) => {
+const SubHeaderTable = (props: SubHeaderTableProps) => {
   return <SubHeader>
     <div>
       <span className={ css.theLoby }>Table №2</span>
@@ -24,4 +22,4 @@ const SubHeaderRooms = (props: SubHeaderRoomsProps) => {
   </SubHeader>
 }
 
-export default SubHeaderRooms
+export default SubHeaderTable
