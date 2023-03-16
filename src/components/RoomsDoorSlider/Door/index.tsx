@@ -1,7 +1,6 @@
 import css from './index.module.css'
 
 import Link from 'next/link'
-import { ReactComponentElement } from 'react'
 
 interface RoomsDoorProps extends React.HTMLAttributes<HTMLDivElement>
 {
@@ -30,7 +29,7 @@ const RoomsDoorItem = (props: RoomsDoorProps) => {
 }
 
 const RoomsDoor = (props: RoomsDoorProps) => {
-    return <div className={ css.door }>
+    return <Link href="/tables" className={ css.door }>
         { props.active ? (
             <img className={ css.doorTexture } src="assets/images/texture/door-active.png" alt="Door" />
         ) : (
@@ -51,7 +50,7 @@ const RoomsDoor = (props: RoomsDoorProps) => {
                 </div>
             </div>
         </div>
-    </div>
+    </Link>
 }
 
 

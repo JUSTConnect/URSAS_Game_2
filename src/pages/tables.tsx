@@ -9,12 +9,14 @@ import Sidebar from '@components/Sidebar'
 import Header from '@/components/Header'
 import HeaderMobile from '@components/HeaderMobile'
 import Footer from '@components/Footer'
+import FooterModal from '@components/FooterModal'
 import SubHeaderTables from '@components/SubHeaderTables'
 
 import TableList from '@components/TableList'
 
 export default function Home() {
     const [contentBlured, setContentBlured] = useState(false)
+    const [footerModal, setFooterModal] = useState(false)
 
     return (
         <>
@@ -22,7 +24,7 @@ export default function Home() {
                 <title>Poker Table</title>
             </Head>
             <PageLayout>
-                <HeaderMobile />
+                <HeaderMobile setFooterModal={setFooterModal} footerModal={footerModal}/>
                 <Sidebar />
                 <PageContent>
                     <Header connected={ true } setBlured={ setContentBlured }/>
@@ -34,6 +36,7 @@ export default function Home() {
                 </PageContent>
             </PageLayout>
             <Footer />
+            <FooterModal active={footerModal}/>
         </>
     )
 }

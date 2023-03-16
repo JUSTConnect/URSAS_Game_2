@@ -170,6 +170,11 @@
         /* width: 1200px; */
         display: none;
     }
+
+    .roomsInfoSection
+    {
+        gap: 8px;
+    }
     
     .roomsInfoKey
     {

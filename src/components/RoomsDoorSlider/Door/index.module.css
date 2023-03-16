@@ -60,36 +60,6 @@
     color: #B5C4E3;
 }
 
-.doorItem
-{
-    position: relative;
-    width: 100%;
-    height: 135px;
-    user-select: none;
-    cursor: pointer;
-}
-
-.doorItem:hover
-{
-    opacity: .8;
-}
-
-.doorItemBg
-{
-    position: absolute;
-    height: 100%;
-    width: 100%;
-}
-
-.doorItemInfo
-{
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    transform: translateY(-50%);
-    text-align: center;
-}
-
 @media (max-width: 768px)
 {
     .doorInfo
@@ -106,9 +76,5 @@
     .doorInfoLevel
     {
         font-size: 12px;
-    }
-    .doorItem
-    {
-        height: 60px;
     }
 }

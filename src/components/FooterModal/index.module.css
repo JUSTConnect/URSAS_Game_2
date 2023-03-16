@@ -1,0 +1,78 @@
+.modalContainer
+{
+    position: absolute;
+    top: 60px;
+    padding: 16px;
+    width: 100%;
+    z-index: 100;
+    transform: translateX(-100%);
+    transition: .3s;
+}
+
+.modalContainerActive
+{
+    transform: translateY(0);
+}
+
+.modal
+{
+    border-radius: 24px;
+    background: #293145;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.top
+{
+    height: 100%;
+    padding: 100px 20px;
+    font-size: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;
+}
+
+.top a
+{
+    text-decoration: none;
+}
+
+.bottom
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 62px;
+    padding: 20px;
+}
+
+.marketsLink
+{
+    display: inline-flex;
+    gap: 16px;
+    margin-left: 16px;
+}
+
+@media (min-width: 1061px)
+{
+    .modalContainer
+    {
+        display: none;
+    }
+}
+
+@media (max-width: 768px)
+{
+    .modalContainer
+    {
+        padding: 8px;
+        top: 54px;
+    }
+    .modal
+    {
+        border-radius: 16px;
+    }
+}

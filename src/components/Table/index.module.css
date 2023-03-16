@@ -7,6 +7,7 @@
     padding: 4px;
     cursor: pointer;
     user-select: none;
+    text-decoration: none;
 }
 
 .table:hover

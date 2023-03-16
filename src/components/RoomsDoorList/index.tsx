@@ -1,6 +1,6 @@
 import css from './index.module.css'
 
-import { RoomsDoorItem as DoorItem } from '@components/RoomsDoor'
+import Item from './Item'
 
 
 interface DoorListProps extends React.HTMLAttributes<HTMLDivElement>
@@ -12,13 +12,18 @@ interface DoorListProps extends React.HTMLAttributes<HTMLDivElement>
 const DoorList = (props: DoorListProps) => {
     return <div className={ css.container }>
         <div className={ css.doorItemList }>
-            <DoorItem
+            <Item
+                level={0}
+                active={true}
+                go={true}
+            />
+            <Item
                 level={0}
                 active={true}
                 go={false}
             />
             { [...Array(50)].map((item, index)=>{
-                return <DoorItem
+                return <Item
                     level={index + 1}
                     active={false}
                     go={false}

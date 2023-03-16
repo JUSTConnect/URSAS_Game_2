@@ -1,11 +1,16 @@
 import css from './index.module.css'
 
+
+import TableModal from '@components/TableModal'
+
 interface TableViewProps
 {
-
+    modalActive: boolean
+    setModalActive: Function
 }
 
 const TableView = (props: TableViewProps) => {
+
     return <div className={ css.tableView }>
         <div className={ css.tableContainer }>
             <div className={ css.table }>
@@ -31,6 +36,7 @@ const TableView = (props: TableViewProps) => {
                 )
             })}
         </div>
+        <TableModal active={ props.modalActive } setActive={ props.setModalActive } />
     </div>
 }
 

@@ -78,13 +78,30 @@
     transform: translate(calc(100% - 1px));    
 }
 
+.arrowIcon
+{
+    height: 6px;
+    width: 6px;
+    margin-left: 4px;
+}
+
+.arrowIconActive
+{
+    transform: rotate(180deg);
+}
+
+.arrowIconActive path
+{
+    fill: #E7DF36;
+}
+
 @media (max-width: 768px)
 {
     .dropdown__button
     {
         padding: 8px 10px;
         border-radius: 6px;
-        gap: 0px;
+        gap: 4px;
     }
 
     .dropdownBadge
@@ -109,5 +126,10 @@
     .dataAngleLeft
     {
         height: 15px;
+    }
+
+    .arrowIcon
+    {
+        margin-left: 0;
     }
 }

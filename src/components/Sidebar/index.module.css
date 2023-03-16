@@ -29,6 +29,21 @@
     margin-bottom: 30px;
 }
 
+.sidebarLinks
+{
+    margin-bottom: 8px;
+}
+
+.sidebarLinks a
+{
+    margin-bottom: 8px;
+}
+
+.sidebarLinks a:hover
+{
+    color: #E7DF36;
+}
+
 @media (max-width: 1060px)
 {
     .sidebarContainer

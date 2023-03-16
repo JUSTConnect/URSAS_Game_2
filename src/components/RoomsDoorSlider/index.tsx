@@ -2,7 +2,7 @@ import css from './index.module.css'
 
 import { useRef, useState } from 'react'
 
-import Door from '@components/RoomsDoor'
+import Door from './Door'
 import DoorList from '@components/RoomsDoorList'
 
 
@@ -14,8 +14,6 @@ interface RoomsDoorSliderProps extends React.HTMLAttributes<HTMLDivElement> {
 const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
     const doorSlider = useRef<HTMLDivElement>(null)
     const door = useRef<HTMLDivElement>(null)
-
-    const [doors, setDoors] = useState([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 
     const [scrollStage, setScrollStage] = useState(0)
     const [scrollStagePercent, setScrollStagePercent] = useState(0)
@@ -82,7 +80,7 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
         { props.mode === 'slide' ? (
             <div onScroll={ scrollHandler } ref={ doorSlider } className={ css.doorSlider }>
                 <div className={css.doorSliderInner}>
-                    {doors.map((item, index) => {
+                    { [...Array(16)].map((item, index) => {
                         return (
                             <div 
                                 style={{
@@ -105,7 +103,7 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
                                 className={css.doorSlide}
                             >
                                 <Door
-                                    level={index}
+                                    level={index + 1}
                                     active={index === selectedDoor}
                                     go={false}
                                 />
@@ -144,7 +142,7 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
             <img className={css.roomsInfoBg} src="assets/images/texture/rooms-info.png" alt="Rooms info" />
             <div className={css.roomsInfoSection}>
                 <div>
-                    <div className={css.roomsInfoKey}>available</div>
+                    <div className={css.roomsInfoKey}>available tables</div>
                     <div className={css.roomsInfoValue}>234</div>
                 </div>
                 <div>

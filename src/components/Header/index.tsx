@@ -28,6 +28,14 @@ const Header = (props: HeaderProps) => {
                         <img src="/assets/images/icons/wallet.svg" alt="wallet" />
                     </Button>
                     <Dropdown
+                        values={
+                            [
+                                [1],
+                                [1],
+                                [1]
+                            ]
+                        }
+                        rooms={true}
                         controller={{
                             id: 1,
                             currentId: activeDropdown,
@@ -43,6 +51,14 @@ const Header = (props: HeaderProps) => {
                         badgeValue={ 16 }
                     />
                     <Dropdown
+                        values={
+                            [
+                                [12, 10],
+                                [12, 10],
+                                [12, 10]
+                            ]
+                        }
+                        tables={true}
                         controller={{
                             id: 2,
                             currentId: activeDropdown,

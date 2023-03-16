@@ -9,6 +9,12 @@
     padding: 0 30px;
 }
 
+.marketLinks
+{
+    display: flex;
+    gap: 16px;
+}
+
 .mediaIcon
 {
     background: #313B52;
@@ -21,9 +27,10 @@
     margin-left: 8px;
 }
 
-.mediaIcon:hover
+
+.mediaIcon:hover svg path
 {
-    opacity: .7;
+    fill: #E7DF36;
 }
 
 @media (max-width: 1060px)

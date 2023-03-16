@@ -32,6 +32,11 @@ a
     font-family: "Eckhardt Deco";
 }
 
+.textMuted
+{
+    color: #4E5E80;
+}
+
 .d-mobile
 {
     display: none;

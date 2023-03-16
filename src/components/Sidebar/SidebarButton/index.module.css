@@ -17,10 +17,11 @@
 }
 
 
-.sidebarButton__active > svg > path
+.sidebarButton__active > svg path
 {
     fill: #E7DF36;
 }
+
 
 @media (max-width: 1060px)
 {

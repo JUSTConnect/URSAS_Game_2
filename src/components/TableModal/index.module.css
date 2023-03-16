@@ -1,0 +1,363 @@
+.modalContainer
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 16px;
+    height: 100%;
+    max-width: 500px;
+    width: 100%;
+    transform: translate(100%);
+    transition: .5s;
+}
+
+.modalContainerActive
+{
+    transform: translate(0);
+}
+
+.modal
+{
+    background: #293145;
+    border-radius: 24px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.modalAlert
+{
+    background: #313B52;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.modalAlertIcon
+{
+    height: 30px;
+    margin-right: 16px;
+}
+
+.modalHeader
+{
+    padding: 16px;
+    border-bottom: 1px solid #384156;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #4E5E80;
+    gap: 8px;
+}
+
+.modalHeaderButton
+{
+    padding: 11px;
+    background: linear-gradient(180deg, #E7DF36 0%, #EFB23D 100%);
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    min-width: 140px;
+    cursor: pointer;
+}
+
+.modalHeaderButton:hover
+{
+    opacity: .7;
+}
+
+.modalHeaderButtons
+{
+    display: flex;
+    gap: 6px;
+}
+
+.modalContentRaw
+{
+    height: 100%;
+}
+
+.modalContent
+{
+    position: relative;
+    padding: 16px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.modalFooter
+{
+    padding: 16px;
+    background: #313B52;
+}
+
+.modalFooterButton
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #222A3A;
+    padding: 11px;
+    width: 100%;
+    border-radius: 12px;
+    line-height: 22px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.modalFooterButton:hover
+{
+    opacity: .7;
+}
+
+.modalFooterButtonIcon
+{
+    height: 16px;
+}
+
+.modalFooterButtons
+{
+    display: flex;
+    gap: 8px;
+}
+
+.modalButtonNext
+{
+    border: 1px solid #384156;
+    border-radius: 12px;
+    height: 44px;
+    width: 44px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.modalButtonNext:hover
+{
+    opacity: .7;
+}
+
+.modalButtonNextIcon
+{
+    height: 16px;
+}
+
+.basketEmptyContainer
+{
+    position: relative;
+    min-height: 350px;
+    height: 100%;
+}
+
+.basketEmptyContent
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.basketEmptyTitle
+{
+    color: #4E5E80;
+    margin-bottom: 8px;
+}
+
+.basketEmptyDescription
+{
+    margin-bottom: 30px;
+}
+
+.basketEmptyCircle
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: #313B52;
+    border-radius: 50%;
+    height: 965px;
+    width: 965px;
+    transform: translateX(-50%);
+}
+
+.basketEmptySofa
+{
+    position: relative;
+    display: block;
+    width: 364px;
+    margin: 0 auto;
+}
+
+.cards
+{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card
+{
+    height: 92px;
+    width: 66px;
+}
+
+.places
+{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-gap: 8px;
+}
+
+.textLight
+{
+    color: #B5C4E3;
+}
+
+.dialog
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.dialogContent
+{
+    width: 100%;
+    text-align: center;
+}
+
+.dialogPlace
+{
+    margin-bottom: 4px;
+}
+
+.dialogNumber
+{
+    margin-bottom: 16px;
+}
+
+.dialogButtons
+{
+    display: flex;
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto;
+    gap: 16px;
+}
+
+.loading
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.loadingIcon
+{
+    height: 100px;
+}
+
+@media (max-width: 1060px)
+{
+    .modalContainer
+    {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px)
+{
+    .modalContainer
+    {
+        padding: 8px;
+    }
+
+    .modal
+    {
+        font-size: 12px;
+        border-radius: 12px;
+    }
+
+    .modalHeaderButton
+    {
+        border-radius: 6px;
+        padding: 5px;
+    }
+
+    .modalButtonNext
+    {
+        border-radius: 6px;
+        height: 30px;
+        width: 30px;
+    }
+
+    .modalFooterButton
+    {
+        padding: 7px;
+        border-radius: 6px;
+    }
+    .modalFooterButtonIcon
+    {
+        height: 12px;
+    }
+
+    .cards
+    {
+        gap: 4px;
+    }
+    .card
+    {
+        height: 66px;
+        width: 48px;
+    }
+
+    .modalHeader, .modalContentRaw, .modalFooter, .modalAlert
+    {
+        padding: 8px;
+    }
+
+    .basketEmptySofa
+    {
+        width: 200px;
+    }
+
+    .basketEmptyCircle
+    {
+        top: 60%;
+    }
+
+    .places
+    {
+        grid-template-columns: repeat(auto-fit, minmax(101px, 1fr));
+        grid-gap: 4px;
+    }
+
+    .dialogPlace
+    {
+        margin-bottom: 0;
+    }
+
+    .dialogNumber
+    {
+        margin-bottom: 8px;
+    }
+
+    .dialogButtons
+    {
+        gap: 8px;
+        max-width: 168px;
+    }
+
+    
+    .loadingIcon
+    {
+        height: 60px;
+    }
+}

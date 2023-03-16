@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import SidebarButton from '@components/SidebarButton'
+import SidebarButton from './SidebarButton'
 
 import css from './index.module.css'
 
@@ -53,7 +53,6 @@ const Sidebar = () => {
                 </div>
                 <div className={ [css.sidebarSection, css.sidebarLinks].join(' ') }>
                     <Link href='#'>Help</Link>
-                    <br />
                     <Link href='#'>Rules</Link>
                 </div>
             </div>

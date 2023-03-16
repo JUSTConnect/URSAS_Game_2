@@ -1,5 +1,7 @@
 import css from './index.module.css'
 
+import Link from 'next/link'
+
 interface TableProps extends React.HTMLAttributes<HTMLDivElement>
 {
     tableNumber: number,
@@ -9,7 +11,7 @@ interface TableProps extends React.HTMLAttributes<HTMLDivElement>
 }
 
 const Table = (props: TableProps) => {
-    return <div className={ [css.table, props.isActive ? css.tableActive : '', props.disabled ? css.tableDisabled : ''].join(' ') }>
+    return <Link href='/table' className={ [css.table, props.isActive ? css.tableActive : '', props.disabled ? css.tableDisabled : ''].join(' ') }>
         <div className={ css.tableContent }>
             <div className={ css.tableContentInner }>
                 <div className={ css.tableHeader }>
@@ -27,7 +29,7 @@ const Table = (props: TableProps) => {
                 </div>
             </div>
         </div>
-    </div>
+    </Link>
 }
 
 
