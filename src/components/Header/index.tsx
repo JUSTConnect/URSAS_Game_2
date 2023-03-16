@@ -1,21 +1,23 @@
 import css from './index.module.css'
 
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+
 import Badge from '@components/Badge'
 import Button from '@components/Button'
 import Dropdown from '@components/Dropdown'
 import HeaderBase, { HeaderSection } from '@/components/HeaderBase'
+import { MainframeContext } from '@components/Mainframe'
 
 
 interface HeaderProps extends React.HTMLAttributes<HTMLDivElement>
 {
     connected?: boolean
-    setBlured?: Function
 }
 
 
 const Header = (props: HeaderProps) => {
     const [activeDropdown, setActiveDropdown] = useState(0)
+    const context = useContext(MainframeContext)
 
     return <HeaderBase>
         { props.connected ? (
@@ -41,7 +43,7 @@ const Header = (props: HeaderProps) => {
                             currentId: activeDropdown,
                             setId: setActiveDropdown
                         }}
-                        callback={ props.setBlured }
+                        callback={ context.setContentBlured }
                         text={ 
                             <>
                                 <span className={ 'd-desktop' }>Rooms</span>
@@ -64,7 +66,7 @@ const Header = (props: HeaderProps) => {
                             currentId: activeDropdown,
                             setId: setActiveDropdown
                         }}
-                        callback={ props.setBlured }
+                        callback={ context.setContentBlured }
                         text={
                             <>
                                 <span className={ 'd-desktop' }>Tables</span>

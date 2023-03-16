@@ -1,20 +1,16 @@
 import css from './index.module.css'
 
-
+import { useContext } from 'react'
 import Link from 'next/link'
 
-
 import { MediaIcon } from '@components/Footer'
+import { MainframeContext } from '@components/Mainframe'
 
 
-interface FooterModalProps
-{
-    active?: boolean
-}
+const FooterModal = () => {
+    const context = useContext(MainframeContext)
 
-
-const FooterModal = (props: FooterModalProps) => {
-    return <div className={ [css.modalContainer, props.active ? css.modalContainerActive : ''].join(' ') }>
+    return <div className={ [css.modalContainer, context.footerModal ? css.modalContainerActive : ''].join(' ') }>
         <div className={ css.modal }>
             <div className={ css.top }>
                 <Link href='#'>Help</Link>

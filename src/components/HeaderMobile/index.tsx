@@ -1,11 +1,9 @@
 import css from './index.module.css'
 
+import { useContext } from 'react'
 
-interface HeaderMobileProps extends React.HTMLAttributes<HTMLDivElement>
-{
-    footerModal: boolean
-    setFooterModal: Function
-}
+import { MainframeContext  } from '@components/Mainframe'
+
 
 const BurgerButton = (props: React.HTMLAttributes<HTMLButtonElement>) => {
     return <button onClick={props.onClick} className={css.burgerButton}>
@@ -14,10 +12,12 @@ const BurgerButton = (props: React.HTMLAttributes<HTMLButtonElement>) => {
     </button>
 }
 
-const HeaderMobile = (props: HeaderMobileProps) => {
+const HeaderMobile = () => {
+    const context = useContext(MainframeContext)
+
     return <div className={ css.headerMobile }>
         <img src="/assets/images/logo.svg" alt="Logo" className={css.headerMobileLogo} />
-        <BurgerButton onClick={()=>props.setFooterModal(!props.footerModal)}/>
+        <BurgerButton onClick={()=>context.setFooterModal(!context.footerModal)}/>
     </div>
 }
 
