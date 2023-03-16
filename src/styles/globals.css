@@ -1,4 +1,7 @@
 @import url('./normalize.css');
+@import url('./scrollbar.css');
+@import url('./typography.css');
+@import url('./media.css');
 @import url('./fonts/eckhardt_deco/stylesheet.css');
 @import url('./fonts/neue_mahina/stylesheet.css');
 
@@ -12,66 +15,6 @@ body
     color: #B5C4E3;
     font-family: Neue Machina;
     background-color: #1E2636;
-    margin: 0;
-    padding: 0;
     height: 100vh;
 }
 
-a
-{
-    color: #B5C4E3;
-}
-
-.textActive
-{
-    color: #E7DF36;
-}
-
-.fontSpecial
-{
-    font-family: "Eckhardt Deco";
-}
-
-.textMuted
-{
-    color: #4E5E80;
-}
-
-.d-mobile
-{
-    display: none;
-}
-
-@media (max-width: 768px)
-{
-    .d-desktop
-    {
-        display: none;
-    }
-
-    .d-mobile
-    {
-        display: inherit;
-    }
-}
-
-/* width */
-::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-/* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #313B52;
-    border-radius: 5px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
