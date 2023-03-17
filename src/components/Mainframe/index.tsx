@@ -20,15 +20,25 @@ interface MainframeProps extends HTMLAttributes<HTMLDivElement> {
 type MainFrameContextData = {
   contentBlured: boolean,
   setContentBlured: Function,
+  mainBlured: boolean,
+  setMainBlured: Function,
   footerModal: boolean,
   setFooterModal: Function, 
 }
 
 
-const MainframeContext = createContext<MainFrameContextData>({})
+const MainframeContext = createContext<MainFrameContextData>({
+  contentBlured: false,
+  setContentBlured: Function,
+  mainBlured: false,
+  setMainBlured: Function,
+  footerModal: false,
+  setFooterModal: Function, 
+})
 
 const Mainframe = (props: MainframeProps) => {
   const [contentBlured, setContentBlured] = useState(false)
+  const [mainBlured, setMainBlured] = useState(false)
   const [footerModal, setFooterModal] = useState(false)
 
 
@@ -40,6 +50,8 @@ const Mainframe = (props: MainframeProps) => {
       <MainframeContext.Provider value={{
         contentBlured: contentBlured,
         setContentBlured: setContentBlured,
+        mainBlured: mainBlured,
+        setMainBlured: setMainBlured,
         footerModal: footerModal,
         setFooterModal: setFooterModal,
       }}>
@@ -52,6 +64,7 @@ const Mainframe = (props: MainframeProps) => {
             <Blur active={contentBlured}/>
             <PageMain>
               { props.children }
+              <Blur active={mainBlured}/>
             </PageMain>
           </PageContent>
         </PageLayout>

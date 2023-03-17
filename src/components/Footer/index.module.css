@@ -15,22 +15,10 @@
     gap: 16px;
 }
 
-.mediaIcon
+.mediaLinks
 {
-    background: #313B52;
-    height: 30px;
-    width: 30px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 30px;
-    margin-left: 8px;
-}
-
-
-.mediaIcon:hover svg path
-{
-    fill: #E7DF36;
+    display: flex;
+    gap: 8px;
 }
 
 @media (max-width: 1060px)

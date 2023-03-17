@@ -4,6 +4,7 @@ import Mainframe from '@components/Mainframe'
 
 import SubHeaderTables from '@components/SubHeaderTables'
 import TableList from '@components/TableList'
+import Blur from '@/components/Blur'
 
 export default function Home() {
 

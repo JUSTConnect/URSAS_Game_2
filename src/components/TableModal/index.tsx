@@ -114,7 +114,7 @@ const TableModal = (props: TableModalProps) => {
                     choose_card: (
                         <div className={ css.cards }>
                             { [...Array(100)].map((item,index)=>(
-                                <img className={ css.card } key={index} src="assets/images/texture/example-card.png" alt="card" />
+                                <img  onClick={ () => {setStep('confirm_places');setAlert('Places not subbmit - clear/confirm or press exit again')} } className={ css.card } key={index} src="assets/images/texture/example-card.png" alt="card" />
                             ))}
                         </div>
                     ),

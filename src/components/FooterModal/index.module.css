@@ -49,11 +49,23 @@
     padding: 20px;
 }
 
+.marketsLinkSection
+{
+    display: flex;
+    align-items: center;
+}
+
 .marketsLink
 {
     display: inline-flex;
     gap: 16px;
     margin-left: 16px;
+}
+
+.mediaLinks
+{
+    display: flex;
+    gap: 8px;
 }
 
 @media (min-width: 1061px)
@@ -74,5 +86,22 @@
     .modal
     {
         border-radius: 16px;
+    }
+    .top
+    {
+        padding: 25px 8px;
+        gap: 8px;
+        font-size: 25px;
+    }
+    .bottom
+    {
+        flex-direction: column;
+        height: auto;
+        gap: 16px;
+    }
+    .marketsLinkSection
+    {
+        flex-direction: column;
+        gap: 8px;
     }
 }

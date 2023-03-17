@@ -1,0 +1,19 @@
+.mediaLink
+{
+    background: #313B52;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 30px;
+    width: 30px;
+
+    border-radius: 30px;
+}
+
+
+.mediaLink:hover svg path
+{
+    fill: #E7DF36;
+}

@@ -204,6 +204,12 @@
 {
     height: 92px;
     width: 66px;
+    cursor: pointer;
+}
+
+.card:hover
+{
+    opacity: .7;
 }
 
 .places
@@ -336,7 +342,7 @@
     .places
     {
         grid-template-columns: repeat(auto-fit, minmax(101px, 1fr));
-        grid-gap: 4px;
+        grid-gap: 8px;
     }
 
     .dialogPlace
