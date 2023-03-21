@@ -16,7 +16,7 @@ const HeaderMobile = () => {
     const context = useContext(MainframeContext)
 
     return <div className={ css.headerMobile }>
-        <img src="/assets/images/logo.svg" alt="Logo" className={css.headerMobileLogo} />
+        <img src="/assets/images/logo.svg" alt="Logo" className={css.logo} />
         <BurgerButton onClick={()=>{context.setFooterModal(!context.footerModal), context.setMainBlured(!context.mainBlured)}}/>
     </div>
 }

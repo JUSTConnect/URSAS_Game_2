@@ -26,7 +26,7 @@ const Place = (props: PlaceProps) => {
                         <img src="./assets/images/texture/example-card.png" alt="card" className={ css.placeCard } />
                     ) : ''}
                     { !props.return && !props.clear ? (
-                        <div className={ css.placeInfo }>
+                        <div className={ [css.placeInfo, !props.card ? css.placeInfoCenter : ''].join(' ') }>
                             <div className={ css.placeTitle }>place</div>
                             <div className={ [css.placeNumber, 'fontSpecial'].join(' ') }>№ {props.number}</div>
                         </div>

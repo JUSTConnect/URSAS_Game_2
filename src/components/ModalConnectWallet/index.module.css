@@ -1,0 +1,153 @@
+.container
+{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 16px;
+    max-width: 490px;
+    width: 100%;
+    z-index: 1000;
+}
+
+.containerActive
+{
+    display: block;
+}
+
+.modal
+{
+    background: rgba(41, 49, 69, 1);
+    border-radius: 24px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.top
+{
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px;
+}
+
+.buttonClose
+{
+    height: 44px;
+    width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #384156;
+    border-radius: 12px;
+    background: none;
+    cursor: pointer;
+}
+
+.buttonClose:hover
+{
+    opacity: .8;
+}
+
+.header
+{
+    padding: 0 16px;
+}
+
+.content
+{
+    padding: 30px;
+}
+
+.item
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid #384156;
+}
+
+.item:last-child
+{
+    border-bottom: none;
+}
+
+.itemInfo
+{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(78, 94, 128, 1);
+}
+
+.itemButton
+{
+    border: none;
+    background: rgba(34, 42, 58, 1);
+    color: rgba(181, 196, 227, 1);
+    border-radius: 12px;
+    padding: 11px 24px;
+    cursor: pointer;
+}
+
+.itemButton:hover
+{
+    opacity: .8;
+}
+
+
+@media (max-width: 768px)
+{
+    .container
+    {
+        padding: 8px;
+        max-width: 300px;
+    }
+
+    .modal
+    {
+        font-size: 12px;
+        border-radius: 12px;
+    }
+
+    .top
+    {
+        padding: 8px;
+    }
+
+    .buttonClose
+    {
+        height: 30px;
+        width: 30px;
+        border-radius: 6px;
+    }
+
+    .buttonCloseIcon
+    {
+        height: 10px;
+    }
+
+    .content
+    {
+        padding: 16px;
+    }
+
+    .item
+    {
+        padding: 8px 0;
+    }
+
+    .itemLogo
+    {
+        height: 30px;
+        width: 30px;
+    }
+
+    .itemButton
+    {
+        padding: 5px 12px;
+        line-height: 22px;
+        border-radius: 6px;
+    }
+}

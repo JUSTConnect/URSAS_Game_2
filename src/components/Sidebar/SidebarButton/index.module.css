@@ -1,13 +1,21 @@
 .sidebarButton
 {
     padding: 16px;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex;
     margin-bottom: 1em;
 }
 
-.sidebarButton:hover
+.sidebarButton.sidebarButton__active:hover
 {
     opacity: .6;
+}
+
+.sidebarButton:not(.sidebarButton__active):hover > svg path
+{
+    fill: #B5C4E3;
 }
 
 .sidebarButton__active

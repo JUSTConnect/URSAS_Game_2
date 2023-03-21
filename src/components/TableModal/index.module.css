@@ -52,6 +52,17 @@
     gap: 8px;
 }
 
+.headerTitle
+{
+    margin-bottom: 4px;
+}
+
+.headerSubTitle
+{
+    font-size: 12px;
+    color: rgba(181, 196, 227, 1);
+}
+
 .modalHeaderButton
 {
     padding: 11px;
@@ -126,6 +137,9 @@
 
 .modalButtonNext
 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 1px solid #384156;
     border-radius: 12px;
     height: 44px;
@@ -304,6 +318,11 @@
         width: 30px;
     }
 
+    .modalButtonNextIcon
+    {
+        height: 12px;
+    }
+
     .modalFooterButton
     {
         padding: 7px;
@@ -327,6 +346,16 @@
     .modalHeader, .modalContentRaw, .modalFooter, .modalAlert
     {
         padding: 8px;
+    }
+
+    .headerTitle
+    {
+        margin-bottom: 0;
+    }
+
+    .headerSubTitle
+    {
+        font-size: 10px;
     }
 
     .basketEmptySofa

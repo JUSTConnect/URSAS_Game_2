@@ -1,14 +1,68 @@
 import css from './index.module.css'
 
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useContext } from 'react'
 
 import Door from './Door'
+import NavigationButton from './NavigationButton'
+import Info from './Info'
 import DoorList from '@components/RoomsDoorList'
+import { MainframeContext } from '@components/Mainframe'
 
 
 interface RoomsDoorSliderProps extends React.HTMLAttributes<HTMLDivElement> {
     mode: string
 }
+
+interface SliderFragmentProps
+{
+    indexAdd: number
+    currentDoor: number
+    scrollStagePercent: number
+    selectedDoor: number
+    doorRef: any
+    over: number
+}
+
+
+const SliderFragment = (props: SliderFragmentProps) => {
+    return (
+        <>
+            { [...Array(16)].map((item, index) => {
+                let level = index + 1
+                index += props.indexAdd
+                return (
+                    <div 
+                        style={{
+                            bottom:
+                                props.currentDoor - 2 === index ? `${(100 - props.scrollStagePercent) / 100 * 10}px` :
+                                props.currentDoor - 1 === index ? `${(100 - props.scrollStagePercent) / 100 * 40 + 10}px` :
+                                props.currentDoor === index ? `${(100 - props.scrollStagePercent) / 100 * 26 + 50}px` :
+                                props.currentDoor + 1 === index ? `${props.scrollStagePercent / 100 * 26 + 50}px` :
+                                props.currentDoor + 2 === index ? `${props.scrollStagePercent / 100 * 40 + 10}px` :
+                                props.currentDoor + 3 === index ? `${props.scrollStagePercent / 100 * 10}px` :
+                                '0',
+                            opacity:
+                                index === props.selectedDoor ? 1 :
+                                index === props.selectedDoor + 1 ? 0.9 :
+                                index === props.selectedDoor - 1 ? 0.9 :
+                                0.5
+                        }} 
+                        ref={index === 0 ? props.doorRef : null}
+                        key={index}
+                        className={css.slide}
+                    >
+                        <Door
+                            level={level}
+                            active={index === props.selectedDoor}
+                            go={false}
+                            over={ index-props.indexAdd === props.over-1 }
+                        />
+                    </div>
+                )
+            })}
+        </>
+    )
+} 
 
 
 const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
@@ -21,6 +75,10 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
 
     const [currentDoor, setCurrentDoor] = useState(0)
     const [selectedDoor, setSelectedDoor] = useState(0)
+
+    const [currentDoorList, setCurrentDoorList] = useState(0)
+
+    const context = useContext(MainframeContext)
 
     useEffect(()=>{
         if (null !== doorSliderInner.current && null !== doorSlider.current) {
@@ -58,8 +116,6 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
             current = Math.floor(scrollLeft / doorWidth)
             selected = Math.floor(scrollLeft / doorWidth + (stage > doorWidth / 2 ? 1 : 0))
             
-            console.log(selected)
-            console.log(stage)
             setCurrentDoor(current)
             setSelectedDoor(selected)
             if (selected>=32 && stage < doorWidth / 2) {
@@ -83,10 +139,9 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
         if (null !== doorSlider.current && null !== door.current) {
             doorSlider.current.scroll({
                 left: 
-                    doorSlider.current.scrollLeft +
-                    (door.current.offsetWidth - scrollStage) +
-                    value +
-                    1,
+                    doorSlider.current.scrollLeft
+                     - scrollStage +
+                    value,
                 behavior: "smooth",
             })
         }
@@ -107,147 +162,55 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
         <div
             onScroll={ scrollHandler }
             ref={ doorSlider }
-            className={ [css.doorSlider, props.mode !== 'slide' ? css.doorSliderHidden : ''].join(' ') }
+            className={ [css.slider, props.mode !== 'slide' ? css.sliderHidden: ''].join(' ') }
         >
-            <div ref={ doorSliderInner } className={css.doorSliderInner}>
-                { [...Array(16)].map((item, index) => {
-                    return (
-                        <div 
-                            style={{
-                                bottom:
-                                    currentDoor - 2 === index ? `${(100 - scrollStagePercent) / 100 * 10}px` :
-                                    currentDoor - 1 === index ? `${(100 - scrollStagePercent) / 100 * 40 + 10}px` :
-                                    currentDoor === index ? `${(100 - scrollStagePercent) / 100 * 26 + 50}px` :
-                                    currentDoor + 1 === index ? `${scrollStagePercent / 100 * 26 + 50}px` :
-                                    currentDoor + 2 === index ? `${scrollStagePercent / 100 * 40 + 10}px` :
-                                    currentDoor + 3 === index ? `${scrollStagePercent / 100 * 10}px` :
-                                    '0',
-                                opacity:
-                                    index === selectedDoor ? 1 :
-                                    index === selectedDoor + 1 ? 0.9 :
-                                    index === selectedDoor - 1 ? 0.9 :
-                                    0.5
-                            }} 
-                            ref={index === 0 ? door : null}
-                            key={index}
-                            className={css.doorSlide}
-                        >
-                            <Door
-                                level={index + 1}
-                                active={index === selectedDoor}
-                                go={false}
-                            />
-                        </div>
-                    )
-                })}
-                { [...Array(16)].map((item, index) => {
-                    let level = index + 1
-                    index += 16
-                    return (
-                        <div 
-                            style={{
-                                bottom:
-                                    currentDoor - 2 === index ? `${(100 - scrollStagePercent) / 100 * 10}px` :
-                                    currentDoor - 1 === index ? `${(100 - scrollStagePercent) / 100 * 40 + 10}px` :
-                                    currentDoor === index ? `${(100 - scrollStagePercent) / 100 * 26 + 50}px` :
-                                    currentDoor + 1 === index ? `${scrollStagePercent / 100 * 26 + 50}px` :
-                                    currentDoor + 2 === index ? `${scrollStagePercent / 100 * 40 + 10}px` :
-                                    currentDoor + 3 === index ? `${scrollStagePercent / 100 * 10}px` :
-                                    '0',
-                                opacity:
-                                    index === selectedDoor ? 1 :
-                                    index === selectedDoor + 1 ? 0.9 :
-                                    index === selectedDoor - 1 ? 0.9 :
-                                    0.5
-                            }} 
-                            ref={index === 0 ? door : null}
-                            key={index}
-                            className={css.doorSlide}
-                        >
-                            <Door
-                                level={level}
-                                active={index === selectedDoor}
-                                go={false}
-                            />
-                        </div>
-                    )
-                })}
-                { [...Array(16)].map((item, index) => {
-                    let level = index + 1
-                    index += 32
-                    return (
-                        <div 
-                            style={{
-                                bottom:
-                                    currentDoor - 2 === index ? `${(100 - scrollStagePercent) / 100 * 10}px` :
-                                    currentDoor - 1 === index ? `${(100 - scrollStagePercent) / 100 * 40 + 10}px` :
-                                    currentDoor === index ? `${(100 - scrollStagePercent) / 100 * 26 + 50}px` :
-                                    currentDoor + 1 === index ? `${scrollStagePercent / 100 * 26 + 50}px` :
-                                    currentDoor + 2 === index ? `${scrollStagePercent / 100 * 40 + 10}px` :
-                                    currentDoor + 3 === index ? `${scrollStagePercent / 100 * 10}px` :
-                                    '0',
-                                opacity:
-                                    index === selectedDoor ? 1 :
-                                    index === selectedDoor + 1 ? 0.9 :
-                                    index === selectedDoor - 1 ? 0.9 :
-                                    0.5
-                            }} 
-                            ref={index === 0 ? door : null}
-                            key={index}
-                            className={css.doorSlide}
-                        >
-                            <Door
-                                level={level}
-                                active={index === selectedDoor}
-                                go={false}
-                            />
-                        </div>
-                    )
-                })}
-            </div>
-            <div
-                className={[css.prevButton, css.sliderNavigation].join(' ')}
-                onClick={ prevSlide }
-            >
-                <img 
-                    className={[css.prevButtonIcon, css.sliderNavigationIcon].join(' ')}
-                    src="assets/images/icons/slider-arrow.png"
-                    alt="Arrow"
+            <div ref={ doorSliderInner } className={css.inner}>
+                <SliderFragment
+                    indexAdd={0}
+                    currentDoor={currentDoor}
+                    selectedDoor={selectedDoor}
+                    scrollStagePercent={scrollStagePercent}
+                    doorRef={door}
+                    over={context.gameOver}
+                />
+                <SliderFragment
+                    indexAdd={16}
+                    currentDoor={currentDoor}
+                    selectedDoor={selectedDoor}
+                    scrollStagePercent={scrollStagePercent}
+                    doorRef={door}
+                    over={context.gameOver}
+                />
+                <SliderFragment
+                    indexAdd={32}
+                    currentDoor={currentDoor}
+                    selectedDoor={selectedDoor}
+                    scrollStagePercent={scrollStagePercent}
+                    doorRef={door}
+                    over={context.gameOver}
                 />
             </div>
-
-            <div
-                className={[css.nextButton, css.sliderNavigation].join(' ')}
-                onClick={ nextSlide }
-            >
-                <img 
-                    className={[css.nextButtonIcon, css.sliderNavigationIcon].join(' ')}
-                    src="assets/images/icons/slider-arrow.png"
-                    alt="Arrow" />
-            </div>
+            <NavigationButton
+                className={ css.prevButton }
+                onClick={ prevSlide }
+            />
+            <NavigationButton
+                className={ css.nextButton }
+                onClick={ nextSlide}
+            />
         </div> 
         
         { props.mode === 'list' ? (
-            <DoorList/>
+            <DoorList currentDoor={ currentDoorList } setCurrentDoor={ setCurrentDoorList }/>
         ) : ''}
 
-        <div className={css.roomsInfo}>
-            <img className={css.roomsInfoBg} src="assets/images/texture/rooms-info.png" alt="Rooms info" />
-            <div className={css.roomsInfoSection}>
-                <div>
-                    <div className={css.roomsInfoKey}>available tables</div>
-                    <div className={css.roomsInfoValue}>234</div>
-                </div>
-                <div>
-                    <div className={css.roomsInfoKey}>empty tables</div>
-                    <div className={css.roomsInfoValue}>102</div>
-                </div>
-                <div>
-                    <div className={css.roomsInfoKey}>time game</div>
-                    <div className={css.roomsInfoValue}>24+2</div>
-                </div>
-            </div>
-        </div>
+
+        <Info
+            available={234}
+            empty={102}
+            timeGame={'24+2'}
+            hidden={ props.mode === 'list' ? !currentDoorList : props.mode === 'list' }
+        />
     </div>
 }
 

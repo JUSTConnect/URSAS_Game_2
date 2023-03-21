@@ -4,6 +4,18 @@
     white-space: nowrap;
     overflow: hidden;
     width: 260;
+    background: linear-gradient(180deg, #E7DF36 0%, #EFB23D 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+}
+
+.gameOverButtons
+{
+    display: flex;
+    gap: 16px;
+    margin-left: 14px;
 }
 
 @media (max-width: 1060px)
@@ -20,8 +32,38 @@
     {
         display: none;
     }
-    .headerWalletButton
+    .walletButton
     {
         margin-right: 4px;
+    }
+
+    .gameOverSection
+    {
+        position: absolute;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #293145;
+        border-top: 1px solid #384156;
+        border-radius: 0px 0px 12px 12px;
+        bottom: 0;
+        left: 0;
+        padding: 8px 8px 8px 18px;
+        transform: translateY(100%);
+        width: 100%;
+    }
+
+    .gameOverSectionButton
+    {
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: rgba(34, 42, 58, 1);
+    }
+
+    .gameOverButtons
+    {
+        gap: 8px;
+        margin-left: 0;
     }
 }

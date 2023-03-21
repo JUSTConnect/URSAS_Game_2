@@ -1,7 +1,12 @@
 import css from './index.module.css'
 
-const Badge = (props: React.HTMLAttributes<HTMLDivElement>) => {
-    return <div  {...props } className={ css.badge }>
+interface BadgeProps extends React.HTMLAttributes<HTMLDivElement>
+{
+    transparentMobile?: boolean
+}
+
+const Badge = (props: BadgeProps) => {
+    return <div  {...props } className={ [css.badge, props.transparentMobile ? css.transparentMobile : ''].join(' ') }>
         { props.children }
     </div>
 }

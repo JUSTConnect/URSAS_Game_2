@@ -14,6 +14,7 @@ export default function Home() {
                 <title>Poker Rooms</title>
             </Head>
             <Mainframe
+                connected={ false }
                 subHeader={<SubHeaderTables />}
             >
                 <TableList />

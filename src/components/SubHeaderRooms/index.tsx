@@ -14,7 +14,7 @@ const SubHeaderRooms = (props: SubHeaderRoomsProps) => {
   return <SubHeader>
     <div>
       <span className={ css.theLoby }>The loby</span>
-      <span className={ css.totalRooms }>Table rooms <Badge>16</Badge></span>
+      <span className={ css.totalRooms }>Table room <Badge>16</Badge></span>
     </div>
     <FlexBox gap={ '8px' } className={ css.filterButtons }>
       <SubHeaderButton onClick={ ()=>props.setMode('slide') } active={ props.mode === 'slide' } value={ 'slide' }/>

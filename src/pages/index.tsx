@@ -16,7 +16,9 @@ export default function Home() {
                 <title>Poker Rooms</title>
             </Head>
             <Mainframe
+                connected={true}
                 subHeader={<SubHeaderRooms mode={mode} setMode={setMode} />}
+                gameOver={2} 
             >
                 <RoomsDoorSlider mode={mode} />
             </Mainframe>

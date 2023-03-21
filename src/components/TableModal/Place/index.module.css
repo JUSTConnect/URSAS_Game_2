@@ -39,6 +39,10 @@
     font-weight: 800;
 }
 
+.placeInfoCenter
+{
+    text-align: center;
+}
 
 @media (max-width: 768px)
 {

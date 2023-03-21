@@ -13,7 +13,7 @@
     opacity: .8;
 }
 
-.doorItemBg
+.bg
 {
     position: absolute;
     height: 100%;
@@ -27,6 +27,11 @@
     width: 100%;
     transform: translateY(-50%);
     text-align: center;
+}
+
+.doorItemInfoOver
+{
+    opacity: .4;
 }
 
 

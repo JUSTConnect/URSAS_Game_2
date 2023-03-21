@@ -1,0 +1,49 @@
+
+.navigation
+{
+    position: absolute;
+    top: 248px;
+    height: 60px;
+    width: 60px;
+    background: #222A3A;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    cursor: pointer;
+    opacity: .7;
+    user-select: none;
+    border: none;
+}
+
+.navigation:hover
+{
+    background: linear-gradient(180deg, #E7DF36 0%, #EFB23D 100%);
+    opacity: 1;
+}
+
+.navigation:hover svg path
+{
+    fill: #000;
+}
+
+.icon
+{
+    height: 16px;
+}
+
+
+@media (max-width: 768px)
+{
+    .navigation
+    {
+        height: 30px;
+        width: 30px;
+        top: 50%;
+    }
+    .icon
+    {
+        height: 8px;
+    }
+}

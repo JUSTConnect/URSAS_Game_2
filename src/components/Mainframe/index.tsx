@@ -10,10 +10,13 @@ import Header from '@/components/Header'
 import HeaderMobile from '@components/HeaderMobile'
 import Footer from '@components/Footer'
 import FooterModal from '@components/FooterModal'
+import ModalConnectWallet from '@components/ModalConnectWallet'
 
 
 interface MainframeProps extends HTMLAttributes<HTMLDivElement> {
     subHeader?: JSX.Element
+    connected?: boolean
+    gameOver?: number
 }
 
 
@@ -23,7 +26,10 @@ type MainFrameContextData = {
   mainBlured: boolean,
   setMainBlured: Function,
   footerModal: boolean,
-  setFooterModal: Function, 
+  setFooterModal: Function,
+  connectWalletModal: boolean,
+  setConnectWalletModal: Function
+  gameOver: number
 }
 
 
@@ -33,13 +39,17 @@ const MainframeContext = createContext<MainFrameContextData>({
   mainBlured: false,
   setMainBlured: Function,
   footerModal: false,
-  setFooterModal: Function, 
+  setFooterModal: Function,
+  connectWalletModal: false,
+  setConnectWalletModal: Function,
+  gameOver: 0,
 })
 
 const Mainframe = (props: MainframeProps) => {
   const [contentBlured, setContentBlured] = useState(false)
   const [mainBlured, setMainBlured] = useState(false)
   const [footerModal, setFooterModal] = useState(false)
+  const [connectWalletModal, setConnectWalletModal] = useState(false)
 
 
   return (
@@ -54,22 +64,27 @@ const Mainframe = (props: MainframeProps) => {
         setMainBlured: setMainBlured,
         footerModal: footerModal,
         setFooterModal: setFooterModal,
+        connectWalletModal: connectWalletModal,
+        setConnectWalletModal: setConnectWalletModal,
+        gameOver: props.gameOver || 0,
       }}>
         <PageLayout>
           <HeaderMobile/>
           <Sidebar/>
           <PageContent>
-            <Header connected={ true }/>
+            <Header connected={ props.connected }/>
             { props.subHeader }
-            <Blur active={contentBlured}/>
+            <Blur isActive={contentBlured}/>
             <PageMain>
               { props.children }
-              <Blur active={mainBlured}/>
+              <Blur isActive={mainBlured}/>
             </PageMain>
           </PageContent>
         </PageLayout>
         <Footer/>
         <FooterModal/>
+        <ModalConnectWallet/>
+        <Blur isActive={ connectWalletModal }/>
       </MainframeContext.Provider>
     </>
   )

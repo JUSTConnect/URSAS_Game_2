@@ -16,6 +16,7 @@ export default function Home() {
                 <title>Poker Rooms</title>
             </Head>
             <Mainframe
+                connected={ true }
                 subHeader={<SubHeaderTable modalActive={modalActive} setModalActive={setModalActive}/>}
             >
                 <TableView modalActive={modalActive} setModalActive={setModalActive}/>

@@ -1,15 +1,19 @@
 .header
 {
     background: #293145;
-    padding: 16px;
+    position: relative;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 3;
 }
 
-.header__section
+
+.section
 {
+    padding: 16px;
     display: flex;
     align-items: center;
     gap: 18px;
@@ -22,12 +26,10 @@
 
 @media (max-width: 768px)
 {
-    .header
-    {
-        padding: 8px;
-    }
-    .header__section
+    
+    .section
     {
         gap: 4px;   
+        padding: 8px;
     }
 }

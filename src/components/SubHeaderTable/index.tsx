@@ -15,8 +15,8 @@ const SubHeaderTable = (props: SubHeaderTableProps) => {
 
   return <SubHeader>
     <div>
-      <span className={ css.theLoby }>Table №2</span>
-      <span className={ css.totalRooms }>Places <Badge>5/6</Badge></span>
+      <span className={ css.theLoby }>Table <span className={ 'fixNumber' }>№</span>2</span>
+      <span className={ css.totalRooms }>Places <Badge>&nbsp;5/6&nbsp;</Badge></span>
     </div>
     <button onClick={ ()=>props.setModalActive(!props.modalActive) } className={ [css.filterButton].join(' ') }>
       {

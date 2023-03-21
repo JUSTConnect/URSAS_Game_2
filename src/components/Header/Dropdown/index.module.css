@@ -2,6 +2,7 @@
 {
     position: relative;
     user-select: none;
+    line-height: 1em;
     -webkit-user-select: none;
     -ms-user-select: none;
     -webkit-touch-callout: none;
@@ -9,7 +10,7 @@
     -moz-user-select: none;
 }
 
-.dropdownBadge
+.badge
 {
     background: #313B52;
     color: #B5C4E3;
@@ -24,7 +25,7 @@
     line-height: 1em;
 }
 
-.dropdown__button
+.button
 {
     color: #4E5E80;
     display: flex;
@@ -38,21 +39,51 @@
     gap: 4px;
 }
 
-.dropdown__data
+.data
 {
     display: none;
     position: absolute;
     transform: translateY(calc(100% + 15px));
     background: #293145;
-    padding: 0 15px 16px;
     bottom: 0;
     left: 0;
     width: max-content;
     border-radius: 0 0 24px 24px;
     z-index: 2;
+    padding-bottom: 16px;
 }
 
-.dropdown__dataActive
+.dataContainer
+{
+    padding: 0 15px;
+    max-height: 150px;
+    overflow-x: visible;
+    overflow-y: auto;
+}
+
+/* width */
+.dataContainer::-webkit-scrollbar {
+    width: 3px;
+}
+
+/* Track */
+.dataContainer::-webkit-scrollbar-track {
+    background: rgba(34, 42, 58, 1);
+}
+
+/* Handle */
+.dataContainer::-webkit-scrollbar-thumb {
+    background: #313b52;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+.dataContainer::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+  
+
+.dataActive
 {
     display: block;
 }
@@ -81,13 +112,13 @@
 .arrowIcon
 {
     height: 6px;
-    width: 6px;
     margin-left: 4px;
+    transition: .3s;
 }
 
 .arrowIconActive
 {
-    transform: rotate(180deg);
+    transform: rotate(-180deg);
 }
 
 .arrowIconActive path
@@ -95,16 +126,21 @@
     fill: #E7DF36;
 }
 
+.text
+{
+    margin-bottom: 3px;
+}
+
 @media (max-width: 768px)
 {
-    .dropdown__button
+    .button
     {
         padding: 8px 10px;
         border-radius: 6px;
         gap: 4px;
     }
 
-    .dropdownBadge
+    .badge
     {
         background: none;
         height: auto;
@@ -113,11 +149,15 @@
         padding: 0 3px;
     }
 
-    .dropdown__data{
+    .data{
         transform: translateY(calc(100% + 7px));
         font-size: 12px;
-        padding: 0 15px 4px;
         border-radius: 0 0 12px 12px;
+        padding-bottom: 6px;
+    }
+    .dataContainer
+    {
+        padding: 0 15px;
     }
     .dataAngleRight
     {

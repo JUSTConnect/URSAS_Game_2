@@ -2,12 +2,12 @@ import css from './index.module.css'
 
 interface BlurProps
 {
-    active?: boolean
+    isActive?: boolean
 }
 
 const Blur = (props: BlurProps) => {
     return (
-        <div className={ [css.blur, props.active? css.active : ''].join(' ') }>
+        <div className={ [css.blur, props.isActive? css.active : ''].join(' ') }>
 
         </div>
     )

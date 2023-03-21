@@ -1,9 +1,9 @@
+import { JsxElement } from 'typescript'
 import css from './index.module.css'
 
 
 interface HeaderBaseProps extends React.HTMLAttributes<HTMLDivElement>
 {
-
 }
 
 interface HeaderSectionProps extends React.HTMLAttributes<HTMLDivElement>
@@ -13,7 +13,7 @@ interface HeaderSectionProps extends React.HTMLAttributes<HTMLDivElement>
 
 
 const HeaderSection = (props: HeaderSectionProps) => {
-    return <div className={ [css.header__section].join(' ') }>
+    return <div className={ [css.section].join(' ') }>
         { props.children }
     </div>
 }

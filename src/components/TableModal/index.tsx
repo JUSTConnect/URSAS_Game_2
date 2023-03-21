@@ -42,7 +42,12 @@ const TableModal = (props: TableModalProps) => {
                     choose_card: (
                         <>
                             <div>
-                                Сhoose cart <span className={ css.textLight }>place №3</span>
+                                <div className={ css.headerTitle }>
+                                    Сhoose cart <span className={ css.textLight }>place <span className={ 'fixNumber' }>№</span>3</span>
+                                </div>
+                                <div className={ css.headerSubTitle }>
+                                    you seat has been taken, please select another
+                                </div>
                             </div>
                             <div>
                                 <button onClick={ () => {setStep('confirm_places');setAlert('Places not subbmit - clear/confirm or press exit again')} } className={ css.modalButtonNext }>
@@ -114,7 +119,7 @@ const TableModal = (props: TableModalProps) => {
                     choose_card: (
                         <div className={ css.cards }>
                             { [...Array(100)].map((item,index)=>(
-                                <img  onClick={ () => {setStep('confirm_places');setAlert('Places not subbmit - clear/confirm or press exit again')} } className={ css.card } key={index} src="assets/images/texture/example-card.png" alt="card" />
+                                <img  onClick={ () => {setStep('confirm_places');setAlert('Places not submit - clear/confirm or press exit again')} } className={ css.card } key={index} src="assets/images/texture/example-card.png" alt="card" />
                             ))}
                         </div>
                     ),
@@ -125,10 +130,10 @@ const TableModal = (props: TableModalProps) => {
                                 card={false}
                             />
                             <Place
-                                return={true}
+                                clear={true}
                             />
                             <Place
-                                clear={true}
+                                return={true}
                             />
                             <Place
                                 number={1}
@@ -156,7 +161,7 @@ const TableModal = (props: TableModalProps) => {
                                     place
                                 </div>
                                 <div className={ [css.dialogNumber, 'fontSpecial'].join(' ') }>
-                                    № 3
+                                    №3
                                 </div>
                                 <div className={ css.dialogButtons }>
                                     <Place
@@ -176,7 +181,7 @@ const TableModal = (props: TableModalProps) => {
                     )
                 } [step] || 'not_found' }
             </div>
-            { step !== 'basket_empty' && step !== 'confirm_places2' ? (
+            { step !== 'basket_empty' && step !== 'confirm_places2' && step !== 'choose_card' ? (
                 <div className={ css.modalFooter }>
                     <div className={ css.modalFooterButtons }>
                         <div className={ css.modalFooterButton }>
