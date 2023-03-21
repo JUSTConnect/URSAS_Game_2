@@ -63,6 +63,12 @@
 {
     height: 213px;
     position: absolute;
+    opacity: .4;
+}
+
+.sofaActive
+{
+    opacity: 1;
 }
 
 /* 1 */
@@ -161,9 +167,26 @@
     z-index: 2;
 }
 
+.placeEmpty
+{
+    background: #222A3A;
+    line-height: 1.5em;
+}
+
+.placeActive
+{
+    background: linear-gradient(180deg, #E7DF36 0%, #EFB23D 100%);
+    line-height: 1.5em;
+}
+
 .placeInfo
 {
     color: #4E5E80;
+}
+
+.placeActive .placeInfo
+{
+    color: rgba(212, 173, 44, 1);
 }
 
 .placeNumber
@@ -172,10 +195,25 @@
     color: #B5C4E3;
 }
 
+.placeActive .placeNumber
+{
+    color: rgba(107, 86, 15, 1);
+}
+
 .placeCard
 {
     height: 44px;
     width: 40px;
+}
+
+.placeEmpty .placeCard
+{
+    display: none;
+}
+
+.placeActive .placeCard
+{
+    display: none;
 }
 
 /* top */

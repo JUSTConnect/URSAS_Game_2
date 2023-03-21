@@ -24,6 +24,11 @@
     {
         width: 120px;
     }
+
+    .gameOverButtons
+    {
+        margin-left: 0;
+    }
 }
 
 @media (max-width: 768px)
@@ -40,7 +45,7 @@
     .gameOverSection
     {
         position: absolute;
-        display: flex;
+        display: none;
         justify-content: space-between;
         align-items: center;
         background: #293145;
@@ -51,14 +56,36 @@
         padding: 8px 8px 8px 18px;
         transform: translateY(100%);
         width: 100%;
+        transition: .3s;
+    }
+
+    .gameOverSection.gameOverSectionShow
+    {
+        display: flex;
     }
 
     .gameOverSectionButton
     {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         height: 16px;
         width: 16px;
         border-radius: 50%;
         background: rgba(34, 42, 58, 1);
+        transform: rotate(90deg);
+    }
+
+    .gameOverSectionButton svg
+    {
+        height: 8px;
+        margin-right: 2px;
+        fill: #EFB23D;
+    }
+
+    .gameOverSectionButtonActive
+    {
+        transform: rotate(-90deg);
     }
 
     .gameOverButtons

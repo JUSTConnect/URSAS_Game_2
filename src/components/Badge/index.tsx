@@ -6,7 +6,7 @@ interface BadgeProps extends React.HTMLAttributes<HTMLDivElement>
 }
 
 const Badge = (props: BadgeProps) => {
-    return <div  {...props } className={ [css.badge, props.transparentMobile ? css.transparentMobile : ''].join(' ') }>
+    return <div className={ [css.badge, props.transparentMobile ? css.transparentMobile : ''].join(' ') }>
         { props.children }
     </div>
 }

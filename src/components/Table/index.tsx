@@ -12,7 +12,7 @@ interface TableProps extends React.HTMLAttributes<HTMLDivElement>
 }
 
 const Table = (props: TableProps) => {
-    return <Link href='/table' className={ [css.table ,props.isActive ? css.tableActive : '', props.freePlaces || 0 >= 10 ? css.tableDisabled : '', props.cooldown ? css.tableCooldown : ''].join(' ') }>
+    return <Link href='/table' className={ [css.table ,props.isActive ? css.tableActive : '', (props.freePlaces || 0) >= 10 ? css.tableDisabled : '', props.cooldown ? css.tableCooldown : ''].join(' ') }>
         <div className={ css.bg }>
             <div className={ css.layer1 }>
                 <div className={ css.layer2 }>

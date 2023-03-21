@@ -17,6 +17,7 @@ interface HeaderProps extends React.HTMLAttributes<HTMLDivElement>
 
 const Header = (props: HeaderProps) => {
     const [activeDropdown, setActiveDropdown] = useState(0)
+    const [gameOverShow, setGameOverShow] = useState(true)
     const context = useContext(MainframeContext)
 
     return <HeaderBase
@@ -84,24 +85,30 @@ const Header = (props: HeaderProps) => {
                             <Badge transparentMobile={ true }>&nbsp;5/5&nbsp;</Badge>
                         </div>
                         <Button>CLAIm</Button>
-                        <div className={ css.gameOverSectionButton }>
-                            Button
-                        </div>
                         { context.gameOver ? (
-                            <div className={ css.gameOverSection }>
+                            <>
                                 <div className={ 'd-mobile' }>
-                                    <div>
-                                        <div className={ 'textMuted' }>
-                                            announcement of results
-                                        </div>
-                                        04:51
+                                    <div onClick={ ()=>setGameOverShow(!gameOverShow) } className={ [css.gameOverSectionButton, gameOverShow ? css.gameOverSectionButtonActive : ''].join(' ') }>
+                                        <svg width="11" height="14" viewBox="0 0 11 14" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M0.499999 7.86602C-0.166668 7.48112 -0.166667 6.51888 0.5 6.13397L9.5 0.937821C10.1667 0.552921 11 1.03405 11 1.80385L11 12.1962C11 12.966 10.1667 13.4471 9.5 13.0622L0.499999 7.86602Z"/>
+                                        </svg>
                                     </div>
                                 </div>
-                                <div className={ css.gameOverButtons }>
-                                    <Button primary={true}>REFOUND</Button>
-                                    <Button primary={true}>BURN</Button>
+                                <div className={ [css.gameOverSection, gameOverShow ? css.gameOverSectionShow : ''].join(' ') }>
+                                    <div className={ 'd-mobile' }>
+                                        <div>
+                                            <div className={ 'textMuted' }>
+                                                announcement of results
+                                            </div>
+                                            04:51
+                                        </div>
+                                    </div>
+                                    <div className={ css.gameOverButtons }>
+                                        <Button primary={true}>REFOUND</Button>
+                                        <Button primary={true}>BURN</Button>
+                                    </div>
                                 </div>
-                            </div>
+                            </>
                         ) : '' }
                 </HeaderSection>
             </>

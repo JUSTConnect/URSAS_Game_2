@@ -9,6 +9,7 @@
     width: 100%;
     transform: translate(100%);
     transition: .5s;
+    z-index: 1001;
 }
 
 .modalContainerActive
@@ -209,7 +210,7 @@
 .cards
 {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
     justify-content: center;
 }
