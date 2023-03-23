@@ -1,0 +1,265 @@
+.place
+{
+    min-width: 140px;
+    position: absolute;
+    background: #313B52;
+    padding: 8px 16px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    z-index: 2;
+}
+.empty
+{
+    background: #222A3A;
+    line-height: 1.5em;
+}
+.active
+{
+    background: linear-gradient(180deg, #E7DF36 0%, #EFB23D 100%);
+    line-height: 1.5em;
+}
+
+
+.info
+{
+    color: #4E5E80;
+}
+.active .info
+{
+    color: rgba(212, 173, 44, 1);
+}
+
+
+.number
+{
+    margin-top: 4px;
+    color: #B5C4E3;
+}
+.active .number
+{
+    color: rgba(107, 86, 15, 1);
+}
+
+
+.card
+{
+    height: 44px;
+    width: 40px;
+}
+.empty .card
+{
+    display: none;
+}
+.active .card
+{
+    display: none;
+}
+
+
+/* top */
+
+.place1, .place10
+{
+    top: 0;
+}
+
+.place5, .place6
+{
+    bottom: 0;
+}
+
+.place1, .place5
+{
+    left: 65%;
+}
+
+.place10, .place6
+{
+    left: 35%;
+}
+
+.place1
+{
+    transform: translate(-50%, calc(-50% + 16px));
+}
+
+.place10
+{
+    transform: translate(-50%, calc(-50% + 16px));
+}
+
+.place5
+{
+    transform: translate(-50%, calc(50% - 16px));
+}
+
+.place6
+{
+    transform: translate(-50%, calc(50% - 16px));
+}
+
+/* middle */
+
+.place8, .place3
+{
+    bottom: 50%;
+}
+
+.place8
+{
+    left: 0;
+    transform: translate(-30px, 50%);
+}
+
+.place3
+{
+    right: 0;
+    transform: translate(30px, 50%);
+}
+
+/* middle middle */
+
+.place9, .place2
+{
+    top: 0;
+}
+.place7, .place4
+{
+    bottom: 0;
+}
+.place9, .place7
+{
+    left: 0;
+}
+.place2, .place4
+{
+    right: 0;
+}
+
+.place9
+{
+    transform: translate(70px, -14px);
+}
+.place2
+{
+    transform: translate(-70px, -14px);
+}
+.place7
+{
+    transform: translate(70px, 14px);
+}
+.place4
+{
+    transform: translate(-70px, 14px);
+}
+
+
+@media (max-width: 1060px)
+{
+    .place9, .place2
+    {
+        top: 10%;
+    }
+    .place7, .place4
+    {
+        bottom: 10%;
+    }
+    .place9, .place7
+    {
+        left: 0;
+    }
+    .place2, .place4
+    {
+        right: 0;
+    }
+    .place9, .place2, .place7, .place4
+    {
+        transform: none;
+    }
+}
+
+@media (max-width: 768px)
+{
+    .place
+    {
+        font-size: 12px;
+        padding: 6px;
+        min-width: 90px;
+        gap: 4px;
+        border-radius: 12px;
+        top: initial;
+        bottom: initial;
+        right: initial;
+        left: initial;
+    }
+    .card
+    {
+        height: 33px;
+        width: 30px;
+    }
+
+    /* --- */
+
+    .place1, .place6
+    {
+        left: 50%;
+        transform: translate(-50%);
+    }
+    .place1
+    {
+        top: -22px;
+    }
+    .place6
+    {
+        bottom: -22px;
+    }
+    .place3, .place4
+    {
+        right: -45px;
+    }
+    .place8, .place9
+    {
+        left: -45px;
+    }
+
+    /* --- */
+
+    .place4, .place8, .place5, .place7
+    {
+        transform: translate(0, 50%);
+    }
+    .place3, .place9, .place2, .place10
+    {
+        transform: translate(0, -50%);
+    }
+    .place3, .place9
+    {
+        top: 37%;
+    }
+    .place4, .place8
+    {
+        bottom: 37%;
+    }
+
+    /* --- */
+
+    .place2, .place10
+    {
+        top: 10%;
+    }
+    .place5, .place7
+    {
+        bottom: 10%;
+    }
+    .place2, .place5
+    {
+        right: -29px;
+    }
+    .place10, .place7
+    {
+        left: -29px;
+    }
+}

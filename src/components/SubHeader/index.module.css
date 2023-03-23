@@ -11,6 +11,7 @@
     justify-content: space-between;
     color: #4E5E80;
     margin: 30px 16px 0px;
+    line-height: 1em;
 }
 
 .subHeaderSection
@@ -20,14 +21,17 @@
 
 .subHeaderButton
 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: #222A3A;
     color: #4E5E80;
     min-width: 140px;
     text-align: center;
-    padding: 11px 16px;
     border: none;
     border-radius: 32px;
     cursor: pointer;
+    height: 44px;
 }
 
 .subHeaderButtonActive
@@ -43,6 +47,13 @@
 .subHeaderButton:hover
 {
     opacity: .7;
+}
+
+.section
+{
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 
 @media (max-width: 768px)

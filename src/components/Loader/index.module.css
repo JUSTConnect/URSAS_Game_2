@@ -1,0 +1,42 @@
+.loader
+{
+    position: relative;
+    width: min-content;
+    padding: 3px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.inner
+{
+    position: relative;
+    height: 1.5em;
+    width: 1.5em;
+    background: #222A3A;
+    border-radius: 50%;
+}
+
+.loader:before
+{
+    content: '';
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    background: #B5C4E3;
+    height: 50%;
+    width: 50%;
+    animation: loader 1s linear infinite;
+}
+
+@keyframes loader {
+    from
+    {
+        transform: rotate(0deg) translate(-50%, -50%);
+    }
+    
+    to
+    {
+        transform: rotate(360deg) translate(-50%, -50%);
+    }
+}

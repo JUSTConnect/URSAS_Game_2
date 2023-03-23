@@ -18,6 +18,12 @@
     margin-left: 14px;
 }
 
+.places
+{
+    display: flex;
+    align-items: center;
+}
+
 @media (max-width: 1060px)
 {
     .walletHash

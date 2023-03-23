@@ -1,0 +1,89 @@
+.sofa
+{
+    height: 213px;
+    position: absolute;
+    opacity: .4;
+}
+
+.sofaActive
+{
+    opacity: 1;
+}
+
+.sofa1, .sofa10
+{
+    top: 0;
+    transform: translate(-50%, calc(-100% - 46px));
+}
+.sofa5, .sofa6
+{
+    bottom: 0;
+    transform: translate(-50%, calc(100% + 46px)) rotate(180deg);
+}
+.sofa1, .sofa5
+{
+    left: 65%;
+}
+.sofa10, .sofa6
+{
+    left: 35%;
+}
+
+
+.sofa2, .sofa9
+{
+    top: 0;
+}
+.sofa7, .sofa4
+{
+    bottom: 0;
+}
+.sofa9, .sofa7
+{
+    left: 0;
+}
+.sofa2, .sofa4
+{
+    right: 0;
+}
+.sofa2
+{
+    transform: translate(50%, -100%) rotate(32deg);
+}
+.sofa9
+{
+    transform: translate(-50%, -100%) rotate(-32deg);
+}
+.sofa7
+{
+    transform: translate(-50%, 100%) rotate(-142deg);
+}
+.sofa4
+{
+    transform: translate(50%, 100%) rotate(142deg);
+
+}
+
+
+.sofa8, .sofa3
+{
+    top: 50%;
+}
+.sofa8
+{
+    left: 0;
+    transform: translate(calc(-100% - 46px), -50%) rotate(-90deg);
+}
+.sofa3
+{
+    right: 0;
+    transform: translate(calc(100% + 46px), -50%) rotate(90deg);
+}
+
+@media (max-width: 1060px)
+{
+    .sofa
+    {
+        display: none;
+    }
+}

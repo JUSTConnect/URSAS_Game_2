@@ -8,13 +8,13 @@ import css from './index.module.css'
 
 const Sidebar = () => {
     return <>
-        <div className={ css.sidebarContainer }>
-            <div className={ css.sidebarCard }>
-                <div className={ css.sidebarSection }>
+        <div className={ css.container }>
+            <div className={ css.card }>
+                <div className={ css.section }>
                     <img 
                         src="assets/images/logo.svg"
                         alt="Logo"
-                        className={ css.sidebarLogo }
+                        className={ css.logo }
                     />
                     <SidebarButton
                         href={'/'}
@@ -51,9 +51,9 @@ const Sidebar = () => {
                         }
                     />
                 </div>
-                <div className={ [css.sidebarSection, css.sidebarLinks].join(' ') }>
-                    <Link href='#'>Help</Link>
-                    <Link href='#'>Rules</Link>
+                <div className={ [css.section, css.links].join(' ') }>
+                    <Link className={ css.link } href='#'>Help</Link>
+                    <Link className={ css.link } href='#'>Rules</Link>
                 </div>
             </div>
         </div>

@@ -8,6 +8,12 @@
     margin-bottom: 1em;
 }
 
+.sidebarButton svg
+{
+    height: 16px;
+    width: 16px;
+}
+
 .sidebarButton.sidebarButton__active:hover
 {
     opacity: .6;

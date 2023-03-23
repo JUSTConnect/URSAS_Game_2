@@ -4,7 +4,7 @@ import Mainframe from '@components/Mainframe'
 
 import SubHeaderTables from '@components/SubHeaderTables'
 import TableList from '@components/TableList'
-import Blur from '@/components/Blur'
+import Loader from '@components/Loader'
 
 export default function Home() {
 
@@ -18,6 +18,9 @@ export default function Home() {
                 subHeader={<SubHeaderTables />}
             >
                 <TableList />
+                <div>
+                    <Loader/>
+                </div>
             </Mainframe>
         </>
     )

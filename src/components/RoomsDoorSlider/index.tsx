@@ -139,8 +139,7 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
         if (null !== doorSlider.current && null !== door.current) {
             doorSlider.current.scroll({
                 left: 
-                    doorSlider.current.scrollLeft
-                     - scrollStage +
+                    doorSlider.current.scrollLeft +
                     value,
                 behavior: "smooth",
             })
@@ -149,12 +148,16 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
 
     const prevSlide = () => {
         if (null !== door.current) {
-            scroll(-door.current.offsetWidth)
+            if (scrollStage>1){
+                scroll(-(scrollStage))
+            } else {
+                scroll(-(door.current.offsetWidth-scrollStage))
+            }
         }
     }
     const nextSlide = () => {
         if (null !== door.current) {
-            scroll(door.current.offsetWidth)
+            scroll(door.current.offsetWidth-scrollStage)
         }
     }
 

@@ -7,7 +7,13 @@ interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement>
 }
 
 const Button = (props: ButtonProps) => {
-    return <button onClick={ props.onClick } className={ [css.button, props.primary ? css.buttonPrimary : 'k', props.className].join(' ') }>
+    return <button 
+        onClick={ props.onClick }
+        className={ [
+            css.button,
+            props.primary ? css.buttonPrimary : '', props.className
+        ].join(' ') }
+    >
         <span className={ css.text }>
             { props.children }
         </span>

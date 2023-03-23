@@ -19,9 +19,9 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    font-size: 12px;
     padding: 8px;
     border-radius: 30px;
+    font-size: 16px;
     line-height: 1em;
 }
 
@@ -91,6 +91,12 @@
 .dataItem
 {
     margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.dataItem:hover
+{
+    opacity: .8;
 }
 
 .dataAngleLeft
@@ -126,10 +132,6 @@
     fill: #E7DF36;
 }
 
-.text
-{
-    margin-bottom: 3px;
-}
 
 @media (max-width: 768px)
 {

@@ -80,7 +80,7 @@ const Header = (props: HeaderProps) => {
                 </HeaderSection>
                 <HeaderSection>
                     <img className={ 'd-mobile' } src="/assets/images/icons/chair.svg" alt="chair" />
-                        <div>
+                        <div className={ css.places }>
                             <span className={ 'd-desktop' }>Places&nbsp;</span>
                             <Badge transparentMobile={ true }>&nbsp;5/5&nbsp;</Badge>
                         </div>

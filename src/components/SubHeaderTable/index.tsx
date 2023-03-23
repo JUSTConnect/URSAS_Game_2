@@ -3,7 +3,7 @@ import css from './index.module.css'
 import { useContext } from 'react'
 
 import Badge from '@components/Badge'
-import SubHeader from '@components/SubHeader'
+import SubHeader, { SubHeaderSection } from '@components/SubHeader'
 
 interface SubHeaderTableProps
 {
@@ -14,10 +14,10 @@ interface SubHeaderTableProps
 const SubHeaderTable = (props: SubHeaderTableProps) => {
 
   return <SubHeader>
-    <div>
-      <span className={ css.theLoby }>Table <span className={ 'fixNumber' }>№</span>2</span>
-      <span className={ css.totalRooms }>Places <Badge>&nbsp;5/6&nbsp;</Badge></span>
-    </div>
+    <SubHeaderSection>
+      <div className={ css.theLoby }>Table n.2</div >
+      <div className={ css.totalRooms }><span>Places</span> <Badge>&nbsp;5/10&nbsp;</Badge></div>
+    </SubHeaderSection>
     <button onClick={ ()=>props.setModalActive(!props.modalActive) } className={ [css.filterButton].join(' ') }>
       {
         <svg  width="16" height="13" viewBox="0 0 16 13" xmlns="http://www.w3.org/2000/svg">

@@ -30,7 +30,6 @@
     top: 76px;
     width: max-content;
     display: flex;
-    align-items: center;
     margin: 0 calc(50% - 180px);
     height: 100%;
 }
@@ -73,6 +72,11 @@
     {
         margin-top: 8px;
     }
+
+    .slider
+    {
+        min-height: 400px;
+    }
     .slide
     {
         height: 324px;
@@ -82,9 +86,10 @@
     .inner
     {
         position: relative;
-        top: -30px;
+        /* top: -30px; */
         width: max-content;
         display: flex;
+        align-items: center;
         margin: 0 calc(50% - 92px);
     }
 }

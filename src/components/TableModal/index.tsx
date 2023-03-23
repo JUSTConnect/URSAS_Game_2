@@ -43,14 +43,14 @@ const TableModal = (props: TableModalProps) => {
                         <>
                             <div>
                                 <div className={ css.headerTitle }>
-                                    Сhoose cart <span className={ css.textLight }>place <span className={ 'fixNumber' }>№</span>3</span>
+                                    Сhoose cart <span className={ css.textLight }>place n.3</span>
                                 </div>
                                 <div className={ css.headerSubTitle }>
                                     you seat has been taken, please select another
                                 </div>
                             </div>
                             <div>
-                                <button onClick={ () => {setStep('confirm_places');setAlert('Places not subbmit - clear/confirm or press exit again')} } className={ css.modalButtonNext }>
+                                <button onClick={ () => {setStep('confirm_places');setAlert('Places not sbbmit - clear/confirm or press exit again')} } className={ css.modalButtonNext }>
                                     <img className={ css.modalButtonNextIcon } src="assets/images/icons/arrow-right.png" alt="Arrow Right" />
                                 </button>
                             </div>

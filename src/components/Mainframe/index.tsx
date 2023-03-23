@@ -11,6 +11,7 @@ import HeaderMobile from '@components/HeaderMobile'
 import Footer from '@components/Footer'
 import FooterModal from '@components/FooterModal'
 import ModalConnectWallet from '@components/ModalConnectWallet'
+import LoaderScreen from '../LoaderScreen'
 
 
 interface MainframeProps extends HTMLAttributes<HTMLDivElement> {
@@ -84,6 +85,7 @@ const Mainframe = (props: MainframeProps) => {
         <Footer/>
         <FooterModal/>
         <ModalConnectWallet/>
+        <LoaderScreen/>
         <Blur isActive={ connectWalletModal }/>
       </MainframeContext.Provider>
     </>
