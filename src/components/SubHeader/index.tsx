@@ -9,7 +9,7 @@ interface SubHeaderButtonProps extends React.HTMLAttributes<HTMLButtonElement>
 {
     active?: boolean,
     keyName?: string,
-    value?: string
+    value?: React.ReactElement|string
 }
 
 const SubHeaderSection = (props: React.HTMLAttributes<HTMLDivElement>) => {
