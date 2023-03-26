@@ -2,7 +2,7 @@ import css from './index.module.css'
 
 import { useContext } from 'react'
 
-import { MainframeContext } from '@components/Mainframe'
+import { MainframeContext, GameContext } from '@components/Mainframe'
 
 
 interface props
@@ -35,6 +35,7 @@ const items:Array<item> = [
 
 export default () => {
     const context = useContext(MainframeContext)
+    const game = useContext(GameContext)
 
     return <div className={ [css.container, context.connectWalletModal ? css.containerActive: ''].join(' ') }>
         <div className={ css.modal }>
@@ -63,7 +64,7 @@ export default () => {
                             <img className={ css.itemLogo } src={ item.logoSrc } alt="Item Logo" />
                             { item.name }
                         </div>
-                        <button className={ css.itemButton }>
+                        <button onClick={ () => {game.setWalletConnected(true); context.setConnectWalletModal(false)} } className={ css.itemButton }>
                             detected
                         </button>
                     </div>

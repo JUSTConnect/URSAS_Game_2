@@ -1,9 +1,11 @@
 import css from './index.module.css'
 
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 
+import { GameContext } from '@components/Mainframe'
 import SubHeader, {SubHeaderButton, SubHeaderSection} from '@components/SubHeader'
 import FlexBox from '@components/FlexBox'
+import Loader from '@components/Loader'
 
 interface SubHeaderTablesProps
 {
@@ -11,6 +13,8 @@ interface SubHeaderTablesProps
 }
 
 const SubHeaderTables = (props: SubHeaderTablesProps) => {
+  const game = useContext(GameContext)
+
   const [filtersActive, setFiltersActive] = useState(false)
 
   return <SubHeader>
@@ -18,10 +22,22 @@ const SubHeaderTables = (props: SubHeaderTablesProps) => {
       <span className={ css.pockerTable }>Poker room</span><span className={ 'textPrimary' }>14 Level</span>
     </SubHeaderSection>
     <FlexBox gap={ '8px' } className={ [css.filterButtons, filtersActive ? css.filterButtonsActive : ''].join(' ') }>
-      <SubHeaderButton active={ true } keyName={ 'all' } value={ '12' }/>
-      <SubHeaderButton keyName={ 'empty' } value={ '102' }/>
-      <SubHeaderButton keyName={ 'сooldown' } value={ '12' }/>
-      <SubHeaderButton keyName={ 'gaming' } value={ '20' }/>
+      { game.loadingTables ? (
+        <>
+          { [...Array(4)].map((item, index)=><>
+            <div key={ index }>
+              <SubHeaderButton value={ <Loader/> } />            
+            </div>
+          </>) }
+        </>
+      ) : (
+        <>
+          <SubHeaderButton active={ true } keyName={ 'all' } value={ '12' }/>
+          <SubHeaderButton keyName={ 'empty' } value={ '102' }/>
+          <SubHeaderButton keyName={ 'сooldown' } value={ '12' }/>
+          <SubHeaderButton keyName={ 'gaming' } value={ '20' }/>
+        </>
+      ) }
     </FlexBox>
     <button onClick={ ()=>setFiltersActive(!filtersActive) } className={ [css.filterButton, 'd-mobile'].join(' ') }>
       <img src="/assets/images/icons/filter.svg" alt="Filter Icon" />

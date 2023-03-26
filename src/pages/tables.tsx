@@ -18,9 +18,6 @@ export default function Home() {
                 subHeader={<SubHeaderTables />}
             >
                 <TableList />
-                <div>
-                    <Loader/>
-                </div>
             </Mainframe>
         </>
     )
