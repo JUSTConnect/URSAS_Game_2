@@ -51,7 +51,7 @@ const Dropdown = (props: DropdownProps) => {
                     }
                 } 
             }>
-            <div className={ css.text }>
+            <div className={ [css.text, 'fixMargin'].join(' ') }>
                 { props.text }       
             </div>
             <div className={ css.badge}><span className={ css.badgeValue }>{ props.badgeValue }</span></div>

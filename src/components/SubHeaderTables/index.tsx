@@ -1,7 +1,10 @@
 import css from './index.module.css'
 
 import { useState, useContext } from 'react'
+import { useSelector } from 'react-redux'
 
+import { RootState } from '@/app/store'
+import { setLoadingTables } from '@/features/game/gameSlice'
 import { GameContext } from '@components/Mainframe'
 import SubHeader, {SubHeaderButton, SubHeaderSection} from '@components/SubHeader'
 import FlexBox from '@components/FlexBox'
@@ -13,7 +16,7 @@ interface SubHeaderTablesProps
 }
 
 const SubHeaderTables = (props: SubHeaderTablesProps) => {
-  const game = useContext(GameContext)
+  const game = useSelector((state: RootState) => state.game)
 
   const [filtersActive, setFiltersActive] = useState(false)
 

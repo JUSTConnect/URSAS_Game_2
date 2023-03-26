@@ -20,7 +20,9 @@ const SubHeaderSection = (props: React.HTMLAttributes<HTMLDivElement>) => {
 
 const SubHeaderButton = (props: SubHeaderButtonProps) => {
     return <button onClick={ props.onClick } className={ [css.subHeaderButton, props.active ? css.subHeaderButtonActive : ''].join(' ') }>
-        { props.keyName } <span className={ css.subHeaderButtonValue }>{ props.value }</span>
+        <div className={ 'fixMargin' }>
+            { props.keyName } <span className={ css.subHeaderButtonValue }>{ props.value }</span>
+        </div>
     </button>
 }
 

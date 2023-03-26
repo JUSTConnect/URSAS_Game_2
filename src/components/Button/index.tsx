@@ -14,9 +14,9 @@ const Button = (props: ButtonProps) => {
             props.primary ? css.buttonPrimary : '', props.className
         ].join(' ') }
     >
-        <span className={ css.text }>
+        <div className={ [css.text, 'fixMargin'].join(' ') }>
             { props.children }
-        </span>
+        </div>
     </button>
 }
 

@@ -1,12 +1,21 @@
 import Head from 'next/head'
 
-import Mainframe from '@components/Mainframe'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
+import { setLoadingTables } from '@/features/game/gameSlice'
+import Mainframe from '@components/Mainframe'
 import SubHeaderTables from '@components/SubHeaderTables'
 import TableList from '@components/TableList'
-import Loader from '@components/Loader'
 
 export default function Home() {
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+        setTimeout(()=>{
+            dispatch(setLoadingTables(false))
+        }, 5000)
+    },[])
 
     return (
         <>

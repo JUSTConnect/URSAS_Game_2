@@ -32,3 +32,9 @@ a
 {
     font-family: Arial, Helvetica, sans-serif;
 }
+
+.fixMargin
+{
+    display: block;
+    margin-bottom: .08em;
+}

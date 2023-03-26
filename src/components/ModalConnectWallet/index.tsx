@@ -1,8 +1,11 @@
 import css from './index.module.css'
 
 import { useContext } from 'react'
+import { useDispatch } from 'react-redux'
 
-import { MainframeContext, GameContext } from '@components/Mainframe'
+import { MainframeContext } from '@components/Mainframe'
+
+import { setWalletConnected } from '@/features/game/gameSlice'
 
 
 interface props
@@ -34,8 +37,8 @@ const items:Array<item> = [
 
 
 export default () => {
+    const dispatch = useDispatch()
     const context = useContext(MainframeContext)
-    const game = useContext(GameContext)
 
     return <div className={ [css.container, context.connectWalletModal ? css.containerActive: ''].join(' ') }>
         <div className={ css.modal }>
@@ -64,7 +67,7 @@ export default () => {
                             <img className={ css.itemLogo } src={ item.logoSrc } alt="Item Logo" />
                             { item.name }
                         </div>
-                        <button onClick={ () => {game.setWalletConnected(true); context.setConnectWalletModal(false)} } className={ css.itemButton }>
+                        <button onClick={ () => {dispatch(setWalletConnected(true)); context.setConnectWalletModal(false)} } className={ css.itemButton }>
                             detected
                         </button>
                     </div>

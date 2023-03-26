@@ -1,3 +1,5 @@
+// #test
+
 import css from './index.module.css'
 
 import { useState, useContext } from 'react'
@@ -9,9 +11,16 @@ import HeaderBase, { HeaderSection } from '@/components/HeaderBase'
 import { MainframeContext } from '@components/Mainframe'
 
 
+// --- test
+
+import type { RootState } from '@/app/store'
+import { useSelector } from 'react-redux'
+
+// ---
+
+
 interface HeaderProps extends React.HTMLAttributes<HTMLDivElement>
 {
-    connected?: boolean
 }
 
 
@@ -20,9 +29,11 @@ const Header = (props: HeaderProps) => {
     const [gameOverShow, setGameOverShow] = useState(true)
     const context = useContext(MainframeContext)
 
+    const game = useSelector((state: RootState) => state.game)
+
     return <HeaderBase
     >
-        { props.connected ? (
+        { game.walletConnected ? (
             <>
                 <HeaderSection>
                     <div className={ [css.walletHash].join(' ') }>
@@ -81,7 +92,7 @@ const Header = (props: HeaderProps) => {
                 <HeaderSection>
                     <img className={ 'd-mobile' } src="/assets/images/icons/chair.svg" alt="chair" />
                         <div className={ css.places }>
-                            <span className={ 'd-desktop' }>Places&nbsp;</span>
+                            <span className={ ['d-desktop', 'textMuted'].join(' ') }>Places&nbsp;</span>
                             <Badge transparentMobile={ true }>&nbsp;5/5&nbsp;</Badge>
                         </div>
                         <Button>CLAIm</Button>
