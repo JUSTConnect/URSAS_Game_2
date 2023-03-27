@@ -9,6 +9,12 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     font-weight: 600;
+    cursor: pointer;
+}
+
+.walletHash:hover
+{
+    opacity: .8;
 }
 
 .gameOverButtons

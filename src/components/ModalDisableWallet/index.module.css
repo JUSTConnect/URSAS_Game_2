@@ -1,0 +1,56 @@
+.modal
+{
+    background: rgba(41, 49, 69, 1);
+    border-radius: 24px;
+    display: none;
+    left: 50%;
+    line-height: 22px;
+    text-align: center;
+    top: 50%;
+    position: absolute;
+    padding: 60px;
+    z-index: 1000;
+    transform: translate(-50%, -50%);
+}
+
+.modalActive
+{
+    display: block;
+}
+
+.header
+{
+    margin-bottom: 30px;
+}
+
+.buttons
+{
+    text-align: center;
+    display: flex;
+    gap: 16px;
+}
+
+.button
+{
+    border-radius: 24px;
+    cursor: pointer;
+    padding: 19px;
+    color: rgba(34, 42, 58, 1);
+    box-shadow: #EFB23D 0px 0px 30px -5px;
+    background: linear-gradient(180deg, #E7DF36 0%, #EFB23D 100%);
+    font-weight: 600;
+    min-width: 140px;
+    text-align: center;
+}
+
+.button:hover
+{
+    opacity: .8;
+}
+
+.buttonPrimary
+{
+    box-shadow: none;
+    background: rgba(34, 42, 58, 1);
+    color: rgba(181, 196, 227, 1);
+}

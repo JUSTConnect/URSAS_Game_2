@@ -9,6 +9,7 @@
     left: 0;
     display: none;
     z-index: 999;
+    border: none;
 }
 
 .blur.active

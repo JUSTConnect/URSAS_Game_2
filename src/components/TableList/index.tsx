@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 
 import { RootState } from '@/app/store'
 import Table from '@components/Table'
-import Loader from '@components/Loader'
+import LoaderLogo from '@components/LoaderLogo'
 
 
 interface TableListProps extends React.HTMLAttributes<HTMLDivElement>
@@ -20,7 +20,7 @@ const TableList = (props: TableListProps) => {
     return <>
         { game.loadingTables ? (
             <div className={ css.loader }>
-                <Loader/>
+                <LoaderLogo/>
             </div>
         ) : (
             <div className={ css.tableList }>

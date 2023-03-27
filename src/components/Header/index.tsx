@@ -3,20 +3,18 @@
 import css from './index.module.css'
 
 import { useState, useContext } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
+import type { RootState } from '@/app/store'
+import { setClaim } from '@/features/game/gameSlice'
 import Badge from '@components/Badge'
 import Button from '@components/Button'
 import Dropdown from '@/components/Header/Dropdown'
+import {Loader} from './Dropdown'
 import HeaderBase, { HeaderSection } from '@/components/HeaderBase'
 import { MainframeContext } from '@components/Mainframe'
 
 
-// --- test
-
-import type { RootState } from '@/app/store'
-import { useSelector } from 'react-redux'
-
-// ---
 
 
 interface HeaderProps extends React.HTMLAttributes<HTMLDivElement>
@@ -27,6 +25,7 @@ interface HeaderProps extends React.HTMLAttributes<HTMLDivElement>
 const Header = (props: HeaderProps) => {
     const [activeDropdown, setActiveDropdown] = useState(0)
     const [gameOverShow, setGameOverShow] = useState(true)
+    const dispatch = useDispatch()
     const context = useContext(MainframeContext)
 
     const game = useSelector((state: RootState) => state.game)
@@ -36,15 +35,16 @@ const Header = (props: HeaderProps) => {
         { game.walletConnected ? (
             <>
                 <HeaderSection>
-                    <div className={ [css.walletHash].join(' ') }>
+                    <div onClick={ () => context.setDisableWalletModal(true) } className={ [css.walletHash].join(' ') }>
                         DFYrNUgxguiGKmZKdbGga...
                     </div>
-                    <Button className={ [css.walletButton, 'd-mobile'].join(' ') }>
+                    <Button onClick={ () => context.setConnectWalletModal(true) } className={ [css.walletButton, 'd-mobile'].join(' ') }>
                         <img src="/assets/images/icons/wallet.svg" alt="wallet" />
                     </Button>
                     { !context.gameOver ? (
                         <>
                             <Dropdown
+                                loading={ game.loadingRooms }
                                 values={
                                     [
                                         [1],
@@ -68,6 +68,7 @@ const Header = (props: HeaderProps) => {
                                 badgeValue={ 16 }
                             />
                             <Dropdown
+                                loading={ game.loadingRooms }
                                 values={
                                     [...Array(10)].map(item=>[12, 10])
                                 }
@@ -93,9 +94,17 @@ const Header = (props: HeaderProps) => {
                     <img className={ 'd-mobile' } src="/assets/images/icons/chair.svg" alt="chair" />
                         <div className={ css.places }>
                             <span className={ ['d-desktop', 'textMuted'].join(' ') }>Places&nbsp;</span>
-                            <Badge transparentMobile={ true }>&nbsp;5/5&nbsp;</Badge>
+                            <Badge transparentMobile={ true }>
+                                { game.loadingRooms ? (
+                                    <Loader/>
+                                ) : (
+                                    <>&nbsp;5/5&nbsp;</>
+                                ) }
+                            </Badge>
                         </div>
-                        <Button>CLAIm</Button>
+                        { game.claim ? (
+                            <Button onClick={ () => dispatch(setClaim(false)) }>CLAIm</Button>
+                        ) : ''}
                         { context.gameOver ? (
                             <>
                                 <div className={ 'd-mobile' }>

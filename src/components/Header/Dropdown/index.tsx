@@ -2,7 +2,6 @@ import css from './index.module.css'
 
 import { useState } from 'react'
 
-
 type controller = {
     id: number
     currentId: number
@@ -19,6 +18,23 @@ interface DropdownProps extends React.HTMLAttributes<HTMLDivElement>
     controller?: controller
     rooms?: boolean
     tables?: boolean
+    loading?: boolean
+}
+
+
+const Loader = () => {
+    return <div className={ css.loaderContainer }>
+        <div className={ css.loaderContainerInner }>
+            <div className={ css.loaderBorder }>
+                <div className={ css.loaderBorderInner }>
+
+                </div>
+            </div>
+            <div className={ css.loader }>
+                <div className={ css.loaderInner }></div>
+            </div>
+        </div>
+    </div>
 }
 
 
@@ -36,7 +52,7 @@ const Dropdown = (props: DropdownProps) => {
         return isCurrent() ? true : active 
     }
 
-    return <div {...props} className={ css.dropdown }>
+    return <div className={ [css.dropdown, props.loading ? css.loading : ''].join(' ') }>
         <button
             className={ css.button }
             onClick={
@@ -54,7 +70,15 @@ const Dropdown = (props: DropdownProps) => {
             <div className={ [css.text, 'fixMargin'].join(' ') }>
                 { props.text }       
             </div>
-            <div className={ css.badge}><span className={ [css.badgeValue, 'fixMargin'].join(' ') }>{ props.badgeValue }</span></div>
+            { !props.loading ? (
+                <div className={ css.badge}>
+                    <span className={ [css.badgeValue, 'fixMargin'].join(' ') }>
+                        { props.badgeValue }
+                    </span>
+                </div>
+            ) : (
+                <Loader/>
+            )}
             <svg className={ [css.arrowIcon, isActive() ? css.arrowIconActive : '' ].join(' ') } viewBox="0 0 8 6" xmlns="http://www.w3.org/2000/svg">
                 <path d="M4.43301 5.25C4.24056 5.58333 3.75944 5.58333 3.56699 5.25L0.968911 0.75C0.776461 0.416667 1.01702 6.10471e-07 1.40192 5.76822e-07L6.59808 1.2256e-07C6.98298 8.8911e-08 7.22354 0.416667 7.03109 0.75L4.43301 5.25Z" fill="#B5C4E3"/>
             </svg>
@@ -87,3 +111,4 @@ const Dropdown = (props: DropdownProps) => {
 }
 
 export default Dropdown
+export { Loader }

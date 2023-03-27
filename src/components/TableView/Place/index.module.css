@@ -10,6 +10,11 @@
     justify-content: center;
     gap: 15px;
     z-index: 2;
+    cursor: pointer;
+}
+.place:hover
+{
+    opacity: .8;
 }
 .empty
 {

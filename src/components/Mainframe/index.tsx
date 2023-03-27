@@ -1,6 +1,8 @@
 import { HTMLAttributes, useState, useEffect, createContext } from 'react'
+import { useDispatch } from 'react-redux'
 import Head from 'next/head'
 
+import { setLoadingRooms } from '@/features/game/gameSlice'
 import Blur from '@components/Blur'
 import PageLayout from '@components/PageLayout'
 import PageContent from '@components/PageContent'
@@ -11,6 +13,7 @@ import HeaderMobile from '@components/HeaderMobile'
 import Footer from '@components/Footer'
 import FooterModal from '@components/FooterModal'
 import ModalConnectWallet from '@components/ModalConnectWallet'
+import ModalDisableWallet from '@components/ModalDisableWallet'
 import LoaderScreen from '../LoaderScreen'
 
 
@@ -30,6 +33,8 @@ type MainFrameContextData = {
   setFooterModal: Function,
   connectWalletModal: boolean,
   setConnectWalletModal: Function
+  disableWalletModal: boolean,
+  setDisableWalletModal: Function,
   gameOver: number
 }
 
@@ -42,15 +47,25 @@ const MainframeContext = createContext<MainFrameContextData>({
   setFooterModal: Function,
   connectWalletModal: false,
   setConnectWalletModal: Function,
+  disableWalletModal: false,
+  setDisableWalletModal: Function,
   gameOver: 0,
 })
 
 
 const Mainframe = (props: MainframeProps) => {
+  const dispatch = useDispatch()
   const [contentBlured, setContentBlured] = useState(false)
   const [mainBlured, setMainBlured] = useState(false)
   const [footerModal, setFooterModal] = useState(false)
   const [connectWalletModal, setConnectWalletModal] = useState(false)
+  const [disableWalletModal, setDisableWalletModal] = useState(false)
+
+  useEffect(()=>{
+    setTimeout(()=>{
+      dispatch(setLoadingRooms(false))
+    }, 3000)
+  }, [])
 
   return (
     <>
@@ -66,6 +81,8 @@ const Mainframe = (props: MainframeProps) => {
         setFooterModal: setFooterModal,
         connectWalletModal: connectWalletModal,
         setConnectWalletModal: setConnectWalletModal,
+        disableWalletModal: disableWalletModal,
+        setDisableWalletModal: setDisableWalletModal,
         gameOver: props.gameOver || 0,
       }}>
         <PageLayout>
@@ -84,8 +101,9 @@ const Mainframe = (props: MainframeProps) => {
         <Footer/>
         <FooterModal/>
         <ModalConnectWallet/>
+        <ModalDisableWallet/>
         <LoaderScreen/>
-        <Blur isActive={ connectWalletModal }/>
+        <Blur isActive={ connectWalletModal || disableWalletModal } onClick={ () => { setConnectWalletModal(false); setDisableWalletModal(false) } }/>
       </MainframeContext.Provider>
     </>
   )

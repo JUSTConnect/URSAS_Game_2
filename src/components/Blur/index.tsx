@@ -1,15 +1,15 @@
 import css from './index.module.css'
 
-interface BlurProps
+interface BlurProps extends React.HTMLAttributes<HTMLButtonElement>
 {
     isActive?: boolean
 }
 
 const Blur = (props: BlurProps) => {
     return (
-        <div className={ [css.blur, props.isActive? css.active : ''].join(' ') }>
+        <button onClick={ props.onClick }  className={ [css.blur, props.isActive? css.active : ''].join(' ') }>
 
-        </div>
+        </button>
     )
 }
 

@@ -1,8 +1,9 @@
 .loader
 {
     position: relative;
-    width: min-content;
-    padding: 3px;
+    height: 1.5em;
+    width: 1.5em;
+    padding: 2px;
     overflow: hidden;
     border-radius: 50%;
 }
@@ -10,15 +11,14 @@
 .inner
 {
     position: relative;
-    height: 1.5em;
-    width: 1.5em;
+    height: 100%;
+    width: 100%;
     background: #222A3A;
     border-radius: 50%;
 }
 
-.loader:before
+.border
 {
-    content: '';
     position: absolute;
     top: 25%;
     left: 25%;
