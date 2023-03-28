@@ -30,9 +30,9 @@ const SubHeaderRooms = (props: SubHeaderRoomsProps) => {
     </SubHeaderSection>
     <FlexBox gap={ '8px' } className={ css.filterButtons }>
       { props.mode === 'slide' ? (
-        <SubHeaderButton onClick={ ()=>props.setMode('list') } active={ props.mode === 'list' } value={ 'list' }/>
+        <SubHeaderButton onClick={ ()=>props.setMode('list') } active={ false } value={ 'list' }/>
       ) : (
-        <SubHeaderButton onClick={ ()=>props.setMode('slide') } active={ props.mode === 'slide' } value={ 'slide' }/>
+        <SubHeaderButton onClick={ ()=>props.setMode('slide') } active={ false } value={ 'slide' }/>
       ) }
     </FlexBox>
     <button onClick={ ()=>props.setMode(props.mode === 'slide'?'list':'slide') } className={ [css.filterButton, 'd-mobile'].join(' ') }>
