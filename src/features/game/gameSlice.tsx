@@ -4,7 +4,8 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 export interface gameState {
   walletConnected: boolean,
-  currentGame: Array<number>,
+  currentGame: number,
+  currentRoom: number,
   loadingRooms: boolean
   loadingTables: boolean,
   loadingTable: boolean,
@@ -13,7 +14,8 @@ export interface gameState {
 
 const initialState: gameState = {
   walletConnected: true,
-  currentGame: [0, 0],
+  currentGame: 0,
+  currentRoom: 0,
   loadingRooms: true,
   loadingTables: true,
   loadingTable: true,
@@ -36,7 +38,10 @@ export const gameSlice = createSlice({
     setLoadingTable: (state, action: PayloadAction<boolean>) => {
       state.loadingTable = action.payload
     },
-    setCurrentGame: (state, action: PayloadAction<Array<number>>) => {
+    setCurrentRoom: (state, action: PayloadAction<number>) => {
+      state.currentRoom = action.payload
+    },
+    setCurrentGame: (state, action: PayloadAction<number>) => {
       state.currentGame = action.payload
     },
     setClaim: (state, action: PayloadAction<boolean>) => {
@@ -50,6 +55,7 @@ export const {
   setLoadingRooms,
   setLoadingTables,
   setLoadingTable,
+  setCurrentRoom,
   setCurrentGame,
   setClaim
 } = gameSlice.actions

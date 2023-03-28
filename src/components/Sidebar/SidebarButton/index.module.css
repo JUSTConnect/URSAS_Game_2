@@ -8,6 +8,12 @@
     margin-bottom: 1em;
 }
 
+.sidebarButton.disabled
+{
+    opacity: .6;
+    cursor: initial;
+}
+
 .sidebarButton svg
 {
     height: 16px;
@@ -19,7 +25,7 @@
     opacity: .6;
 }
 
-.sidebarButton:not(.sidebarButton__active):hover > svg path
+.sidebarButton:not(.sidebarButton__active):not(.disabled):hover > svg path
 {
     fill: #B5C4E3;
 }

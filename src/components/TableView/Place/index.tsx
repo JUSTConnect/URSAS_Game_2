@@ -18,7 +18,7 @@ export default (props: props) => {
             props.empty ? css.empty : ''
         ].join(' ')  
     }>
-        <img className={ css.card } src="assets/images/texture/example-card.png" alt="Card example" />
+        <img className={ css.card } src="/assets/images/texture/example-card.png" alt="Card example" />
         <div className={ css.info }>
             place
             <br />

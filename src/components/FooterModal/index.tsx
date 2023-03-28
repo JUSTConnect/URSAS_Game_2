@@ -22,11 +22,11 @@ const FooterModal = () => {
                         markets link:
                     </span>
                     <div className={ css.marketsLink }>
-                        <img src="assets/images/icons/market1.svg" alt="" />
-                        <img src="assets/images/icons/market2.svg" alt="" />
-                        <img src="assets/images/icons/market3.svg" alt="" />
-                        <img src="assets/images/icons/market4.svg" alt="" />
-                        <img src="assets/images/icons/market5.svg" alt="" />
+                        <img src="/assets/images/icons/market1.svg" alt="" />
+                        <img src="/assets/images/icons/market2.svg" alt="" />
+                        <img src="/assets/images/icons/market3.svg" alt="" />
+                        <img src="/assets/images/icons/market4.svg" alt="" />
+                        <img src="/assets/images/icons/market5.svg" alt="" />
                     </div>
                 </div>
                 <div className={ css.mediaLinks }>

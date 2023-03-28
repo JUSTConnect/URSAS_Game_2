@@ -1,7 +1,8 @@
 import css from './index.module.css'
 
-import { useContext } from 'react'
+import { useSelector } from 'react-redux'
 
+import { RootState } from '@/app/store'
 import Badge from '@components/Badge'
 import SubHeader, { SubHeaderSection } from '@components/SubHeader'
 
@@ -12,10 +13,11 @@ interface SubHeaderTableProps
 }
 
 const SubHeaderTable = (props: SubHeaderTableProps) => {
+  const game = useSelector((state: RootState)=>state.game)
 
   return <SubHeader>
     <SubHeaderSection>
-      <div className={ css.theLoby }>Table n.2</div >
+      <div className={ css.theLoby }>Table n.{ game.currentGame }</div >
       <div className={ css.totalRooms }><span>Places</span> <Badge>&nbsp;5/10&nbsp;</Badge></div>
     </SubHeaderSection>
     <button onClick={ ()=>props.setModalActive(!props.modalActive) } className={ [css.filterButton].join(' ') }>

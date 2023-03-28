@@ -11,7 +11,7 @@ interface props
 
 export default (props: props) => {
     return <div className={ [css.info, props.hidden ? css.infoHidden: ''].join(' ') }>
-        <img className={css.bg} src="assets/images/texture/rooms-info.png" alt="Rooms info" />
+        <img className={css.bg} src="/assets/images/texture/rooms-info.png" alt="Rooms info" />
         <div className={css.section}>
             <div>
                 <div className={css.key}>available tables</div>

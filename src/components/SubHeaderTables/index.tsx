@@ -20,16 +20,15 @@ const SubHeaderTables = (props: SubHeaderTablesProps) => {
 
   return <SubHeader>
     <SubHeaderSection>
-      <span className={ css.pockerTable }>Poker room</span><span className={ 'textPrimary' }>14 Level</span>
+      <span className={ css.pockerTable }>Poker room</span><span className={ 'textPrimary' }>{ game.currentRoom } Level</span>
     </SubHeaderSection>
     <FlexBox gap={ '8px' } className={ [css.filterButtons, filtersActive ? css.filterButtonsActive : ''].join(' ') }>
       { game.loadingTables ? (
         <>
-          { [...Array(4)].map((item, index)=><>
-            <div key={ index }>
-              <SubHeaderButton value={ <Loader/> } />            
-            </div>
-          </>) }
+          <SubHeaderButton value={ <Loader/> } />            
+          <SubHeaderButton value={ <Loader/> } />            
+          <SubHeaderButton value={ <Loader/> } />            
+          <SubHeaderButton value={ <Loader/> } />            
         </>
       ) : (
         <>

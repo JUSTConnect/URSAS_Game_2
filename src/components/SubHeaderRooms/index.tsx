@@ -5,7 +5,6 @@ import { useContext } from 'react'
 import Badge from '@components/Badge'
 import SubHeader, { SubHeaderButton, SubHeaderSection } from '@components/SubHeader'
 import FlexBox from '@components/FlexBox'
-import Loader from '../Loader'
 import { MainframeContext } from '@components/Mainframe'
 
 
@@ -30,8 +29,11 @@ const SubHeaderRooms = (props: SubHeaderRoomsProps) => {
       ) : ''}
     </SubHeaderSection>
     <FlexBox gap={ '8px' } className={ css.filterButtons }>
-      <SubHeaderButton onClick={ ()=>props.setMode('slide') } active={ props.mode === 'slide' } value={ 'slide' }/>
-      <SubHeaderButton onClick={ ()=>props.setMode('list') } active={ props.mode === 'list' } value={ 'list' }/>
+      { props.mode === 'slide' ? (
+        <SubHeaderButton onClick={ ()=>props.setMode('list') } active={ props.mode === 'list' } value={ 'list' }/>
+      ) : (
+        <SubHeaderButton onClick={ ()=>props.setMode('slide') } active={ props.mode === 'slide' } value={ 'slide' }/>
+      ) }
     </FlexBox>
     <button onClick={ ()=>props.setMode(props.mode === 'slide'?'list':'slide') } className={ [css.filterButton, 'd-mobile'].join(' ') }>
       {

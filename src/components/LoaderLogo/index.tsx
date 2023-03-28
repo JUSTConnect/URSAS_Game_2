@@ -14,7 +14,7 @@ export default (props: props) => {
                 <div className={ css.border }></div>
             </div>
             <div className={ css.loader }>
-                <img className={ css.logo } src="assets/images/texture/loader-logo.png" alt="logo" />
+                <img className={ css.logo } src="/assets/images/texture/loader-logo.png" alt="logo" />
             </div>
         </div>
     </div>

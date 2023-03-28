@@ -4,15 +4,16 @@ import Link from 'next/link'
 
 interface TableProps extends React.HTMLAttributes<HTMLDivElement>
 {
-    tableNumber: number,
-    freePlaces?: number,
+    tableNumber: number
+    freePlaces?: number
     gameEnd?: string
-    isActive?: boolean,
+    isActive?: boolean
     cooldown?: boolean
+    href: string
 }
 
 const Table = (props: TableProps) => {
-    return <Link href='/table' className={ [css.table ,props.isActive ? css.tableActive : '', (props.freePlaces || 0) >= 10 ? css.tableDisabled : '', props.cooldown ? css.tableCooldown : ''].join(' ') }>
+    return <Link href={ props.href } className={ [css.table ,props.isActive ? css.tableActive : '', (props.freePlaces || 0) >= 10 ? css.tableDisabled : '', props.cooldown ? css.tableCooldown : ''].join(' ') }>
         <div className={ css.bg }>
             <div className={ css.layer1 }>
                 <div className={ css.layer2 }>

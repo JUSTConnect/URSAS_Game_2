@@ -84,8 +84,8 @@ const Dropdown = (props: DropdownProps) => {
             </svg>
         </button>
         <div className={ [css.data, isActive() ? css.dataActive : ''].join(' ') }>
-            <img className={ css.dataAngleLeft } src="assets/images/texture/dropdown-angle-left.png" alt="" />
-            <img className={ css.dataAngleRight } src="assets/images/texture/dropdown-angle-right.png" alt="" />
+            <img className={ css.dataAngleLeft } src="/assets/images/texture/dropdown-angle-left.png" alt="" />
+            <img className={ css.dataAngleRight } src="/assets/images/texture/dropdown-angle-right.png" alt="" />
             <div className={ css.dataContainer }>
                 { props.rooms ? (
                     <>

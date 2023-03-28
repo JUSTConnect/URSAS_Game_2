@@ -12,11 +12,11 @@ interface ItemProps extends React.HTMLAttributes<HTMLButtonElement>
 
 
 const Item = (props: ItemProps) => {
-    return <Link href={ props.go ? '/table' : {} } onClick={ !props.over ? props.onClick : null } className={ css.doorItem }>
+    return <Link href={ props.go ? `/tables/${props.level}` : {} } onClick={ !props.over ? props.onClick : null } className={ css.doorItem }>
         {
-            props.go ? <img className={ css.bg } src="assets/images/texture/door-item-active-bg.png" alt="Door Item BG" /> :
-            props.over ? <img className={ css.bg } src="assets/images/texture/door-item-over-bg.png" alt="Door Item BG" /> :
-            <img className={ css.bg } src="assets/images/texture/door-item-bg.png" alt="Door Item BG" />
+            props.go ? <img className={ css.bg } src="/assets/images/texture/door-item-active-bg.png" alt="Door Item BG" /> :
+            props.over ? <img className={ css.bg } src="/assets/images/texture/door-item-over-bg.png" alt="Door Item BG" /> :
+            <img className={ css.bg } src="/assets/images/texture/door-item-bg.png" alt="Door Item BG" />
         }
         <div className={ [css.doorItemInfo, props.over ? css.doorItemInfoOver : ''].join(' ') }>
             { !props.go ? (

@@ -22,15 +22,15 @@ type item = {
 
 const items:Array<item> = [
     {
-        logoSrc: 'assets/images/icons/wallet-glow.svg',
+        logoSrc: '/assets/images/icons/wallet-glow.svg',
         name: 'Glow'
     },
     {
-        logoSrc: 'assets/images/icons/wallet-phantom.svg',
+        logoSrc: '/assets/images/icons/wallet-phantom.svg',
         name: 'Phantom'
     },
     {
-        logoSrc: 'assets/images/icons/wallet-math-wallet.svg',
+        logoSrc: '/assets/images/icons/wallet-math-wallet.svg',
         name: 'MathWallet'
     },
 ]

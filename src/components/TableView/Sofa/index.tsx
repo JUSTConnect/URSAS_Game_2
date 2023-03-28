@@ -15,6 +15,6 @@ export default (props: props) => {
                 css.sofa, css[`sofa${ props.number }`],
                 props.active ? css.sofaActive : ''
             ].join(' ') 
-        } src="assets/images/texture/table-sofa.png" alt="Sofa" 
+        } src="/assets/images/texture/table-sofa.png" alt="Sofa" 
     />
 }

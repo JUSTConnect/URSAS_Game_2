@@ -33,7 +33,7 @@ const TableView = (props: TableViewProps) => {
                             </div>
                         </div>
                     </div>
-                    <img className={ css.cocaCola } src="assets/images/texture/table-coca-cola.png" alt="Coca Cola" />
+                    <img className={ css.cocaCola } src="/assets/images/texture/table-coca-cola.png" alt="Coca Cola" />
                     { [...Array(10)].map((item, index)=> {
                         return (
                             <div key={index}>

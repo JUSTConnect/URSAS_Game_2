@@ -19,7 +19,7 @@ const TableModal = (props: TableModalProps) => {
         <div className={ css.modal }>
             { alert ? (
                 <div className={ css.modalAlert }>
-                    <img className={ css.modalAlertIcon } src="assets/images/icons/alert.png" alt="Alert" />
+                    <img className={ css.modalAlertIcon } src="/assets/images/icons/alert.png" alt="Alert" />
                     { alert }
                 </div>
             ) : (
@@ -34,7 +34,7 @@ const TableModal = (props: TableModalProps) => {
                             </div>
                             <div>
                                 <button onClick={ () => setStep('choose_card') } className={ css.modalButtonNext }>
-                                    <img className={ css.modalButtonNextIcon } src="assets/images/icons/arrow-right.png" alt="Arrow Right" />
+                                    <img className={ css.modalButtonNextIcon } src="/assets/images/icons/arrow-right.png" alt="Arrow Right" />
                                 </button>
                             </div>
                         </>
@@ -51,7 +51,7 @@ const TableModal = (props: TableModalProps) => {
                             </div>
                             <div>
                                 <button onClick={ () => {setStep('confirm_places');setAlert('Places not sbbmit - clear/confirm or press exit again')} } className={ css.modalButtonNext }>
-                                    <img className={ css.modalButtonNextIcon } src="assets/images/icons/arrow-right.png" alt="Arrow Right" />
+                                    <img className={ css.modalButtonNextIcon } src="/assets/images/icons/arrow-right.png" alt="Arrow Right" />
                                 </button>
                             </div>
                         </>
@@ -66,7 +66,7 @@ const TableModal = (props: TableModalProps) => {
                                     submit
                                 </button>
                                 <button onClick={ () => {setStep('confirm_places2');setAlert('')} } className={ css.modalButtonNext }>
-                                    <img className={ css.modalButtonNextIcon } src="assets/images/icons/arrow-right.png" alt="Arrow Right" />
+                                    <img className={ css.modalButtonNextIcon } src="/assets/images/icons/arrow-right.png" alt="Arrow Right" />
                                 </button>
                             </div>
                         </>
@@ -81,7 +81,7 @@ const TableModal = (props: TableModalProps) => {
                                     submit
                                 </button>
                                 <button onClick={ () => {setStep('finish');setAlert('')} } className={ css.modalButtonNext }>
-                                    <img className={ css.modalButtonNextIcon } src="assets/images/icons/arrow-right.png" alt="Arrow Right" />
+                                    <img className={ css.modalButtonNextIcon } src="/assets/images/icons/arrow-right.png" alt="Arrow Right" />
                                 </button>
                             </div>
                         </>
@@ -93,7 +93,7 @@ const TableModal = (props: TableModalProps) => {
                             </div>
                             <div>
                                 <button onClick={ () => setStep('basket_empty') } className={ css.modalButtonNext }>
-                                    <img className={ css.modalButtonNextIcon } src="assets/images/icons/arrow-right.png" alt="Arrow Right" />
+                                    <img className={ css.modalButtonNextIcon } src="/assets/images/icons/arrow-right.png" alt="Arrow Right" />
                                 </button>
                             </div>
                         </>
@@ -112,14 +112,14 @@ const TableModal = (props: TableModalProps) => {
                                     Please choose places
                                 </div>
                                 <div className={ css.basketEmptyCircle }></div>
-                                <img className={ css.basketEmptySofa } src="assets/images/texture/table-sofa-modal.png" alt="" />
+                                <img className={ css.basketEmptySofa } src="/assets/images/texture/table-sofa-modal.png" alt="" />
                             </div>
                         </div>
                     ),
                     choose_card: (
                         <div className={ css.cards }>
                             { [...Array(100)].map((item,index)=>(
-                                <img  onClick={ () => {setStep('confirm_places');setAlert('Places not submit - clear/confirm or press exit again')} } className={ css.card } key={index} src="assets/images/texture/example-card.png" alt="card" />
+                                <img  onClick={ () => {setStep('confirm_places');setAlert('Places not submit - clear/confirm or press exit again')} } className={ css.card } key={index} src="/assets/images/texture/example-card.png" alt="card" />
                             ))}
                         </div>
                     ),
@@ -176,7 +176,7 @@ const TableModal = (props: TableModalProps) => {
                     ),
                     finish: (
                         <div className={ css.loading }>
-                            <img className={ css.loadingIcon } src="assets/images/icons/logo-loading.png" alt="Loading" />
+                            <img className={ css.loadingIcon } src="/assets/images/icons/logo-loading.png" alt="Loading" />
                         </div>
                     )
                 } [step] || 'not_found' }
@@ -185,11 +185,11 @@ const TableModal = (props: TableModalProps) => {
                 <div className={ css.modalFooter }>
                     <div className={ css.modalFooterButtons }>
                         <div className={ css.modalFooterButton }>
-                            <img className={ css.modalFooterButtonIcon } src="assets/images/icons/return.png" alt="Icon" />
+                            <img className={ css.modalFooterButtonIcon } src="/assets/images/icons/return.png" alt="Icon" />
                             return all
                         </div>
                         <div className={ css.modalFooterButton }>
-                            <img className={ css.modalFooterButtonIcon } src="assets/images/icons/clear.png" alt="Icon" />
+                            <img className={ css.modalFooterButtonIcon } src="/assets/images/icons/clear.png" alt="Icon" />
                             clear all
                         </div>
                     </div>
