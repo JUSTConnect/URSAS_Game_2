@@ -6,14 +6,14 @@ import { useRouter } from 'next/router';
 interface SidebarButtonProps extends React.HTMLAttributes<HTMLLinkElement>
 {
     icon: any,
-    href: string|null,
+    href: string|{},
     active?: boolean
 }
 
 const SidebarButton = (props: SidebarButtonProps) => {
     const router = useRouter()
 
-    return <Link href={props.href?props.href:{}} className={ [css.sidebarButton, router.asPath === props.href ? css.sidebarButton__active : '', !props.href ? css.disabled : ''].join(' ') }>
+    return <Link href={props.href} className={ [css.sidebarButton, router.asPath === props.href ? css.sidebarButton__active : '', (props.href instanceof Object) ? css.disabled : ''].join(' ') }>
         { props.icon }
     </Link>
 }

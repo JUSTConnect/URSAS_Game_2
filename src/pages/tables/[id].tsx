@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 
-import { setLoadingTables, setCurrentRoom } from '@/features/game/gameSlice'
+import { setLoadingTables, setCurrentRoom, setCurrentGame } from '@/features/game/gameSlice'
 import Mainframe from '@components/Mainframe'
 import SubHeaderTables from '@components/SubHeaderTables'
 import TableList from '@components/TableList'
@@ -28,6 +28,7 @@ export default function Home() {
     },[])
     useEffect(()=>{
         dispatch(setCurrentRoom(id||0))
+        dispatch(setCurrentGame(0))
     })
 
     return (

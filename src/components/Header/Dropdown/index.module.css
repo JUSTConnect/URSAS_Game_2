@@ -60,7 +60,7 @@
     padding: 0 15px;
     max-height: 150px;
     overflow-x: visible;
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 
 /* width */
@@ -70,6 +70,7 @@
 
 /* Track */
 .dataContainer::-webkit-scrollbar-track {
+    border-radius: 5px;
     background: rgba(34, 42, 58, 1);
 }
 
