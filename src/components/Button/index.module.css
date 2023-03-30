@@ -35,12 +35,13 @@
     opacity: .7;
 }
 
-@media (max-width: 769px)
+@media (max-width: 768px)
 {
     .button
     {
         min-width: fit-content;
         border-radius: 6px;
         padding: 8px;
+        font-size: 12px;
     }
 }

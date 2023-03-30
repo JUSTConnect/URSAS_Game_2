@@ -1,0 +1,49 @@
+.card
+{
+    height: 92px;
+    width: 66px;
+    background: #B43B35;
+    border-radius: 2px;
+    border: none;
+    line-height: .8em;
+    padding: .25em;
+    font-size: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card svg
+{
+    height: 1em;
+    width: 1em;
+}
+
+.icon
+{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.red
+{
+    background: #B43B35;
+    color: #B5C4E3;
+}
+
+.red path
+{
+    fill: #B5C4E3;
+}
+
+.dark
+{
+    background: #171B25;
+    color: #4E5E80;
+}
+
+.dark path
+{
+    fill: #4E5E80;
+}

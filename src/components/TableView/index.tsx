@@ -7,6 +7,8 @@ import { RootState } from '@/app/store'
 import TableModal from '@components/TableModal'
 import Blur from '@components/Blur'
 
+import type { PlaceProps as PlaceData } from '@components/TableModal/Place'
+import { CardRank, CardSuit } from '../Card'
 import Place from './Place'
 import Sofa from './Sofa'
 import LoaderLogo from '@components/LoaderLogo'
@@ -18,10 +20,38 @@ interface TableViewProps
     setModalActive: Function
 }
 
+// example data
+const exampleBusyPlaces: PlaceData[] = [
+    {
+        number: 4,
+        suit: CardSuit.CLUB,
+        rank: CardRank.N10,
+    }
+]
+const exampleStakedPlaces: PlaceData[] = [
+    {
+        number: 1,
+        suit: CardSuit.CLUB,
+        rank: CardRank.N9,
+    }
+]
+const exampleBasketPlaces: PlaceData[] = [
+    {
+        number: 2,
+        suit: CardSuit.HEART,
+        rank: CardRank.N10,
+    }
+]
+// 
+
 const TableView = (props: TableViewProps) => {
     const game = useSelector((state: RootState)=>state.game)
 
-    const [activePlace, setActivePlace] = useState(1)
+    const [busyPlaces, setBusyPlaces] = useState<PlaceData[]>(exampleBusyPlaces)
+    const [stakedPlaces, setStakedPlaces] = useState<PlaceData[]>(exampleStakedPlaces)
+    const [basketPlaces, setBasketPlaces] = useState<PlaceData[]>(exampleBasketPlaces)
+    const [choosingCardPlace, setChoosingCardPlace] = useState<number>(0)
+
 
     return <div className={ css.tableView }>
         { !game.loadingTable ? (
@@ -39,19 +69,39 @@ const TableView = (props: TableViewProps) => {
                             <div key={index}>
                                 <Sofa
                                     number={ index+1 }
-                                    active={ index+1 === activePlace }
+                                    active={ stakedPlaces.map(item=>item.number).includes(index+1) }
                                 />
                                 <Place
                                     number={ index+1 }
-                                    active={ index+1 === activePlace }
-                                    empty={ index+1 === 8 }
+                                    busy= { busyPlaces.map(item=>item.number).includes(index+1) }
+                                    staked={ stakedPlaces.map(item=>item.number).includes(index+1) }
+                                    empty={ !stakedPlaces.map(item=>item.number).includes(index+1) && !busyPlaces.map(item=>item.number).includes(index+1) }
+                                    loading={ choosingCardPlace === index+1 }
+                                    onClick={ ()=> {props.setModalActive(true); setChoosingCardPlace(index+1)} }
+
+                                    rank={ [...stakedPlaces, ...busyPlaces].filter(item=>item.number===index+1)[0]?.rank }
+                                    suit={ [...stakedPlaces, ...busyPlaces].filter(item=>item.number===index+1)[0]?.suit }
                                 />
                             </div>
                         )
                     })}
                 </div>
-                <Blur isActive={props.modalActive}/>
-                <TableModal active={ props.modalActive } setActive={ props.setModalActive } />
+                <Blur 
+                    isActive={props.modalActive}
+                    onClick={ () => {props.setModalActive(false); setChoosingCardPlace(0)} }
+                />
+                <TableModal 
+                    active={ props.modalActive }
+                    setActive={ props.setModalActive }
+                    {...{
+                        basketPlaces,
+                        setBasketPlaces,
+                        stakedPlaces,
+                        setStakedPlaces,
+                        choosingCardPlace,
+                        setChoosingCardPlace
+                    }}
+                />
             </>
         ) : (
             <LoaderLogo/>

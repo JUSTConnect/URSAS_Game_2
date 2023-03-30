@@ -2,12 +2,23 @@ import css from './index.module.css'
 
 import { useState } from 'react'
 
+import type { PlaceProps as PlaceData } from './Place'
+
 import Place from './Place'
+import PlaceButton from './PlaceButton'
+import Card, { CardRank, CardSuit, randomCard } from '@components/Card'
+
 
 interface TableModalProps extends React.HTMLAttributes<HTMLDivElement>
 {
+    basketPlaces: PlaceData[]
+    setBasketPlaces: Function
+    stakedPlaces: PlaceData[]
+    setStakedPlaces: Function
+    choosingCardPlace: number
+    setChoosingCardPlace: Function
     active?: boolean  
-    setActive?: Function
+    setActive: Function
 }
 
 
@@ -26,36 +37,49 @@ const TableModal = (props: TableModalProps) => {
                 <></>
             ) }
             <div className={ css.modalHeader }>
-                {{
-                    basket_empty: (
-                        <>
-                            <div>
-                                Basket places
+                { props.choosingCardPlace ? (
+                    <>
+                        <div>
+                            <div className={ css.headerTitle }>
+                                Сhoose cart <span className={ css.textLight }>place n.3</span>
                             </div>
-                            <div>
-                                <button onClick={ () => setStep('choose_card') } className={ css.modalButtonNext }>
-                                    <img className={ css.modalButtonNextIcon } src="/assets/images/icons/arrow-right.png" alt="Arrow Right" />
-                                </button>
+                            <div className={ css.headerSubTitle }>
+                                you seat has been taken, please select another
                             </div>
-                        </>
-                    ),
-                    choose_card: (
-                        <>
-                            <div>
-                                <div className={ css.headerTitle }>
-                                    Сhoose cart <span className={ css.textLight }>place n.3</span>
-                                </div>
-                                <div className={ css.headerSubTitle }>
-                                    you seat has been taken, please select another
-                                </div>
-                            </div>
-                            <div>
-                                <button onClick={ () => {setStep('confirm_places');setAlert('Places not sbbmit - clear/confirm or press exit again')} } className={ css.modalButtonNext }>
-                                    <img className={ css.modalButtonNextIcon } src="/assets/images/icons/arrow-right.png" alt="Arrow Right" />
-                                </button>
-                            </div>
-                        </>
-                    ),
+                        </div>
+                        <div>
+                            <button onClick={ () => {props.setActive(false);setAlert('Places not sbbmit - clear/confirm or press exit again')} } className={ css.modalButtonNext }>
+                                <img className={ css.modalButtonNextIcon } src="/assets/images/icons/arrow-right.png" alt="Arrow Right" />
+                            </button>
+                        </div>
+                    </>
+                ) : props.basketPlaces.length || props.stakedPlaces.length ? (
+                    <>
+                        <div>
+                            Confirm places <span className={ css.textLight }>01:56</span>
+                        </div>
+                        <div className={ css.modalHeaderButtons }>
+                            <button className={ css.modalHeaderButton }>
+                                submit
+                            </button>
+                            <button onClick={ () => {props.setActive(false)} } className={ css.modalButtonNext }>
+                                <img className={ css.modalButtonNextIcon } src="/assets/images/icons/arrow-right.png" alt="Arrow Right" />
+                            </button>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div>
+                            Basket places
+                        </div>
+                        <div>
+                            <button onClick={ () => props.setActive(false) } className={ css.modalButtonNext }>
+                                <img className={ css.modalButtonNextIcon } src="/assets/images/icons/arrow-right.png" alt="Arrow Right" />
+                            </button>
+                        </div>
+                    </>
+                ) }
+                {/* {{
                     confirm_places: (
                         <>
                             <div>
@@ -98,61 +122,63 @@ const TableModal = (props: TableModalProps) => {
                             </div>
                         </>
                     )
-                } [step] || 'not_found' }
+                } [step] || 'not_found' } */}
             </div>
-            <div className={ [step !== 'basket_empty' ? css.modalContent : '', css.modalContentRaw].join(' ') }>
-                {{
-                    basket_empty: (
-                        <div className={ css.basketEmptyContainer }>
-                            <div className={ css.basketEmptyContent }>
-                                <div className={ css.basketEmptyTitle }>
-                                    Your basket  is empty
-                                </div>
-                                <div className={ css.basketEmptyDescription }>
-                                    Please choose places
-                                </div>
-                                <div className={ css.basketEmptyCircle }></div>
-                                <img className={ css.basketEmptySofa } src="/assets/images/texture/table-sofa-modal.png" alt="" />
+            <div className={ [(props.choosingCardPlace||(props.stakedPlaces || props.basketPlaces)) ? css.modalContent : '', css.modalContentRaw].join(' ') }>
+                { props.choosingCardPlace ? (    
+                    <div className={ css.cards }>
+                        { [...Array(20)].map((item,index) => 
+                            <Card
+                                key={ index }
+                                className={ css.card }
+                                rank={ randomCard()[0] }
+                                suit={ randomCard()[1] }
+                                onClick={ () => props.setBasketPlaces([...props.basketPlaces, {number: props.choosingCardPlace, rank: CardRank.N2, suit: CardSuit.HEART}]) }
+                            />
+                        ) }
+                    </div>
+                ) : props.stakedPlaces || props.basketPlaces ? (
+                    <div className={ css.places }>
+                        { props.basketPlaces.map((place, index) =>
+                            <Place
+                                key={ index }
+                                number={place.number}
+                                rank={ place.rank }
+                                suit={ place.suit }
+                            />
+                        ) }
+                        <PlaceButton>
+                            clear
+                        </PlaceButton>
+                        <PlaceButton>
+                            return
+                        </PlaceButton>
+                        { props.stakedPlaces.map((place, index) =>
+                            <Place
+                                key={ index }
+                                number={place.number}
+                                rank={ place.rank }
+                                suit={ place.suit }
+                            />
+                        ) }
+                    </div>
+                ) : (
+                    <div className={ css.basketEmptyContainer }>
+                        <div className={ css.basketEmptyContent }>
+                            <div className={ css.basketEmptyTitle }>
+                                Your basket  is empty
                             </div>
+                            <div className={ css.basketEmptyDescription }>
+                                Please choose places
+                            </div>
+                            <div className={ css.basketEmptyCircle }></div>
+                            <img className={ css.basketEmptySofa } src="/assets/images/texture/table-sofa-modal.png" alt="" />
                         </div>
-                    ),
-                    choose_card: (
-                        <div className={ css.cards }>
-                            { [...Array(100)].map((item,index)=>(
-                                <img  onClick={ () => {setStep('confirm_places');setAlert('Places not submit - clear/confirm or press exit again')} } className={ css.card } key={index} src="/assets/images/texture/example-card.png" alt="card" />
-                            ))}
-                        </div>
-                    ),
+                    </div>
+                ) }
+                {/* {{
                     confirm_places: (
-                        <div className={ css.places }>
-                            <Place
-                                number={1}
-                                card={false}
-                            />
-                            <Place
-                                clear={true}
-                            />
-                            <Place
-                                return={true}
-                            />
-                            <Place
-                                number={1}
-                                card={true}
-                            />
-                            <Place
-                                number={1}
-                                card={true}
-                            />
-                            <Place
-                                number={1}
-                                card={true}
-                            />
-                            <Place
-                                number={1}
-                                card={true}
-                            />
-
-                        </div>
+                        
                     ),
                     confirm_places2: (
                         <div className={ css.dialog }>
@@ -179,7 +205,7 @@ const TableModal = (props: TableModalProps) => {
                             <img className={ css.loadingIcon } src="/assets/images/icons/logo-loading.png" alt="Loading" />
                         </div>
                     )
-                } [step] || 'not_found' }
+                } [step] || 'not_found' } */}
             </div>
             { step !== 'basket_empty' && step !== 'confirm_places2' && step !== 'choose_card' ? (
                 <div className={ css.modalFooter }>

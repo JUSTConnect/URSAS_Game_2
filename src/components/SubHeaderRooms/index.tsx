@@ -20,7 +20,7 @@ const SubHeaderRooms = (props: SubHeaderRoomsProps) => {
   return <SubHeader>
     <SubHeaderSection>
       <div className={ css.theLoby }>The loby</div>
-      <div className={ css.totalRooms }>Table room <Badge>16</Badge></div>
+      <div className={ css.totalRooms }>Total rooms <Badge>16</Badge></div>
       { context.gameOver ? (
         <div className={ 'd-desktop' }>
           <span className={ 'textMuted' }>announcement of results </span>
