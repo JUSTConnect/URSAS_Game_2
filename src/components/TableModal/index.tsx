@@ -26,6 +26,8 @@ const TableModal = (props: TableModalProps) => {
     const [step, setStep] = useState('basket_empty')
     const [alert, setAlert] = useState('')
 
+    const randomCards = [...Array(10)].map(()=>randomCard())
+
     return <div className={ [css.modalContainer, props.active ? css.modalContainerActive : ''].join(' ') }>
         <div className={ css.modal }>
             { alert ? (
@@ -127,13 +129,13 @@ const TableModal = (props: TableModalProps) => {
             <div className={ [(props.choosingCardPlace||(props.stakedPlaces || props.basketPlaces)) ? css.modalContent : '', css.modalContentRaw].join(' ') }>
                 { props.choosingCardPlace ? (    
                     <div className={ css.cards }>
-                        { [...Array(20)].map((item,index) => 
+                        { randomCards.map((item,index) => 
                             <Card
                                 key={ index }
                                 className={ css.card }
-                                rank={ randomCard()[0] }
-                                suit={ randomCard()[1] }
-                                onClick={ () => props.setBasketPlaces([...props.basketPlaces, {number: props.choosingCardPlace, rank: CardRank.N2, suit: CardSuit.HEART}]) }
+                                rank={ randomCards[index][0] }
+                                suit={ randomCards[index][1] }
+                                onClick={ () => {props.setBasketPlaces([...props.basketPlaces, {number: props.choosingCardPlace, rank: randomCards[index][0], suit: randomCards[index][1]}]); props.setChoosingCardPlace(0);} }
                             />
                         ) }
                     </div>
@@ -207,7 +209,7 @@ const TableModal = (props: TableModalProps) => {
                     )
                 } [step] || 'not_found' } */}
             </div>
-            { step !== 'basket_empty' && step !== 'confirm_places2' && step !== 'choose_card' ? (
+            { !props.choosingCardPlace ? (
                 <div className={ css.modalFooter }>
                     <div className={ css.modalFooterButtons }>
                         <div className={ css.modalFooterButton }>
