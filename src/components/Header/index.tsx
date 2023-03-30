@@ -46,7 +46,7 @@ const Header = (props: HeaderProps) => {
                             <Dropdown
                                 loading={ game.loadingRooms }
                                 values={
-                                    [...Array(5)].map(item=>[1])
+                                    [...Array(10)].map(item=>[1])
                                 }
                                 rooms={true}
                                 controller={{

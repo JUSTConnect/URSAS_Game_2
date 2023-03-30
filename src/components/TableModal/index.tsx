@@ -25,6 +25,8 @@ interface TableModalProps extends React.HTMLAttributes<HTMLDivElement>
 const TableModal = (props: TableModalProps) => {
     const [step, setStep] = useState('basket_empty')
     const [alert, setAlert] = useState('')
+    const [selectedBasketPlaces, setSelectedBasketPlaces] = useState<number[]>([])
+    const [selectedStakedPlaces, setSelectedStakedPlaces] = useState<number[]>([])
 
     const randomCards = [...Array(10)].map(()=>randomCard())
 
@@ -43,7 +45,7 @@ const TableModal = (props: TableModalProps) => {
                     <>
                         <div>
                             <div className={ css.headerTitle }>
-                                Сhoose cart <span className={ css.textLight }>place n.3</span>
+                                Choose cart <span className={ css.textLight }>place n.3</span>
                             </div>
                             <div className={ css.headerSubTitle }>
                                 you seat has been taken, please select another
@@ -61,7 +63,7 @@ const TableModal = (props: TableModalProps) => {
                             Confirm places <span className={ css.textLight }>01:56</span>
                         </div>
                         <div className={ css.modalHeaderButtons }>
-                            <button className={ css.modalHeaderButton }>
+                            <button onClick={ () => {props.setStakedPlaces([...props.stakedPlaces, ...props.basketPlaces]); props.setBasketPlaces([])} } className={ css.modalHeaderButton }>
                                 submit
                             </button>
                             <button onClick={ () => {props.setActive(false)} } className={ css.modalButtonNext }>
@@ -139,29 +141,59 @@ const TableModal = (props: TableModalProps) => {
                             />
                         ) }
                     </div>
-                ) : props.stakedPlaces || props.basketPlaces ? (
+                ) : props.stakedPlaces.length || props.basketPlaces.length ? (
                     <div className={ css.places }>
-                        { props.basketPlaces.map((place, index) =>
-                            <Place
-                                key={ index }
-                                number={place.number}
-                                rank={ place.rank }
-                                suit={ place.suit }
-                            />
+                        { props.basketPlaces.map((place, index) => (
+                                <Place
+                                    key={ index }
+                                    number={place.number}
+                                    rank={ place.rank }
+                                    suit={ place.suit }
+                                    active={ selectedBasketPlaces.includes(place.number) }
+                                    onClick={
+                                        () => 
+                                            selectedBasketPlaces.includes(place.number)
+                                            ?
+                                            setSelectedBasketPlaces(selectedBasketPlaces.filter(number=>number!==place.number))
+                                            :
+                                            setSelectedBasketPlaces([...selectedBasketPlaces, place.number])
+                                    }
+                                />
+                            )
                         ) }
-                        <PlaceButton>
-                            clear
-                        </PlaceButton>
-                        <PlaceButton>
-                            return
-                        </PlaceButton>
-                        { props.stakedPlaces.map((place, index) =>
-                            <Place
-                                key={ index }
-                                number={place.number}
-                                rank={ place.rank }
-                                suit={ place.suit }
-                            />
+                        { props.basketPlaces.length ? (
+                            <PlaceButton onClick={ () => {
+                                props.setBasketPlaces(props.basketPlaces.filter(place=>!selectedBasketPlaces.includes(place.number)))
+                                setSelectedBasketPlaces([])
+                            } }>
+                                clear
+                            </PlaceButton>
+                        ) : '' }
+                        { props.stakedPlaces.length ? (
+                            <PlaceButton onClick={ () => {
+                                props.setStakedPlaces(props.stakedPlaces.filter(place=>!selectedStakedPlaces.includes(place.number)))
+                                setSelectedStakedPlaces([])
+                            } }>
+                                return
+                            </PlaceButton>
+                        ) : '' }
+                        { props.stakedPlaces.map((place, index) => (
+                                <Place
+                                    key={ index }
+                                    number={place.number}
+                                    rank={ place.rank }
+                                    suit={ place.suit }
+                                    active={ selectedStakedPlaces.includes(place.number) }
+                                    onClick={
+                                        () => 
+                                            selectedStakedPlaces.includes(place.number)
+                                            ?
+                                            setSelectedStakedPlaces(selectedStakedPlaces.filter(number=>number!==place.number))
+                                            :
+                                            setSelectedStakedPlaces([...selectedStakedPlaces, place.number])
+                                    }
+                                />
+                            )
                         ) }
                     </div>
                 ) : (
@@ -209,17 +241,21 @@ const TableModal = (props: TableModalProps) => {
                     )
                 } [step] || 'not_found' } */}
             </div>
-            { !props.choosingCardPlace ? (
+            { !props.choosingCardPlace && (props.stakedPlaces.length || props.basketPlaces.length) ? (
                 <div className={ css.modalFooter }>
                     <div className={ css.modalFooterButtons }>
-                        <div className={ css.modalFooterButton }>
-                            <img className={ css.modalFooterButtonIcon } src="/assets/images/icons/return.png" alt="Icon" />
-                            return all
-                        </div>
-                        <div className={ css.modalFooterButton }>
-                            <img className={ css.modalFooterButtonIcon } src="/assets/images/icons/clear.png" alt="Icon" />
-                            clear all
-                        </div>
+                        { props.stakedPlaces.length ? (
+                            <button onClick={ () => props.setStakedPlaces([]) } className={ css.modalFooterButton }>
+                                <img className={ css.modalFooterButtonIcon } src="/assets/images/icons/return.png" alt="Icon" />
+                                return all
+                            </button>
+                        ) : '' }
+                        { props.basketPlaces.length ? (
+                            <button onClick={ () => props.setBasketPlaces([]) } className={ css.modalFooterButton }>
+                                <img className={ css.modalFooterButtonIcon } src="/assets/images/icons/clear.png" alt="Icon" />
+                                clear all
+                            </button>
+                        ) : '' }
                     </div>
                 </div>       
             ) : (

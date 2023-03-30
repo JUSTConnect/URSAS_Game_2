@@ -9,6 +9,7 @@ interface props extends React.HTMLAttributes<HTMLButtonElement>
     number: number
     busy?: boolean
     staked?: boolean
+    basket?: boolean
     empty?: boolean
     loading?: boolean
     suit: CardSuit
@@ -21,7 +22,7 @@ export default (props: props) => {
         [
             css.place,
             css[`place${props.number}`],
-            props.staked || props.busy ? css.active : '',
+            props.staked || props.busy || props.basket ? css.active : '',
             props.empty ? css.empty : '',
             props.loading ? css.loading : ''
         ].join(' ')  
@@ -40,9 +41,9 @@ export default (props: props) => {
                 <div className={ css.info }>
                     { props.staked ? (
                         'staked'
-                    ) : (
-                        'place'
-                    ) }
+                    ) : props.basket ? (
+                        'basket'
+                    ) : 'place' }
                     <br />
                     <span className={ [css.number, 'fontSpecial'].join(' ') }>№ { props.number }</span>
                 </div>

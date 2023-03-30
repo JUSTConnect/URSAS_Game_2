@@ -107,6 +107,7 @@
 
 .modalFooterButton
 {
+    color: #B5C4E3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -114,6 +115,7 @@
     background: #222A3A;
     padding: 11px;
     width: 100%;
+    border: none;
     border-radius: 12px;
     line-height: 22px;
     text-align: center;

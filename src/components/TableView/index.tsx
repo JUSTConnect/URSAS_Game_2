@@ -73,14 +73,15 @@ const TableView = (props: TableViewProps) => {
                                 />
                                 <Place
                                     number={ index+1 }
-                                    busy= { busyPlaces.map(item=>item.number).includes(index+1) }
-                                    staked={ stakedPlaces.map(item=>item.number).includes(index+1) }
-                                    empty={ !stakedPlaces.map(item=>item.number).includes(index+1) && !busyPlaces.map(item=>item.number).includes(index+1) }
-                                    loading={ choosingCardPlace === index+1 }
-                                    onClick={ ()=> {props.setModalActive(true); setChoosingCardPlace(index+1)} }
+                                    busy = { busyPlaces.map(item=>item.number).includes(index+1) }
+                                    basket = { basketPlaces.map(item=>item.number).includes(index+1) } 
+                                    staked = { stakedPlaces.map(item=>item.number).includes(index+1) }
+                                    empty={ ![...stakedPlaces, ...basketPlaces].map(item=>item.number).includes(index+1) && !busyPlaces.map(item=>item.number).includes(index+1) }
+                                    loading = { choosingCardPlace === index+1 }
+                                    onClick = { ()=> {props.setModalActive(true); setChoosingCardPlace(index+1)} }
 
-                                    rank={ [...stakedPlaces, ...busyPlaces].filter(item=>item.number===index+1)[0]?.rank }
-                                    suit={ [...stakedPlaces, ...busyPlaces].filter(item=>item.number===index+1)[0]?.suit }
+                                    rank={ [...stakedPlaces, ...busyPlaces, ...basketPlaces].filter(item=>item.number===index+1)[0]?.rank }
+                                    suit={ [...stakedPlaces, ...busyPlaces, ...basketPlaces].filter(item=>item.number===index+1)[0]?.suit }
                                 />
                             </div>
                         )
