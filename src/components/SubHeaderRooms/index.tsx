@@ -21,12 +21,12 @@ const SubHeaderRooms = (props: SubHeaderRoomsProps) => {
     <SubHeaderSection>
       <div className={ css.theLoby }>The loby</div>
       <div className={ css.totalRooms }>Total rooms <Badge>16</Badge></div>
-      { mainframe.gameOver ? (
+      {/* { mainframe.gameOver ? (
         <div className={ 'd-desktop' }>
           <span className={ 'textMuted' }>announcement of results </span>
           <span className={ 'textPrimary' }>04:51</span>
         </div>
-      ) : ''}
+      ) : ''} */}
     </SubHeaderSection>
     <FlexBox gap={ '8px' } className={ css.filterButtons }>
       { props.mode === 'slide' ? (

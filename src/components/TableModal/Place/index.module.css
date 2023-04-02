@@ -20,6 +20,7 @@
 .active
 {
     border: 1px solid #EFB23D;
+    min-height: 58px;
 }
 
 .place:hover
@@ -55,6 +56,7 @@
 
 .placeNumber
 {
+    white-space: nowrap;
     color: #B5C4E3;
 }
 
@@ -67,6 +69,11 @@
         min-height: 44px;
         border-radius: 12px;
         gap: 4px;
+    }
+
+    .place.active
+    {
+        min-height: 42px;
     }
 
     .placeCard

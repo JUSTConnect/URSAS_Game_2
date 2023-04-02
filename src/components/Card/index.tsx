@@ -27,7 +27,7 @@ enum Suit
     DIAMOND = 1,
     HEART = 2,
     CLUB = 3,
-    SPADE = 4 
+    SPADE = 4
 }
 
 function randomCard():[Rank, Suit] {
@@ -58,6 +58,18 @@ const suitColors = {
     dark: [Suit.CLUB, Suit.SPADE]
 }
 
+const SpecialRanks = [
+    Rank.POT,
+    Rank.JOKER,
+    Rank.CLOCK
+]
+
+const SpecialRankIcons = {
+    'POT': <img className={ css.rankIcon } src="/assets/images/icons/card-pot.png" alt="pot"/>,
+    'CLOCK': <img className={ css.rankIcon } src="/assets/images/icons/card-clock.png" alt="clock"/>,
+    'JO': 'JO'
+}
+
 
 const Wrapper = (props: HTMLAttributes<HTMLButtonElement>) => {
     return <>
@@ -75,20 +87,38 @@ const Wrapper = (props: HTMLAttributes<HTMLButtonElement>) => {
 
 
 export default (props: props) => {
+    const isSpecial = () => {
+        return SpecialRanks.includes(props.rank)
+    }
+
     return <Wrapper
         onClick={ props.onClick }
         className={
             [
                 css.card,
-                suitColors.red.includes(props.suit) ? css.red : css.dark,
+                isSpecial() ? css.special : '',
+                props.rank === Rank.CLOCK ? css.clock : '',
+                !isSpecial() && suitColors.red.includes(props.suit) ? css.red : css.dark,
                 'fontSpecial',
                 props.className,
             ].join(' ')
         }
     >
-        <div className={ css.type}>{ props.rank }</div>
-        <div className={ css.icon }>
-            { suitIcons[props.suit] }
+        <div className={ css.content }>
+            <div className={ css.type}>
+                { props.rank === Rank.POT || props.rank === Rank.JOKER || props.rank === Rank.CLOCK ? (
+                    <>{ SpecialRankIcons[props.rank] }</>
+                ) : (
+                    props.rank
+                ) }
+            </div>
+            { isSpecial() ? (
+                ''
+            ) : (
+                <div className={ css.icon }>
+                    { suitIcons[props.suit] }
+                </div>
+            ) }
         </div>
     </Wrapper>
 } 

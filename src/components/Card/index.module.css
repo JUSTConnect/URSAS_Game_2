@@ -1,17 +1,45 @@
 .card
 {
-    height: 92px;
-    width: 66px;
-    background: #B43B35;
-    border-radius: 2px;
     border: none;
-    line-height: .8em;
-    padding: .25em;
+    border-radius: 2px;
     font-size: 2em;
+    height: 2.5em;
+    line-height: .8em;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    width: 2em;
+}
+
+.card.special
+{
+    color: #222A3A;
+    background: #4E5E80;
+}
+
+.content
+{
+    padding: .2em;
+    position: relative;
+    
+    height: 100%;
+    width: 100%;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow: hidden;
+    align-items: flex-start;
+}
+
+.special .content
+{
+    justify-content: center;
+    align-items: center;
+}
+
+.special.clock
+{
+    background: #B43B35;
 }
 
 .card svg
@@ -25,6 +53,11 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
+}
+
+.rankIcon
+{
+    height: 1.3em;
 }
 
 .red

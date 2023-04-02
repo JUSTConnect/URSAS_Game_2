@@ -1,17 +1,15 @@
 import css from './index.module.css'
 
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { RootState } from '@/app/store'
 import TableModal from '@components/TableModal'
 import Blur from '@components/Blur'
 
-import type { PlaceProps as PlaceData } from '@components/TableModal/Place'
-import { CardRank, CardSuit } from '../Card'
+import { CardRank, CardSuit } from '@components/Card'
+import { setChoosingCardPlace, setModalAlert, addBusyPlace } from '@/features/table/tableSlice'
 import Place from './Place'
 import Sofa from './Sofa'
-import LoaderLogo from '@components/LoaderLogo'
 
 
 interface TableViewProps
@@ -20,40 +18,27 @@ interface TableViewProps
     setModalActive: Function
 }
 
-// example data
-const exampleBusyPlaces: PlaceData[] = [
-    {
-        number: 4,
-        suit: CardSuit.CLUB,
-        rank: CardRank.N10,
-    }
-]
-const exampleStakedPlaces: PlaceData[] = [
-    {
-        number: 1,
-        suit: CardSuit.CLUB,
-        rank: CardRank.N9,
-    }
-]
-const exampleBasketPlaces: PlaceData[] = [
-    {
-        number: 2,
-        suit: CardSuit.HEART,
-        rank: CardRank.N10,
-    }
-]
-// 
 
 const TableView = (props: TableViewProps) => {
+    const dispatch = useDispatch()
     const game = useSelector((state: RootState)=>state.game)
-
-    const [busyPlaces, setBusyPlaces] = useState<PlaceData[]>(exampleBusyPlaces)
-    const [stakedPlaces, setStakedPlaces] = useState<PlaceData[]>(exampleStakedPlaces)
-    const [basketPlaces, setBasketPlaces] = useState<PlaceData[]>(exampleBasketPlaces)
-    const [choosingCardPlace, setChoosingCardPlace] = useState<number>(0)
+    const table = useSelector((state: RootState)=>state.table)
 
     const handleClickPlace = (number: number) => {
-        props.setModalActive(true); setChoosingCardPlace(number)
+        props.setModalActive(true)
+        dispatch(setChoosingCardPlace(number))
+
+        setTimeout(() => {
+            dispatch(
+                addBusyPlace({
+                    number: number,
+                    rank: CardRank.ACE,
+                    suit: CardSuit.DIAMOND
+                })
+            )
+            dispatch(setModalAlert('Your seat has been taken, please select another!'))
+            setTimeout(() => dispatch(setModalAlert('')), 5000)
+        }, 10000)
     }
 
 
@@ -71,19 +56,19 @@ const TableView = (props: TableViewProps) => {
                     <div key={index}>
                         <Sofa
                             number={ index+1 }
-                            active={ stakedPlaces.map(item=>item.number).includes(index+1) }
+                            active={ table.stakedPlaces.map(item=>item.number).includes(index+1) }
                         />
                         <Place
                             number={ index+1 }
-                            busy = { busyPlaces.map(item=>item.number).includes(index+1) }
-                            basket = { basketPlaces.map(item=>item.number).includes(index+1) } 
-                            staked = { stakedPlaces.map(item=>item.number).includes(index+1) }
-                            empty={ game.loadingTable || ![...stakedPlaces, ...basketPlaces].map(item=>item.number).includes(index+1) && !busyPlaces.map(item=>item.number).includes(index+1) }
-                            loading = { game.loadingTable || choosingCardPlace === index+1 }
+                            busy = { table.busyPlaces.map(item=>item.number).includes(index+1) }
+                            basket = { table.basketPlaces.map(item=>item.number).includes(index+1) } 
+                            staked = { table.stakedPlaces.map(item=>item.number).includes(index+1) }
+                            empty={ game.loadingTable || ![...table.stakedPlaces, ...table.basketPlaces].map(item=>item.number).includes(index+1) && !table.busyPlaces.map(item=>item.number).includes(index+1) }
+                            loading = { game.loadingTable || table.choosingCardPlace === index+1 }
                             onClick = { () => handleClickPlace(index+1) }
 
-                            rank={ [...stakedPlaces, ...busyPlaces, ...basketPlaces].filter(item=>item.number===index+1)[0]?.rank }
-                            suit={ [...stakedPlaces, ...busyPlaces, ...basketPlaces].filter(item=>item.number===index+1)[0]?.suit }
+                            rank={ [...table.stakedPlaces, ...table.busyPlaces, ...table.basketPlaces].filter(item=>item.number===index+1)[0]?.rank }
+                            suit={ [...table.stakedPlaces, ...table.busyPlaces, ...table.basketPlaces].filter(item=>item.number===index+1)[0]?.suit }
                         />
                     </div>
                 )
@@ -91,19 +76,11 @@ const TableView = (props: TableViewProps) => {
         </div>
         <Blur 
             isActive={props.modalActive}
-            onClick={ () => {props.setModalActive(false); setChoosingCardPlace(0)} }
+            onClick={ () => {props.setModalActive(false); dispatch(setChoosingCardPlace(0))} }
         />
         <TableModal 
             active={ props.modalActive }
             setActive={ props.setModalActive }
-            {...{
-                basketPlaces,
-                setBasketPlaces,
-                stakedPlaces,
-                setStakedPlaces,
-                choosingCardPlace,
-                setChoosingCardPlace
-            }}
         />
     </div>
 }

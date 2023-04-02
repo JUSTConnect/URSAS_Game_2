@@ -224,7 +224,13 @@
 
 .card:hover
 {
-    opacity: .7;
+    background: linear-gradient(180deg, #E7DF36 0%, #EFB23D 100%);
+    color: white;
+}
+
+.card:hover path
+{
+    fill: white;
 }
 
 .places
@@ -341,8 +347,9 @@
     }
     .card
     {
-        height: 66px;
-        width: 48px;
+        height: 44px;
+        width: 40px;
+        font-size: 16px;
     }
 
     .modalHeader, .modalContentRaw, .modalFooter, .modalAlert
