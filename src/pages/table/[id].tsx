@@ -26,7 +26,7 @@ export default function Home() {
     useEffect(()=>{
         setTimeout(()=>{
             dispatch(setLoadingTable(false))
-        }, 0)
+        }, 1000)
     })
     useEffect(()=>{
         dispatch(setCurrentGame(id||0))

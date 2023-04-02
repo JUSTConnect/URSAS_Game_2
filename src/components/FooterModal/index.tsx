@@ -1,16 +1,16 @@
 import css from './index.module.css'
 
-import { useContext } from 'react'
+import { useSelector } from 'react-redux'
 import Link from 'next/link'
 
+import { RootState } from '@/app/store'
 import MediaLink from '@components/MediaLink'
-import { MainframeContext } from '@components/Mainframe'
 
 
 const FooterModal = () => {
-    const context = useContext(MainframeContext)
+    const mainframe = useSelector((state: RootState) => state.mainframe)
 
-    return <div className={ [css.modalContainer, context.footerModal ? css.modalContainerActive : ''].join(' ') }>
+    return <div className={ [css.modalContainer, mainframe.footerModal ? css.modalContainerActive : ''].join(' ') }>
         <div className={ css.modal }>
             <div className={ css.top }>
                 <Link href='#'>Help</Link>

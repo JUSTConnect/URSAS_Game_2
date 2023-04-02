@@ -1,14 +1,14 @@
 import css from './index.module.css'
 
 import { useRef, useState, useEffect, useContext } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
+import { RootState } from '@/app/store'
 import { setCurrentRoom } from '@/features/game/gameSlice'
 import Door from './Door'
 import NavigationButton from './NavigationButton'
 import Info from './Info'
 import DoorList from '@components/RoomsDoorList'
-import { MainframeContext } from '@components/Mainframe'
 
 
 interface RoomsDoorSliderProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -99,7 +99,8 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
 
     const [currentDoorList, setCurrentDoorList] = useState(0)
 
-    const context = useContext(MainframeContext)
+    const mainframe = useSelector((state: RootState) => state.mainframe)
+    const game = useSelector((state: RootState) => state.game)
 
     useEffect(()=>{
         if (null !== doorSliderInner.current && null !== doorSlider.current) {
@@ -198,7 +199,7 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
                         selectedDoor={selectedDoor}
                         scrollStagePercent={scrollStagePercent}
                         doorRef={door}
-                        over={context.gameOver}
+                        over={game.gameOver}
                     />
                 )) }
             </div>

@@ -24,7 +24,7 @@ export default function Home() {
     useEffect(()=>{
         setTimeout(()=>{
             dispatch(setLoadingTables(false))
-        }, 5000)
+        }, 500)
     },[])
     useEffect(()=>{
         dispatch(setCurrentRoom(id||0))

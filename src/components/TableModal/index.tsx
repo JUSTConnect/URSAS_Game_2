@@ -162,7 +162,7 @@ const TableModal = (props: TableModalProps) => {
                             )
                         ) }
                         { props.basketPlaces.length ? (
-                            <PlaceButton onClick={ () => {
+                            <PlaceButton active={ selectedBasketPlaces.length } onClick={ () => {
                                 props.setBasketPlaces(props.basketPlaces.filter(place=>!selectedBasketPlaces.includes(place.number)))
                                 setSelectedBasketPlaces([])
                             } }>
@@ -170,7 +170,7 @@ const TableModal = (props: TableModalProps) => {
                             </PlaceButton>
                         ) : '' }
                         { props.stakedPlaces.length ? (
-                            <PlaceButton onClick={ () => {
+                            <PlaceButton active={ selectedStakedPlaces.length } onClick={ () => {
                                 props.setStakedPlaces(props.stakedPlaces.filter(place=>!selectedStakedPlaces.includes(place.number)))
                                 setSelectedStakedPlaces([])
                             } }>

@@ -1,12 +1,10 @@
 import css from './index.module.css'
 
-import { useContext } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { MainframeContext } from '@components/Mainframe'
-
+import { RootState } from '@/app/store'
 import { setWalletConnected } from '@/features/game/gameSlice'
-
+import { setConnectWalletModal } from '@/features/mainframe/mainframeSlice'
 
 interface props
 {
@@ -37,13 +35,13 @@ const items:Array<item> = [
 
 
 export default () => {
+    const mainframe = useSelector((state: RootState) => state.mainframe)
     const dispatch = useDispatch()
-    const context = useContext(MainframeContext)
 
-    return <div className={ [css.container, context.connectWalletModal ? css.containerActive: ''].join(' ') }>
+    return <div className={ [css.container, mainframe.connectWalletModal ? css.containerActive: ''].join(' ') }>
         <div className={ css.modal }>
             <div className={ css.top }>
-                <button onClick={ ()=>context.setConnectWalletModal(false) } className={ css.buttonClose}>
+                <button onClick={ ()=>dispatch(setConnectWalletModal(false)) } className={ css.buttonClose}>
                     <svg className={ css.buttonCloseIcon } width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clipPath="url(#clip0_669_5347)">
                         <path d="M15 1L1 15" stroke="#B5C4E3" strokeLinecap="round" strokeLinejoin="round"/>
@@ -67,7 +65,7 @@ export default () => {
                             <img className={ css.itemLogo } src={ item.logoSrc } alt="Item Logo" />
                             { item.name }
                         </div>
-                        <button onClick={ () => {dispatch(setWalletConnected(true)); context.setConnectWalletModal(false)} } className={ css.itemButton }>
+                        <button onClick={ () => {dispatch(setWalletConnected(true)); dispatch(setConnectWalletModal(false))} } className={ css.itemButton }>
                             detected
                         </button>
                     </div>

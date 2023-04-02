@@ -257,4 +257,9 @@
     {
         background: none;
     }
+
+    .loaderInner
+    {
+        background: rgba(34, 42, 58, 1);
+    }
 }

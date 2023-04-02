@@ -52,61 +52,59 @@ const TableView = (props: TableViewProps) => {
     const [basketPlaces, setBasketPlaces] = useState<PlaceData[]>(exampleBasketPlaces)
     const [choosingCardPlace, setChoosingCardPlace] = useState<number>(0)
 
+    const handleClickPlace = (number: number) => {
+        props.setModalActive(true); setChoosingCardPlace(number)
+    }
+
 
     return <div className={ css.tableView }>
-        { !game.loadingTable ? (
-            <>
-                <div className={ css.tableContainer }>
-                    <div className={ css.table }>
-                        <div className={ css.tableContent }>
-                            <div className={ css.tableContentInner }>
-                            </div>
-                        </div>
+        <div className={ css.tableContainer }>
+            <div className={ css.table }>
+                <div className={ css.tableContent }>
+                    <div className={ css.tableContentInner }>
                     </div>
-                    <img className={ css.cocaCola } src="/assets/images/texture/table-coca-cola.png" alt="Coca Cola" />
-                    { [...Array(10)].map((item, index)=> {
-                        return (
-                            <div key={index}>
-                                <Sofa
-                                    number={ index+1 }
-                                    active={ stakedPlaces.map(item=>item.number).includes(index+1) }
-                                />
-                                <Place
-                                    number={ index+1 }
-                                    busy = { busyPlaces.map(item=>item.number).includes(index+1) }
-                                    basket = { basketPlaces.map(item=>item.number).includes(index+1) } 
-                                    staked = { stakedPlaces.map(item=>item.number).includes(index+1) }
-                                    empty={ ![...stakedPlaces, ...basketPlaces].map(item=>item.number).includes(index+1) && !busyPlaces.map(item=>item.number).includes(index+1) }
-                                    loading = { choosingCardPlace === index+1 }
-                                    onClick = { ()=> {props.setModalActive(true); setChoosingCardPlace(index+1)} }
-
-                                    rank={ [...stakedPlaces, ...busyPlaces, ...basketPlaces].filter(item=>item.number===index+1)[0]?.rank }
-                                    suit={ [...stakedPlaces, ...busyPlaces, ...basketPlaces].filter(item=>item.number===index+1)[0]?.suit }
-                                />
-                            </div>
-                        )
-                    })}
                 </div>
-                <Blur 
-                    isActive={props.modalActive}
-                    onClick={ () => {props.setModalActive(false); setChoosingCardPlace(0)} }
-                />
-                <TableModal 
-                    active={ props.modalActive }
-                    setActive={ props.setModalActive }
-                    {...{
-                        basketPlaces,
-                        setBasketPlaces,
-                        stakedPlaces,
-                        setStakedPlaces,
-                        choosingCardPlace,
-                        setChoosingCardPlace
-                    }}
-                />
-            </>
-        ) : (
-            <LoaderLogo/>
-        ) }
+            </div>
+            <img className={ css.cocaCola } src="/assets/images/texture/table-coca-cola.png" alt="Coca Cola" />
+            { [...Array(10)].map((item, index)=> {
+                return (
+                    <div key={index}>
+                        <Sofa
+                            number={ index+1 }
+                            active={ stakedPlaces.map(item=>item.number).includes(index+1) }
+                        />
+                        <Place
+                            number={ index+1 }
+                            busy = { busyPlaces.map(item=>item.number).includes(index+1) }
+                            basket = { basketPlaces.map(item=>item.number).includes(index+1) } 
+                            staked = { stakedPlaces.map(item=>item.number).includes(index+1) }
+                            empty={ game.loadingTable || ![...stakedPlaces, ...basketPlaces].map(item=>item.number).includes(index+1) && !busyPlaces.map(item=>item.number).includes(index+1) }
+                            loading = { game.loadingTable || choosingCardPlace === index+1 }
+                            onClick = { () => handleClickPlace(index+1) }
+
+                            rank={ [...stakedPlaces, ...busyPlaces, ...basketPlaces].filter(item=>item.number===index+1)[0]?.rank }
+                            suit={ [...stakedPlaces, ...busyPlaces, ...basketPlaces].filter(item=>item.number===index+1)[0]?.suit }
+                        />
+                    </div>
+                )
+            })}
+        </div>
+        <Blur 
+            isActive={props.modalActive}
+            onClick={ () => {props.setModalActive(false); setChoosingCardPlace(0)} }
+        />
+        <TableModal 
+            active={ props.modalActive }
+            setActive={ props.setModalActive }
+            {...{
+                basketPlaces,
+                setBasketPlaces,
+                stakedPlaces,
+                setStakedPlaces,
+                choosingCardPlace,
+                setChoosingCardPlace
+            }}
+        />
     </div>
 }
 

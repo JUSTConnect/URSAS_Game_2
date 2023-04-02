@@ -1,11 +1,11 @@
 import css from './index.module.css'
 
-import { useContext } from 'react'
+import { useSelector } from 'react-redux'
 
+import { RootState } from '@/app/store'
 import Badge from '@components/Badge'
 import SubHeader, { SubHeaderButton, SubHeaderSection } from '@components/SubHeader'
 import FlexBox from '@components/FlexBox'
-import { MainframeContext } from '@components/Mainframe'
 
 
 interface SubHeaderRoomsProps
@@ -15,13 +15,13 @@ interface SubHeaderRoomsProps
 }
 
 const SubHeaderRooms = (props: SubHeaderRoomsProps) => {
-  const context = useContext(MainframeContext)
+  const mainframe = useSelector((state: RootState) => state.mainframe)
 
   return <SubHeader>
     <SubHeaderSection>
       <div className={ css.theLoby }>The loby</div>
       <div className={ css.totalRooms }>Total rooms <Badge>16</Badge></div>
-      { context.gameOver ? (
+      { mainframe.gameOver ? (
         <div className={ 'd-desktop' }>
           <span className={ 'textMuted' }>announcement of results </span>
           <span className={ 'textPrimary' }>04:51</span>

@@ -24,7 +24,6 @@ export default function Home() {
             <Mainframe
                 connected={true}
                 subHeader={<SubHeaderRooms mode={mode} setMode={setMode} />}
-                gameOver={2} 
             >
                 <RoomsDoorSlider mode={mode} />
             </Mainframe>

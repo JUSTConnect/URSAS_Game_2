@@ -1,20 +1,16 @@
-// #test
-
 import css from './index.module.css'
 
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import type { RootState } from '@/app/store'
+import { setConnectWalletModal, setDisableWalletModal } from '@/features/mainframe/mainframeSlice'
 import { setClaim } from '@/features/game/gameSlice'
 import Badge from '@components/Badge'
 import Button from '@components/Button'
 import Dropdown from '@/components/Header/Dropdown'
 import {Loader} from './Dropdown'
 import HeaderBase, { HeaderSection } from '@/components/HeaderBase'
-import { MainframeContext } from '@components/Mainframe'
-
-
 
 
 interface HeaderProps extends React.HTMLAttributes<HTMLDivElement>
@@ -23,11 +19,9 @@ interface HeaderProps extends React.HTMLAttributes<HTMLDivElement>
 
 
 const Header = (props: HeaderProps) => {
-    const [activeDropdown, setActiveDropdown] = useState(0)
     const [gameOverShow, setGameOverShow] = useState(true)
     const dispatch = useDispatch()
-    const context = useContext(MainframeContext)
-
+    
     const game = useSelector((state: RootState) => state.game)
 
     return <HeaderBase
@@ -35,13 +29,13 @@ const Header = (props: HeaderProps) => {
         { game.walletConnected ? (
             <>
                 <HeaderSection>
-                    <div onClick={ () => context.setDisableWalletModal(true) } className={ [css.walletHash].join(' ') }>
+                    <div onClick={ () => dispatch(setDisableWalletModal(true)) } className={ [css.walletHash].join(' ') }>
                         DFYrNUgxguiGKmZKdbGga...
                     </div>
-                    <Button onClick={ () => context.setConnectWalletModal(true) } className={ [css.walletButton, 'd-mobile'].join(' ') }>
+                    <Button onClick={ () => dispatch(setConnectWalletModal(true)) } className={ [css.walletButton, 'd-mobile'].join(' ') }>
                         <img src="/assets/images/icons/wallet.svg" alt="wallet" />
                     </Button>
-                    { !context.gameOver ? (
+                    { game.gameOver === 0 ? (
                         <>
                             <Dropdown
                                 loading={ game.loadingRooms }
@@ -49,12 +43,7 @@ const Header = (props: HeaderProps) => {
                                     [...Array(10)].map(item=>[1])
                                 }
                                 rooms={true}
-                                controller={{
-                                    id: 1,
-                                    currentId: activeDropdown,
-                                    setId: setActiveDropdown
-                                }}
-                                callback={ context.setContentBlured }
+                                dropdownId = {1}
                                 text={ 
                                     <>
                                         <span className={ 'd-desktop' }>Rooms</span>
@@ -69,12 +58,7 @@ const Header = (props: HeaderProps) => {
                                     [...Array(10)].map(item=>[12, 10])
                                 }
                                 tables={true}
-                                controller={{
-                                    id: 2,
-                                    currentId: activeDropdown,
-                                    setId: setActiveDropdown
-                                }}
-                                callback={ context.setContentBlured }
+                                dropdownId = {2}
                                 text={
                                     <>
                                         <span className={ 'd-desktop' }>Tables</span>
@@ -101,7 +85,7 @@ const Header = (props: HeaderProps) => {
                         { game.claim ? (
                             <Button onClick={ () => dispatch(setClaim(false)) }>CLAIm</Button>
                         ) : ''}
-                        { context.gameOver ? (
+                        { game.gameOver ? (
                             <>
                                 <div className={ 'd-mobile' }>
                                     <div onClick={ ()=>setGameOverShow(!gameOverShow) } className={ [css.gameOverSectionButton, gameOverShow ? css.gameOverSectionButtonActive : ''].join(' ') }>
@@ -131,7 +115,7 @@ const Header = (props: HeaderProps) => {
         ) : (
             <>
                 <HeaderSection>
-                    <Button onClick={ () => context.setConnectWalletModal(true) }>CONNECT WALLET</Button>
+                    <Button onClick={ () => dispatch(setConnectWalletModal(true)) }>CONNECT WALLET</Button>
                 </HeaderSection>
             </>
         ) }

@@ -3,13 +3,14 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 
 export interface gameState {
-  walletConnected: boolean,
-  currentGame: number,
-  currentRoom: number,
+  walletConnected: boolean
+  currentGame: number
+  currentRoom: number
   loadingRooms: boolean
-  loadingTables: boolean,
-  loadingTable: boolean,
+  loadingTables: boolean
+  loadingTable: boolean
   claim: boolean
+  gameOver: number
 }
 
 const initialState: gameState = {
@@ -19,7 +20,8 @@ const initialState: gameState = {
   loadingRooms: true,
   loadingTables: true,
   loadingTable: true,
-  claim: true
+  claim: true,
+  gameOver: 0
 }
 
 export const gameSlice = createSlice({

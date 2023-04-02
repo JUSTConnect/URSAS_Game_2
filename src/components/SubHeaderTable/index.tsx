@@ -18,7 +18,7 @@ const SubHeaderTable = (props: SubHeaderTableProps) => {
   return <SubHeader>
     <SubHeaderSection>
       <div className={ css.theLoby }>Table n.{ game.currentGame }</div >
-      <div className={ css.totalRooms }><span>Places</span> <Badge>&nbsp;5/10&nbsp;</Badge></div>
+      <div className={ css.totalRooms }><span>Places</span> <Badge loading={ game.loadingTable }>&nbsp;5/10&nbsp;</Badge></div>
     </SubHeaderSection>
     <button onClick={ ()=>props.setModalActive(!props.modalActive) } className={ [css.filterButton].join(' ') }>
       {

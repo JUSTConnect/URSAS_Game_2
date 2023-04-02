@@ -12,6 +12,69 @@
     line-height: 1em;
 }
 
+
+.loader
+{
+    background: rgba(34, 42, 58, 1);
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    padding: 2px;
+}
+
+.loaderInner
+{
+    position: relative;
+    background: rgba(49, 59, 82, 1);
+    padding: 1px;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+}
+
+.loaderBorder
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: spin 1s linear infinite;
+    padding-bottom: 50%;
+}
+
+.loaderBorderInner
+{
+    background: rgba(78, 94, 128, 1);
+    width: 100%;
+    height: 100%;
+}
+
+.loaderContainer
+{
+    position: relative;
+    padding: 7px;
+    background: rgba(49, 59, 82, 1);
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.loaderContainerInner
+{
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+@keyframes spin {
+    from
+    {
+        transform: rotate(0);
+    }
+    to
+    {
+        transform: rotate(360deg);
+    }
+}
+
 @media (max-width: 768px)
 {
     .badge
