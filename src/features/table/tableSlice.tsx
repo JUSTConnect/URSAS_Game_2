@@ -54,7 +54,15 @@ const initialState: tableState = {
 const addDecorator = (stateArray: PlaceState) => {
     return (state: Draft<tableState>, action: PayloadAction<Draft<PlaceData>>) => {
 
-        if (!state[stateArray].map(place => place.number).includes(action.payload.number)) {
+        console.log(action.payload)
+        console.log(state[stateArray])
+        if (
+            [
+                ...state.busyPlaces,
+                ...state.basketPlaces,
+                ...state.stakedPlaces
+            ].map(place => place.number).includes(action.payload.number)
+        ) {
             state[stateArray] = [...state[stateArray], action.payload]
             state.choosingCardPlace = 0
         }
