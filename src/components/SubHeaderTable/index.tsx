@@ -1,8 +1,9 @@
 import css from './index.module.css'
 
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { RootState } from '@/app/store'
+import { setChoosingCardPlace } from '@/features/table/tableSlice'
 import Badge from '@components/Badge'
 import SubHeader, { SubHeaderSection } from '@components/SubHeader'
 
@@ -13,6 +14,7 @@ interface SubHeaderTableProps
 }
 
 const SubHeaderTable = (props: SubHeaderTableProps) => {
+  const dispatch = useDispatch()
   const game = useSelector((state: RootState)=>state.game)
 
   return <SubHeader>
@@ -20,7 +22,7 @@ const SubHeaderTable = (props: SubHeaderTableProps) => {
       <div className={ css.theLoby }>Table n.{ game.currentGame }</div >
       <div className={ css.totalRooms }><span>Places</span> <Badge loading={ game.loadingTable }>&nbsp;5/10&nbsp;</Badge></div>
     </SubHeaderSection>
-    <button onClick={ ()=>props.setModalActive(!props.modalActive) } className={ [css.filterButton].join(' ') }>
+    <button onClick={ ()=>{props.setModalActive(!props.modalActive); dispatch(setChoosingCardPlace(0))} } className={ [css.filterButton].join(' ') }>
       {
         <svg  width="16" height="13" viewBox="0 0 16 13" xmlns="http://www.w3.org/2000/svg">
           <path 

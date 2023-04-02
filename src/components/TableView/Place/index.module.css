@@ -17,6 +17,11 @@
     text-align: start;
 }
 
+.place.loading
+{
+    cursor: initial;
+}
+
 .empty
 {
     background: #222A3A;

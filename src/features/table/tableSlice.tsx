@@ -54,10 +54,8 @@ const initialState: tableState = {
 const addDecorator = (stateArray: PlaceState) => {
     return (state: Draft<tableState>, action: PayloadAction<Draft<PlaceData>>) => {
 
-        console.log(action.payload)
-        console.log(state[stateArray])
         if (
-            [
+            ![
                 ...state.busyPlaces,
                 ...state.basketPlaces,
                 ...state.stakedPlaces

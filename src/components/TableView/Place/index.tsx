@@ -18,7 +18,7 @@ interface props extends React.HTMLAttributes<HTMLButtonElement>
 
 
 export default (props: props) => {
-    return <button onClick={ props.onClick } className={ 
+    return <button onClick={ !props.loading ? props.onClick : () => {} } className={ 
         [
             css.place,
             css[`place${props.number}`],
