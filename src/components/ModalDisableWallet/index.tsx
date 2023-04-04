@@ -1,5 +1,6 @@
 import css from './index.module.css'
 
+import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { RootState } from '@/app/store'
@@ -8,6 +9,7 @@ import { setDisableWalletModal } from '@/features/mainframe/mainframeSlice'
 
 
 export default () => {
+    const router = useRouter()
     const dispatch = useDispatch()
     const mainframe = useSelector((state: RootState) => state.mainframe)
 
@@ -16,7 +18,7 @@ export default () => {
             Disable the wallet
         </div>
         <div className={ css.buttons }>
-            <div onClick={ ()=> { dispatch(setDisableWalletModal(false)); dispatch(setWalletConnected(false)) } } className={ [css.button, 'fixMargin'].join(' ') }>disable</div>
+            <div onClick={ ()=> { router.push('/'); dispatch(setDisableWalletModal(false)); dispatch(setWalletConnected(false)) } } className={ [css.button, 'fixMargin'].join(' ') }>disable</div>
             <div onClick={ () => { dispatch(setDisableWalletModal(false)) } } className={ [css.button, css.buttonPrimary, 'fixMargin'].join(' ') }>cancel</div>
         </div>
     </div>

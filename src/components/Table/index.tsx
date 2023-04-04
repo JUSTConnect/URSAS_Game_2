@@ -7,13 +7,12 @@ interface TableProps extends React.HTMLAttributes<HTMLDivElement>
     tableNumber: number
     freePlaces?: number
     gameEnd?: string
-    isActive?: boolean
     cooldown?: boolean
-    href: string
+    href: number
 }
 
 const Table = (props: TableProps) => {
-    return <Link href={ props.href } className={ [css.table ,props.isActive ? css.tableActive : '', (props.freePlaces || 0) >= 10 ? css.tableDisabled : '', props.cooldown ? css.tableCooldown : ''].join(' ') }>
+    return <Link href={ props.cooldown || props.freePlaces===10 ? {} : `/table/${props.href}` } className={ [css.table, props.freePlaces || 0 >= 10 ? css.tableDisabled : '', props.cooldown ? css.tableCooldown : ''].join(' ') }>
         <div className={ css.bg }>
             <div className={ css.layer1 }>
                 <div className={ css.layer2 }>
@@ -31,8 +30,14 @@ const Table = (props: TableProps) => {
             <div className={ css.badge }>
                 { props.cooldown ? (
                     <span className={ 'textPrimary' } style={{ lineHeight: '2em' }}>cooldown</span>
-                ) : '' }
-                { props.freePlaces ? (
+                ) : props.gameEnd ? (
+                    <>
+                        game end
+                        <div className={ css.free }>
+                            { props.gameEnd }
+                        </div>
+                    </>
+                ) : Number.isInteger(props.freePlaces) ? (
                     <>
                         free places
                         <div className={ css.free }>
@@ -40,14 +45,6 @@ const Table = (props: TableProps) => {
                         </div>
                     </>
                 ) : '' }
-                { props.gameEnd ? (
-                    <>
-                        game end
-                        <div className={ css.free }>
-                            { props.gameEnd }
-                        </div>
-                    </>
-                ) : ''}
             </div>
         </div>
     </Link>
@@ -55,3 +52,4 @@ const Table = (props: TableProps) => {
 
 
 export default Table
+export type { TableProps }

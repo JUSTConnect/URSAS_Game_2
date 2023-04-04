@@ -109,7 +109,7 @@ export default (props: props) => {
                 { props.rank === Rank.POT || props.rank === Rank.JOKER || props.rank === Rank.CLOCK ? (
                     <>{ SpecialRankIcons[props.rank] }</>
                 ) : (
-                    props.rank
+                    props.rank !== Rank.N1 ? props.rank : 'A'
                 ) }
             </div>
             { isSpecial() ? (

@@ -10,20 +10,15 @@
     line-height: 1em;
 }
 
-.table:hover
-{
-    /* opacity: .7; */
-}
-
 .table.tableDisabled
 {
     opacity: .4;
-    cursor: not-allowed;
+    pointer-events: none;
 }
 
 .table.tableCooldown
 {
-    cursor: wait;
+    pointer-events: none;
 }
 
 .bg, .layer1, .layer2
@@ -41,7 +36,7 @@
     left: 0;
     background: linear-gradient(0deg, rgba(60,89,130,1) 0%, rgba(52,71,102,1) 13%, rgba(47,58,82,1) 26%, rgba(41,44,60,1) 46%, rgba(40,42,57,1) 67%);    
 }
-.tableActive .bg
+.table:not(.table.tableDisabled):not(.tableCooldown):hover .bg
 {
     background: linear-gradient(180deg, rgba(215,184,46,1) 0%, rgba(216,184,46,1) 13%, rgba(213,178,45,1) 26%, rgba(211,172,44,1) 46%, rgba(245,211,56,1) 67%);   
 }
@@ -54,7 +49,7 @@
 {
     background: radial-gradient(118.3% 90.79% at 53.34% 50%, #3A4561 0%, #222E41 100%);
 }
-.tableActive .layer1
+.table:not(.table.tableDisabled):not(.tableCooldown):hover .layer1
 {
     background: linear-gradient(180deg, #E7DF36 0%, #EFB23D 100%);
 }
@@ -63,7 +58,7 @@
 {
     border: 1px solid #384156;
 }
-.tableActive .layer2
+.table:not(.table.tableDisabled):not(.tableCooldown):hover .layer2
 {
     border: 1px solid #D1AE1E;
 }
@@ -78,7 +73,7 @@
 {
     margin-bottom: 22px;
 }
-.tableActive .header
+.table:not(.table.tableDisabled):not(.tableCooldown):hover .header
 {
     color: rgba(212, 173, 44, 1);
 }
@@ -93,7 +88,7 @@
     margin-top: 4px;
     line-height: 22px;
 }
-.tableActive .number
+.table:not(.table.tableDisabled):not(.tableCooldown):hover .number
 {
     color: #6B560F;
 }
@@ -117,7 +112,7 @@
     line-height: 1em;
     color:  #4E5E80;
 }
-.tableActive .badge
+.table:not(.table.tableDisabled):not(.tableCooldown):hover .badge
 {
     background: #D4AD2C;
     color: #E8D837;
@@ -128,7 +123,7 @@
     color: #B5C4E3;
     margin-top: 4px;
 }
-.tableActive .free
+.table:not(.table.tableDisabled):not(.tableCooldown):hover .free
 {
     color: #6B560F;
 }
@@ -154,7 +149,7 @@
         padding: 0;
         height: 30px;
     }
-    .tableActive .badge
+    .table:not(.table.tableDisabled):not(.tableCooldown):hover .badge
     {
         background: transparent;
     }

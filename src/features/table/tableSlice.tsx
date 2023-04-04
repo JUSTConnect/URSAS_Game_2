@@ -48,7 +48,7 @@ const initialState: tableState = {
     stakedPlaces: exampleStakedPlaces,
     basketPlaces: exampleBasketPlaces,
     choosingCardPlace: 0,
-    modalAlert: ''
+    modalAlert: '',
 }
 
 const addDecorator = (stateArray: PlaceState) => {
@@ -117,7 +117,7 @@ export const tableSlice = createSlice({
 
         setModalAlert: (state, action: PayloadAction<string>) => {
             state.modalAlert = action.payload
-        }
+        },
     }
 })
 

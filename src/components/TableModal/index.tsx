@@ -31,6 +31,7 @@ const TableModal = (props: TableModalProps) => {
     const table = useSelector((state: RootState) => state.table)
     const [selectedBasketPlaces, setSelectedBasketPlaces] = useState<number[]>([])
     const [selectedStakedPlaces, setSelectedStakedPlaces] = useState<number[]>([])
+    const [submitTimer, setSubmitTimer] = useState<[number, number]>([2, 0])
 
     const randomCards = [...Array(10)].map(()=>randomCard())
 
@@ -58,7 +59,11 @@ const TableModal = (props: TableModalProps) => {
                         :
                         table.basketPlaces.length ?
                             <div>
-                                Confirm places <span className={ css.textLight }>01:56</span>
+                                Confirm places <span className={ css.textLight }>
+                                    { String(submitTimer[0]).padStart(2, '0') }
+                                    :
+                                    { String(submitTimer[1]).padStart(2, '0') }
+                                </span>
                             </div>
                         :    
                             'Basket places'
@@ -66,7 +71,7 @@ const TableModal = (props: TableModalProps) => {
                     </div>
                 </div>
                 <div className={ css.modalHeaderButtons }>
-                    { Boolean(table.basketPlaces.length) &&
+                    { Boolean(table.basketPlaces.length) && !table.choosingCardPlace  &&
                         <button onClick={ () => dispatch(submitPlaces()) } className={ css.modalHeaderButton }>
                             submit
                         </button>
@@ -109,7 +114,7 @@ const TableModal = (props: TableModalProps) => {
                                     suit={ place.suit }
                                     active={ selectedBasketPlaces.includes(place.number) }
                                     onClick={
-                                        () => 
+                                        () =>
                                             selectedBasketPlaces.includes(place.number)
                                             ?
                                             setSelectedBasketPlaces(selectedBasketPlaces.filter(number=>number!==place.number))

@@ -36,8 +36,11 @@ const TableView = (props: TableViewProps) => {
                     suit: CardSuit.DIAMOND
                 })
             )
-            dispatch(setModalAlert('Your seat has been taken, please select another!'))
-            setTimeout(() => dispatch(setModalAlert('')), 5000)
+            if (table.basketPlaces.map(place=>place.number).includes(number))
+            {
+                dispatch(setModalAlert('Your seat has been taken, please select another!'))
+                setTimeout(() => dispatch(setModalAlert('')), 5000)
+            }
         }, 10000)
     }
 
