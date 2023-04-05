@@ -1,34 +1,32 @@
-import css from './index.module.css'
+import css from './index.module.scss'
 
 
-import Card, {CardRank, CardSuit} from '@/components/Card'
+import type { Card } from '@/components/Card'
+import Place from '@/components/UIPlace'
 
-
-interface PlaceProps extends React.HTMLAttributes<HTMLButtonElement>
+interface props extends React.HTMLAttributes<HTMLButtonElement>
 {
-    number: number
-    rank: CardRank
-    suit: CardSuit
+    number?: number
+    card?: Card
     active?: boolean
 }
 
 
-const Place = (props: PlaceProps) => {
+export default (props: props) => {
     return (
-        <button onClick={ props.onClick } className={ [css.place, props.active ? css.active : ''].join(' ') }>
-            <Card
-                rank={ props.rank }
-                suit={ props.suit }
-                className={ css.placeCard }
-            />
-            <div className={ [css.placeInfo].join(' ') }>
-                <div className={ css.placeTitle }>place</div>
-                <div className={ [css.placeNumber, 'fontSpecial'].join(' ') }>№ {props.number}</div>
-            </div>
-        </button>
+        <Place
+            className={
+                [
+                    css.place,
+                    props.active && css.active
+                ].join(' ')
+            }
+            onClick={ props.onClick }
+
+            number={ props.number }
+            card={ props.card }
+        />
     )
 }
 
-
-export default Place
-export type { PlaceProps }
+export type { props }

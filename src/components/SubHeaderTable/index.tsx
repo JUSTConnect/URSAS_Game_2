@@ -19,7 +19,7 @@ const SubHeaderTable = (props: SubHeaderTableProps) => {
   const table = useSelector((state: RootState)=>state.table)
 
   const countTakenPlaces = () => {
-    return table.basketPlaces.length + table.busyPlaces.length + table.stakedPlaces.length
+    return 10 - (table.basketPlaces.length + table.busyPlaces.length + table.stakedPlaces.length)
   }
 
   return <SubHeader>
@@ -33,7 +33,7 @@ const SubHeaderTable = (props: SubHeaderTableProps) => {
             Confirm places <span className={ 'textPrimary' }>02:00</span>
         </div>
       }
-      <button onClick={ ()=>{props.setModalActive(!props.modalActive); dispatch(setChoosingCardPlace(0))} } className={ [css.filterButton].join(' ') }>
+      <button onClick={ !game.loadingTable ? ()=>{props.setModalActive(!props.modalActive); dispatch(setChoosingCardPlace(0))} : () => {} } className={ [css.filterButton].join(' ') }>
         {
           <svg  width="16" height="13" viewBox="0 0 16 13" xmlns="http://www.w3.org/2000/svg">
             <path 

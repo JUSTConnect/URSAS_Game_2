@@ -1,0 +1,18 @@
+
+.place
+{
+    pointer-events: initial !important;
+    cursor: pointer;
+    width: 100% !important;
+
+    & *::before
+    {
+        content: none !important;
+    }
+
+    &.active
+    {
+        outline: 1px solid #EFB23D;
+    }
+
+}

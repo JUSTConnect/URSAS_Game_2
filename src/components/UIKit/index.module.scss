@@ -1,0 +1,17 @@
+.container
+{
+    padding: 16px;
+    @media (max-width: 768px)
+    {
+        padding: 8px;
+    }
+}
+
+.section
+{
+    margin-bottom: 32px;
+    @media (max-width: 768px)
+    {
+        margin-bottom: 16px;
+    }
+}

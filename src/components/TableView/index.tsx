@@ -1,6 +1,8 @@
 import css from './index.module.css'
 
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useRouter } from 'next/router'
 
 import { RootState } from '@/app/store'
 import TableModal from '@components/TableModal'
@@ -20,9 +22,15 @@ interface TableViewProps
 
 
 const TableView = (props: TableViewProps) => {
+    const router = useRouter()
     const dispatch = useDispatch()
     const game = useSelector((state: RootState)=>state.game)
     const table = useSelector((state: RootState)=>state.table)
+
+    if (table.stakedPlaces.length + table.busyPlaces.length === 10)
+    {
+        router.push('/')
+    }
 
     const handleClickPlace = (number: number) => {
         props.setModalActive(true)
@@ -32,11 +40,13 @@ const TableView = (props: TableViewProps) => {
             dispatch(
                 addBusyPlace({
                     number: number,
-                    rank: CardRank.ACE,
-                    suit: CardSuit.DIAMOND
+                    card: {
+                        rank: CardRank.ACE,
+                        suit: CardSuit.DIAMOND
+                    }
                 })
             )
-            if (table.basketPlaces.map(place=>place.number).includes(number))
+            if (!table.basketPlaces.map(place=>place.number).includes(number))
             {
                 dispatch(setModalAlert('Your seat has been taken, please select another!'))
                 setTimeout(() => dispatch(setModalAlert('')), 5000)
@@ -63,15 +73,17 @@ const TableView = (props: TableViewProps) => {
                         />
                         <Place
                             number={ index+1 }
-                            busy = { table.busyPlaces.map(item=>item.number).includes(index+1) }
+                            className={ css[`place${index+1}`] }
                             basket = { table.basketPlaces.map(item=>item.number).includes(index+1) } 
                             staked = { table.stakedPlaces.map(item=>item.number).includes(index+1) }
-                            empty={ game.loadingTable || ![...table.stakedPlaces, ...table.basketPlaces].map(item=>item.number).includes(index+1) && !table.busyPlaces.map(item=>item.number).includes(index+1) }
-                            loading = { game.loadingTable || table.choosingCardPlace === index+1 }
+                            loading = { game.loadingTable }
+                            choosing = { table.choosingCardPlace === index+1 }
                             onClick = { () => handleClickPlace(index+1) }
 
-                            rank={ [...table.stakedPlaces, ...table.busyPlaces, ...table.basketPlaces].filter(item=>item.number===index+1)[0]?.rank }
-                            suit={ [...table.stakedPlaces, ...table.busyPlaces, ...table.basketPlaces].filter(item=>item.number===index+1)[0]?.suit }
+                            card={ (!game.loadingTable && [...table.stakedPlaces, ...table.busyPlaces, ...table.basketPlaces].filter(item=>item.number===index+1)[0]) ? {
+                                rank: [...table.stakedPlaces, ...table.busyPlaces, ...table.basketPlaces].filter(item=>item.number===index+1)[0].card.rank,
+                                suit: [...table.stakedPlaces, ...table.busyPlaces, ...table.basketPlaces].filter(item=>item.number===index+1)[0].card.suit
+                            } : undefined }
                         />
                     </div>
                 )

@@ -3,7 +3,7 @@ import css from './index.module.css'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import type { PlaceProps as PlaceData } from './Place'
+import type { props as PlaceData } from './Place'
 import { RootState } from '@/app/store'
 import {
     addBasketPlace,
@@ -95,8 +95,10 @@ const TableModal = (props: TableModalProps) => {
                                         addBasketPlace(
                                             {
                                                 number: table.choosingCardPlace,
-                                                rank: randomCards[index][0],
-                                                suit: randomCards[index][1] 
+                                                card: {
+                                                    rank: randomCards[index][0],
+                                                    suit: randomCards[index][1] 
+                                                }
                                             }
                                         )
                                     )
@@ -110,16 +112,18 @@ const TableModal = (props: TableModalProps) => {
                                 <Place
                                     key={ index }
                                     number={place.number}
-                                    rank={ place.rank }
-                                    suit={ place.suit }
-                                    active={ selectedBasketPlaces.includes(place.number) }
+                                    card={ place.card ? {
+                                        rank: place.card.rank,
+                                        suit: place.card.suit
+                                    } : undefined }
+                                    active={ selectedBasketPlaces.includes(place.number||0) }
                                     onClick={
                                         () =>
-                                            selectedBasketPlaces.includes(place.number)
+                                            selectedBasketPlaces.includes(place.number||0)
                                             ?
                                             setSelectedBasketPlaces(selectedBasketPlaces.filter(number=>number!==place.number))
                                             :
-                                            setSelectedBasketPlaces([...selectedBasketPlaces, place.number])
+                                            setSelectedBasketPlaces([...selectedBasketPlaces, place.number||0])
                                     }
                                 />
                             )
@@ -144,8 +148,10 @@ const TableModal = (props: TableModalProps) => {
                                 <Place
                                     key={ index }
                                     number={place.number}
-                                    rank={ place.rank }
-                                    suit={ place.suit }
+                                    card={ place.card ?{
+                                        rank: place.card.rank,
+                                        suit: place.card.suit
+                                    } : undefined }
                                     active={ selectedStakedPlaces.includes(place.number) }
                                     onClick={
                                         () => 
@@ -153,7 +159,7 @@ const TableModal = (props: TableModalProps) => {
                                             ?
                                             setSelectedStakedPlaces(selectedStakedPlaces.filter(number=>number!==place.number))
                                             :
-                                            setSelectedStakedPlaces([...selectedStakedPlaces, place.number])
+                                            setSelectedStakedPlaces([...selectedStakedPlaces, place.number||0])
                                     }
                                 />
                             )

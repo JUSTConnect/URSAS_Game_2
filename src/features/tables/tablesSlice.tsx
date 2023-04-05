@@ -8,12 +8,12 @@ import type { TableProps } from '@/components/Table'
 const examplePlaces: TableProps[] = [
     {
         tableNumber: 1,
-        freePlaces: 1,
+        freePlaces: 10,
         href: 1
     },
     {
         tableNumber: 2,
-        freePlaces: 10,
+        freePlaces: 0,
         href: 2
     },
     {
@@ -24,13 +24,13 @@ const examplePlaces: TableProps[] = [
     },
     {
         tableNumber: 4,
-        freePlaces: 0,
+        freePlaces: 1,
         href: 4,
         cooldown: true
     },
     ...Array.from(Array(30).keys()).map(item => Object({
         tableNumber: item+5,
-        freePlaces: 0,
+        freePlaces: 10,
         href: 4,
     }))
 ]

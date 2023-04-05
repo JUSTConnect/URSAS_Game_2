@@ -1,0 +1,127 @@
+.button
+{
+    border: none;
+    outline: none;
+    padding: 0;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    &.circle
+    {
+        border-radius: 666px;
+    }
+}
+
+
+.button-lg
+{
+    border-radius: 24px;
+    @media (max-width: 768px)
+    {
+        border-radius: 6px;
+    }
+
+    &:hover
+    {
+        opacity: .7;
+    }
+    
+    &.minWidth
+    {
+        min-width: 140px;
+        text-align: center;
+        @media (max-width: 768px)
+        {
+            min-width: 80px;
+        }
+    }
+    &.fullWidth
+    {
+        width: 100%;
+        text-align: center;
+    }
+
+    &.dark
+    {
+        color: #B5C4E3;
+        &.normal
+        {
+            background: #222A3A;
+        }
+    }
+    &.light
+    {
+        color: #222A3A;
+        transition: .2s;
+        &.gradient
+        {
+            background: linear-gradient(180deg, #E7DF36 0%, #EFB23D 100%);
+        }
+        &:hover
+        {
+            opacity: 1;
+            box-shadow: #EFB23D 0px 0px 30px -5px;
+        }
+        & .inner::before
+        {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            height: 200%;
+            width: 10px;
+            opacity: .5;
+            background-color: white;
+            transform: rotate(25deg);
+            transition: 1s;
+        }
+        &:hover .inner::before
+        {
+            left: 150%
+        }
+    }
+    &.outline
+    {
+        border: 1px solid #313B52;
+        background: none;
+    }
+
+    & .inner
+    {
+        padding: 20px;
+        font-weight: 600;
+
+        @media (max-width: 768px)
+        {
+            font-size: 12px;
+            padding: 10px;
+        }
+    }
+}
+
+.button-md
+{
+    min-width: 110px;
+    background: #313B52;
+    color: #B5C4E3;
+    border-radius: 666px;
+    @media (max-width: 768px)
+    {
+        min-width: initial;
+    }
+
+    &.disabled
+    {
+        background: #222A3A;
+        color: #4E5E80;
+    }
+
+    & .inner
+    {
+        padding: 11px;
+        @media (max-width: 768px)
+        {
+            padding: 9px;
+        }
+    }
+}

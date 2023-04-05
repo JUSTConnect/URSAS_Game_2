@@ -1,0 +1,60 @@
+.text
+{
+    color: #B5C4E3;
+    
+    &.muted
+    {
+        color: #4E5E80;
+    }
+    &.inline
+    {
+        display: inline;
+    }
+}
+
+
+// margin
+
+.h1, .h2, .p
+{
+    margin-bottom: 1em;
+}
+
+
+// size
+
+.h1
+{
+    font-size: 64px;
+    @media (max-width: 768px)
+    {
+        font-size: 32px;
+    }
+}
+
+.h2
+{
+    font-size: 32px;
+    @media (max-width: 768px)
+    {
+        font-size: 24px;
+    }
+}
+
+.p
+{
+    font-size: 16px;
+    @media (max-width: 768px)
+    {
+        font-size: 12px;
+    }
+}
+
+.small
+{
+    font-size: 12px;
+    @media (max-width: 768px)
+    {
+        font-size: 8px;
+    }
+}

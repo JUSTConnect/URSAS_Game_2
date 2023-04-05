@@ -6,8 +6,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import type { RootState } from '@/app/store'
 import { setConnectWalletModal, setDisableWalletModal } from '@/features/mainframe/mainframeSlice'
 import { setClaim } from '@/features/game/gameSlice'
-import Badge from '@components/Badge'
-import Button from '@components/Button'
+import Badge from '@components/UIBadge'
+import Button from '@components/UIButton'
 import Dropdown from '@/components/Header/Dropdown'
 import {Loader} from './Dropdown'
 import HeaderBase, { HeaderSection } from '@/components/HeaderBase'
@@ -32,8 +32,8 @@ const Header = (props: HeaderProps) => {
                     <div onClick={ () => dispatch(setDisableWalletModal(true)) } className={ [css.walletHash].join(' ') }>
                         DFYrNUgxguiGKmZKdbGga...
                     </div>
-                    <Button onClick={ () => dispatch(setConnectWalletModal(true)) } className={ [css.walletButton, 'd-mobile'].join(' ') }>
-                        <img src="/assets/images/icons/wallet.svg" alt="wallet" />
+                    <Button onClick={ () => dispatch(setDisableWalletModal(true)) } className={ [css.walletButton, 'd-mobile'].join(' ') }>
+                        <i className="fa-solid fa-wallet"></i>
                     </Button>
                     { game.gameOver === 0 ? (
                         <>
@@ -74,16 +74,12 @@ const Header = (props: HeaderProps) => {
                     <img className={ 'd-mobile' } src="/assets/images/icons/chair.svg" alt="chair" />
                         <div className={ css.places }>
                             <span className={ ['d-desktop', 'textMuted'].join(' ') }>Places&nbsp;</span>
-                            <Badge transparentMobile={ true }>
-                                { game.loadingRooms ? (
-                                    <Loader/>
-                                ) : (
-                                    <>&nbsp;5/5&nbsp;</>
-                                ) }
+                            <Badge loading={game.loadingRooms} mobileTransparrent={ true }>
+                                &nbsp;5/5&nbsp;
                             </Badge>
                         </div>
                         { game.claim ? (
-                            <Button onClick={ () => dispatch(setClaim(false)) }>CLAIm</Button>
+                            <Button minWidth={ true } onClick={ () => dispatch(setClaim(false)) }>CLAIM</Button>
                         ) : ''}
                         { game.gameOver ? (
                             <>
@@ -104,8 +100,8 @@ const Header = (props: HeaderProps) => {
                                         </div>
                                     </div>
                                     <div className={ css.gameOverButtons }>
-                                        <Button primary={true}>REFOUND</Button>
-                                        <Button primary={true}>BURN</Button>
+                                        <Button minWidth>REFOUND</Button>
+                                        <Button minWidth>BURN</Button>
                                     </div>
                                 </div>
                             </>

@@ -29,6 +29,8 @@ interface SliderFragmentProps
 
 const SliderFragment = (props: SliderFragmentProps) => {
     const dispatch = useDispatch()
+    const game = useSelector((state: RootState) => state.game)
+
 
     return (
         <>
@@ -72,9 +74,9 @@ const SliderFragment = (props: SliderFragmentProps) => {
                         }
                     >
                         <Door
-                            href={ index === props.selectedDoor ? `/tables/${level}` : null }
+                            href={ game.walletConnected && index === props.selectedDoor ? `/tables/${level}` : null }
                             level={level}
-                            active={index === props.selectedDoor}
+                            active={ game.walletConnected && index === props.selectedDoor}
                             go={false}
                             over={ index-props.indexAdd === props.over-1 }
                         />
@@ -99,7 +101,6 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
 
     const [currentDoorList, setCurrentDoorList] = useState(0)
 
-    const mainframe = useSelector((state: RootState) => state.mainframe)
     const game = useSelector((state: RootState) => state.game)
 
     useEffect(()=>{

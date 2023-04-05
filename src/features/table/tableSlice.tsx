@@ -1,29 +1,42 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction, Draft } from '@reduxjs/toolkit'
 
-import { PlaceProps as PlaceData } from '@/components/TableModal/Place'
-import { CardSuit, CardRank } from '@/components/Card'
+import type { Card } from '@/components/Card'
+import { PlaceProps } from '@/components/UIPlace'
+import { CardRank, CardSuit } from '@/components/Card'
+
+interface BusyPlaceProps extends PlaceProps
+{
+    number: number,
+    card: Card
+}
 
 // example data
-const exampleBusyPlaces: PlaceData[] = [
+const exampleBusyPlaces: BusyPlaceProps[] = [
     {
         number: 4,
-        suit: CardSuit.CLUB,
-        rank: CardRank.N10,
+        card: {
+            suit: CardSuit.CLUB,
+            rank: CardRank.N10,
+        }
     }
 ]
-const exampleStakedPlaces: PlaceData[] = [
+const exampleStakedPlaces: BusyPlaceProps[] = [
     {
         number: 1,
-        suit: CardSuit.CLUB,
-        rank: CardRank.N9,
+        card: {
+            suit: CardSuit.CLUB,
+            rank: CardRank.N9,
+        }
     }
 ]
-const exampleBasketPlaces: PlaceData[] = [
+const exampleBasketPlaces: BusyPlaceProps[] = [
     {
         number: 2,
-        suit: CardSuit.HEART,
-        rank: CardRank.N10,
+        card: {
+            suit: CardSuit.HEART,
+            rank: CardRank.N10,
+        }
     }
 ]
 // 
@@ -36,9 +49,9 @@ enum PlaceState
 }
 
 export interface tableState {
-    busyPlaces: PlaceData[]
-    stakedPlaces: PlaceData[]
-    basketPlaces: PlaceData[]
+    busyPlaces: BusyPlaceProps[]
+    stakedPlaces: BusyPlaceProps[]
+    basketPlaces: BusyPlaceProps[]
     choosingCardPlace: number
     modalAlert: string
 }
@@ -52,7 +65,7 @@ const initialState: tableState = {
 }
 
 const addDecorator = (stateArray: PlaceState) => {
-    return (state: Draft<tableState>, action: PayloadAction<Draft<PlaceData>>) => {
+    return (state: Draft<tableState>, action: PayloadAction<Draft<BusyPlaceProps>>) => {
 
         if (
             ![
@@ -75,7 +88,7 @@ const removeDecorator = (stateArray: PlaceState) => {
 }
 
 const setDecorator = (stateArray: PlaceState) => {
-    return (state: Draft<tableState>, action: PayloadAction<Draft<PlaceData[]>>) => {
+    return (state: Draft<tableState>, action: PayloadAction<Draft<BusyPlaceProps[]>>) => {
         state[stateArray] = action.payload
     }
 }

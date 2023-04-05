@@ -1,4 +1,4 @@
-import css from './index.module.css'
+import css from './index.module.scss'
 
 import { useContext, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -23,7 +23,7 @@ const TableList = (props: TableListProps) => {
     const filteredPlaces = () => {
         switch (tables.filter) {
             case TablesFilter.all: return tables.places
-            case TablesFilter.empty: return tables.places.filter(place=>place.freePlaces===0) 
+            case TablesFilter.empty: return tables.places.filter(place=>place.freePlaces===10) 
             case TablesFilter.cooldown: return tables.places.filter(place=>place.cooldown)
             case TablesFilter.gaming: return tables.places.filter(place=>place.gameEnd)
             default: return []

@@ -128,3 +128,5 @@ export {
     Suit as CardSuit,
     randomCard
 }
+
+export type { props as Card }
