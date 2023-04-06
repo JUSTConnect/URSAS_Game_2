@@ -1,4 +1,4 @@
-import css from './index.module.css'
+import css from './index.module.scss'
 
 import { useDispatch, useSelector } from 'react-redux'
 

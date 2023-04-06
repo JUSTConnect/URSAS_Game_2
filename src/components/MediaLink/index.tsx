@@ -9,7 +9,7 @@ interface MediaLinkProps extends React.HTMLAttributes<HTMLAnchorElement>
 }
 
 const MediaLink = (props: MediaLinkProps) => {
-    return <Link {...props} className={ css.mediaLink } href={ props.href }>
+    return <Link target='_blank' {...props} className={ css.mediaLink } href={ props.href }>
         { props.children }
     </Link>
 }

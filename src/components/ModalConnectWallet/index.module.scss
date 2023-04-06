@@ -27,8 +27,46 @@
 .top
 {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding: 16px;
+    margin-bottom: 16px;
+}
+
+.tabs
+{
+    display: flex;
+    border-bottom: 1px solid #384156;
+    width: 100%;
+}
+
+.tab
+{
+    outline: none;
+    border: none;
+    background: none;
+    padding: 0 8px 4px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #B5C4E3;
+    user-select: none;
+    
+    &:not(.tabActive):hover {
+        cursor: pointer;
+        opacity: .8;
+    }
+    &Active
+    {
+        border-bottom: 2px solid #E7DF36;
+        pointer-events: none;
+    }
+}
+
+
+.tabIcon
+{
+    height: 32px;
 }
 
 .buttonClose
@@ -42,6 +80,7 @@
     border-radius: 12px;
     background: none;
     cursor: pointer;
+    margin-left: 8px;
 }
 
 .buttonClose:hover
@@ -102,7 +141,8 @@
     .container
     {
         padding: 8px;
-        max-width: 300px;
+        max-width: 375px;
+        width: 100%;
     }
 
     .modal
@@ -114,6 +154,15 @@
     .top
     {
         padding: 8px;
+    }
+
+    .tab
+    {
+        font-size: 14px;
+    }
+    .tabIcon
+    {
+        height: 20px;
     }
 
     .buttonClose

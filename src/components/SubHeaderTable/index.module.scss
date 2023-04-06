@@ -18,6 +18,10 @@
     border-radius: 12px;
     border: none;
     cursor: pointer;
+    &:hover
+    {
+        opacity: .7;
+    }
 }
 
 @media (max-widtH: 1060px)
@@ -46,5 +50,10 @@
     {
         margin-left: 8px;
         font-size: 14px;
+    }
+
+    .confirmPlaces
+    {
+        font-size: 12px;
     }
 }

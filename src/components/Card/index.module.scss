@@ -1,0 +1,83 @@
+.card
+{
+    border: none;
+    border-radius: 2px;
+    font-size: 2em;
+    height: 2.5em;
+    line-height: .8em;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    width: 2em;
+
+    & svg
+    {       
+        height: 1em;
+        width: 1em;
+    }
+
+    & .inner
+    {
+        padding: .2em;
+        position: relative;
+        
+        height: 100%;
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+
+
+    }
+
+    &.red
+    {
+        background: #B43B35;
+        color: #B5C4E3;
+
+        & path
+        {
+            fill: #B5C4E3;
+        }
+    }
+
+
+    &.dark
+    {
+        background: #171B25;
+        color: #4E5E80;
+
+        & path
+        {
+            fill: #4E5E80;
+        }
+    }
+    
+    & .suit
+    {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    & .rank
+    {
+        &Center
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+
+
+.rankIcon
+{
+    height: 1.8em;
+}

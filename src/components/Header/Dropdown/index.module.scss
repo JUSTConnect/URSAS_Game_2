@@ -43,7 +43,6 @@
 
 .data
 {
-    display: none;
     position: absolute;
     transform: translateY(calc(100% + 15px));
     background: #293145;
@@ -52,15 +51,48 @@
     width: max-content;
     border-radius: 0 0 24px 24px;
     z-index: 2;
-    padding-bottom: 16px;
+    transition: .2s;
+    height: 0px;
+
+    & .dataAngleLeft, & .dataAngleRight
+    {
+        height: 0;
+        transition: .1s;
+    }
+
+    & &AngleLeft
+    {
+        position: absolute;
+        left: 0;
+        transform: translate(-100%);
+    }
+
+    & &AngleRight
+    {
+        position: absolute;
+        right: 0;
+        transform: translate(calc(100% - 1px));    
+    }
+
+    &Active
+    {
+        display: block;
+        height: 150px;
+
+        & .dataAngleLeft, & .dataAngleRight
+        {
+            height: 20px;
+        }
+    }
+
 }
 
 .dataContainer
 {
     padding: 0 15px;
-    max-height: 150px;
     overflow-x: visible;
     overflow-y: scroll;
+    height: calc(100% - 20px);
 }
 
 /* width */
@@ -84,12 +116,6 @@
 .dataContainer::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
-  
-
-.dataActive
-{
-    display: block;
-}
 
 .dataItem
 {
@@ -102,22 +128,6 @@
     opacity: .8;
 }
 
-.dataAngleLeft
-{
-    position: absolute;
-    left: 0;
-    height: 20px;
-    transform: translate(-100%);
-}
-
-.dataAngleRight
-{
-    position: absolute;
-    right: 0;
-    height: 20px;
-    transform: translate(calc(100% - 1px));    
-}
-
 .arrowIcon
 {
     font-size: 8px;
@@ -125,10 +135,15 @@
     transform: rotate(90deg);
 }
 
+.dropdown:hover:hover .arrowIcon
+{
+    color: #EFD154 !important;
+}
+
 .arrowIconActive
 {
     transform: rotate(-90deg);
-    color: #EFB23D;
+    color: #EFD154;
 }
 
 
@@ -223,11 +238,11 @@
         transform: translateY(calc(100% + 7px));
         font-size: 12px;
         border-radius: 0 0 12px 12px;
-        padding-bottom: 6px;
     }
     .dataContainer
     {
         padding: 0 15px;
+        height: calc(100% - 16px);
     }
     .dataAngleRight
     {

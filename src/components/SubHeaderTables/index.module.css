@@ -3,6 +3,11 @@
     margin-left: 8px;
 }
 
+.filterButtonActive path
+{
+    fill: #EFD154;
+}
+
 @media (max-widtH: 1060px)
 {
     .pockerTable

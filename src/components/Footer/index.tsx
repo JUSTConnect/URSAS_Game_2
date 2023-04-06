@@ -32,7 +32,7 @@ const Footer = (props: FooterProps) => {
             </Link>
         </div>
         <div className={ css.mediaLinks }>
-            <a href="mailto://support@ursas.io" className={ css.mail }>support@ursas.io</a>
+            <a target="_blank" href="mailto:support@ursas.io" className={ css.mail }>support@ursas.io</a>
             <MediaLink href='https://medium.com/@Teddy_arrr     /'>
                 <svg width="21" height="12" viewBox="0 0 21 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M11.8451 6.00033C11.8451 9.29372 9.19353 11.9636 5.92257 11.9636C2.65162 11.9636 0 9.29372 0 6.00033C0 2.70694 2.65162 0.0371094 5.92257 0.0371094C9.19349 0.0371094 11.8451 2.70694 11.8451 6.00033Z" fill="#B5C4E3"/>

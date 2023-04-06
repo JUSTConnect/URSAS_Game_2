@@ -29,7 +29,7 @@ const TableView = (props: TableViewProps) => {
 
     if (table.stakedPlaces.length + table.busyPlaces.length === 10)
     {
-        router.push('/')
+        router.push(`/tables/${game.currentRoom}`)
     }
 
     const handleClickPlace = (number: number) => {

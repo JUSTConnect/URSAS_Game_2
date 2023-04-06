@@ -11,7 +11,7 @@ import {
     Size as ButtonSize
 } from '@components/UIButton'
 import Place from '@components/UIPlace'
-import { CardRank, CardSuit } from '@components/Card'
+import Card, { CardRank, CardSuit } from '@components/Card'
 
 
 export default () => {
@@ -50,36 +50,148 @@ export default () => {
         </div>
         <div className={ css.section }>
             <Text variant={text.h2}>Badge:</Text>
-            <Badge>12</Badge>
-            <Badge mobileTransparrent={ true }>Mobile transparrent</Badge>
-            <Badge loading={ true }>Mobile transparrent</Badge>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+                <Badge>12</Badge>
+                <Badge mobileTransparrent={ true }>Mobile transparrent</Badge>
+                <Badge loading={ true }>Mobile transparrent</Badge>
+            </div>
         </div>
         <div className={ css.section }>
             <Text variant={text.h2}>Place:</Text>
-            <Place
-                number={ 1 }
-                card={ {rank: CardRank.CLOCK, suit: CardSuit.CLUB} }
-            />
-            <Place
-                number={ 1 }
-                staked={ true }
-                card={ {rank: CardRank.N1, suit: CardSuit.CLUB} }
-            />
-            <Place
-                number={ 1 }
-                basket={ true }
-                card={ {rank: CardRank.N10, suit: CardSuit.HEART} }
-            />
-            <Place
-                number={ 1 }
-            />
-            <Place
-                loading={ true }
-            />
-            <Place
-                number={1}
-                choosing={ true }
-            />
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+                <Place
+                    number={ 1 }
+                    card={ {rank: CardRank.CLOCK, suit: CardSuit.CLUB} }
+                />
+                <Place
+                    number={ 1 }
+                    staked={ true }
+                    card={ {rank: CardRank.N1, suit: CardSuit.CLUB} }
+                />
+                <Place
+                    number={ 1 }
+                    basket={ true }
+                    card={ {rank: CardRank.N10, suit: CardSuit.HEART} }
+                />
+                <Place
+                    number={ 1 }
+                />
+                <Place
+                    loading={ true }
+                />
+                <Place
+                    number={1}
+                    choosing={ true }
+                />
+            </div>
+        </div>
+        <div className={ css.section }>
+            <Text variant={text.h2}>Cards:</Text>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                <Card
+                    suit={CardSuit.CLUB}
+                    rank={CardRank.ACE}
+                />
+                __
+                <Card
+                    suit={CardSuit.HEART}
+                    rank={CardRank.ACE}
+                />
+                --
+                <Card
+                    suit={CardSuit.SPADE}
+                    rank={CardRank.ACE}
+                />
+                --
+                <Card
+                    suit={CardSuit.DIAMOND}
+                    rank={CardRank.ACE}
+                />
+            </div>
+            <br />
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                <Card
+                    suit={CardSuit.CLUB}
+                    rank={CardRank.N2}
+                />
+                --  
+                <Card
+                    suit={CardSuit.CLUB}
+                    rank={CardRank.N3}
+                />
+                __
+                <Card
+                    suit={CardSuit.CLUB}
+                    rank={CardRank.N4}
+                />
+                __
+                <Card
+                    suit={CardSuit.CLUB}
+                    rank={CardRank.N5}
+                />
+                __
+                <Card
+                    suit={CardSuit.CLUB}
+                    rank={CardRank.N6}
+                />
+                __
+                <Card
+                    suit={CardSuit.CLUB}
+                    rank={CardRank.N7}
+                />
+                __
+                <Card
+                    suit={CardSuit.CLUB}
+                    rank={CardRank.N8}
+                />
+                --
+                <Card
+                    suit={CardSuit.CLUB}
+                    rank={CardRank.N9}
+                />
+                --
+                <Card
+                    suit={CardSuit.CLUB}
+                    rank={CardRank.N10}
+                />
+                -----
+                <Card
+                    suit={CardSuit.CLUB}
+                    rank={CardRank.JACK}
+                />
+                --
+                <Card
+                    suit={CardSuit.CLUB}
+                    rank={CardRank.QUEEN}
+                />
+                --
+                <Card
+                    suit={CardSuit.CLUB}
+                    rank={CardRank.KING}
+                />
+                --
+                <Card
+                    suit={CardSuit.CLUB}
+                    rank={CardRank.N1}
+                />
+            </div>
+            <br />
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                <Card
+                    suit={CardSuit.DIAMOND}
+                    rank={CardRank.POT}
+                />
+                --
+                <Card
+                    suit={CardSuit.CLUB}
+                    rank={CardRank.JOKER}
+                />
+                --
+                <Card
+                    suit={CardSuit.CLUB}
+                    rank={CardRank.CLOCK}
+                />
+            </div>
         </div>
     </div>
 }

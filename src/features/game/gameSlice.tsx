@@ -14,7 +14,7 @@ export interface gameState {
 }
 
 const initialState: gameState = {
-  walletConnected: true,
+  walletConnected: false,
   currentGame: 0,
   currentRoom: 0,
   loadingRooms: true,
