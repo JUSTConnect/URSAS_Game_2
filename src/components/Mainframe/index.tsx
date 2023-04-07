@@ -1,4 +1,6 @@
-import React, { HTMLAttributes, useState, useEffect, createContext } from 'react'
+import css from './index.module.scss'
+
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Head from 'next/head'
 
@@ -6,63 +8,88 @@ import { RootState } from '@/app/store'
 import { setActiveHeaderDropdown, setConnectWalletModal, setDisableWalletModal } from '@/features/mainframe/mainframeSlice'
 import { setLoadingRooms } from '@/features/game/gameSlice'
 import Blur from '@components/Blur'
-import PageLayout from '@components/PageLayout'
-import PageContent from '@components/PageContent'
-import PageMain from '@components/PageMain'
-import Sidebar from '@components/Sidebar'
+import Sidebar from './Sidebar'
 import Header from '@/components/Header'
 import HeaderMobile from '@components/HeaderMobile'
 import Footer from '@components/Footer'
 import FooterModal from '@components/FooterModal'
 import ModalConnectWallet from '@components/ModalConnectWallet'
 import ModalDisableWallet from '@components/ModalDisableWallet'
-import LoaderScreen from '../LoaderScreen'
+import DialogGameAccount from '@components/DialogGameAccount'
 
 
-interface MainframeProps extends HTMLAttributes<HTMLDivElement> {
+interface MainframeProps extends React.HTMLAttributes<HTMLDivElement> {
     subHeader?: JSX.Element
+    dialogLayer1?: JSX.Element
+    dialogLayer2?: JSX.Element    
     connected?: boolean
 }
 
 const Mainframe = (props: MainframeProps) => {
-  const mainframe = useSelector((state: RootState) => state.mainframe)
-  const dispatch = useDispatch()
+    const mainframe = useSelector((state: RootState) => state.mainframe)
+    const game = useSelector((state: RootState) => state.game)
+    const dispatch = useDispatch()
 
-  useEffect(()=>{
-    setTimeout(()=>{
-      dispatch(setLoadingRooms(false))
-    }, 500)
-  }, [])
+    useEffect(() => {
+        setTimeout(() => {
+            dispatch(setLoadingRooms(false))
+        }, 500)
+    }, [])
 
-  return (
-    <>
-      <Head>
-        <title>Poker Rooms</title>
-      </Head>
-      <PageLayout>
-        <HeaderMobile/>
-        <Sidebar/>
-        <PageContent>
-          <Header/>
-          { props.subHeader }
-          <Blur 
-            isActive={mainframe.contentBlured}
-            onClick={ ()=>dispatch(setActiveHeaderDropdown(0)) }
-          />
-          <PageMain>
-            { props.children }
-            <Blur isActive={mainframe.mainBlured}/>
-          </PageMain>
-        </PageContent>
-      </PageLayout>
-      <Footer/>
-      <FooterModal/>
-      <ModalConnectWallet/>
-      <ModalDisableWallet/>
-      <LoaderScreen/>
-      <Blur isActive={ mainframe.connectWalletModal || mainframe.disableWalletModal } onClick={ () => { dispatch(setConnectWalletModal(false)); dispatch(setDisableWalletModal(false)) } }/>
-    </>
-  )
+    return (
+        <>
+            <Head>
+                <title>Poker Rooms</title>
+            </Head>
+            <div className={css.layout}>
+                <div className={ css.inner }>
+
+                    <HeaderMobile />
+                    <Sidebar />
+
+                    {/* LAYER 1 */}
+                    <div className={css.layer1}>
+                        <Header />
+
+                        <div className={ css.inner }>
+
+                            {/* LAYER 2 */}
+                            <div className={ css.layer2 }>
+                                {props.subHeader}
+                                <div className={ css.inner }>
+                                    <div className={css.main}>
+                                        { props.children }
+                                    </div>
+                                </div>
+                                <Blur
+                                    isActive={
+                                        mainframe.layer2Blured
+                                    }
+                                    onClick={() => dispatch(setActiveHeaderDropdown(0))}
+                                />
+                                { props.dialogLayer2 }
+                                <DialogGameAccount
+                                    active={ game.walletConnected && mainframe.gameAccountDialog }
+                                />
+                            </div>
+
+                        </div>
+
+                        <Blur
+                            isActive={ mainframe.layer1Blured }
+                        />
+                        { props.dialogLayer1 }
+
+                    </div>
+
+                </div>
+            </div>
+            <Footer />
+            <FooterModal />
+            <ModalConnectWallet />
+            <ModalDisableWallet />
+        </>
+    )
 }
 
 

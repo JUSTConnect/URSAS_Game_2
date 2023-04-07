@@ -3,7 +3,7 @@ import css from './index.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { RootState } from '@/app/store'
-import { setFooterModal, setMainBlured } from '@/features/mainframe/mainframeSlice'
+import { setFooterModal } from '@/features/mainframe/mainframeSlice'
 
 
 const BurgerButton = (props: React.HTMLAttributes<HTMLButtonElement>) => {
@@ -35,7 +35,7 @@ const HeaderMobile = () => {
 
     return <div className={ css.headerMobile }>
         <img src="/assets/images/logo.svg" alt="Logo" className={css.logo} />
-        <BurgerButton onClick={()=>{dispatch(setFooterModal(!main.footerModal)), dispatch(setMainBlured(false))}}/>
+        <BurgerButton onClick={()=>{dispatch(setFooterModal(!main.footerModal))}}/>
     </div>
 }
 

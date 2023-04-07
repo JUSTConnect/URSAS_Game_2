@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { RootState } from '@/app/store'
 import { setActiveHeaderDropdown } from '@/features/mainframe/mainframeSlice'
-import { setContentBlured } from '@/features/mainframe/mainframeSlice'
 
 type controller = {
     id: number

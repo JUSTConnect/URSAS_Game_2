@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import type { RootState } from '@/app/store'
 import { setConnectWalletModal, setDisableWalletModal } from '@/features/mainframe/mainframeSlice'
+import { setGameAccountDialog } from '@/features/mainframe/mainframeSlice'
 import { setClaim } from '@/features/game/gameSlice'
 import Badge from '@components/UIBadge'
 import Button from '@components/UIButton'
@@ -22,18 +23,19 @@ const Header = (props: HeaderProps) => {
     const [gameOverShow, setGameOverShow] = useState(true)
     const dispatch = useDispatch()
     
-    const table = useSelector((state: RootState) => state.table)
     const game = useSelector((state: RootState) => state.game)
+    const mainframe = useSelector((state: RootState) => state.mainframe)
+    const table = useSelector((state: RootState) => state.table)
 
     return <HeaderBase
     >
         { game.walletConnected ? (
             <>
                 <HeaderSection>
-                    <div onClick={ () => dispatch(setDisableWalletModal(true)) } className={ [css.walletHash].join(' ') }>
+                    <div onClick={ () => dispatch(setGameAccountDialog(!mainframe.gameAccountDialog)) } className={ [css.walletHash].join(' ') }>
                         DFYrNUgxguiGKmZKdbGga...
                     </div>
-                    <Button onClick={ () => dispatch(setDisableWalletModal(true)) } className={ [css.walletButton, 'd-mobile'].join(' ') }>
+                    <Button onClick={ () => dispatch(setGameAccountDialog(!mainframe.gameAccountDialog)) } className={ [css.walletButton, 'd-mobile'].join(' ') }>
                         <i className="fa-solid fa-wallet"></i>
                     </Button>
                     { game.gameOver === 0 ? (

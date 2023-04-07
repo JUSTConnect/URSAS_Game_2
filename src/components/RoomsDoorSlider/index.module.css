@@ -37,9 +37,9 @@
 .slide
 {
     position: relative;
-    width: 360px;
-    height: 630px;
-    padding: 0 15px;
+    width: 30vh;
+    height: 50vh;
+    padding: 0 1vh;
     transition: .4s;
     transition-property: opacity;
 }
@@ -79,9 +79,9 @@
     }
     .slide
     {
-        height: 324px;
-        width: 184px;
-        padding: 0 4px;
+        width: 30vh;
+        height: 50vh;    
+        padding: 0 1vh;
     }
     .inner
     {

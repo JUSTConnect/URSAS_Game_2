@@ -13,6 +13,17 @@ import {
 import Place from '@components/UIPlace'
 import Card, { CardRank, CardSuit } from '@components/Card'
 
+import Dialog, {
+    Header as DialogHeader,
+    HeaderButtons as DialogHeaderButtons,
+    Content as DialogContent,
+    Footer as DialogFooter,
+    FooterButtons as DialogFooterButtons
+} from '@components/Dialog'
+
+import DialogGameAccount from '@components/DialogGameAccount'
+import DialogMint from '@components/DialogMint'
+
 
 export default () => {
     return <div className={ css.container }>
@@ -192,6 +203,72 @@ export default () => {
                     rank={CardRank.CLOCK}
                 />
             </div>
+        </div>
+        <div>
+            <Text variant={ text.h2 }>
+                Dialog:
+            </Text>
+            <Dialog className={ css.dialog }>
+                <DialogHeader>
+                    Header
+                    <DialogHeaderButtons>
+                        <Button
+                            color={ ButtonColor.DARK }
+                            variant={ ButtonVariant.NORMAL }
+                            size={ ButtonSize.SM }
+                        >
+                            button 1
+                        </Button>
+                        <Button
+                            color={ ButtonColor.DARK }
+                            variant={ ButtonVariant.NORMAL }
+                            size={ ButtonSize.SM }
+                        >
+                            button 2
+                        </Button>
+                        <Button color={ ButtonColor.DARK } variant={ ButtonVariant.OUTLINE } size={ ButtonSize.SM }><i className="fa-solid fa-arrow-left"></i></Button>
+                    </DialogHeaderButtons>
+                </DialogHeader>
+                <DialogContent>
+                    Content
+                </DialogContent>
+                <DialogFooter>
+                    <DialogFooterButtons>
+                        <Button
+                            color={ ButtonColor.LIGHT }
+                            size={ ButtonSize.SM }
+                            fullWidth
+                        >
+                            button 1
+                        </Button>
+                        <Button
+                            color={ ButtonColor.LIGHT }
+                            size={ ButtonSize.SM }
+                            fullWidth
+                        >
+                            button 2
+                        </Button>
+                    </DialogFooterButtons>
+                </DialogFooter>
+            </Dialog>
+            <br />
+            <br />
+        </div>
+        <div>
+            <Text variant={ text.h2 }>
+                GameAccount Dialog:
+            </Text>
+            <DialogGameAccount></DialogGameAccount>
+            <br />
+            <br />
+        </div>
+        <div>
+            <Text variant={ text.h2 }>
+                Mint Dialog:
+            </Text>
+            <DialogMint></DialogMint>
+            <br />
+            <br />
         </div>
     </div>
 }

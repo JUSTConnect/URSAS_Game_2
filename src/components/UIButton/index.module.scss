@@ -10,6 +10,47 @@
     {
         border-radius: 666px;
     }
+
+    &.iconMobile
+    {
+        & .icon
+        {
+            display: none;
+        }
+
+        @media (max-width: 768px)
+        {
+            & .icon
+            {
+                display: initial;
+            }
+
+            & .text
+            {
+                display: none;
+            }
+        }
+    }
+    &.iconTablet
+    {
+        & .icon
+        {
+            display: none;
+        }
+
+        @media (max-width: 1060px)
+        {
+            & .icon
+            {
+                display: initial;
+            }
+
+            & .text
+            {
+                display: none;
+            }
+        }
+    }
 }
 
 
@@ -105,6 +146,7 @@
     background: #313B52;
     color: #B5C4E3;
     border-radius: 666px;
+    line-height: 1em;
     @media (max-width: 768px)
     {
         min-width: initial;
@@ -122,6 +164,98 @@
         @media (max-width: 768px)
         {
             padding: 9px;
+        }
+    }
+}
+
+.button-sm
+{
+    border-radius: 12px;
+
+    @media (max-width: 768px)
+    {
+        border-radius: 6px;
+    }
+
+    &:hover
+    {
+        opacity: .7;
+    }
+    
+    &.minWidth
+    {
+        min-width: 140px;
+        text-align: center;
+        @media (max-width: 768px)
+        {
+            min-width: 80px;
+        }
+    }
+    &.fullWidth
+    {
+        width: 100%;
+        text-align: center;
+    }
+
+    &.dark
+    {
+        color: #B5C4E3;
+        &.normal
+        {
+            background: #222A3A;
+        }
+    }
+    &.light
+    {
+        color: #222A3A;
+        transition: .2s;
+        &.gradient
+        {
+            background: linear-gradient(180deg, #E7DF36 0%, #EFB23D 100%);
+        }
+        &:hover
+        {
+            opacity: 1;
+            box-shadow: #EFB23D 0px 0px 20px -5px;
+        }
+
+        & .inner
+        {
+            font-weight: 600;
+        }
+
+        & .inner::before
+        {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            height: 200%;
+            width: 10px;
+            opacity: .5;
+            background-color: white;
+            transform: rotate(25deg);
+            transition: 1s;
+        }
+        &:hover .inner::before
+        {
+            left: 150%
+        }
+    }
+    &.outline
+    {
+        border: 1px solid #313B52;
+        background: none;
+    }
+
+    & .inner
+    {
+        padding: 15px;
+
+        @media (max-width: 768px)
+        {
+            font-size: 12px;
+            padding: 10px;
         }
     }
 }

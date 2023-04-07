@@ -64,10 +64,7 @@ const SliderFragment = (props: SliderFragmentProps) => {
                                     props.doorRef.current.offsetWidth - props.scrollStagePercent/100 *
                                     props.doorRef.current.offsetWidth
                                 )
-                                console.log(props.currentDoor)
-                                console.log(index)
                                 if (props.currentDoor + 1 === index) {
-                                    console.log('lol')
                                     dispatch(setCurrentRoom(level))
                                 }
                             }

@@ -3,32 +3,33 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 
 export interface mainframeState {
-    contentBlured: boolean
-    mainBlured: boolean
+    layoutBlured: boolean
+    layer1Blured: boolean
+    layer2Blured: boolean
     footerModal: boolean
     connectWalletModal: boolean
     disableWalletModal: boolean
     activeHeaderDropdown: number
+    gameAccountDialog: boolean
 }
 
 const initialState: mainframeState = {
-    contentBlured: false,
-    mainBlured: false,
+    layoutBlured: false,
+    layer1Blured: false,
+    layer2Blured: false,
     footerModal: false,
     connectWalletModal: false,
     disableWalletModal: false,
-    activeHeaderDropdown: 0
+    activeHeaderDropdown: 0,
+    gameAccountDialog: false,
 }
 
 export const mainframeSlice = createSlice({
     name: 'game',
     initialState,
     reducers: {
-        setContentBlured: (state, action: PayloadAction<boolean>) => {
-            state.contentBlured = action.payload
-        },
-        setMainBlured: (state, action: PayloadAction<boolean>) => {
-            state.mainBlured = action.payload
+        setLayoutBlured: (state, action: PayloadAction<boolean>) => {
+            state.layoutBlured = action.payload
         },
         setFooterModal: (state, action: PayloadAction<boolean>) => {
             state.footerModal = action.payload
@@ -40,18 +41,22 @@ export const mainframeSlice = createSlice({
             state.disableWalletModal = action.payload
         },
         setActiveHeaderDropdown: (state, action: PayloadAction<number>) => {
-            state.contentBlured = !(action.payload === 0)  
+            state.layer2Blured = !(action.payload === 0)
             state.activeHeaderDropdown = action.payload
-        }
+        },
+        setGameAccountDialog: (state, action: PayloadAction<boolean>) => {
+            state.gameAccountDialog = action.payload  
+            state.layer2Blured = false
+            state.activeHeaderDropdown = 0
+        },
     }
 })
 
 export const {
-    setContentBlured,
-    setMainBlured,
     setFooterModal,
     setConnectWalletModal,
     setDisableWalletModal,
-    setActiveHeaderDropdown
+    setActiveHeaderDropdown,
+    setGameAccountDialog
 } = mainframeSlice.actions
 export default mainframeSlice.reducer

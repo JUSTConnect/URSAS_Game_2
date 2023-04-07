@@ -1,3 +1,4 @@
+import { JsxElement } from 'typescript'
 import css from './index.module.scss'
 
 
@@ -32,6 +33,9 @@ interface props extends React.HTMLAttributes<HTMLButtonElement>
     minWidth?: boolean
     fullWidth?: boolean
     circle?: boolean
+    icon?: React.ReactElement,
+    iconMobile?: boolean
+    iconTablet?: boolean
 }
 
 
@@ -49,11 +53,18 @@ export default (props: props) => {
                 props.minWidth && css.minWidth,
                 props.fullWidth && css.fullWidth,
                 props.circle && css.circle,
+                props.iconMobile && css.iconMobile,
+                props.iconTablet && css.iconTablet,
                 props.className
             ].join(' ')
         }>
             <div className={ css.inner }>
-                { props.children }
+                <span className={ css.icon }>
+                    { props.icon }
+                </span>
+                <span className={ css.text }>
+                    { props.children }
+                </span>
             </div>
         </button>
     )

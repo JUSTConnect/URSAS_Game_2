@@ -11,6 +11,13 @@
     padding: 60px;
     z-index: 1000;
     transform: translate(-50%, -50%);
+
+    @media (max-width: 768px)
+    {
+        padding: 30px;
+        font-size: 14px;
+        border-radius: 12px;
+    }
 }
 
 .modalActive
@@ -41,6 +48,13 @@
     font-weight: 600;
     min-width: 140px;
     text-align: center;
+
+    @media (max-width: 768px)
+    {
+        font-size: 14px;
+        border-radius: 12px;
+        padding: 14px;
+    }
 }
 
 .button:hover
