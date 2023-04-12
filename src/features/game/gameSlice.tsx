@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
+import type { PayloadAction, Draft } from '@reduxjs/toolkit'
+import { Card, CardRank, CardSuit } from '@/components/Card'
 
 
 export interface gameState {
@@ -11,17 +12,63 @@ export interface gameState {
   loadingTable: boolean
   claim: boolean
   gameOver: number
+  walletCards: Card[]
+  gameCards: Card[]
 }
 
 const initialState: gameState = {
-  walletConnected: false,
+  walletConnected: true,
   currentGame: 0,
   currentRoom: 0,
   loadingRooms: true,
   loadingTables: true,
   loadingTable: true,
   claim: true,
-  gameOver: 0
+  gameOver: 0,
+  walletCards: [
+    {
+      rank: CardRank.N10,
+      suit: CardSuit.DIAMOND
+    },
+    {
+      rank: CardRank.ACE,
+      suit: CardSuit.DIAMOND
+    },
+    {
+      rank: CardRank.ACE,
+      suit: CardSuit.DIAMOND
+    },
+    {
+      rank: CardRank.ACE,
+      suit: CardSuit.DIAMOND
+    },
+    {
+      rank: CardRank.ACE,
+      suit: CardSuit.DIAMOND
+    },
+  ],
+  gameCards: [
+    {
+      rank: CardRank.ACE,
+      suit: CardSuit.DIAMOND
+    },
+    {
+      rank: CardRank.ACE,
+      suit: CardSuit.DIAMOND
+    },
+    {
+      rank: CardRank.ACE,
+      suit: CardSuit.DIAMOND
+    },
+    {
+      rank: CardRank.ACE,
+      suit: CardSuit.DIAMOND
+    },
+    {
+      rank: CardRank.N2,
+      suit: CardSuit.DIAMOND
+    },
+  ]
 }
 
 export const gameSlice = createSlice({
@@ -48,6 +95,24 @@ export const gameSlice = createSlice({
     },
     setClaim: (state, action: PayloadAction<boolean>) => {
       state.claim = action.payload
+    },
+
+    cardsRefound: (state, action: PayloadAction<Draft<number[]>>) => {
+      state.walletCards = [
+        ...state.walletCards,
+        ...state.gameCards.filter(
+          (item, index) => action.payload.includes(index)
+        )]
+      state.gameCards = state.gameCards.filter((item, index) => !action.payload.includes(index))
+      console.log(1)
+    },
+
+    cardsWalletBurn: (state, action: PayloadAction<Draft<number[]>>) => {
+      state.walletCards = state.walletCards.filter((item, index)=> !action.payload.includes(index))
+    },
+
+    cardsGameBurn: (state, action: PayloadAction<Draft<number[]>>) => {
+      state.gameCards = state.gameCards.filter((item, index)=> !action.payload.includes(index))
     }
   }
 })
@@ -59,6 +124,10 @@ export const {
   setLoadingTable,
   setCurrentRoom,
   setCurrentGame,
-  setClaim
+  setClaim,
+
+  cardsRefound,
+  cardsWalletBurn,
+  cardsGameBurn
 } = gameSlice.actions
 export default gameSlice.reducer

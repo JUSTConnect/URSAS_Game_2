@@ -6,6 +6,12 @@
     position: absolute;
     transform: translate(-100%);
     transition: .3s;
+    width: 100%;
+
+    @media (max-width: 1060px)
+    {
+        max-width: initial;
+    }
 
     @media (max-width: 768px) {
         padding: 8px;
@@ -41,15 +47,12 @@
     }
 }
 
-
-.content, .header, .footer
+.containers
 {
-    padding: 11px;
-
-    @media (max-width: 768px)
-    {
-        padding: 8px;
-    }
+    position: relative;
+    display: flex;
+    gap: 8px;
+    height: 100%;
 }
 
 .container
@@ -63,10 +66,19 @@
 
     display: flex;
     flex-direction: column;
+    width: 100%;
+
+    transition: .3S;
 
     @media (max-width: 768px)
     {
         border-radius: 12px;
+    }
+
+    &.disabled
+    {
+        opacity: .3;
+        pointer-events: none;
     }
 }
 
@@ -75,33 +87,73 @@
     background: #313B52;
     color: #4E5E80;
     text-align: center;
+    padding: 27px 16px;
+
+    @media(max-width: 1060px)
+    {
+        padding: 16px;
+    }
+
+    @media(max-width: 768px)
+    {
+        padding: 11px;
+    }
 }
 
 .footer
 {
-    background: #313B52;
-    border: none;
-    outline: none;
-    cursor: pointer;
+    display: flex;
 
-    &:hover
+    @media (max-width: 768px)
     {
-        opacity: .8;
+        flex-direction: column;    
+    }
+
+    &Button
+    {
+        background: #313B52;
+        border: none;
+        outline: none;
+        cursor: pointer;    
+        padding: 14px;
+        width: 100%;
+
+        @media(max-width: 768px)
+        {
+            padding: 8px;
+
+            &:first-child
+            {
+                border-radius: 12px 12px 0 0;
+            }
+        }
+
+        &:hover
+        {
+            opacity: .7;
+        }
+
+        &Text
+        {
+            background: linear-gradient(180deg, #E7DF36 0%, #EFB23D 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;        
+        }
     }
 }
 
-.footerText
-{
-    background: linear-gradient(180deg, #E7DF36 0%, #EFB23D 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
 
 .content
 {
     flex-grow: 1;
     overflow: auto;
+    padding: 11px;   
+
+    @media (max-width: 768px)
+    {
+        padding: 8px;
+    }
 }
 
 .cards
@@ -110,11 +162,21 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 8px;
+
+    @media (max-width: 768px)
+    {
+        gap: 4px;
+    }
 }
 
 .card
 {
     cursor: pointer;
+
+    @media (max-width: 768px)
+    {
+        font-size: 16px;
+    }
 
     &:hover
     {
@@ -123,5 +185,27 @@
     &Active
     {
         outline: 3px solid #EFB23D;
+
+        @media (max-width: 768px)
+        {
+            outline: 2px solid #EFB23D;                
+        }
+    }
+}
+
+.arrowFirst
+{
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    & span
+    {
+        background: linear-gradient(180deg, #E7DF36 0%, #EFB23D 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 }

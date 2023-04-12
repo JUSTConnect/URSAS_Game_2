@@ -1,0 +1,39 @@
+.table
+    {
+        border: 1px solid #384156;
+        border-radius: 12px;
+        border-collapse: collapse;
+        border-style: hidden;
+        box-shadow: 0 0 0 1px #384156;
+
+        & td
+        {
+            padding: 8px 20px;
+            color: #B5C4E3;
+            border-right: 1px solid #384156;
+
+            &.head
+            {
+                color: #4E5E80 !important;
+                border: 1px solid #384156;
+                border-radius: 12px;
+    
+                @media (max-width: 768px)
+                {
+                    max-width: 40px;
+                }
+    
+                &.tableRoomsHead
+                {
+                    color: #4E5E80;
+                }
+            }
+            &.amount
+            {
+                text-align: center;
+                min-width: 100px;
+            }
+        }
+
+
+    }

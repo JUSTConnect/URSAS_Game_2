@@ -23,7 +23,7 @@ interface headerProps extends React.HTMLAttributes<HTMLDivElement>
 
 interface contentProps extends React.HTMLAttributes<HTMLDivElement>
 {
-
+    overflowHidden?: boolean
 }
 
 
@@ -45,7 +45,7 @@ const HeaderButtons = (props: React.HTMLAttributes<HTMLDivElement>) => {
 
 const Content = (props: contentProps) => {
     return (
-        <div className={ [css.content, props.className].join(' ') }>
+        <div className={ [css.content, props.overflowHidden && css.contentOverflowHidden, props.className].join(' ') }>
             <div className={ css.contentInner }>
                 { props.children }
             </div>

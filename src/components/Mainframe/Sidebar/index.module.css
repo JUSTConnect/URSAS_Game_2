@@ -47,9 +47,14 @@
     background-clip: text;
 }
 
-.link:first-child
+.link
 {
     margin-bottom: 8px;
+}
+
+.link:last-child
+{
+    margin-bottom: 0;
 }
 
 @media (max-width: 1060px)

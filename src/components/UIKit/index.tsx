@@ -23,6 +23,7 @@ import Dialog, {
 
 import DialogGameAccount from '@components/DialogGameAccount'
 import DialogMint from '@components/DialogMint'
+import DialogGameInfo from '@components/DialogGameInfo'
 
 
 export default () => {
@@ -254,21 +255,12 @@ export default () => {
             <br />
             <br />
         </div>
-        <div>
+        {/* <div>
             <Text variant={ text.h2 }>
-                GameAccount Dialog:
+                Game info dialog:
             </Text>
-            <DialogGameAccount></DialogGameAccount>
             <br />
             <br />
-        </div>
-        <div>
-            <Text variant={ text.h2 }>
-                Mint Dialog:
-            </Text>
-            <DialogMint></DialogMint>
-            <br />
-            <br />
-        </div>
+        </div> */}
     </div>
 }

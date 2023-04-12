@@ -11,6 +11,7 @@ export interface mainframeState {
     disableWalletModal: boolean
     activeHeaderDropdown: number
     gameAccountDialog: boolean
+    gameInfoDialog: boolean
 }
 
 const initialState: mainframeState = {
@@ -22,6 +23,7 @@ const initialState: mainframeState = {
     disableWalletModal: false,
     activeHeaderDropdown: 0,
     gameAccountDialog: false,
+    gameInfoDialog: false
 }
 
 export const mainframeSlice = createSlice({
@@ -49,6 +51,11 @@ export const mainframeSlice = createSlice({
             state.layer2Blured = false
             state.activeHeaderDropdown = 0
         },
+        setGameInfoDialog: (state, action: PayloadAction<boolean>) => {
+            state.gameInfoDialog = action.payload
+            state.layer2Blured = false
+            state.activeHeaderDropdown = 0
+        }
     }
 })
 
@@ -57,6 +64,7 @@ export const {
     setConnectWalletModal,
     setDisableWalletModal,
     setActiveHeaderDropdown,
-    setGameAccountDialog
+    setGameAccountDialog,
+    setGameInfoDialog
 } = mainframeSlice.actions
 export default mainframeSlice.reducer

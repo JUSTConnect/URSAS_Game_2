@@ -1,11 +1,10 @@
 import css from './index.module.css'
 
-import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
 
 import { RootState } from '@/app/store'
-import TableModal from '@components/TableModal'
+import DialogPlace from '@components/DialogPlace'
 import Blur from '@components/Blur'
 
 import { CardRank, CardSuit } from '@components/Card'
@@ -93,7 +92,7 @@ const TableView = (props: TableViewProps) => {
             isActive={props.modalActive}
             onClick={ () => {props.setModalActive(false); dispatch(setChoosingCardPlace(0))} }
         />
-        <TableModal 
+        <DialogPlace
             active={ props.modalActive }
             setActive={ props.setModalActive }
         />
