@@ -16,13 +16,11 @@ import Button, {
 } from '@components/UIButton'
 import Blur from '../Blur'
 
-import type { winner } from './TableWinners'
+import type { tableValues } from './BaseTableRooms'
 import DataMain from './DataMain'
 import DataGame from './DataGame'
 import TableWinners from './TableWinners'
-import TablePricesMint from './TablePricesMint'
-import TableTimeOfGameInRoom from './TableTimeOfGameInRoom'
-import TableGamesCompleted from './TableGamesCompleted'
+import RowWithTable from './RowWithTable'
 
 
 enum typePrize
@@ -52,6 +50,56 @@ interface props extends React.HTMLAttributes<HTMLDivElement>
     active?: boolean
     data?: info
 }
+
+// example data
+
+const winnersWallets = [
+    {
+        walletHash: '0x67B94473D81D0cd00849D563C94d0432Ac988B49',
+        amount: 10
+    },
+    {
+        walletHash: '0x67B94473D81D0cd00849D563C94d0432Ac988B49',
+        amount: 10
+    },
+    {
+        walletHash: '0x67B94473D81D0cd00849D563C94d0432Ac988B49',
+        amount: 10
+    },
+    {
+        walletHash: '0x67B94473D81D0cd00849D563C94d0432Ac988B49',
+        amount: 10
+    },
+    {
+        walletHash: '0x67B94473D81D0cd00849D563C94d0432Ac988B49',
+        amount: 10
+    },
+    {
+        walletHash: '0x67B94473D81D0cd00849D563C94d0432Ac988B49',
+        amount: 10
+    },
+]
+
+const pricesMint: tableValues = [
+    '123',
+    '123',
+    '123',
+    '123',
+    '123',
+    '123',
+    '123',
+    '123',
+    '123',
+    '123',
+    '123',
+    '123',
+    '123',
+    '123',
+    '123',
+    '123121212',
+]
+
+//
 
 
 export default (props: props) => {
@@ -98,37 +146,15 @@ export default (props: props) => {
                                 <DataMain data={props.data}/>
 
                                 { state === seasonState.CURRENT ? (
-                                    <TablePricesMint/>
+                                    <RowWithTable
+                                        keyName={ 'Prices mint:' }
+                                        tableValues={ pricesMint }
+                                    />
                                 ) : state === seasonState.RESULT ? (
                                     <TableWinners
                                         result={1}
                                         data={
-                                            [
-                                                {
-                                                    walletHash: '0x67B94473D81D0cd00849D563C94d0432Ac988B49',
-                                                    amount: 10
-                                                },
-                                                {
-                                                    walletHash: '0x67B94473D81D0cd00849D563C94d0432Ac988B49',
-                                                    amount: 10
-                                                },
-                                                {
-                                                    walletHash: '0x67B94473D81D0cd00849D563C94d0432Ac988B49',
-                                                    amount: 10
-                                                },
-                                                {
-                                                    walletHash: '0x67B94473D81D0cd00849D563C94d0432Ac988B49',
-                                                    amount: 10
-                                                },
-                                                {
-                                                    walletHash: '0x67B94473D81D0cd00849D563C94d0432Ac988B49',
-                                                    amount: 10
-                                                },
-                                                {
-                                                    walletHash: '0x67B94473D81D0cd00849D563C94d0432Ac988B49',
-                                                    amount: 10
-                                                },
-                                            ]
+                                            winnersWallets
                                         }
                                     />
                                 ) : null }
@@ -138,8 +164,15 @@ export default (props: props) => {
                             <div className={ css.section }>
                                 <div className={ css.inner }>
                                     <DataGame/>
-                                    <TableTimeOfGameInRoom/>
-                                    <TableGamesCompleted/>
+                                    <RowWithTable
+                                        keyName={ 'Time of game in room' }
+                                        value={ 'Hours' }
+                                        tableValues={ pricesMint }
+                                    />
+                                    <RowWithTable
+                                        keyName={ 'Games completed' }
+                                        tableValues={ pricesMint }
+                                    />
                                 </div>
                             </div>
                         }

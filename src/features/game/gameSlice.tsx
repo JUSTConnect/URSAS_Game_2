@@ -104,7 +104,6 @@ export const gameSlice = createSlice({
           (item, index) => action.payload.includes(index)
         )]
       state.gameCards = state.gameCards.filter((item, index) => !action.payload.includes(index))
-      console.log(1)
     },
 
     cardsWalletBurn: (state, action: PayloadAction<Draft<number[]>>) => {

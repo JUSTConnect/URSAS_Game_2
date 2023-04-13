@@ -1,0 +1,14 @@
+.row
+{
+    margin-bottom: 8px;
+
+    @media (max-width: 768px)
+    {
+        font-size: 14px;
+        & span
+        {
+            display: block;
+            margin-top: 4px;
+        }
+    }
+}
