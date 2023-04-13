@@ -4,8 +4,6 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { setMintDialog } from '@/features/mainframe/mainframeSlice'
-
-
 import Dialog, {
     Header,
     HeaderButtons,
