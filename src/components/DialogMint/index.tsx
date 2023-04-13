@@ -3,7 +3,7 @@ import css from './index.module.scss'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { setDialogMint } from '@/features/rooms/roomsSlice'
+import { setMintDialog } from '@/features/mainframe/mainframeSlice'
 
 
 import Dialog, {
@@ -41,7 +41,7 @@ export default (props: props) => {
     return (
         <>
             <Blur
-                onClick={ () => dispatch(setDialogMint(false)) }
+                onClick={ () => dispatch(setMintDialog(false)) }
                 isActive={ props.active }
             />
             <div className={
@@ -59,7 +59,7 @@ export default (props: props) => {
                         </div>
                         <HeaderButtons>
                             <Button
-                                onClick={ () => dispatch(setDialogMint(false)) }
+                                onClick={ () => dispatch(setMintDialog(false)) }
                                 color={ ButtonColor.DARK }
                                 variant={ ButtonVariant.OUTLINE }
                                 size={ ButtonSize.SM }

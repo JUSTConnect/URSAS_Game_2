@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Head from 'next/head'
 
 import { RootState } from '@/app/store'
-import { setActiveHeaderDropdown, setConnectWalletModal, setDisableWalletModal } from '@/features/mainframe/mainframeSlice'
+import { setActiveHeaderDropdown } from '@/features/mainframe/mainframeSlice'
 import { setLoadingRooms } from '@/features/game/gameSlice'
 import Blur from '@components/Blur'
 import Sidebar from './Sidebar'
@@ -16,6 +16,8 @@ import FooterModal from '@components/FooterModal'
 import ModalConnectWallet from '@components/ModalConnectWallet'
 import ModalDisableWallet from '@components/ModalDisableWallet'
 import DialogGameAccount from '@components/DialogGameAccount'
+import DialogGameInfo, { typePrize } from '@components/DialogGameInfo'
+import DialogMint from '@components/DialogMint'
 
 
 interface MainframeProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -71,6 +73,16 @@ const Mainframe = (props: MainframeProps) => {
                                 <DialogGameAccount
                                     active={ game.walletConnected && mainframe.gameAccountDialog }
                                 />
+                                <DialogGameInfo
+                                    data={
+                                        {
+                                            typePrize: typePrize.WL,
+                                            result: 1
+                                        }
+                                    }
+                                    active={ mainframe.gameInfoDialog }
+                                />
+                                <DialogMint active={ mainframe.mintDialog }/>
                             </div>
 
                         </div>

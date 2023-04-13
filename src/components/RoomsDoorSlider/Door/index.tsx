@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Link from 'next/link'
 
 import { RootState } from '@/app/store'
-import { setDialogMint } from '@/features/rooms/roomsSlice'
+import { setMintDialog } from '@/features/mainframe/mainframeSlice'
 import Button, {
     Variant as ButtonVariant,
     Color as ButtonColor
@@ -46,7 +46,7 @@ const RoomsDoor = (props: RoomsDoorProps) => {
             </Link>
             { props.active &&
                 <Button
-                    onClick={ () => dispatch(setDialogMint(true)) }
+                    onClick={ () => dispatch(setMintDialog(true)) }
                     color={ ButtonColor.DARK }
                     variant={ ButtonVariant.NORMAL }
                     className={ css.button }
