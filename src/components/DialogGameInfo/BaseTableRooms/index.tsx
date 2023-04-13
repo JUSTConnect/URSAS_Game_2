@@ -34,12 +34,12 @@ export default (props: props) => {
                 <tbody>
                     <tr>
                         { Array.from(Array(16)).map((item, index)=>
-                            <td className={ css.head }>{ index + 1}</td>
+                            <td key={ index } className={ css.head }>{ index + 1}</td>
                         ) }
                     </tr>
                     <tr>
                         { Array.from(Array(16)).map((item, index)=>
-                            <td>{ props.values[index] }</td>
+                            <td key={ index }>{ props.values[index] }</td>
                         ) }
                     </tr>
                 </tbody>
