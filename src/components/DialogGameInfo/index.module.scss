@@ -28,6 +28,11 @@
     background: #222A3A;
     border-radius: 24px;
 
+    @media (max-width: 768px)
+    {
+        border-radius: 12px;
+    }
+
     &:not(:last-child)
     {
         margin-bottom: 10px;

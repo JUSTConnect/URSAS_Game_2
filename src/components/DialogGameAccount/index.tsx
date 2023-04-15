@@ -259,6 +259,7 @@ export default (props: props) => {
                                 color={ ButtonColor.LIGHT }
                                 size={ ButtonSize.SM }
                                 fullWidth
+                                disabled={ !selectedGameCards.length && !selectedWalletCards.length }
                                 onClick={ () => {
                                     dispatch(cardsGameBurn(selectedGameCards))
                                     dispatch(cardsWalletBurn(selectedWalletCards))

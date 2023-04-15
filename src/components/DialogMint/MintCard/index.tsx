@@ -1,5 +1,7 @@
 import css from './index.module.scss'
 
+import { useState } from 'react'
+
 import Button, {
     Color as ButtonColor,
     Size as ButtonSize
@@ -14,6 +16,8 @@ interface props extends React.HTMLAttributes<HTMLDivElement>
 
 
 export default (props: props) => {
+    const [amount, setAmount] = useState<string>('')
+
     return (
         <div className={ css.card }>
             <div className={ css.inner }>
@@ -25,12 +29,31 @@ export default (props: props) => {
                         <span className={ 'textMuted' }>Price</span> {props.price} MATIC
                     </div>
                 </div>
-                <input type='number' placeholder='input amount' className={ css.input }/>
+                <input
+                    onChange={ e => {
+                        if (e.currentTarget.value.length > 3) {
+                            e.currentTarget.value = '999'
+                            setAmount(e.currentTarget.value)
+                        } else {
+                            setAmount(e.currentTarget.value)
+                        }
+                    } }
+                    max={999}
+                    className={ css.input }
+                    type='number'
+                    placeholder='input amount'
+                />
                 <Button
                     color={ ButtonColor.LIGHT }
                     size={ ButtonSize.SM }
+                    className={ css.button }
                 >
-                    mint
+                    { Number(amount) > 0 ?
+                        <>
+                            <div className={ css.buttonCaption }>total amount</div>
+                            { Number(amount) * props.price } MATIC
+                        </>
+                    : 'mint'}
                 </Button>
             </div>
         </div>

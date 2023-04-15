@@ -7,7 +7,7 @@ import { setMintDialog } from '@/features/mainframe/mainframeSlice'
 import Dialog, {
     Header,
     HeaderButtons,
-    Content,
+    ContentScrollable as Content,
 } from '@components/Dialog'
 import Button, {
     Color as ButtonColor,
@@ -68,11 +68,11 @@ export default (props: props) => {
                     </Header>
                     <Content>
                         <div className={ css.mintCards }>
-                            { Array.from(Array(10)).map((item, index) => (
+                            { Array.from(Array(16)).map((item, index) => (
                                 <MintCard
                                     key={ index }
-                                    price={123}
-                                    level={123}
+                                    price={ (index+1) * 2 }
+                                    level={16-index}
                                 />
                             )) }
                         </div>

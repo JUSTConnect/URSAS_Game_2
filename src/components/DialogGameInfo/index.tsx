@@ -7,7 +7,7 @@ import { setGameInfoDialog } from '@/features/mainframe/mainframeSlice'
 import Dialog, {
     Header,
     HeaderButtons,
-    Content,
+    ContentScrollable,
 } from '@components/Dialog'
 import Button, {
     Color as ButtonColor,
@@ -134,7 +134,7 @@ export default (props: props) => {
                             </Button>
                         </HeaderButtons>
                     </Header>
-                    <Content>
+                    <ContentScrollable>
                         Switch mode (for testing) &nbsp;
                         <button onClick={ () => setState(seasonState.CURRENT) }>Current</button>
                         <button onClick={ () => setState(seasonState.ANNOUNCEMENT) }>Announcement</button>
@@ -176,7 +176,7 @@ export default (props: props) => {
                                 </div>
                             </div>
                         }
-                    </Content>
+                    </ContentScrollable>
                 </Dialog>
             </div>
         </>

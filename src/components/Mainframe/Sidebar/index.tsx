@@ -59,7 +59,7 @@ const Sidebar = () => {
                 </div>
                 <div>
                     <div className={ [css.section, css.links].join(' ') }>
-                        <Link className={ css.link } onClick={ () => dispatch(setGameInfoDialog(!mainframe.gameInfoDialog)) } href={ '' }>Info</Link>
+                        <Link className={ css.link } onClick={ () => dispatch(setGameInfoDialog(!mainframe.gameInfoDialog)) } href={ '#' }>Info</Link>
                         <Link className={ css.link } href='#'>Help</Link>
                         <Link className={ css.link } target='_blank' href='https://ursas.gitbook.io/ursas-game/'>Rules</Link>
                     </div>
