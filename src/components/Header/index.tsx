@@ -1,6 +1,6 @@
 import css from './index.module.css'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import type { RootState } from '@/app/store'
@@ -12,28 +12,52 @@ import Button from '@components/UIButton'
 import Dropdown from '@/components/Header/Dropdown'
 import {Loader} from './Dropdown'
 import HeaderBase, { HeaderSection } from '@/components/HeaderBase'
+import { setAccount } from '@/features/main/mainSlice'
 
 
 interface HeaderProps extends React.HTMLAttributes<HTMLDivElement>
 {
 }
 
-
+//DFYrNUgxguiGKmZKdbGga...
 const Header = (props: HeaderProps) => {
     const [gameOverShow, setGameOverShow] = useState(true)
+    const [editAccount, setEditAccount] = useState('')
+    const [accountFromStorage, setAccountFromStorage] = useState('')
     const dispatch = useDispatch()
     
     const game = useSelector((state: RootState) => state.game)
     const mainframe = useSelector((state: RootState) => state.mainframe)
     const table = useSelector((state: RootState) => state.table)
+    const main = useSelector((state: RootState) => state.main)
 
-    return <HeaderBase
-    >
-        { game.walletConnected ? (
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const account = localStorage.getItem("account");
+            if (account !== null) {
+                setEditAccount(`${account.substring(0, 21)}...`);
+                setAccountFromStorage(account);
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const account = localStorage.getItem("account");
+            if (account !== null) {
+                setEditAccount(`${account.substring(0, 21)}...`);
+                setAccountFromStorage(account);
+            }
+        }
+    }, [main.account]);
+
+    return <HeaderBase>
+        { game.walletConnected && accountFromStorage.length ? (
             <>
                 <HeaderSection>
                     <div onClick={ () => dispatch(setGameAccountDialog(!mainframe.gameAccountDialog)) } className={ [css.walletHash].join(' ') }>
-                        DFYrNUgxguiGKmZKdbGga...
+                        {editAccount}
                     </div>
                     <Button onClick={ () => dispatch(setGameAccountDialog(!mainframe.gameAccountDialog)) } className={ [css.walletButton, 'd-mobile'].join(' ') }>
                         <i className="fa-solid fa-wallet"></i>
