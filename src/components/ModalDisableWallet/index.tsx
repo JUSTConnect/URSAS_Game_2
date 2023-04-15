@@ -3,15 +3,16 @@ import css from './index.module.scss'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { RootState } from '@/app/store'
-import { setWalletConnected } from '@/features/game/gameSlice'
+import { AppDispatch, RootState } from '@/app/store'
 import { setDisableWalletModal } from '@/features/mainframe/mainframeSlice'
+import { disconnectAccount } from '@/features/main/mainSlice'
 import Blur from '@components/Blur'
+
 
 
 export default () => {
     const router = useRouter()
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const mainframe = useSelector((state: RootState) => state.mainframe)
 
     return (
@@ -26,7 +27,7 @@ export default () => {
                 </div>
                 <div className={ css.buttons }>
                     <div
-                        onClick={ ()=> { router.push('/'); dispatch(setDisableWalletModal(false)); dispatch(setWalletConnected(false)) } }
+                        onClick={ ()=> { router.push('/'); dispatch(disconnectAccount()) } }
                         className={ [css.button, 'fixMargin'].join(' ') }
                     >
                         <i className="fa-solid fa-right-from-bracket"></i>&nbsp;
