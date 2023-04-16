@@ -1,4 +1,4 @@
-import css from './index.module.css'
+import css from './index.module.scss'
 
 import { useSelector, useDispatch } from 'react-redux'
 import Link from 'next/link'
@@ -22,8 +22,8 @@ const FooterModal = () => {
             <div className={ [css.modalContainer, mainframe.footerModal ? css.modalContainerActive : ''].join(' ') }>
                 <div className={ css.modal }>
                     <div className={ css.top }>
-                        <Link href='#'>Help</Link>
-                        <Link href='https://ursas.gitbook.io/ursas-game/' target='_blank'>Rules</Link>
+                        <Link className={ css.link } href='#'>Help</Link>
+                        <Link className={ css.link } href='https://ursas.gitbook.io/ursas-game/' target='_blank'>Rules</Link>
                     </div>
                     <div className={ css.bottom }>
                         <div className={ css.marketsLinkSection }>

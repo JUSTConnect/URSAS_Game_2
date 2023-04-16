@@ -14,17 +14,20 @@
     opacity: .7;
     user-select: none;
     border: none;
+    color: #B5C4E3;
 }
 
 .navigation:hover
 {
     background: linear-gradient(180deg, #E7DF36 0%, #EFB23D 100%);
     opacity: 1;
+    color: #000;
 }
 
-.navigation:hover svg path
+.navigation i
 {
-    fill: #000;
+    position: relative;
+    right: -1px;
 }
 
 .icon
@@ -40,6 +43,7 @@
         height: 30px;
         width: 30px;
         top: 50%;
+        font-size: 8px;
     }
     .icon
     {

@@ -1,4 +1,4 @@
-import css from './index.module.css'
+import css from './index.module.scss'
 
 import { useRef, useState, useEffect, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,6 +9,7 @@ import Door from './Door'
 import NavigationButton from './NavigationButton'
 import Info from './Info'
 import DoorList from '@components/RoomsDoorList'
+import LoaderLogo from '@components/LoaderLogo'
 
 
 interface RoomsDoorSliderProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -181,48 +182,62 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
         }
     }
 
-    return <div className={css.container}>
-        <div
-            onScroll={ scrollHandler }
-            ref={ doorSlider }
-            className={ [css.slider, props.mode !== 'slide' ? css.sliderHidden: ''].join(' ') }
-        >
-            <div ref={ doorSliderInner } className={css.inner}>
-                { [...Array(3)].map((item, index)=>(
-                    <SliderFragment
-                        key={ index }
-                        scroll={ scroll }
-                        indexAdd={index*16}
-                        currentDoor={currentDoor}
-                        selectedDoor={selectedDoor}
-                        scrollStagePercent={scrollStagePercent}
-                        doorRef={door}
-                        over={game.gameOver}
+    return (
+        <>
+            <div className={
+                [
+                    css.container,
+                    game.loadingRooms && css.containerLoading
+                ].join(' ')
+            }>
+                <div
+                    onScroll={ scrollHandler }
+                    ref={ doorSlider }
+                    className={ [css.slider, props.mode !== 'slide' ? css.sliderHidden: ''].join(' ') }
+                >
+                    <div ref={ doorSliderInner } className={css.inner}>
+                        { [...Array(3)].map((item, index)=>(
+                            <SliderFragment
+                                key={ index }
+                                scroll={ scroll }
+                                indexAdd={index*16}
+                                currentDoor={currentDoor}
+                                selectedDoor={selectedDoor}
+                                scrollStagePercent={scrollStagePercent}
+                                doorRef={door}
+                                over={game.gameOver}
+                            />
+                        )) }
+                    </div>
+                    <NavigationButton
+                        className={ css.prevButton }
+                        onClick={ prevSlide }
                     />
-                )) }
+                    <NavigationButton
+                        className={ css.nextButton }
+                        onClick={ nextSlide}
+                    />
+                </div> 
+                
+                { props.mode === 'list' ? (
+                    <DoorList currentDoor={ currentDoorList } setCurrentDoor={ setCurrentDoorList }/>
+                ) : ''}
+
+
+                <Info
+                    available={234}
+                    empty={102}
+                    timeGame={'24+2'}
+                    hidden={ props.mode === 'list' ? !currentDoorList : props.mode === 'list' }
+                />
             </div>
-            <NavigationButton
-                className={ css.prevButton }
-                onClick={ prevSlide }
-            />
-            <NavigationButton
-                className={ css.nextButton }
-                onClick={ nextSlide}
-            />
-        </div> 
-        
-        { props.mode === 'list' ? (
-            <DoorList currentDoor={ currentDoorList } setCurrentDoor={ setCurrentDoorList }/>
-        ) : ''}
-
-
-        <Info
-            available={234}
-            empty={102}
-            timeGame={'24+2'}
-            hidden={ props.mode === 'list' ? !currentDoorList : props.mode === 'list' }
-        />
-    </div>
+            { game.loadingRooms &&
+                <div className={ css.loader }>
+                    <LoaderLogo/>
+                </div>
+            }
+        </>
+    )
 }
 
 

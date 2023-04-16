@@ -32,7 +32,7 @@ export default (props: props) => {
                 <input
                     onChange={ e => {
                         if (e.currentTarget.value.length > 3) {
-                            e.currentTarget.value = '999'
+                            e.currentTarget.value = e.currentTarget.value.slice(0, -1)
                             setAmount(e.currentTarget.value)
                         } else {
                             setAmount(e.currentTarget.value)

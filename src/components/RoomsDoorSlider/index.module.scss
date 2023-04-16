@@ -1,9 +1,26 @@
+.loader
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .container
 {
     margin-top: 16px;
     position: relative;
     height: 100%;
     overflow: hidden;
+}
+
+.containerLoading
+{
+    opacity: 0;
 }
 
 .slider
@@ -30,8 +47,13 @@
     top: 76px;
     width: max-content;
     display: flex;
-    margin: 0 calc(50% - 180px);
+    margin: 0 calc(50% - 15vh);
     height: 100%;
+
+    @media (max-width: 768px)
+    {
+        margin: 0 calc(50% - 17.5vh);
+    }
 }
 
 .slide
@@ -42,17 +64,24 @@
     padding: 0 1vh;
     transition: .4s;
     transition-property: opacity;
+
+    @media (max-width: 768px)
+    {
+        height: 60vh;
+        width: 35vh;
+        padding: 0 1vh;
+    }
 }
 
 .prevButton
 {
     left: 14px;
+    transform: rotate(180deg);
 }
 
 .nextButton
 {
     right: 14px;
-    transform: rotate(180deg);
 }
 
 .prevButtonIcon
@@ -76,12 +105,6 @@
     .slider
     {
         min-height: 400px;
-    }
-    .slide
-    {
-        width: 30vh;
-        height: 50vh;    
-        padding: 0 1vh;
     }
     .inner
     {

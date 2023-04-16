@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/app/store'
 import { setDisableWalletModal, setGameAccountDialog } from '@/features/mainframe/mainframeSlice'
 
-import { cardsRefound, cardsWalletBurn, cardsGameBurn } from '@/features/game/gameSlice'
+import { cardsRefound, cardsWalletBurn } from '@/features/game/gameSlice'
 import Dialog, {
     Header,
     HeaderButtons,
@@ -32,7 +32,6 @@ export default (props: props) => {
     const dispatch = useDispatch()
     const game = useSelector((state: RootState) => state.game)
     const [ selectedWalletCards, setSelectedWalletCards ] = useState<number[]>([])
-    const [ selectedGameCards, setSelectedGameCards ] = useState<number[]>([])
 
 
     const toggleWalletCard = (number: number) => {
@@ -43,28 +42,12 @@ export default (props: props) => {
         }
     }
 
-    const toggleGameCard = (number: number) => {
-        if (selectedGameCards.includes(number)) {
-            setSelectedGameCards(selectedGameCards.filter(item=>item!==number))
-        } else {
-            setSelectedGameCards([...selectedGameCards, number])
-        }
-    }
-
     const resetWalletCards = () => {
         setSelectedWalletCards([])
     }
 
-    const resetGameCards = () => {
-        setSelectedGameCards([])
-    }
-
     const selectWalletCards = () => {
         setSelectedWalletCards(game.walletCards.map((item, index) => index))
-    }
-
-    const selectGameCards = () => {
-        setSelectedGameCards(game.gameCards.map((item, index) => index))
     }
 
     return (
@@ -138,20 +121,9 @@ export default (props: props) => {
                     </Header>
                     <Content>
                         <div className={ css.containers }>
-                            { Boolean(selectedGameCards.length) &&
-                                <Button
-                                    size={ ButtonSize.SM }
-                                    color={ ButtonColor.DARK }
-                                    variant={ ButtonVariant.NORMAL }
-                                    className={ css.arrowFirst }
-                                >
-                                    <i className="fa-solid fa-arrow-left"></i>
-                                </Button>
-                            }
                             <div className={
                                 [
                                     css.container,
-                                    selectedGameCards.length && css.disabled
                                 ].join(' ')
                             }>
                                 <div className={ css.header }>
@@ -177,7 +149,7 @@ export default (props: props) => {
                                         ) : (
                                             <>
                                                 <br />
-                                                wallet account doesn{"'"}t have URSAS NFT{"'"}s {':('}
+                                                wallet account doesn{"'"}t have URSAS NFT{"'"}s { game.gameCards.length ? ':)' : ':('}
                                             </>
                                         ) }
                                     </div>
@@ -211,13 +183,6 @@ export default (props: props) => {
                                                 game.gameCards.map((card, index) => (
                                                     <Card
                                                         key={ index }
-                                                        className={
-                                                            [
-                                                                css.card,
-                                                                selectedGameCards.includes(index) && css.cardActive
-                                                            ].join(' ')
-                                                        }
-                                                        onClick={ ()=> toggleGameCard(index) }
                                                         rank={ card.rank }
                                                         suit={ card.suit }
                                                     />
@@ -225,19 +190,17 @@ export default (props: props) => {
                                             }
                                         </div>
                                     </div>
-                                    <div className={ css.footer }>
-                                        <button onClick={ selectGameCards } className={ css.footerButton }>
-                                            <span className={ css.footerButtonText }>
-                                                select all
-                                            </span>
-                                        </button>
-                                        <button onClick={ resetGameCards } className={ css.footerButton }>
-                                            <span className={ css.footerButtonText }>
-                                                reset all
-                                            </span>
-                                        </button>
-                                    </div>
                                 </div>
+                            }
+                            { Boolean(selectedWalletCards.length) &&
+                                <Button
+                                    size={ ButtonSize.SM }
+                                    color={ ButtonColor.DARK }
+                                    variant={ ButtonVariant.NORMAL }
+                                    className={ css.arrowFirst }
+                                >
+                                    <i className="fa-solid fa-arrow-right"></i>
+                                </Button>
                             }
                         </div>
                     </Content>
@@ -247,23 +210,21 @@ export default (props: props) => {
                                 color={ ButtonColor.LIGHT }
                                 size={ ButtonSize.SM }
                                 fullWidth
-                                disabled={ !selectedGameCards.length }
+                                disabled={ !selectedWalletCards.length }
                                 onClick={ () => {
-                                    dispatch(cardsRefound(selectedGameCards))
-                                    setSelectedGameCards([])
+                                    dispatch(cardsRefound(selectedWalletCards))
+                                    setSelectedWalletCards([])
                                 } }
                             >
-                                refound
+                                refund
                             </Button>
                             <Button
                                 color={ ButtonColor.LIGHT }
                                 size={ ButtonSize.SM }
                                 fullWidth
-                                disabled={ !selectedGameCards.length && !selectedWalletCards.length }
+                                disabled={ !selectedWalletCards.length && !selectedWalletCards.length }
                                 onClick={ () => {
-                                    dispatch(cardsGameBurn(selectedGameCards))
                                     dispatch(cardsWalletBurn(selectedWalletCards))
-                                    setSelectedGameCards([])
                                     setSelectedWalletCards([])
                                 } }
                             >

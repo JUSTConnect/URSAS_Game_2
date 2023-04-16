@@ -1,6 +1,5 @@
 import css from './index.module.scss'
 
-import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { setMintDialog } from '@/features/mainframe/mainframeSlice'
@@ -25,16 +24,6 @@ interface props extends React.HTMLAttributes<HTMLDivElement>
 
 export default (props: props) => {
     const dispatch = useDispatch()
-    const [ selectedCards, setSelectedCards ] = useState<number[]>([])
-
-    const toggleCard = (number: number) => {
-        if (selectedCards.includes(number)) {
-            setSelectedCards(selectedCards.filter(item=>item!==number))
-        } else {
-            setSelectedCards([...selectedCards, number])
-        }
-
-    }
 
     return (
         <>
@@ -52,8 +41,6 @@ export default (props: props) => {
                     <Header>
                         <div className={ css.heading }>
                             Mint level
-                            &nbsp;
-                            <img className={ css.headingIcon } src="/assets/images/icons/dialog-gameaccount-matic.png" alt="matic" />
                         </div>
                         <HeaderButtons>
                             <Button

@@ -41,7 +41,6 @@ interface info
 {
     typePrize?: typePrize
     result?: number
-    
 }
 
 
@@ -143,11 +142,11 @@ export default (props: props) => {
                         <br />
                         <div className={ css.section }>
                             <div className={ css.inner }>
-                                <DataMain data={props.data}/>
+                                <DataMain data={props.data} state={state}/>
 
                                 { state === seasonState.CURRENT ? (
                                     <RowWithTable
-                                        keyName={ 'Prices mint:' }
+                                        keyName={ 'Prices mint' }
                                         tableValues={ pricesMint }
                                     />
                                 ) : state === seasonState.RESULT ? (
@@ -185,5 +184,6 @@ export default (props: props) => {
 
 export {
     type info,
-    typePrize
+    typePrize,
+    seasonState
 }

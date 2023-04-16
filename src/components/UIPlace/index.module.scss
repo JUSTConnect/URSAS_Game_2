@@ -18,6 +18,11 @@
         border-radius: 12px;
     }
 
+    &:not(.empty)
+    {
+        text-align: left;
+    }
+
     & .inner::before
     {
         content: '';
@@ -67,7 +72,7 @@
     & .inner
     {
         height: 100%;
-        padding: 8px;
+        padding: 8px 12px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -76,6 +81,7 @@
         
         @media (max-width: 768px)
         {
+            padding: 6px 8px;
             font-size: 12px;
             gap: 8px;
             line-height: 16px;
@@ -83,14 +89,14 @@
 
         & .card
         {
-            height: 44px;
-            width: 40px;
+            height: 100%;
+            width: 100%;
             font-size: 16px;
 
             @media (max-width: 768px)
             {
-                height: 33px;
-                width: 30px;
+                height: 100%;
+                width: 100%;
                 font-size: 12px;
             }
         }

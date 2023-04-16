@@ -99,26 +99,26 @@ export default (props: props) => {
             ].join(' ')
         }
     >
-        <div className={ css.inner }>
+        <span className={ css.inner }>
             {
                 props.rank === Rank.JOKER ||
                 props.rank === Rank.POT ||
                 props.rank === Rank.CLOCK ?
                 (
-                    <div className={ css.rankCenter }>
+                    <span className={ css.rankCenter }>
                         {rankIcon[props.rank]}
-                    </div>
+                    </span>
                 ) : (
                     <>
-                        <div className={ css.rank}>
+                        <span className={ css.rank}>
                             { props.rank !== Rank.N1 ? props.rank : 'A' }
-                        </div>
-                        <div className={ css.suit }>
+                        </span>
+                        <span className={ css.suit }>
                             { suitIcons[props.suit] }
-                        </div>
+                        </span>
                     </>
             ) }
-        </div>
+        </span>
     </Wrapper>
 } 
 
