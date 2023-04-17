@@ -28,11 +28,18 @@ interface props extends React.HTMLAttributes<HTMLDivElement>
     active?: boolean
 }
 
+enum tabs
+{
+    STAKE = 'Stake',
+    WALLET = 'Wallet'
+}
+
 export default (props: props) => {
     const dispatch = useDispatch()
     const game = useSelector((state: RootState) => state.game)
     const [ selectedWalletCards, setSelectedWalletCards ] = useState<number[]>([])
-
+    const [ activeTab, setActiveTab ] = useState<tabs>(tabs.STAKE)
+    const [ addressCopied, setAddressCopied ] = useState<boolean>(false)
 
     const toggleWalletCard = (number: number) => {
         if (selectedWalletCards.includes(number)) {
@@ -82,13 +89,29 @@ export default (props: props) => {
                         </div>
                         <HeaderButtons>
                             <Button
+                                onClick={ () => {
+                                    navigator.clipboard.writeText('DFYrNUgxguiGKmZKdbGgaDFYrNUgxguiGKmZK')
+                                    setAddressCopied(true)
+                                    setTimeout(()=>{
+                                        setAddressCopied(false)
+                                    }, 3000)
+                                } }
+                                disabled={ addressCopied }
                                 color={ ButtonColor.DARK }
                                 variant={ ButtonVariant.NORMAL }
                                 size={ ButtonSize.SM }
                                 icon={ <i className="fa-solid fa-link"></i> }
                                 iconTablet
                             >
-                                copy adress
+                                { addressCopied ? (
+                                    <>
+                                        <i className="fa-solid fa-check"></i>
+                                        &nbsp;
+                                        copied
+                                    </>
+                                ) : (
+                                    'copy adress'
+                                ) }
                             </Button>
                             <Button
                                 color={ ButtonColor.DARK }
@@ -121,52 +144,54 @@ export default (props: props) => {
                     </Header>
                     <Content>
                         <div className={ css.containers }>
-                            <div className={
-                                [
-                                    css.container,
-                                ].join(' ')
-                            }>
-                                <div className={ css.header }>
-                                    Wallet account
-                                </div>
-                                <div className={ css.content }>
-                                    <div className={ css.cards }>
-                                        { game.walletCards.length ? (
-                                            game.walletCards.map((card, index) => (
-                                                <Card
-                                                    key={ index }
-                                                    className={
-                                                        [
-                                                            css.card,
-                                                            selectedWalletCards.includes(index) && css.cardActive
-                                                        ].join(' ')
-                                                    }
-                                                    onClick={ ()=> toggleWalletCard(index) }
-                                                    rank={ card.rank }
-                                                    suit={ card.suit }
-                                                />
-                                            ))
-                                        ) : (
-                                            <>
-                                                <br />
-                                                wallet account doesn{"'"}t have URSAS NFT{"'"}s { game.gameCards.length ? ':)' : ':('}
-                                            </>
-                                        ) }
+                            { activeTab === tabs.STAKE &&
+                                <div className={
+                                    [
+                                        css.container,
+                                    ].join(' ')
+                                }>
+                                    <div className={ css.header }>
+                                        Wallet account
+                                    </div>
+                                    <div className={ css.content }>
+                                        <div className={ css.cards }>
+                                            { game.walletCards.length ? (
+                                                game.walletCards.map((card, index) => (
+                                                    <Card
+                                                        key={ index }
+                                                        className={
+                                                            [
+                                                                css.card,
+                                                                selectedWalletCards.includes(index) && css.cardActive
+                                                            ].join(' ')
+                                                        }
+                                                        onClick={ ()=> toggleWalletCard(index) }
+                                                        rank={ card.rank }
+                                                        suit={ card.suit }
+                                                    />
+                                                ))
+                                            ) : (
+                                                <>
+                                                    <br />
+                                                    wallet account doesn{"'"}t have URSAS NFT{"'"}s { game.gameCards.length ? ':)' : ':('}
+                                                </>
+                                            ) }
+                                        </div>
+                                    </div>
+                                    <div className={ css.footer }>
+                                        <button onClick={ selectWalletCards } className={ css.footerButton }>
+                                            <span className={ css.footerButtonText }>
+                                                select all
+                                            </span>
+                                        </button>
+                                        <button onClick={ resetWalletCards } className={ css.footerButton }>
+                                            <span className={ css.footerButtonText }>
+                                                reset all
+                                            </span>
+                                        </button>
                                     </div>
                                 </div>
-                                <div className={ css.footer }>
-                                    <button onClick={ selectWalletCards } className={ css.footerButton }>
-                                        <span className={ css.footerButtonText }>
-                                            select all
-                                        </span>
-                                    </button>
-                                    <button onClick={ resetWalletCards } className={ css.footerButton }>
-                                        <span className={ css.footerButtonText }>
-                                            reset all
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
+                            }
                             { Boolean(game.gameCards.length) &&
                                 <div className={
                                     [
@@ -192,7 +217,7 @@ export default (props: props) => {
                                     </div>
                                 </div>
                             }
-                            { Boolean(selectedWalletCards.length) &&
+                            { Boolean(selectedWalletCards.length) && Boolean(game.gameCards.length) &&
                                 <Button
                                     size={ ButtonSize.SM }
                                     color={ ButtonColor.DARK }
@@ -204,35 +229,63 @@ export default (props: props) => {
                             }
                         </div>
                     </Content>
-                    <Footer>
-                        <FooterButtons>
-                            <Button
-                                color={ ButtonColor.LIGHT }
-                                size={ ButtonSize.SM }
-                                fullWidth
-                                disabled={ !selectedWalletCards.length }
-                                onClick={ () => {
-                                    dispatch(cardsRefound(selectedWalletCards))
-                                    setSelectedWalletCards([])
-                                } }
-                            >
-                                refund
-                            </Button>
-                            <Button
-                                color={ ButtonColor.LIGHT }
-                                size={ ButtonSize.SM }
-                                fullWidth
-                                disabled={ !selectedWalletCards.length && !selectedWalletCards.length }
-                                onClick={ () => {
-                                    dispatch(cardsWalletBurn(selectedWalletCards))
-                                    setSelectedWalletCards([])
-                                } }
-                            >
-                                burn
-                            </Button>
-                        </FooterButtons>
-                    </Footer>
+                    { activeTab === tabs.STAKE &&
+                        <Footer>
+                            <FooterButtons>
+                                <Button
+                                    color={ ButtonColor.LIGHT }
+                                    size={ ButtonSize.SM }
+                                    fullWidth
+                                    disabled={ !selectedWalletCards.length }
+                                    onClick={ () => {
+                                        dispatch(cardsRefound(selectedWalletCards))
+                                        setSelectedWalletCards([])
+                                    } }
+                                >
+                                    refund
+                                </Button>
+                                <Button
+                                    color={ ButtonColor.LIGHT }
+                                    size={ ButtonSize.SM }
+                                    fullWidth
+                                    disabled={ !selectedWalletCards.length && !selectedWalletCards.length }
+                                    onClick={ () => {
+                                        dispatch(cardsWalletBurn(selectedWalletCards))
+                                        setSelectedWalletCards([])
+                                    } }
+                                >
+                                    burn
+                                </Button>
+                            </FooterButtons>
+                        </Footer>
+                    }
                 </Dialog>
+                <div className={ css.tabs }>
+                    <div className={ css.inner }>
+                        <button
+                            onClick={ () => setActiveTab(tabs.STAKE) }
+                            className={
+                                [
+                                    css.tab,
+                                    activeTab == tabs.STAKE && css.tabActive
+                                ].join(' ')
+                            }
+                        >
+                            Stake
+                        </button>
+                        <button
+                            onClick={ () => setActiveTab(tabs.WALLET) }
+                            className={
+                                [
+                                    css.tab,
+                                    activeTab == tabs.WALLET && css.tabActive
+                                ].join(' ')
+                            }
+                        >
+                            Wallet
+                        </button>
+                    </div>
+                </div>
             </div>
         </>
     )

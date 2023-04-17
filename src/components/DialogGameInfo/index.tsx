@@ -73,10 +73,6 @@ const winnersWallets = [
         walletHash: '0x67B94473D81D0cd00849D563C94d0432Ac988B49',
         amount: 10
     },
-    {
-        walletHash: '0x67B94473D81D0cd00849D563C94d0432Ac988B49',
-        amount: 10
-    },
 ]
 
 const pricesMint: tableValues = [

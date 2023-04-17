@@ -30,18 +30,24 @@ export default (props: props) => {
                     </div>
                 </div>
                 <input
-                    onChange={ e => {
-                        if (e.currentTarget.value.length > 3) {
+                    onInput={ e => {
+                        e.preventDefault()
+                        console.log(e.currentTarget.value)
+                        if (
+                            e.currentTarget.value.length > 3 ||
+                            !/^([0-9]*)$/.test(e.currentTarget.value)
+                        ) {
                             e.currentTarget.value = e.currentTarget.value.slice(0, -1)
                             setAmount(e.currentTarget.value)
                         } else {
                             setAmount(e.currentTarget.value)
                         }
                     } }
-                    max={999}
                     className={ css.input }
-                    type='number'
+                    type='text'
                     placeholder='input amount'
+                    min='0'
+                    required
                 />
                 <Button
                     color={ ButtonColor.LIGHT }

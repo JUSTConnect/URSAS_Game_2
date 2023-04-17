@@ -47,7 +47,7 @@
     top: 76px;
     width: max-content;
     display: flex;
-    margin: 0 calc(50% - 15vh);
+    margin: 0 calc(50% - 16vh);
     height: 100%;
 
     @media (max-width: 768px)
@@ -105,14 +105,5 @@
     .slider
     {
         min-height: 400px;
-    }
-    .inner
-    {
-        position: relative;
-        /* top: -30px; */
-        width: max-content;
-        display: flex;
-        align-items: center;
-        margin: 0 calc(50% - 92px);
     }
 }

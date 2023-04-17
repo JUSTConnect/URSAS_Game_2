@@ -63,5 +63,8 @@
 
 .active td
 {
-    color: #E7DF36;
+    background: linear-gradient(180deg, #E7DF36 0%, #EFB23D 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }

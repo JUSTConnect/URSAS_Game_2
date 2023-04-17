@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Link from 'next/link'
 
 import { RootState } from '@/app/store'
-import { setFooterModal } from '@/features/mainframe/mainframeSlice'
+import { setFooterModal, setGameInfoDialog } from '@/features/mainframe/mainframeSlice'
 import MediaLink from '@components/MediaLink'
 import Blur from '@components/Blur'
 
@@ -22,6 +22,7 @@ const FooterModal = () => {
             <div className={ [css.modalContainer, mainframe.footerModal ? css.modalContainerActive : ''].join(' ') }>
                 <div className={ css.modal }>
                     <div className={ css.top }>
+                        <Link onClick={ () => {dispatch(setGameInfoDialog(true)); dispatch(setFooterModal(false))} } className={ css.link } href='#'>Info</Link>
                         <Link className={ css.link } href='#'>Help</Link>
                         <Link className={ css.link } href='https://ursas.gitbook.io/ursas-game/' target='_blank'>Rules</Link>
                     </div>

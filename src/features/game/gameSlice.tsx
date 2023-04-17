@@ -101,7 +101,7 @@ const initialState: gameState = {
   claim: true,
   gameOver: 0,
   walletCards: walletCards,
-  gameCards: []
+  gameCards: gameCards
 }
 
 export const gameSlice = createSlice({
@@ -134,9 +134,9 @@ export const gameSlice = createSlice({
       state.gameCards = [
         ...state.gameCards,
         ...state.walletCards.filter(
-          (item, index) => action.payload.includes(index)
+          (item, index) => action.payload.includes(index) && state.walletCards[index].rank === CardRank.N1
         )]
-      state.walletCards = state.walletCards.filter((item, index) => !action.payload.includes(index))
+      state.walletCards = state.walletCards.filter((item, index) => !action.payload.includes(index) && !(state.walletCards[index].rank === CardRank.N1))
     },
 
     cardsWalletBurn: (state, action: PayloadAction<Draft<number[]>>) => {
