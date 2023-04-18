@@ -37,7 +37,83 @@ const walletCards = [
   {
     rank: CardRank.ACE,
     suit: CardSuit.HEART
-  }
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
 ]
 
 const gameCards = [
@@ -134,7 +210,7 @@ export const gameSlice = createSlice({
       state.gameCards = [
         ...state.gameCards,
         ...state.walletCards.filter(
-          (item, index) => action.payload.includes(index) && state.walletCards[index].rank === CardRank.N1
+          (item, index) => (action.payload.includes(index) && state.walletCards[index].rank === CardRank.N1)
         )]
       state.walletCards = state.walletCards.filter((item, index) => !action.payload.includes(index) && !(state.walletCards[index].rank === CardRank.N1))
     },
