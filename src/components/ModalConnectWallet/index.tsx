@@ -23,7 +23,7 @@ type item = {
 
 
 const items = {
-    SOLANA: [
+    Solana: [
         {
             logoSrc: '/assets/images/icons/wallet-glow.svg',
             name: 'Glow'
@@ -37,7 +37,7 @@ const items = {
             name: 'MathWallet'
         }
     ],
-    POLYGON: [
+    Polygon: [
         {
             logoSrc: '/assets/images/icons/wallet-metamask.png',
             name: 'MetaMask'
@@ -56,8 +56,8 @@ const items = {
 
 enum Tabs
 {
-    SOLANA = 'SOLANA',
-    POLYGON = 'POLYGON'
+    SOLANA = 'Solana',
+    POLYGON = 'Polygon'
 }
 
 export default () => {
@@ -111,7 +111,7 @@ export default () => {
                         </button>
                     </div>
                     <div className={ css.header }>
-                        Connect a wallet on Solana to continue
+                        Connect a wallet on { activeTab } to continue
                     </div>
                     <div className={ css.content }>
                         { items[activeTab].map((item, index)=>(

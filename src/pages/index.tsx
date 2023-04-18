@@ -28,7 +28,6 @@ export default function Home() {
             <Mainframe
                 connected={true}
                 subHeader={<SubHeaderRooms mode={mode} setMode={setMode} />}
-                dialogLayer2={ <DialogMint active={ rooms.dialogMint }/> }
             >
                 <RoomsDoorSlider mode={mode}/>
             </Mainframe>

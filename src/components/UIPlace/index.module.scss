@@ -7,6 +7,8 @@
     height: 60px;
     width: 140px;
     border-radius: 24px;
+    -moz-border-radius: 24px;
+    -webkit-border-radius: 24px;
     user-select: none;
     transition: .2s;
     overflow: hidden;
@@ -16,6 +18,13 @@
         height: 44px;
         width: 100px;
         border-radius: 12px;
+        -moz-border-radius: 12px;
+        -webkit-border-radius: 12px;
+    }
+
+    &:not(.empty)
+    {
+        text-align: left;
     }
 
     & .inner::before

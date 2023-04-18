@@ -1,0 +1,43 @@
+.container
+{
+    overflow: auto;
+    padding: 1px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+
+    &::-webkit-scrollbar
+    {
+        height: 10px;
+    }
+}
+
+.table
+{
+    border: 1px solid #384156;
+    border-radius: 12px;
+    border-collapse: collapse;
+    border-style: hidden;
+    box-shadow: 0 0 0 1px #384156;
+    width: 100%;
+    margin-right: 16px;
+
+    & td
+    {
+        min-width: 50px;
+        text-align: center;
+        border: 1px solid #384156;
+        border-radius: 12px;
+        padding: 8px;
+        color: #B5C4E3;
+
+        @media (max-width: 768px)
+        {
+            max-width: 40px;
+        }
+
+        &.head
+        {
+            color: #4E5E80;
+        }
+    }
+}

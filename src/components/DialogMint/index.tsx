@@ -1,15 +1,12 @@
 import css from './index.module.scss'
 
-import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { setDialogMint } from '@/features/rooms/roomsSlice'
-
-
+import { setMintDialog } from '@/features/mainframe/mainframeSlice'
 import Dialog, {
     Header,
     HeaderButtons,
-    Content,
+    ContentScrollable as Content,
 } from '@components/Dialog'
 import Button, {
     Color as ButtonColor,
@@ -27,21 +24,11 @@ interface props extends React.HTMLAttributes<HTMLDivElement>
 
 export default (props: props) => {
     const dispatch = useDispatch()
-    const [ selectedCards, setSelectedCards ] = useState<number[]>([])
-
-    const toggleCard = (number: number) => {
-        if (selectedCards.includes(number)) {
-            setSelectedCards(selectedCards.filter(item=>item!==number))
-        } else {
-            setSelectedCards([...selectedCards, number])
-        }
-
-    }
 
     return (
         <>
             <Blur
-                onClick={ () => dispatch(setDialogMint(false)) }
+                onClick={ () => dispatch(setMintDialog(false)) }
                 isActive={ props.active }
             />
             <div className={
@@ -54,12 +41,10 @@ export default (props: props) => {
                     <Header>
                         <div className={ css.heading }>
                             Mint level
-                            &nbsp;
-                            <img className={ css.headingIcon } src="/assets/images/icons/dialog-gameaccount-matic.png" alt="matic" />
                         </div>
                         <HeaderButtons>
                             <Button
-                                onClick={ () => dispatch(setDialogMint(false)) }
+                                onClick={ () => dispatch(setMintDialog(false)) }
                                 color={ ButtonColor.DARK }
                                 variant={ ButtonVariant.OUTLINE }
                                 size={ ButtonSize.SM }
@@ -70,11 +55,11 @@ export default (props: props) => {
                     </Header>
                     <Content>
                         <div className={ css.mintCards }>
-                            { Array.from(Array(10)).map((item, index) => (
+                            { Array.from(Array(16)).map((item, index) => (
                                 <MintCard
                                     key={ index }
-                                    price={123}
-                                    level={123}
+                                    price={ (index+1) * 2 }
+                                    level={16-index}
                                 />
                             )) }
                         </div>

@@ -8,6 +8,14 @@
     transition: .3s;
     width: 100%;
 
+    &:not(.active)
+    {
+        & .tabs
+        {
+            display: none;
+        }
+    }
+
     @media (max-width: 1060px)
     {
         max-width: initial;
@@ -34,6 +42,11 @@
     display: flex;
     align-items: center;
     gap: 14px;
+
+    @media (max-width: 768px)
+    {
+        gap: 8px;
+    }
 }
 
 .balance
@@ -41,9 +54,20 @@
     display: flex;
     align-items: center;
     gap: 8px;
+
+    @media (max-width: 768px)
+    {
+        gap: 4px;
+    }
+
     &Icon
     {
         height: 30px;
+
+        @media (max-width: 768px)
+        {
+            height: 16px;
+        }
     }
 }
 
@@ -207,5 +231,52 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+    }
+}
+
+.tabs
+{
+    position: absolute;
+    right: 16px;
+    top: 100px;
+    transform: rotate(90deg) translate(100%);
+    transform-origin: 100% 100%;
+
+    & .inner
+    {
+        display: flex;
+    }
+
+    & .tab
+    {
+        background: #222A3A;
+        padding: 10px 40px;
+        border-radius: 22px 22px 0 0;
+        cursor: pointer;
+        border: none;
+        color: inherit;
+
+        &Active
+        {
+            background: #293145;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        &:hover
+        {
+            opacity: .9;
+        }
+
+        &:not(:last-child)
+        {
+            position: relative;
+            left: 15px;
+        }
+
+        @media (max-width: 768px)
+        {
+            display: none;
+        }
     }
 }

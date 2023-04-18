@@ -1,6 +1,157 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction, Draft } from '@reduxjs/toolkit'
-import { Card, CardRank, CardSuit } from '@/components/Card'
+import { Card, CardRank, CardSuit, randomCard } from '@/components/Card'
+
+
+// example data
+
+const walletCards = [
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.N1,
+    suit: CardSuit.DIAMOND
+  },
+  {
+    rank: CardRank.N10,
+    suit: CardSuit.CLUB
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+]
+
+const gameCards = [
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.N2,
+    suit: CardSuit.DIAMOND
+  },
+  {
+    rank: CardRank.N10,
+    suit: CardSuit.CLUB
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.SPADE
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.SPADE
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.ACE,
+    suit: CardSuit.HEART
+  }
+]
+
+// 
 
 
 export interface gameState {
@@ -25,50 +176,8 @@ const initialState: gameState = {
   loadingTable: true,
   claim: true,
   gameOver: 0,
-  walletCards: [
-    {
-      rank: CardRank.N10,
-      suit: CardSuit.DIAMOND
-    },
-    {
-      rank: CardRank.ACE,
-      suit: CardSuit.DIAMOND
-    },
-    {
-      rank: CardRank.ACE,
-      suit: CardSuit.DIAMOND
-    },
-    {
-      rank: CardRank.ACE,
-      suit: CardSuit.DIAMOND
-    },
-    {
-      rank: CardRank.ACE,
-      suit: CardSuit.DIAMOND
-    },
-  ],
-  gameCards: [
-    {
-      rank: CardRank.ACE,
-      suit: CardSuit.DIAMOND
-    },
-    {
-      rank: CardRank.ACE,
-      suit: CardSuit.DIAMOND
-    },
-    {
-      rank: CardRank.ACE,
-      suit: CardSuit.DIAMOND
-    },
-    {
-      rank: CardRank.ACE,
-      suit: CardSuit.DIAMOND
-    },
-    {
-      rank: CardRank.N2,
-      suit: CardSuit.DIAMOND
-    },
-  ]
+  walletCards: walletCards,
+  gameCards: gameCards
 }
 
 export const gameSlice = createSlice({
@@ -98,22 +207,17 @@ export const gameSlice = createSlice({
     },
 
     cardsRefound: (state, action: PayloadAction<Draft<number[]>>) => {
-      state.walletCards = [
-        ...state.walletCards,
-        ...state.gameCards.filter(
-          (item, index) => action.payload.includes(index)
+      state.gameCards = [
+        ...state.gameCards,
+        ...state.walletCards.filter(
+          (item, index) => (action.payload.includes(index) && state.walletCards[index].rank === CardRank.N1)
         )]
-      state.gameCards = state.gameCards.filter((item, index) => !action.payload.includes(index))
-      console.log(1)
+      state.walletCards = state.walletCards.filter((item, index) => !action.payload.includes(index) && !(state.walletCards[index].rank === CardRank.N1))
     },
 
     cardsWalletBurn: (state, action: PayloadAction<Draft<number[]>>) => {
       state.walletCards = state.walletCards.filter((item, index)=> !action.payload.includes(index))
     },
-
-    cardsGameBurn: (state, action: PayloadAction<Draft<number[]>>) => {
-      state.gameCards = state.gameCards.filter((item, index)=> !action.payload.includes(index))
-    }
   }
 })
 
@@ -128,6 +232,5 @@ export const {
 
   cardsRefound,
   cardsWalletBurn,
-  cardsGameBurn
 } = gameSlice.actions
 export default gameSlice.reducer

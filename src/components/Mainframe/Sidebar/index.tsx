@@ -1,16 +1,25 @@
+import css from './index.module.scss'
+
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { RootState } from '@/app/store'
+import { setGameInfoDialog, setMintDialog } from '@/features/mainframe/mainframeSlice'
 import SidebarButton from './SidebarButton'
-
-import css from './index.module.css'
+import Button, {
+    Variant as ButtonVariant,
+    Size as ButtonSize,
+    Color as ButtonColor
+} from '@/components/UIButton'
 
 
 const Sidebar = () => {
+    const dispatch = useDispatch()
     const game = useSelector((state: RootState)=>state.game)
+    const mainframe = useSelector((state: RootState)=>state.mainframe)
+
 
     const buttons = [
         {
@@ -48,10 +57,19 @@ const Sidebar = () => {
                         />
                     ) }
                 </div>
-                <div className={ [css.section, css.links].join(' ') }>
-                    <Link className={ css.link } onClick={ () => console.log(1) } href={ {} }>Info</Link>
-                    <Link className={ css.link } href='#'>Help</Link>
-                    <Link className={ css.link } target='_blank' href='https://ursas.gitbook.io/ursas-game/'>Rules</Link>
+                <div>
+                    <div className={ [css.section, css.links].join(' ') }>
+                        <Link className={ css.link } onClick={ () => dispatch(setGameInfoDialog(!mainframe.gameInfoDialog)) } href={ '#' }>Info</Link>
+                        <Link className={ css.link } href='#'>Help</Link>
+                        <Link className={ css.link } target='_blank' href='https://ursas.gitbook.io/ursas-game/'>Rules</Link>
+                    </div>
+                    <Button
+                        onClick={ () => dispatch(setMintDialog(!mainframe.mintDialog)) }
+                        className={ css.button }
+                        size={ ButtonSize.SM }
+                    >
+                        buy
+                    </Button>
                 </div>
             </div>
         </div>

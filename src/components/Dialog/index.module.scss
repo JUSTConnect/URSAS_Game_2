@@ -1,5 +1,6 @@
 .dialog
 {
+    position: relative;
     background: #293145;
     border-radius: 24px;
     overflow: hidden;
@@ -59,8 +60,16 @@
 
 .content
 {
-    height: 100%;
     overflow: auto;
+    height: 100%;
+}
+
+.contentScrollable
+{
+    & .contentInner
+    {
+        height: initial;
+    }
 }
 
 .contentOverflowHidden

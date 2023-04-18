@@ -23,13 +23,13 @@ import Dialog, {
 
 import DialogGameAccount from '@components/DialogGameAccount'
 import DialogMint from '@components/DialogMint'
-import DialogGameInfo from '@components/DialogGameInfo'
+import DialogGameInfo, {typePrize} from '@components/DialogGameInfo'
 
 
 export default () => {
     return <div className={ css.container }>
         <Text variant={text.h1}>URSAS UI-kit</Text>
-        <div className={ css.section }>
+        {/* <div className={ css.section }>
             <Text variant={text.h2}>Typography:</Text>
             <Text>Paragraph:</Text>
             <Text>
@@ -254,13 +254,19 @@ export default () => {
             </Dialog>
             <br />
             <br />
-        </div>
-        {/* <div>
+        </div> */}
+        <div>
             <Text variant={ text.h2 }>
                 Game info dialog:
             </Text>
+            <DialogGameInfo data={
+                {
+                    typePrize: typePrize.WL,
+                    result: 1
+                }
+            }/>
             <br />
             <br />
-        </div> */}
+        </div>
     </div>
 }

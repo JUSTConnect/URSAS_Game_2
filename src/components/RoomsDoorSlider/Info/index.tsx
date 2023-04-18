@@ -22,6 +22,10 @@ export default (props: props) => {
                 <div className={css.value}>{ props.empty }</div>
             </div>
             <div>
+                <div className={css.key}>suit</div>
+                <div className={css.value}>Hearts</div>
+            </div>
+            <div>
                 <div className={css.key}>time game</div>
                 <div className={css.value}>{ props.timeGame }</div>
             </div>

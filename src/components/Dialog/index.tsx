@@ -53,6 +53,17 @@ const Content = (props: contentProps) => {
     )
 }
 
+const ContentScrollable = (props: contentProps) => {
+    return (
+        <Content
+            { ...props }
+            className={ [props.className, css.contentScrollable].join(' ') }
+        >
+            { props.children }
+        </Content>
+    )
+}
+
 const Footer = (props: footerProps) => {
     return (
         <div className={ [css.footer, props.className].join(' ') }>
@@ -83,6 +94,7 @@ export {
     Header,
     HeaderButtons,
     Content,
+    ContentScrollable,
     Footer,
     FooterButtons
 }

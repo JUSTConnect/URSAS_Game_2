@@ -1,4 +1,4 @@
-import css from './index.module.css'
+import css from './index.module.scss'
 
 import { useRef, useState, useEffect, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,6 +9,7 @@ import Door from './Door'
 import NavigationButton from './NavigationButton'
 import Info from './Info'
 import DoorList from '@components/RoomsDoorList'
+import LoaderLogo from '@components/LoaderLogo'
 
 
 interface RoomsDoorSliderProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -40,19 +41,31 @@ const SliderFragment = (props: SliderFragmentProps) => {
                 return (
                     <div 
                         style={{
-                            bottom:
-                                props.currentDoor - 2 === index ? `${(100 - props.scrollStagePercent) / 100 * 10}px` :
-                                props.currentDoor - 1 === index ? `${(100 - props.scrollStagePercent) / 100 * 40 + 10}px` :
-                                props.currentDoor === index ? `${(100 - props.scrollStagePercent) / 100 * 26 + 50}px` :
-                                props.currentDoor + 1 === index ? `${props.scrollStagePercent / 100 * 26 + 50}px` :
-                                props.currentDoor + 2 === index ? `${props.scrollStagePercent / 100 * 40 + 10}px` :
-                                props.currentDoor + 3 === index ? `${props.scrollStagePercent / 100 * 10}px` :
-                                '0',
-                            opacity:
-                                index === props.selectedDoor ? 1 :
-                                index === props.selectedDoor + 1 ? 0.9 :
-                                index === props.selectedDoor - 1 ? 0.9 :
-                                0.5
+                            bottom: (() => {
+                                let c = props.currentDoor
+                                let l = 100 - props.scrollStagePercent
+                                let r = props.scrollStagePercent
+
+                                switch (-(props.currentDoor - index)) {
+                                    case -2: return l / 100 * 10
+                                    case 3 : return r / 100 * 10
+
+                                    case -1: return l / 100 * 40 + 10
+                                    case 2: return r / 100 * 40 + 10 
+
+                                    case 0: return l / 100 * 26 + 50
+                                    case 1: return r / 100 * 26 + 50
+                                }
+                            })(),
+                            opacity: (() => {
+                                switch (index) {
+                                    case props.selectedDoor: return 1
+                                    case props.selectedDoor + 1: 
+                                    case props.selectedDoor - 1:
+                                        return .9
+                                    default: return 0.5
+                                }
+                            })()
                         }} 
                         ref={index === 0 ? props.doorRef : null}
                         key={index}
@@ -72,8 +85,8 @@ const SliderFragment = (props: SliderFragmentProps) => {
                     >
                         <Door
                             href={ game.walletConnected && index === props.selectedDoor ? `/tables/${level}` : null }
-                            level={level}
                             active={ game.walletConnected && index === props.selectedDoor}
+                            level={level}
                             go={false}
                             over={ index-props.indexAdd === props.over-1 }
                         />
@@ -101,11 +114,10 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
     const game = useSelector((state: RootState) => state.game)
 
     useEffect(()=>{
-        if (null !== doorSliderInner.current && null !== doorSlider.current) {
+        if (doorSliderInner.current && doorSlider.current && door.current) {
             doorSlider.current.scroll({
-                    left: doorSliderInner.current.offsetWidth / 3
+                left: doorSliderInner.current.offsetWidth / 3
             })
-
         }
     },[])
 
@@ -119,7 +131,7 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
             current,
             selected
 
-        if (null !== door.current) {
+        if (door.current) {
             doorWidth = door.current.offsetWidth
         }
         if (null !== doorSlider.current) {
@@ -138,20 +150,6 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
             
             setCurrentDoor(current)
             setSelectedDoor(selected)
-            if (selected>=32 && stage < doorWidth / 2) {
-                if (null !== doorSliderInner.current && null !== doorSlider.current) {
-                    doorSlider.current.scroll({
-                            left: doorSliderInner.current.offsetWidth / 3
-                    })
-                }
-            }
-            if (selected<16 && stage > doorWidth / 2) {
-                if (null !== doorSliderInner.current && null !== doorSlider.current) {
-                    doorSlider.current.scroll({
-                        left: doorSliderInner.current.offsetWidth / 3 * 2 - doorWidth
-                    })
-                }
-            }
         }
     }
 
@@ -181,48 +179,62 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
         }
     }
 
-    return <div className={css.container}>
-        <div
-            onScroll={ scrollHandler }
-            ref={ doorSlider }
-            className={ [css.slider, props.mode !== 'slide' ? css.sliderHidden: ''].join(' ') }
-        >
-            <div ref={ doorSliderInner } className={css.inner}>
-                { [...Array(3)].map((item, index)=>(
-                    <SliderFragment
-                        key={ index }
-                        scroll={ scroll }
-                        indexAdd={index*16}
-                        currentDoor={currentDoor}
-                        selectedDoor={selectedDoor}
-                        scrollStagePercent={scrollStagePercent}
-                        doorRef={door}
-                        over={game.gameOver}
+    return (
+        <>
+            <div className={
+                [
+                    css.container,
+                    game.loadingRooms && css.containerLoading
+                ].join(' ')
+            }>
+                <div
+                    onScroll={ scrollHandler }
+                    ref={ doorSlider }
+                    className={ [css.slider, props.mode !== 'slide' ? css.sliderHidden: ''].join(' ') }
+                >
+                    <div ref={ doorSliderInner } className={css.inner}>
+                        { [...Array(3)].map((item, index)=>(
+                            <SliderFragment
+                                key={ index }
+                                scroll={ scroll }
+                                indexAdd={index*16}
+                                currentDoor={currentDoor}
+                                selectedDoor={selectedDoor}
+                                scrollStagePercent={scrollStagePercent}
+                                doorRef={door}
+                                over={game.gameOver}
+                            />
+                        )) }
+                    </div>
+                    <NavigationButton
+                        className={ css.prevButton }
+                        onClick={ prevSlide }
                     />
-                )) }
+                    <NavigationButton
+                        className={ css.nextButton }
+                        onClick={ nextSlide}
+                    />
+                </div> 
+                
+                { props.mode === 'list' ? (
+                    <DoorList currentDoor={ currentDoorList } setCurrentDoor={ setCurrentDoorList }/>
+                ) : ''}
+
+
+                <Info
+                    available={234}
+                    empty={102}
+                    timeGame={'24+2'}
+                    hidden={ props.mode === 'list' ? !currentDoorList : props.mode === 'list' }
+                />
             </div>
-            <NavigationButton
-                className={ css.prevButton }
-                onClick={ prevSlide }
-            />
-            <NavigationButton
-                className={ css.nextButton }
-                onClick={ nextSlide}
-            />
-        </div> 
-        
-        { props.mode === 'list' ? (
-            <DoorList currentDoor={ currentDoorList } setCurrentDoor={ setCurrentDoorList }/>
-        ) : ''}
-
-
-        <Info
-            available={234}
-            empty={102}
-            timeGame={'24+2'}
-            hidden={ props.mode === 'list' ? !currentDoorList : props.mode === 'list' }
-        />
-    </div>
+            { game.loadingRooms &&
+                <div className={ css.loader }>
+                    <LoaderLogo/>
+                </div>
+            }
+        </>
+    )
 }
 
 
