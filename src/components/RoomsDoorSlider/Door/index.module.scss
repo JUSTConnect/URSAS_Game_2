@@ -144,20 +144,6 @@
     transition: .2s;
     overflow: hidden;
 
-    &::before
-    {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        height: 200%;
-        width: 10px;
-        opacity: .5;
-        background-color: white;
-        transform: rotate(25deg);
-        transition: 1s;
-    }
-
     &:hover
     {
         opacity: 1;
@@ -168,11 +154,6 @@
         {
             color: #222A3A;
         }
-
-        &::before
-        {
-            left: 150%;
-        }
     }
 
     &:not(:hover) &Text
@@ -181,6 +162,5 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        text-fill-color: transparent;
     }
 }
