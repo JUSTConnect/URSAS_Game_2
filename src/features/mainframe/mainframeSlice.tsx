@@ -50,16 +50,30 @@ export const mainframeSlice = createSlice({
         },
         setGameAccountDialog: (state, action: PayloadAction<boolean>) => {
             state.gameAccountDialog = action.payload  
+
+            state.gameInfoDialog = false
+            state.mintDialog = false
+
             state.layer2Blured = false
             state.activeHeaderDropdown = 0
         },
         setGameInfoDialog: (state, action: PayloadAction<boolean>) => {
             state.gameInfoDialog = action.payload
+
+            state.gameAccountDialog = false
+            state.mintDialog = false
+
             state.layer2Blured = false
             state.activeHeaderDropdown = 0
         },
         setMintDialog: (state, action: PayloadAction<boolean>) => {
             state.mintDialog = action.payload
+
+            state.gameAccountDialog = false
+            state.gameInfoDialog = false
+
+            state.layer2Blured = false
+            state.activeHeaderDropdown = 0
         }
     }
 })

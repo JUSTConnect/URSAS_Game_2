@@ -11,7 +11,11 @@ const walletCards = [
     suit: CardSuit.HEART
   },
   {
-    rank: CardRank.N1,
+    rank: CardRank.POT,
+    suit: CardSuit.CLUB
+  },
+  {
+    rank: CardRank.ACE,
     suit: CardSuit.DIAMOND
   },
   {
@@ -113,42 +117,35 @@ const walletCards = [
   {
     rank: CardRank.ACE,
     suit: CardSuit.HEART
+  },
+  {
+    rank: CardRank.POT,
+    suit: CardSuit.CLUB
   },
 ]
 
 const gameCards = [
   {
-    rank: CardRank.ACE,
+    rank: CardRank.POT,
     suit: CardSuit.HEART
   },
   {
-    rank: CardRank.N2,
-    suit: CardSuit.DIAMOND
-  },
-  {
-    rank: CardRank.N10,
-    suit: CardSuit.CLUB
-  },
-  {
-    rank: CardRank.ACE,
+    rank: CardRank.POT,
     suit: CardSuit.HEART
   },
   {
-    rank: CardRank.ACE,
-    suit: CardSuit.SPADE
-  },
-  {
-    rank: CardRank.ACE,
-    suit: CardSuit.SPADE
-  },
-  {
-    rank: CardRank.ACE,
+    rank: CardRank.POT,
     suit: CardSuit.HEART
   },
   {
-    rank: CardRank.ACE,
+    rank: CardRank.POT,
     suit: CardSuit.HEART
-  }
+  },
+  {
+    rank: CardRank.POT,
+    suit: CardSuit.HEART
+  },
+
 ]
 
 // 
@@ -206,17 +203,20 @@ export const gameSlice = createSlice({
       state.claim = action.payload
     },
 
-    cardsRefound: (state, action: PayloadAction<Draft<number[]>>) => {
+    cardsStake: (state, action: PayloadAction<Draft<number[]>>) => {
       state.gameCards = [
         ...state.gameCards,
-        ...state.walletCards.filter(
-          (item, index) => (action.payload.includes(index) && state.walletCards[index].rank === CardRank.N1)
+        ...state.walletCards.filter(card => card.rank === CardRank.POT).filter(
+          (item, index) => action.payload.includes(index)
         )]
-      state.walletCards = state.walletCards.filter((item, index) => !action.payload.includes(index) && !(state.walletCards[index].rank === CardRank.N1))
+      state.walletCards = state.walletCards.filter(card => card.rank === CardRank.POT).filter((item, index) => !action.payload.includes(index))
     },
 
-    cardsWalletBurn: (state, action: PayloadAction<Draft<number[]>>) => {
+    cardsBurn: (state, action: PayloadAction<Draft<number[]>>) => {
       state.walletCards = state.walletCards.filter((item, index)=> !action.payload.includes(index))
+    },
+    cardsRefound: (state, action: PayloadAction<Draft<number[]>>) => {
+      state.walletCards = state.walletCards.filter((item, index)=> !(action.payload.includes(index) && state.walletCards[index].rank === CardRank.ACE) )
     },
   }
 })
@@ -230,7 +230,8 @@ export const {
   setCurrentGame,
   setClaim,
 
+  cardsBurn,
   cardsRefound,
-  cardsWalletBurn,
+  cardsStake
 } = gameSlice.actions
 export default gameSlice.reducer
