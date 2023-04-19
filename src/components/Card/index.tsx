@@ -18,7 +18,6 @@ enum Rank
     N4 = '4',
     N3 = '3',
     N2 = '2',
-    N1 = '1'
 }
 
 enum Suit
@@ -30,7 +29,7 @@ enum Suit
 }
 
 function randomCard():[Rank, Suit] {
-    const ranks = [Rank.POT, Rank.CLOCK, Rank.ACE, Rank.KING, Rank.QUEEN, Rank.JACK, Rank.JOKER, Rank.N10, Rank.N9, Rank.N8, Rank.N7, Rank.N6, Rank.N5, Rank.N4, Rank.N3, Rank.N2, Rank.N1]
+    const ranks = [Rank.POT, Rank.CLOCK, Rank.ACE, Rank.KING, Rank.QUEEN, Rank.JACK, Rank.JOKER, Rank.N10, Rank.N9, Rank.N8, Rank.N7, Rank.N6, Rank.N5, Rank.N4, Rank.N3, Rank.N2]
     const suits = [Suit.DIAMOND, Suit.HEART, Suit.CLUB, Suit.SPADE]
     return [
         ranks[Math.floor(Math.random() * ranks.length)],
@@ -111,7 +110,7 @@ export default (props: props) => {
                 ) : (
                     <>
                         <span className={ css.rank}>
-                            { props.rank !== Rank.N1 ? props.rank : 'A' }
+                            { props.rank !== Rank.ACE ? props.rank : 'A' }
                         </span>
                         <span className={ css.suit }>
                             { suitIcons[props.suit] }
