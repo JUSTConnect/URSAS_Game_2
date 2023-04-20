@@ -41,10 +41,12 @@ export default (props: props) => {
             ) : (
                 <div className={ css.inner }>
                     { props.card &&
-                        <Card
-                            className={ css.card }
-                            { ...props.card }
-                        />
+                        <div>
+                            <Card
+                                className={ css.card }
+                                { ...props.card }
+                            />
+                        </div>
                     }
                     { props.number &&
                         <div className={ css.info }>
