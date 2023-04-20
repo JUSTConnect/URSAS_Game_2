@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/app/store'
 import { setDisableWalletModal, setGameAccountDialog } from '@/features/mainframe/mainframeSlice'
 
-import { cardsRefound, cardsWalletBurn } from '@/features/game/gameSlice'
+import { cardsRefound, cardsBurn, cardsStake } from '@/features/game/gameSlice'
 import Dialog, {
     Header,
     HeaderButtons,
@@ -19,7 +19,7 @@ import Button, {
     Variant as ButtonVariant,
     Size as ButtonSize,
 } from '@components/UIButton'
-import Card from '@components/Card'
+import Card, { CardRank } from '@components/Card'
 import Blur from '../Blur'
 
 
@@ -38,6 +38,7 @@ export default (props: props) => {
     const dispatch = useDispatch()
     const game = useSelector((state: RootState) => state.game)
     const [ selectedWalletCards, setSelectedWalletCards ] = useState<number[]>([])
+    const [ selectedStakeCards, setSelectedStakeCards ] = useState<number[]>([])
     const [ activeTab, setActiveTab ] = useState<tabs>(tabs.WALLET)
     const [ addressCopied, setAddressCopied ] = useState<boolean>(false)
 
@@ -49,13 +50,25 @@ export default (props: props) => {
         }
     }
 
-    const resetWalletCards = () => {
-        setSelectedWalletCards([])
+    const resetWalletCards = () => setSelectedWalletCards([])
+
+    const selectWalletCards = () => setSelectedWalletCards(game.walletCards.map((item, index) => index))
+
+    const toggleStakeCard = (number: number) => {
+        if (selectedStakeCards.includes(number)) {
+            setSelectedStakeCards(selectedStakeCards.filter(item=>item!==number))
+        } else {
+            setSelectedStakeCards([...selectedStakeCards, number])
+        }
     }
 
-    const selectWalletCards = () => {
-        setSelectedWalletCards(game.walletCards.map((item, index) => index))
-    }
+    const resetStakeCards = () => setSelectedStakeCards([])
+
+    const selectStakeCards = () => setSelectedStakeCards(
+        game.walletCards
+            .filter(card => card.rank === CardRank.POT)
+            .map((item, index) => index)
+    )
 
     return (
         <>
@@ -157,16 +170,16 @@ export default (props: props) => {
                                         <div className={ css.content }>
                                             <div className={ css.cards }>
                                                 { game.walletCards.length ? (
-                                                    game.walletCards.map((card, index) => (
+                                                    game.walletCards.filter(card => card.rank === CardRank.POT).map((card, index) => (
                                                         <Card
                                                             key={ index }
                                                             className={
                                                                 [
                                                                     css.card,
-                                                                    selectedWalletCards.includes(index) && css.cardActive
+                                                                    selectedStakeCards.includes(index) && css.cardActive
                                                                 ].join(' ')
                                                             }
-                                                            onClick={ ()=> toggleWalletCard(index) }
+                                                            onClick={ ()=> toggleStakeCard(index) }
                                                             rank={ card.rank }
                                                             suit={ card.suit }
                                                         />
@@ -174,50 +187,53 @@ export default (props: props) => {
                                                 ) : (
                                                     <>
                                                         <br />
-                                                        wallet account doesn{"'"}t have URSAS NFT{"'"}s { game.gameCards.length ? ':)' : ':('}
+                                                        wallet account doesn{"'"}t have URSAS ace NFT{"'"}s
                                                     </>
                                                 ) }
                                             </div>
                                         </div>
                                         <div className={ css.footer }>
-                                            <button onClick={ selectWalletCards } className={ css.footerButton }>
+                                            <button onClick={ selectStakeCards } className={ css.footerButton }>
                                                 <span className={ css.footerButtonText }>
                                                     select all
                                                 </span>
                                             </button>
-                                            <button onClick={ resetWalletCards } className={ css.footerButton }>
+                                            <button onClick={ resetStakeCards } className={ css.footerButton }>
                                                 <span className={ css.footerButtonText }>
                                                     reset all
                                                 </span>
                                             </button>
                                         </div>
                                     </div>
-                                    { Boolean(game.gameCards.length) &&
-                                        <div className={
-                                            [
-                                                css.container,
-                                                selectedWalletCards.length && css.disabled
-                                            ].join(' ')
-                                        }>
-                                            <div className={ css.header }>
-                                                Game account
-                                            </div>
-                                            <div className={ css.content }>
-                                                <div className={ css.cards }>
-                                                    {
-                                                        game.gameCards.map((card, index) => (
-                                                            <Card
-                                                                key={ index }
-                                                                rank={ card.rank }
-                                                                suit={ card.suit }
-                                                            />
-                                                        ))
-                                                    }
-                                                </div>
+                                    <div className={
+                                        [
+                                            css.container,
+                                            selectedStakeCards.length && css.disabled
+                                        ].join(' ')
+                                    }>
+                                        <div className={ css.header }>
+                                            Game account
+                                        </div>
+                                        <div className={ css.content }>
+                                            <div className={ css.cards }>
+                                                { game.gameCards.length ? (
+                                                    game.gameCards.map((card, index) => (
+                                                        <Card
+                                                            key={ index }
+                                                            rank={ card.rank }
+                                                            suit={ card.suit }
+                                                        />
+                                                    ))
+                                                ) : (
+                                                    <>
+                                                        <br />
+                                                        Game account is empty!
+                                                    </>
+                                                ) }
                                             </div>
                                         </div>
-                                    }
-                                    { Boolean(selectedWalletCards.length) && Boolean(game.gameCards.length) &&
+                                    </div>
+                                    { Boolean(selectedStakeCards.length) && Boolean(game.gameCards.length) &&
                                         <Button
                                             size={ ButtonSize.SM }
                                             color={ ButtonColor.DARK }
@@ -236,7 +252,7 @@ export default (props: props) => {
                                     ].join(' ')
                                 }>
                                     <div className={ css.header }>
-                                        Wallet Account
+                                        Wallet account
                                     </div>
                                     <div className={ css.content }>
                                         <div className={ css.cards }>
@@ -286,27 +302,43 @@ export default (props: props) => {
                                     color={ ButtonColor.LIGHT }
                                     size={ ButtonSize.SM }
                                     fullWidth
-                                    disabled={ !selectedWalletCards.length }
+                                    disabled={ !selectedStakeCards.length }
                                     onClick={ () => {
-                                        dispatch(cardsRefound(selectedWalletCards))
-                                        setSelectedWalletCards([])
+                                        dispatch(cardsStake(selectedStakeCards))
+                                        setSelectedStakeCards([])
                                     } }
                                 >
-                                    refund
+                                    stake
                                 </Button>
                             }
-                            <Button
-                                color={ ButtonColor.LIGHT }
-                                size={ ButtonSize.SM }
-                                fullWidth
-                                disabled={ !selectedWalletCards.length && !selectedWalletCards.length }
-                                onClick={ () => {
-                                    dispatch(cardsWalletBurn(selectedWalletCards))
-                                    setSelectedWalletCards([])
-                                } }
-                            >
-                                burn
-                            </Button>
+                            { activeTab == tabs.WALLET &&
+                                <>
+                                    <Button
+                                        color={ ButtonColor.LIGHT }
+                                        size={ ButtonSize.SM }
+                                        fullWidth
+                                        disabled={ !selectedWalletCards.length }
+                                        onClick={ () => {
+                                            dispatch(cardsRefound(selectedWalletCards))
+                                            setSelectedWalletCards([])
+                                        } }
+                                    >
+                                        refund
+                                    </Button>
+                                    <Button
+                                        color={ ButtonColor.LIGHT }
+                                        size={ ButtonSize.SM }
+                                        fullWidth
+                                        disabled={ !selectedWalletCards.length && !selectedWalletCards.length }
+                                        onClick={ () => {
+                                            dispatch(cardsBurn(selectedWalletCards))
+                                            setSelectedWalletCards([])
+                                        } }
+                                    >
+                                        burn
+                                    </Button>
+                                </>
+                            }
                         </FooterButtons>
                     </Footer>
                 </Dialog>
