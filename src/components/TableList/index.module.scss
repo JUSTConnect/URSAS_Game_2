@@ -1,21 +1,27 @@
 .tableList
 {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, .25fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, .2fr));
     grid-gap: 16px;
     height: 100%;
     overflow-y: h;
     height: auto;   
     padding: 0 32px 16px;
     margin-top: 16px;
+
+    @media (max-width: 2000px)
+    {
+        grid-template-columns: repeat(auto-fit, minmax(230px, .4fr));
+    }
+
     @media (max-width: 1060px)
     {
-        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));        
+        grid-template-columns: repeat(auto-fit, minmax(230px, .5fr));        
     }
     @media (max-width: 769px)
     {
         margin-top: 8px;
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));        
+        grid-template-columns: repeat(auto-fit, minmax(100px, .5fr));        
         grid-gap: 5px;
         padding: 0 16px 8px;
     }
