@@ -70,9 +70,7 @@ const Mainframe = (props: MainframeProps) => {
                                     onClick={() => dispatch(setActiveHeaderDropdown(0))}
                                 />
                                 { props.dialogLayer2 }
-                                <DialogGameAccount
-                                    active={ game.walletConnected && mainframe.gameAccountDialog }
-                                />
+                                <DialogGameAccount/>
                                 <DialogGameInfo
                                     data={
                                         {

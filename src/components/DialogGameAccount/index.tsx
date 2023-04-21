@@ -24,9 +24,7 @@ import Blur from '../Blur'
 
 
 interface props extends React.HTMLAttributes<HTMLDivElement>
-{
-    active?: boolean
-}
+{}
 
 enum tabs
 {
