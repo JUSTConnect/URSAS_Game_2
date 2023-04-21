@@ -217,6 +217,7 @@ export default (props: props) => {
                                                 { game.gameCards.length ? (
                                                     game.gameCards.map((card, index) => (
                                                         <Card
+                                                            className={ css.card }
                                                             key={ index }
                                                             rank={ card.rank }
                                                             suit={ card.suit }
