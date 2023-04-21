@@ -24,9 +24,7 @@ import Blur from '../Blur'
 
 
 interface props extends React.HTMLAttributes<HTMLDivElement>
-{
-    active?: boolean
-}
+{}
 
 enum tabs
 {
@@ -37,9 +35,9 @@ enum tabs
 export default (props: props) => {
     const dispatch = useDispatch()
     const game = useSelector((state: RootState) => state.game)
+    const mainframe = useSelector((state: RootState) => state.mainframe)
     const [ selectedWalletCards, setSelectedWalletCards ] = useState<number[]>([])
     const [ selectedStakeCards, setSelectedStakeCards ] = useState<number[]>([])
-    const [ activeTab, setActiveTab ] = useState<tabs>(tabs.WALLET)
     const [ addressCopied, setAddressCopied ] = useState<boolean>(false)
 
     const toggleWalletCard = (number: number) => {
@@ -73,13 +71,13 @@ export default (props: props) => {
     return (
         <>
             <Blur
-                onClick={ () => dispatch(setGameAccountDialog(false)) }
-                isActive={ props.active }
+                onClick={ () => dispatch(setGameAccountDialog([false, tabs.WALLET])) }
+                isActive={ mainframe.gameAccountDialog[0] }
             />
             <div className={
                 [
                     css.wrapper,
-                    props.active && css.active
+                    mainframe.gameAccountDialog[0] && css.active
                 ].join(' ')
             }>
                 <Dialog className={ [css.dialog, props.className].join(' ') }>
@@ -146,7 +144,7 @@ export default (props: props) => {
                                 disconnect
                             </Button>
                             <Button
-                                onClick={ () => dispatch(setGameAccountDialog(false)) }
+                                onClick={ () => dispatch(setGameAccountDialog([false, tabs.WALLET])) }
                                 color={ ButtonColor.DARK }
                                 variant={ ButtonVariant.OUTLINE }
                                 size={ ButtonSize.SM }
@@ -157,7 +155,7 @@ export default (props: props) => {
                     </Header>
                     <Content>
                         <div className={ css.containers }>
-                            { activeTab === tabs.STAKE &&
+                            { mainframe.gameAccountDialog[1] === tabs.STAKE &&
                                 <>
                                     <div className={
                                         [
@@ -245,7 +243,7 @@ export default (props: props) => {
                                     }
                                 </>
                             }
-                            { activeTab == tabs.WALLET &&
+                            { mainframe.gameAccountDialog[1] == tabs.WALLET &&
                                 <div className={
                                     [
                                         css.container
@@ -297,7 +295,7 @@ export default (props: props) => {
                     </Content>
                     <Footer>
                         <FooterButtons>
-                            { activeTab === tabs.STAKE &&
+                            { mainframe.gameAccountDialog[1] === tabs.STAKE &&
                                 <Button
                                     color={ ButtonColor.LIGHT }
                                     size={ ButtonSize.SM }
@@ -311,7 +309,7 @@ export default (props: props) => {
                                     stake
                                 </Button>
                             }
-                            { activeTab == tabs.WALLET &&
+                            { mainframe.gameAccountDialog[1] == tabs.WALLET &&
                                 <>
                                     <Button
                                         color={ ButtonColor.LIGHT }
@@ -345,22 +343,22 @@ export default (props: props) => {
                 <div className={ css.tabs }>
                     <div className={ css.inner }>
                         <button
-                            onClick={ () => setActiveTab(tabs.WALLET) }
+                            onClick={ () => dispatch(setGameAccountDialog([mainframe.gameAccountDialog[0], tabs.WALLET])) }
                             className={
                                 [
                                     css.tab,
-                                    activeTab == tabs.WALLET && css.tabActive
+                                    mainframe.gameAccountDialog[1] == tabs.WALLET && css.tabActive
                                 ].join(' ')
                             }
                         >
                             Wallet
                         </button>
                         <button
-                            onClick={ () => setActiveTab(tabs.STAKE) }
+                            onClick={ () => dispatch(setGameAccountDialog([mainframe.gameAccountDialog[0], tabs.STAKE])) }
                             className={
                                 [
                                     css.tab,
-                                    activeTab == tabs.STAKE && css.tabActive
+                                    mainframe.gameAccountDialog[1] == tabs.STAKE && css.tabActive
                                 ].join(' ')
                             }
                         >
@@ -372,3 +370,5 @@ export default (props: props) => {
         </>
     )
 }
+
+export { tabs }

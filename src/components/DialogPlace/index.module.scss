@@ -87,7 +87,9 @@
 {
     position: relative;
     display: block;
-    width: 364px;
+    width: 100%;
+    max-width: 364px;
+    height: auto;
     margin: 0 auto;
 }
 

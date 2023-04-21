@@ -13,13 +13,13 @@ import Dropdown from '@/components/Header/Dropdown'
 import {Loader} from './Dropdown'
 import HeaderBase, { HeaderSection } from '@/components/HeaderBase'
 import { setAccount } from '@/features/main/mainSlice'
+import { tabs } from '@components/DialogGameAccount'
 
 
 interface HeaderProps extends React.HTMLAttributes<HTMLDivElement>
 {
 }
 
-//DFYrNUgxguiGKmZKdbGga...
 const Header = (props: HeaderProps) => {
     const [gameOverShow, setGameOverShow] = useState(true)
     const [editAccount, setEditAccount] = useState('')
@@ -56,10 +56,10 @@ const Header = (props: HeaderProps) => {
         { game.walletConnected && accountFromStorage.length ? (
             <>
                 <HeaderSection>
-                    <div onClick={ () => dispatch(setGameAccountDialog(!mainframe.gameAccountDialog)) } className={ [css.walletHash].join(' ') }>
+                    <div onClick={ () => dispatch(setGameAccountDialog([!mainframe.gameAccountDialog[0], tabs.WALLET])) } className={ [css.walletHash].join(' ') }>
                         {editAccount}
                     </div>
-                    <Button onClick={ () => dispatch(setGameAccountDialog(!mainframe.gameAccountDialog)) } className={ [css.walletButton, 'd-mobile'].join(' ') }>
+                    <Button onClick={ () => dispatch(setGameAccountDialog([!mainframe.gameAccountDialog[0], tabs.WALLET])) } className={ [css.walletButton, 'd-mobile'].join(' ') }>
                         <i className="fa-solid fa-wallet"></i>
                     </Button>
                     { game.gameOver === 0 ? (
