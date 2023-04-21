@@ -11,7 +11,7 @@ import Button, {
 } from '@/components/UIButton'
 
 
-interface RoomsDoorProps extends React.HTMLAttributes<HTMLDivElement>
+interface RoomsDoorProps extends React.HTMLAttributes<HTMLAnchorElement>
 {
     level: number
     active: boolean
@@ -24,7 +24,7 @@ const RoomsDoor = (props: RoomsDoorProps) => {
     const dispatch = useDispatch()
     return (
         <div className={ css.container }>
-            <Link href={ !props.over ? props.href || {} : {} } className={ [css.door, props.active ? css.active : '', props.over ? css.doorOver : ''].join(' ') }>
+            <Link onClick={ props.onClick } href={ !props.over ? props.href || {} : {} } className={ [css.door, props.active ? css.active : '', props.over ? css.doorOver : ''].join(' ') }>
                 <img className={ [css.texture, css.textureActive].join(' ') } src="/assets/images/texture/door-active.png" alt="Door" />
                 <img className={ css.texture } src="/assets/images/texture/door.png" alt="Door" />
                 <div className={ css.info }>

@@ -248,9 +248,10 @@
         z-index: 2;
         top: 50%;
         transform: rotate(90deg) translate(50%);
-        right: 40px;
+        right: 20px;
         overflow: hidden;
-        border-radius: 12px;
+        border-radius: 0 0 12px 12px;
+        border-bottom: 1px solid #4E5E80;
     }
 
     & .inner
@@ -259,7 +260,7 @@
         
         @media (max-width: 768px)
         {
-            flex-direction: column;
+            // flex-direction: column;
         }
     }
 
@@ -278,10 +279,6 @@
             width: 123px;
             border-radius: 0;
 
-            &:last-child
-            {
-                border-top: 1px solid #4E5E80;
-            }
         }
 
         &Active

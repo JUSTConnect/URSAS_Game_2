@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { RootState } from '@/app/store'
 import { setCurrentRoom } from '@/features/game/gameSlice'
+import { setGameAccountDialog } from '@/features/mainframe/mainframeSlice'
+import { tabs as gameAccountDialogTabs } from '../DialogGameAccount'
 import Door from './Door'
 import NavigationButton from './NavigationButton'
 import Info from './Info'
@@ -31,6 +33,7 @@ interface SliderFragmentProps
 const SliderFragment = (props: SliderFragmentProps) => {
     const dispatch = useDispatch()
     const game = useSelector((state: RootState) => state.game)
+    const mainframe = useSelector((state: RootState) => state.mainframe)
 
 
     return (
@@ -86,6 +89,7 @@ const SliderFragment = (props: SliderFragmentProps) => {
                         <Door
                             href={ game.walletConnected && index === props.selectedDoor ? `/tables/${level}` : null }
                             active={ game.walletConnected && index === props.selectedDoor}
+                            onClick={ () => dispatch(setGameAccountDialog([true, gameAccountDialogTabs.STAKE])) }
                             level={level}
                             go={false}
                             over={ index-props.indexAdd === props.over-1 }

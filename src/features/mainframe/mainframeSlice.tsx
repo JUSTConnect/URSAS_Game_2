@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
+import { tabs as dialogGameAccountTabs } from '@/components/DialogGameAccount'
+
 
 export interface mainframeState {
     layoutBlured: boolean
@@ -10,7 +12,7 @@ export interface mainframeState {
     connectWalletModal: boolean
     disableWalletModal: boolean
     activeHeaderDropdown: number
-    gameAccountDialog: boolean
+    gameAccountDialog: [boolean, dialogGameAccountTabs]
     gameInfoDialog: boolean
     mintDialog: boolean
 }
@@ -23,7 +25,7 @@ const initialState: mainframeState = {
     connectWalletModal: false,
     disableWalletModal: false,
     activeHeaderDropdown: 0,
-    gameAccountDialog: false,
+    gameAccountDialog: [false, dialogGameAccountTabs.WALLET],
     gameInfoDialog: false,
     mintDialog: false
 }
@@ -48,8 +50,8 @@ export const mainframeSlice = createSlice({
             state.layer2Blured = !(action.payload === 0)
             state.activeHeaderDropdown = action.payload
         },
-        setGameAccountDialog: (state, action: PayloadAction<boolean>) => {
-            state.gameAccountDialog = action.payload  
+        setGameAccountDialog: (state, action: PayloadAction<[boolean, dialogGameAccountTabs]>) => {
+            state.gameAccountDialog = action.payload
 
             state.gameInfoDialog = false
             state.mintDialog = false
@@ -60,7 +62,7 @@ export const mainframeSlice = createSlice({
         setGameInfoDialog: (state, action: PayloadAction<boolean>) => {
             state.gameInfoDialog = action.payload
 
-            state.gameAccountDialog = false
+            state.gameAccountDialog[0] = false
             state.mintDialog = false
 
             state.layer2Blured = false
@@ -69,7 +71,7 @@ export const mainframeSlice = createSlice({
         setMintDialog: (state, action: PayloadAction<boolean>) => {
             state.mintDialog = action.payload
 
-            state.gameAccountDialog = false
+            state.gameAccountDialog[0] = false
             state.gameInfoDialog = false
 
             state.layer2Blured = false

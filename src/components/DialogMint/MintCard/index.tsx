@@ -26,6 +26,9 @@ export default (props: props) => {
                         <span className={ 'textMuted' }>Level</span> {props.level}
                     </div>
                     <div className={ css.infoSection }>
+                        <span className={ 'textMuted' }>Supply</span> 2048
+                    </div>
+                    <div className={ css.infoSection }>
                         <span className={ 'textMuted' }>Price</span> {props.price} MATIC
                     </div>
                 </div>

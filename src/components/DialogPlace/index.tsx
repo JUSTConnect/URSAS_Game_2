@@ -1,5 +1,9 @@
 import css from './index.module.scss'
 
+import sofaBg from '@assets/images/texture/table-sofa-modal.png'
+
+import Image from 'next/image'
+
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -193,7 +197,14 @@ export default (props: props) => {
                                     Please choose places
                                 </div>
                                 <div className={ css.basketEmptyCircle }></div>
-                                <img className={ css.basketEmptySofa } src="/assets/images/texture/table-sofa-modal.png" alt="" />
+                                <Image
+                                    src={sofaBg}
+                                    alt={'sofa'}
+                                    width={ 327 }
+                                    height={ 220 }
+                                    placeholder={ 'blur' }
+                                    className={ css.basketEmptySofa }
+                                />
                             </div>
                         </div>
                     ) }
