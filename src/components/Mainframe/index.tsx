@@ -29,7 +29,6 @@ interface MainframeProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const Mainframe = (props: MainframeProps) => {
     const mainframe = useSelector((state: RootState) => state.mainframe)
-    const game = useSelector((state: RootState) => state.game)
     const dispatch = useDispatch()
 
     useEffect(() => {

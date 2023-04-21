@@ -89,7 +89,7 @@ const SliderFragment = (props: SliderFragmentProps) => {
                         <Door
                             href={ game.walletConnected && index === props.selectedDoor ? `/tables/${level}` : null }
                             active={ game.walletConnected && index === props.selectedDoor}
-                            onClick={ () => dispatch(setGameAccountDialog([true, gameAccountDialogTabs.STAKE])) }
+                            onClick={ level === 1 ? () => dispatch(setGameAccountDialog([true, gameAccountDialogTabs.STAKE])) : () => {} }
                             level={level}
                             go={false}
                             over={ index-props.indexAdd === props.over-1 }

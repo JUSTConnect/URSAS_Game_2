@@ -57,3 +57,59 @@
         font-size: 12px;
     }
 }
+
+.info
+{
+    transition: .2s;
+
+    @media (max-width: 1600px)
+    {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        transform: translate(-110%, 100%);
+        z-index: 1;
+        padding: 16px 0;
+        &Active
+        {
+            transform: translate(0, 100%);            
+        }
+    
+    }
+    
+    @media (max-width: 768px)
+    {
+        width: 100%;
+        padding: 8px 0;
+        
+        &Content
+        {
+            flex-direction: column;
+        }
+    }
+
+    &Content
+    {
+        display: flex;
+        gap: 8px;
+    }
+
+}
+
+.button
+{
+    &Active
+    {
+        color: #EFD154 !important;
+    }
+
+    &Info
+    {
+        display: none;
+        
+        @media (max-width: 1600px)
+        {
+            display: block;
+        }
+    }
+}
