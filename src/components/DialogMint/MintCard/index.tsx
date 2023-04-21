@@ -57,11 +57,11 @@ export default (props: props) => {
                     size={ ButtonSize.SM }
                     className={ css.button }
                 >
-                    { Number(amount) > 0 ?
-                        <>
+                    { (Number(amount) > 0) ?
+                        <div>
                             <div className={ css.buttonCaption }>total amount</div>
                             { Number(amount) * props.price } MATIC
-                        </>
+                        </div>
                     : 'mint'}
                 </Button>
             </div>
