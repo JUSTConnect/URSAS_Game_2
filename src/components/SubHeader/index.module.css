@@ -20,6 +20,17 @@
     display: flex;
 }
 
+.buttons
+{
+    display: flex;
+    gap: 8px;
+
+    @media (max-width: 768px)
+    {
+        gap: 4px;
+    }
+}
+
 .subHeaderButton
 {
     display: flex;

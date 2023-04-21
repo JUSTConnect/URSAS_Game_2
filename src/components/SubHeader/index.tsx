@@ -1,5 +1,7 @@
 import css from './index.module.css'
 
+import Info from './Info'
+
 interface SubHeaderProps extends React.HTMLAttributes<HTMLDivElement>
 {
     
@@ -14,6 +16,12 @@ interface SubHeaderButtonProps extends React.HTMLAttributes<HTMLButtonElement>
 
 const SubHeaderSection = (props: React.HTMLAttributes<HTMLDivElement>) => {
     return <div className={ css.section }>
+        { props.children }
+    </div>
+}
+
+const Buttons = (props: React.HTMLAttributes<HTMLDivElement>) => {
+    return <div className={ css.buttons }>
         { props.children }
     </div>
 }
@@ -35,6 +43,8 @@ const SubHeader = (props: SubHeaderProps) => {
 
 export default SubHeader
 export {
+    Buttons,
     SubHeaderButton,
-    SubHeaderSection
+    SubHeaderSection,
+    Info
 }
