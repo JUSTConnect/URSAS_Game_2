@@ -152,7 +152,6 @@ const gameCards = [
 
 
 export interface gameState {
-  walletConnected: boolean
   currentGame: number
   currentRoom: number
   loadingRooms: boolean
@@ -165,7 +164,6 @@ export interface gameState {
 }
 
 const initialState: gameState = {
-  walletConnected: true,
   currentGame: 0,
   currentRoom: 0,
   loadingRooms: true,
@@ -181,9 +179,6 @@ export const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
-    setWalletConnected: (state, action: PayloadAction<boolean>) => {
-      state.walletConnected = action.payload
-    },
     setLoadingRooms: (state, action: PayloadAction<boolean>) => {
       state.loadingRooms = action.payload
     },
@@ -222,7 +217,6 @@ export const gameSlice = createSlice({
 })
 
 export const {
-  setWalletConnected,
   setLoadingRooms,
   setLoadingTables,
   setLoadingTable,

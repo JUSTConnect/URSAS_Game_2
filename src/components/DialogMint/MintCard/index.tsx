@@ -6,6 +6,7 @@ import Button, {
     Color as ButtonColor,
     Size as ButtonSize
 } from '@/components/UIButton'
+import { getContract } from '@/utils/web3'
 
 
 interface props extends React.HTMLAttributes<HTMLDivElement>
@@ -17,6 +18,15 @@ interface props extends React.HTMLAttributes<HTMLDivElement>
 
 export default (props: props) => {
     const [amount, setAmount] = useState<string>('')
+
+    const handle = () => {
+        if (Number(amount) > 0)
+        {
+            getContract().mint(amount, {gasLimit: getContract().estimateGas.mint(1)})
+                .then(() => console.log('ok'))
+                .catch(() => console.log('cancelled'))
+        }
+    }
 
     return (
         <div className={ css.card }>
@@ -53,6 +63,7 @@ export default (props: props) => {
                     required
                 />
                 <Button
+                    onClick={ handle }
                     color={ ButtonColor.LIGHT }
                     size={ ButtonSize.SM }
                     className={ css.button }

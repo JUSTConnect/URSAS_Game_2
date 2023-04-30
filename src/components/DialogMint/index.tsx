@@ -17,6 +17,7 @@ import Blur from '../Blur'
 import MintCard from './MintCard'
 
 
+
 interface props extends React.HTMLAttributes<HTMLDivElement>
 {
     active?: boolean

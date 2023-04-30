@@ -4,7 +4,7 @@ import mainframeReducer from '@/features/mainframe/mainframeSlice'
 import roomsReducer from '@/features/rooms/roomsSlice'
 import tablesReducer from '@/features/tables/tablesSlice'
 import tableReducer from '@/features/table/tableSlice'
-import mainReducer from '@/features/main/mainSlice'
+
 
 export const store = configureStore({
   reducer: {
@@ -12,8 +12,7 @@ export const store = configureStore({
     mainframe: mainframeReducer,
     rooms: roomsReducer,
     tables: tablesReducer,
-    table: tableReducer,
-    main: mainReducer
+    table: tableReducer
   },
 })
 

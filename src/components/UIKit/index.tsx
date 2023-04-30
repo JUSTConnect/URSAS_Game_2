@@ -24,6 +24,7 @@ import Dialog, {
 import DialogGameAccount from '@components/DialogGameAccount'
 import DialogMint from '@components/DialogMint'
 import DialogGameInfo, {typePrize} from '@components/DialogGameInfo'
+import TestEthers from '../TestEthers'
 
 
 export default () => {
@@ -255,7 +256,7 @@ export default () => {
             <br />
             <br />
         </div> */}
-        <div>
+        {/* <div>
             <Text variant={ text.h2 }>
                 Game info dialog:
             </Text>
@@ -267,6 +268,7 @@ export default () => {
             }/>
             <br />
             <br />
-        </div>
+        </div> */}
+        <TestEthers/>
     </div>
 }
