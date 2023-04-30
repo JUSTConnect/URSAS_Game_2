@@ -1,37 +1,6 @@
 export default [
     {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "_tokenName",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_tokenSymbol",
-                "type": "string"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_cost",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_maxSupply",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_maxMintAmountPerTx",
-                "type": "uint256"
-            },
-            {
-                "internalType": "string",
-                "name": "_hiddenMetadataUri",
-                "type": "string"
-            }
-        ],
+        "inputs": [],
         "stateMutability": "nonpayable",
         "type": "constructor"
     },
@@ -62,17 +31,23 @@ export default [
     },
     {
         "inputs": [],
-        "name": "InvalidQueryRange",
-        "type": "error"
-    },
-    {
-        "inputs": [],
         "name": "MintToZeroAddress",
         "type": "error"
     },
     {
         "inputs": [],
         "name": "MintZeroQuantity",
+        "type": "error"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "operator",
+                "type": "address"
+            }
+        ],
+        "name": "OperatorNotAllowed",
         "type": "error"
     },
     {
@@ -202,6 +177,108 @@ export default [
     {
         "inputs": [
             {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "CommonUris",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "GenesisUris",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "NFTRoomLevel",
+        "outputs": [
+            {
+                "internalType": "uint8",
+                "name": "",
+                "type": "uint8"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "OPERATOR_FILTER_REGISTRY",
+        "outputs": [
+            {
+                "internalType": "contract IOperatorFilterRegistry",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "_currentIndex",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "_tokenURIs",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
                 "internalType": "address",
                 "name": "to",
                 "type": "address"
@@ -237,13 +314,70 @@ export default [
         "type": "function"
     },
     {
+        "inputs": [
+            {
+                "internalType": "uint24",
+                "name": "",
+                "type": "uint24"
+            }
+        ],
+        "name": "costs",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint8",
+                "name": "",
+                "type": "uint8"
+            }
+        ],
+        "name": "currentDailyMintCounter",
+        "outputs": [
+            {
+                "internalType": "uint32",
+                "name": "",
+                "type": "uint32"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint8",
+                "name": "",
+                "type": "uint8"
+            }
+        ],
+        "name": "currentRoomSupply",
+        "outputs": [
+            {
+                "internalType": "uint32",
+                "name": "",
+                "type": "uint32"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "inputs": [],
-        "name": "cost",
+        "name": "currentUriForMintPass",
         "outputs": [
             {
-                "internalType": "uint256",
+                "internalType": "string",
                 "name": "",
-                "type": "uint256"
+                "type": "string"
             }
         ],
         "stateMutability": "view",
@@ -252,70 +386,17 @@ export default [
     {
         "inputs": [
             {
-                "internalType": "uint256",
-                "name": "tokenId",
-                "type": "uint256"
+                "internalType": "uint8",
+                "name": "",
+                "type": "uint8"
             }
         ],
-        "name": "explicitOwnershipOf",
+        "name": "dailyMintLimit",
         "outputs": [
             {
-                "components": [
-                    {
-                        "internalType": "address",
-                        "name": "addr",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint64",
-                        "name": "startTimestamp",
-                        "type": "uint64"
-                    },
-                    {
-                        "internalType": "bool",
-                        "name": "burned",
-                        "type": "bool"
-                    }
-                ],
-                "internalType": "struct IERC721A.TokenOwnership",
+                "internalType": "uint32",
                 "name": "",
-                "type": "tuple"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256[]",
-                "name": "tokenIds",
-                "type": "uint256[]"
-            }
-        ],
-        "name": "explicitOwnershipsOf",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "internalType": "address",
-                        "name": "addr",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint64",
-                        "name": "startTimestamp",
-                        "type": "uint64"
-                    },
-                    {
-                        "internalType": "bool",
-                        "name": "burned",
-                        "type": "bool"
-                    }
-                ],
-                "internalType": "struct IERC721A.TokenOwnership[]",
-                "name": "",
-                "type": "tuple[]"
+                "type": "uint32"
             }
         ],
         "stateMutability": "view",
@@ -335,19 +416,6 @@ export default [
                 "internalType": "address",
                 "name": "",
                 "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "hiddenMetadataUri",
-        "outputs": [
-            {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
             }
         ],
         "stateMutability": "view",
@@ -378,6 +446,25 @@ export default [
         "type": "function"
     },
     {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "isCommon",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "inputs": [],
         "name": "maxMintAmountPerTx",
         "outputs": [
@@ -391,26 +478,19 @@ export default [
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "maxSupply",
-        "outputs": [
+        "inputs": [
             {
-                "internalType": "uint256",
+                "internalType": "uint8",
                 "name": "",
-                "type": "uint256"
+                "type": "uint8"
             }
         ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "merkleRoot",
+        "name": "maxSupplyForRoom",
         "outputs": [
             {
-                "internalType": "bytes32",
+                "internalType": "uint32",
                 "name": "",
-                "type": "bytes32"
+                "type": "uint32"
             }
         ],
         "stateMutability": "view",
@@ -420,17 +500,9 @@ export default [
         "inputs": [
             {
                 "internalType": "uint256",
-                "name": "_mintAmount",
+                "name": "rarityIndex",
                 "type": "uint256"
-            }
-        ],
-        "name": "mint",
-        "outputs": [],
-        "stateMutability": "payable",
-        "type": "function"
-    },
-    {
-        "inputs": [
+            },
             {
                 "internalType": "uint256",
                 "name": "_mintAmount",
@@ -455,6 +527,25 @@ export default [
                 "internalType": "string",
                 "name": "",
                 "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "notTransferable",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
             }
         ],
         "stateMutability": "view",
@@ -513,13 +604,19 @@ export default [
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "revealed",
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            }
+        ],
+        "name": "returnURIS",
         "outputs": [
             {
-                "internalType": "bool",
+                "internalType": "string",
                 "name": "",
-                "type": "bool"
+                "type": "string"
             }
         ],
         "stateMutability": "view",
@@ -598,11 +695,16 @@ export default [
         "inputs": [
             {
                 "internalType": "uint256",
-                "name": "_cost",
+                "name": "_tokenId",
                 "type": "uint256"
+            },
+            {
+                "internalType": "bool",
+                "name": "_value",
+                "type": "bool"
             }
         ],
-        "name": "setCost",
+        "name": "setNotTransferable",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -610,105 +712,38 @@ export default [
     {
         "inputs": [
             {
-                "internalType": "string",
-                "name": "_hiddenMetadataUri",
-                "type": "string"
+                "internalType": "uint32",
+                "name": "_mintAmount",
+                "type": "uint32"
+            },
+            {
+                "internalType": "uint8",
+                "name": "_roomLevel",
+                "type": "uint8"
             }
         ],
-        "name": "setHiddenMetadataUri",
+        "name": "smartMint",
         "outputs": [],
-        "stateMutability": "nonpayable",
+        "stateMutability": "payable",
         "type": "function"
     },
     {
         "inputs": [
             {
                 "internalType": "uint256",
-                "name": "_maxMintAmountPerTx",
+                "name": "",
                 "type": "uint256"
             }
         ],
-        "name": "setMaxMintAmountPerTx",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "bytes32",
-                "name": "_merkleRoot",
-                "type": "bytes32"
-            }
-        ],
-        "name": "setMerkleRoot",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "bool",
-                "name": "_state",
-                "type": "bool"
-            }
-        ],
-        "name": "setPaused",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "bool",
-                "name": "_state",
-                "type": "bool"
-            }
-        ],
-        "name": "setRevealed",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
+        "name": "suits",
+        "outputs": [
             {
                 "internalType": "string",
-                "name": "_uriPrefix",
+                "name": "",
                 "type": "string"
             }
         ],
-        "name": "setUriPrefix",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "_uriSuffix",
-                "type": "string"
-            }
-        ],
-        "name": "setUriSuffix",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "bool",
-                "name": "_state",
-                "type": "bool"
-            }
-        ],
-        "name": "setWhitelistMintEnabled",
-        "outputs": [],
-        "stateMutability": "nonpayable",
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -757,54 +792,6 @@ export default [
                 "internalType": "string",
                 "name": "",
                 "type": "string"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            }
-        ],
-        "name": "tokensOfOwner",
-        "outputs": [
-            {
-                "internalType": "uint256[]",
-                "name": "",
-                "type": "uint256[]"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "start",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "stop",
-                "type": "uint256"
-            }
-        ],
-        "name": "tokensOfOwnerIn",
-        "outputs": [
-            {
-                "internalType": "uint256[]",
-                "name": "",
-                "type": "uint256[]"
             }
         ],
         "stateMutability": "view",
@@ -861,19 +848,6 @@ export default [
     },
     {
         "inputs": [],
-        "name": "uriPrefix",
-        "outputs": [
-            {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
         "name": "uriSuffix",
         "outputs": [
             {
@@ -888,12 +862,50 @@ export default [
     {
         "inputs": [
             {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
+                "internalType": "uint8",
+                "name": "_roomLevel",
+                "type": "uint8"
             }
         ],
-        "name": "whitelistClaimed",
+        "name": "viewCostForRoom",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint8",
+                "name": "_roomLevel",
+                "type": "uint8"
+            }
+        ],
+        "name": "viewCurrentRoomSupply",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            }
+        ],
+        "name": "viewIsCommon",
         "outputs": [
             {
                 "internalType": "bool",
@@ -908,23 +920,30 @@ export default [
         "inputs": [
             {
                 "internalType": "uint256",
-                "name": "_mintAmount",
+                "name": "_tokenId",
                 "type": "uint256"
-            },
-            {
-                "internalType": "bytes32[]",
-                "name": "_merkleProof",
-                "type": "bytes32[]"
             }
         ],
-        "name": "whitelistMint",
-        "outputs": [],
-        "stateMutability": "payable",
+        "name": "viewNFTRoomLevel",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "whitelistMintEnabled",
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            }
+        ],
+        "name": "viewNotTransferable",
         "outputs": [
             {
                 "internalType": "bool",
@@ -936,10 +955,22 @@ export default [
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "withdraw",
-        "outputs": [],
-        "stateMutability": "nonpayable",
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            }
+        ],
+        "name": "viewSuits",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
         "type": "function"
     }
 ]
