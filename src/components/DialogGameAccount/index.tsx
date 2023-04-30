@@ -2,6 +2,7 @@ import css from './index.module.scss'
 
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useEthers, useEtherBalance } from '@usedapp/core'
 
 import { RootState } from '@/app/store'
 import { setDisableWalletModal, setGameAccountDialog } from '@/features/mainframe/mainframeSlice'
@@ -21,6 +22,7 @@ import Button, {
 } from '@components/UIButton'
 import Card, { CardRank } from '@components/Card'
 import Blur from '../Blur'
+import { isNumber } from 'util'
 
 
 interface props extends React.HTMLAttributes<HTMLDivElement>
@@ -39,6 +41,8 @@ export default (props: props) => {
     const [ selectedWalletCards, setSelectedWalletCards ] = useState<number[]>([])
     const [ selectedStakeCards, setSelectedStakeCards ] = useState<number[]>([])
     const [ addressCopied, setAddressCopied ] = useState<boolean>(false)
+    const { account } = useEthers()
+    const balance = useEtherBalance(account)
 
     const toggleWalletCard = (number: number) => {
         if (selectedWalletCards.includes(number)) {
@@ -95,7 +99,7 @@ export default (props: props) => {
                                 <div className={ 'd-desktop' }>
                                     MATIC
                                 </div>
-                                <span className={ 'textPrimary' }>12</span>
+                                <span className={ 'textPrimary' }>{ balance?._hex && balance?._hex }</span>
                             </div>
                         </div>
                         <HeaderButtons>
