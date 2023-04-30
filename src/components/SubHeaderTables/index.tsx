@@ -73,7 +73,7 @@ const SubHeaderTables = (props: SubHeaderTablesProps) => {
       </FlexBox>
       <Button
         onClick={ () => {setInfoActive(!infoActive); setFiltersActive(false)} }
-        className={ [css.button, infoActive && css.buttonActive, 'd-mobile'].join(' ') }
+        className={ [css.button, css.buttonInfo, infoActive && css.buttonActive].join(' ') }
         size={ ButtonSize.SM }
         variant={ ButtonsVariant.NORMAL }
         color={ ButtonColor.DARK }

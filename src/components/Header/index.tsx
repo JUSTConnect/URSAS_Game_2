@@ -2,6 +2,7 @@ import css from './index.module.css'
 
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useEthers } from '@usedapp/core'
 
 import type { RootState } from '@/app/store'
 import { setConnectWalletModal, setDisableWalletModal } from '@/features/mainframe/mainframeSlice'
@@ -12,7 +13,6 @@ import Button from '@components/UIButton'
 import Dropdown from '@/components/Header/Dropdown'
 import {Loader} from './Dropdown'
 import HeaderBase, { HeaderSection } from '@/components/HeaderBase'
-import { setAccount } from '@/features/main/mainSlice'
 import { tabs } from '@components/DialogGameAccount'
 
 
@@ -22,42 +22,19 @@ interface HeaderProps extends React.HTMLAttributes<HTMLDivElement>
 
 const Header = (props: HeaderProps) => {
     const [gameOverShow, setGameOverShow] = useState(true)
-    const [editAccount, setEditAccount] = useState('')
-    const [accountFromStorage, setAccountFromStorage] = useState('')
     const dispatch = useDispatch()
+    const { account } = useEthers()
     
     const game = useSelector((state: RootState) => state.game)
     const mainframe = useSelector((state: RootState) => state.mainframe)
     const table = useSelector((state: RootState) => state.table)
-    const main = useSelector((state: RootState) => state.main)
-
-
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            const account = localStorage.getItem("account");
-            if (account !== null) {
-                setEditAccount(`${account.substring(0, 21)}...`);
-                setAccountFromStorage(account);
-            }
-        }
-    }, []);
-
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            const account = localStorage.getItem("account");
-            if (account !== null) {
-                setEditAccount(`${account.substring(0, 21)}...`);
-                setAccountFromStorage(account);
-            }
-        }
-    }, [main.account]);
 
     return <HeaderBase>
-        { game.walletConnected && accountFromStorage.length ? (
+        { account ? (
             <>
                 <HeaderSection>
                     <div onClick={ () => dispatch(setGameAccountDialog([!mainframe.gameAccountDialog[0], tabs.WALLET])) } className={ [css.walletHash].join(' ') }>
-                        {editAccount}
+                        { account.substring(0, 21) }...
                     </div>
                     <Button onClick={ () => dispatch(setGameAccountDialog([!mainframe.gameAccountDialog[0], tabs.WALLET])) } className={ [css.walletButton, 'd-mobile'].join(' ') }>
                         <i className="fa-solid fa-wallet"></i>

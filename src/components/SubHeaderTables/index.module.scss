@@ -46,19 +46,19 @@
         transform: translate(0, 100%);
         z-index: 1;
         padding: 16px 0;
+        transform: translate(-110%, 100%);
+        padding: 8px 0;
+        
+        &Active
+        {
+            transform: translate(0, 100%);            
+        }
+    
     }
     
     @media (max-width: 768px)
     {
         width: 100%;
-        transform: translate(100%, 100%);
-        padding: 8px 0;
-
-        &Active
-        {
-            transform: translate(0, 100%);            
-        }
-
         &Content
         {
             flex-direction: column;
@@ -83,5 +83,15 @@
     &Active
     {
         color: #EFD154 !important;
+    }
+}
+
+.buttonInfo
+{
+    display: none;
+
+    @media (max-width: 1600px)
+    {
+        display: block;
     }
 }

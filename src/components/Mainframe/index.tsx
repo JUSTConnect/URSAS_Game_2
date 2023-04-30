@@ -2,6 +2,7 @@ import css from './index.module.scss'
 
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useEthers } from '@usedapp/core'
 import Head from 'next/head'
 
 import { RootState } from '@/app/store'
@@ -28,6 +29,7 @@ interface MainframeProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const Mainframe = (props: MainframeProps) => {
+    const { account } = useEthers()
     const mainframe = useSelector((state: RootState) => state.mainframe)
     const dispatch = useDispatch()
 
@@ -69,17 +71,21 @@ const Mainframe = (props: MainframeProps) => {
                                     onClick={() => dispatch(setActiveHeaderDropdown(0))}
                                 />
                                 { props.dialogLayer2 }
-                                <DialogGameAccount/>
-                                <DialogGameInfo
-                                    data={
-                                        {
-                                            typePrize: typePrize.WL,
-                                            result: 1
-                                        }
-                                    }
-                                    active={ mainframe.gameInfoDialog }
-                                />
-                                <DialogMint active={ mainframe.mintDialog }/>
+                                { Boolean(account) &&
+                                    <>
+                                        <DialogGameAccount/>
+                                        <DialogGameInfo
+                                            data={
+                                                {
+                                                    typePrize: typePrize.WL,
+                                                    result: 1
+                                                }
+                                            }
+                                            active={ mainframe.gameInfoDialog }
+                                        />
+                                        <DialogMint active={ mainframe.mintDialog }/>
+                                    </>
+                                }
                             </div>
 
                         </div>

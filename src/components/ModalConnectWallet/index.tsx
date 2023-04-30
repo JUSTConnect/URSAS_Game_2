@@ -3,12 +3,12 @@ import css from './index.module.scss'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../app/store';
+import { useEthers } from '@usedapp/core';
+
 
 import { RootState } from '@/app/store'
-import { setWalletConnected } from '@/features/game/gameSlice'
 import { setConnectWalletModal } from '@/features/mainframe/mainframeSlice'
 import Blur from '@components/Blur'
-import { connectAccount } from '@/features/main/mainSlice'
 
 interface props
 {
@@ -64,6 +64,7 @@ export default () => {
     const [activeTab, setActiveTab] = useState<Tabs>(Tabs.SOLANA)
     const mainframe = useSelector((state: RootState) => state.mainframe)
     const dispatch = useDispatch<AppDispatch>()
+    const { account, activateBrowserWallet } = useEthers()
 
     return (
         <>
@@ -120,7 +121,7 @@ export default () => {
                                     <img className={ css.itemLogo } src={ item.logoSrc } alt="Item Logo" />
                                     { item.name }
                                 </div>
-                                <button onClick={ () => {dispatch(setConnectWalletModal(false)); dispatch(connectAccount(item.name))} } className={ css.itemButton }>
+                                <button onClick={ () => {activateBrowserWallet(); dispatch(setConnectWalletModal(false))} } className={ css.itemButton }>
                                     detected
                                 </button>
                             </div>
