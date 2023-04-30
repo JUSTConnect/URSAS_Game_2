@@ -60,7 +60,6 @@ export default (props: props) => {
                 <input
                     onInput={ e => {
                         e.preventDefault()
-                        console.log(e.currentTarget.value)
                         if (
                             e.currentTarget.value.length > 3 ||
                             !/^([0-9]*)$/.test(e.currentTarget.value)
@@ -86,7 +85,7 @@ export default (props: props) => {
                     { (Number(amount) > 0) ?
                         <div>
                             <div className={ css.buttonCaption }>total amount</div>
-                            { Number(amount) * props.price } MATIC
+                            { Number(amount) * price } MATIC
                         </div>
                     : 'mint'}
                 </Button>
