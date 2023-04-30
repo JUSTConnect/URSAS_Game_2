@@ -1,6 +1,7 @@
 import css from './index.module.scss'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { ethers } from 'ethers'
 
 import Button, {
     Color as ButtonColor,
@@ -17,14 +18,28 @@ interface props extends React.HTMLAttributes<HTMLDivElement>
 
 
 export default (props: props) => {
-    const [amount, setAmount] = useState<string>('')
+    const [amount, setAmount] = useState<number>(0)
+    const [price, setPrice] = useState<number>(0)
+    const [supply, setSupply] = useState<number>(0)
+
+    const setValues = () => {
+        getContract().viewCurrentRoomSupply(props.level)
+                .then((v: ethers.BigNumber) => setSupply(Number.parseInt(v._hex)))
+        getContract().viewCostForRoom(props.level)
+            .then((v: ethers.BigNumber) => setPrice(Number.parseInt(v._hex)))
+    }
+
+    useEffect(() => {
+        setValues()
+    }, [])
 
     const handle = () => {
         if (Number(amount) > 0)
         {
-            getContract().mint(amount, {gasLimit: getContract().estimateGas.mint(1)})
+            getContract().smartMint(amount, props.level, {gasLimit: 3000000, value: price * amount})
                 .then(() => console.log('ok'))
                 .catch(() => console.log('cancelled'))
+            setValues()
         }
     }
 
@@ -36,10 +51,10 @@ export default (props: props) => {
                         <span className={ 'textMuted' }>Level</span> {props.level}
                     </div>
                     <div className={ css.infoSection }>
-                        <span className={ 'textMuted' }>Supply</span> 2048
+                        <span className={ 'textMuted' }>Supply</span> { supply }
                     </div>
                     <div className={ css.infoSection }>
-                        <span className={ 'textMuted' }>Price</span> {props.price} MATIC
+                        <span className={ 'textMuted' }>Price</span> { price } MATIC
                     </div>
                 </div>
                 <input
@@ -51,9 +66,9 @@ export default (props: props) => {
                             !/^([0-9]*)$/.test(e.currentTarget.value)
                         ) {
                             e.currentTarget.value = e.currentTarget.value.slice(0, -1)
-                            setAmount(e.currentTarget.value)
+                            setAmount(Number(e.currentTarget.value))
                         } else {
-                            setAmount(e.currentTarget.value)
+                            setAmount(Number(e.currentTarget.value))
                         }
                     } }
                     className={ css.input }
