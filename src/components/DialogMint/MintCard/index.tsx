@@ -37,7 +37,7 @@ export default (props: props) => {
         if (Number(amount) > 0)
         {
             getContract().smartMint(amount, props.level, {gasLimit: 3000000, value: price * amount})
-                .then(() => console.log('ok'))
+                .then(() => {console.log('ok'); setAmount(0)})
                 .catch(() => console.log('cancelled'))
             setValues()
         }
@@ -75,12 +75,15 @@ export default (props: props) => {
                     placeholder='input amount'
                     min='0'
                     required
+                    disabled={ !Boolean(supply) }
+                    value={amount === 0 ? '' : amount}
                 />
                 <Button
                     onClick={ handle }
                     color={ ButtonColor.LIGHT }
                     size={ ButtonSize.SM }
                     className={ css.button }
+                    disabled={ !Boolean(supply) }
                 >
                     { (Number(amount) > 0) ?
                         <div>
