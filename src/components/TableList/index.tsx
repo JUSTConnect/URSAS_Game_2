@@ -18,7 +18,6 @@ interface TableListProps extends React.HTMLAttributes<HTMLDivElement>
 const TableList = (props: TableListProps) => {
     const game = useSelector((state: RootState) => state.game)
     const tables = useSelector((state: RootState) => state.tables)
-    const mode = useState()
 
     const filteredPlaces = () => {
         switch (tables.filter) {

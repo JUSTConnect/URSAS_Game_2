@@ -1,11 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction, Draft } from '@reduxjs/toolkit'
 
-import type { TableProps } from '@/components/Table'
+import type { props as Table } from '@/components/Table'
 
-// example data
-
-const examplePlaces: TableProps[] = [
+const examplePlaces: Table[] = [
     {
         tableNumber: 1,
         freePlaces: 10,
@@ -46,7 +44,7 @@ enum TablesFilter {
 
 
 export interface tablesState {
-    places: TableProps[]
+    places: Table[]
     filter: TablesFilter
 }
 

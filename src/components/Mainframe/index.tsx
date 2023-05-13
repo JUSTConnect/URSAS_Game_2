@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEthers } from '@usedapp/core'
 import Head from 'next/head'
 
-import { RootState } from '@/app/store'
+import { AppDispatch, RootState } from '@/app/store'
 import { setActiveHeaderDropdown } from '@/features/mainframe/mainframeSlice'
+import { setContractGame, setContractMint } from '@/features/web3/web3Slice'
 import { setLoadingRooms } from '@/features/game/gameSlice'
 import Blur from '@components/Blur'
 import Sidebar from './Sidebar'
@@ -20,6 +21,12 @@ import DialogGameAccount from '@components/DialogGameAccount'
 import DialogGameInfo, { typePrize } from '@components/DialogGameInfo'
 import DialogMint from '@components/DialogMint'
 
+//
+import { ethers } from 'ethers'
+
+import ABI from '@contract/abi'
+import ABIGame from '@contract/abi-game'
+//
 
 interface MainframeProps extends React.HTMLAttributes<HTMLDivElement> {
     subHeader?: JSX.Element
@@ -31,12 +38,27 @@ interface MainframeProps extends React.HTMLAttributes<HTMLDivElement> {
 const Mainframe = (props: MainframeProps) => {
     const { account } = useEthers()
     const mainframe = useSelector((state: RootState) => state.mainframe)
+    const web3 = useSelector((state: RootState) => state.web3)
     const dispatch = useDispatch()
 
     useEffect(() => {
         setTimeout(() => {
             dispatch(setLoadingRooms(false))
         }, 500)
+        const MINT_CONTRACT_ADDRESS = '0x483841e1b0449ec48781f7f527aaaD1475057223'
+        const GAME_CONTRACT_ADDRESS = '0xC48910a9cE0f432F066E70Aa33b0Ac1dEcD0e9A8'
+
+        const getContractMint = () => {
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const erc20 = new ethers.Contract(MINT_CONTRACT_ADDRESS, ABI, provider);
+            return erc20.connect(provider.getSigner())
+        }
+
+        const getContractGame = () => {
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const erc20 = new ethers.Contract(GAME_CONTRACT_ADDRESS, ABIGame, provider)
+            return erc20.connect(provider.getSigner())
+        }
     }, [])
 
     return (

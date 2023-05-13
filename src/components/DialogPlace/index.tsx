@@ -4,10 +4,11 @@ import sofaBg from '@assets/images/texture/table-sofa-modal.png'
 
 import Image from 'next/image'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useEthers } from '@usedapp/core'
 
-import { RootState } from '@/app/store'
+import { AppDispatch, RootState } from '@/app/store'
 import {
     addBasketPlace,
     clearBasketPlaces,
@@ -15,8 +16,8 @@ import {
     submitPlaces,
     removeStakedPlaces,
     removeBasketPlaces,
-    setChoosingCardPlace,
 } from '@/features/table/tableSlice'
+import { fetchWalletCards } from '@/features/game/gameSlice'
 import Dialog, {
     Header,
     HeaderButtons,
@@ -43,12 +44,17 @@ interface props extends React.HTMLAttributes<HTMLDivElement>
 }
 
 export default (props: props) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const table = useSelector((state: RootState) => state.table)
+    const game = useSelector((state: RootState) => state.game)
+    const { account } = useEthers()
     const [selectedBasketPlaces, setSelectedBasketPlaces] = useState<number[]>([])
     const [selectedStakedPlaces, setSelectedStakedPlaces] = useState<number[]>([])
     const [submitTimer, setSubmitTimer] = useState<[number, number]>([2, 0])
     
+    useEffect(() => {
+        account && dispatch(fetchWalletCards(account))
+    }, [])
 
     const randomCards = [...Array(10)].map(()=>randomCard())
 
@@ -106,12 +112,12 @@ export default (props: props) => {
                     >
                     { table.choosingCardPlace ? (    
                         <div className={ css.cards }>
-                            { randomCards.map((item,index) => 
+                            { game.walletCards.map((item,index) => 
                                 <Card
                                     key={ index }
                                     className={ css.card }
-                                    rank={ randomCards[index][0] }
-                                    suit={ randomCards[index][1] }
+                                    rank={ item.rank }
+                                    suit={ item.suit }
                                     onClick={ () => {
                                         dispatch(
                                             addBasketPlace(

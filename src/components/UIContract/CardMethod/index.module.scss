@@ -1,0 +1,29 @@
+
+.card
+{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+    background: black;
+}
+
+.input
+{
+    width: 100%;
+    padding: 10px;
+}
+
+.button
+{
+    width: 100%;
+    padding: 10px;
+    background: gold;
+}
+
+.json
+{
+    width: 100%;
+    overflow: auto;
+    max-height: 200px;
+}

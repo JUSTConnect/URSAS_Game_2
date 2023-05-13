@@ -1,18 +1,20 @@
 import Button from '@components/UIButton'
 
-
-import { getContract } from '@/utils/web3'
 import { ethers } from 'ethers'
+import { useDispatch } from 'react-redux'
+import { useEthers } from '@usedapp/core'
+
+import { getMintContract, getGameContract } from '@/utils/web3'
+import { fetchWalletCards } from '@/features/game/gameSlice'
+import { AppDispatch } from '@/app/store'
 
 
 export default () => {
+    const dispatch = useDispatch<AppDispatch>()
+    const { account } = useEthers()
     
     const handle = () => {
-        // getContract().smartMint(1, 16, {gasLimit: 3000000, value: 1})
-        //     .then(()=> {
-        //         console.log('ok')
-        //     })
-        getContract().viewCurrentRoomSupply(16).then((v: ethers.BigNumber) => console.log(v._hex))
+        // getGameContract().GetWholeRoom(2).then(c=>console.log(c))
     }
     return (
         <>
