@@ -20,27 +20,6 @@ export default () => {
                         getContract={getMintContract}
                         key={index}
                     />
-                    // item.type === 'function' &&
-                    //     <div className={ css.cardMethod }>
-                    //         { item.name }
-                    //         <div>
-                    //             { item.inputs.map(input=>(
-                    //                 <input
-                    //                     type="text"
-                    //                     placeholder={ `${input.name} (${ input.internalType })` }
-                    //                     className={ css.input }
-                    //                 />
-                    //             )) }
-                    //         </div>
-                    //         <button
-                    //             className={ css.button }
-                    //             onClick={ () => {
-                    //                 console.log(getMintContract()[item.name](1, 16, {gasLimit: 3000000}).then(
-                    //                     i=>console.log(i)
-                    //                 ))
-                    //             } }
-                    //         >Submit</button>
-                    //     </div>
                 ) }
             </div>
         </div>
