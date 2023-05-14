@@ -16,7 +16,7 @@ const exampleBusyPlaces: BusyPlaceProps[] = [
     {
         number: 4,
         card: {
-            suit: CardSuit.CLUB,
+            suit: CardSuit.h,
             rank: CardRank.N10,
         }
     }
@@ -25,7 +25,7 @@ const exampleStakedPlaces: BusyPlaceProps[] = [
     {
         number: 1,
         card: {
-            suit: CardSuit.CLUB,
+            suit: CardSuit.h,
             rank: CardRank.N9,
         }
     }
@@ -34,7 +34,7 @@ const exampleBasketPlaces: BusyPlaceProps[] = [
     {
         number: 2,
         card: {
-            suit: CardSuit.HEART,
+            suit: CardSuit.h,
             rank: CardRank.N10,
         }
     }

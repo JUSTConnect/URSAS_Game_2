@@ -2,6 +2,7 @@ import css from './index.module.css'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
+import { useEthers } from '@usedapp/core'
 
 import { RootState } from '@/app/store'
 import DialogPlace from '@components/DialogPlace'
@@ -25,6 +26,7 @@ const TableView = (props: TableViewProps) => {
     const dispatch = useDispatch()
     const game = useSelector((state: RootState)=>state.game)
     const table = useSelector((state: RootState)=>state.table)
+    const { account } = useEthers()
 
     if (table.stakedPlaces.length + table.busyPlaces.length === 10)
     {
@@ -40,8 +42,8 @@ const TableView = (props: TableViewProps) => {
                 addBusyPlace({
                     number: number,
                     card: {
-                        rank: CardRank.ACE,
-                        suit: CardSuit.DIAMOND
+                        rank: CardRank.N1,
+                        suit: CardSuit.d
                     }
                 })
             )
@@ -92,10 +94,12 @@ const TableView = (props: TableViewProps) => {
             isActive={props.modalActive}
             onClick={ () => {props.setModalActive(false); dispatch(setChoosingCardPlace(0))} }
         />
-        <DialogPlace
-            active={ props.modalActive }
-            setActive={ props.setModalActive }
-        />
+        { account &&
+            <DialogPlace
+                active={ props.modalActive }
+                setActive={ props.setModalActive }
+            />
+        }
     </div>
 }
 

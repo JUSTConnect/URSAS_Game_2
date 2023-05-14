@@ -1,11 +1,13 @@
 import css from './index.module.scss'
 
-import { useState } from 'react'
+import { ethers } from 'ethers'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEthers, useEtherBalance } from '@usedapp/core'
 
-import { RootState } from '@/app/store'
+import { AppDispatch, RootState } from '@/app/store'
 import { setDisableWalletModal, setGameAccountDialog } from '@/features/mainframe/mainframeSlice'
+import { fetchWalletCards } from '@/features/game/gameSlice'
 
 import { cardsRefound, cardsBurn, cardsStake } from '@/features/game/gameSlice'
 import Dialog, {
@@ -22,11 +24,7 @@ import Button, {
 } from '@components/UIButton'
 import Card, { CardRank } from '@components/Card'
 import Blur from '../Blur'
-import { isNumber } from 'util'
 
-
-interface props extends React.HTMLAttributes<HTMLDivElement>
-{}
 
 enum tabs
 {
@@ -34,8 +32,10 @@ enum tabs
     WALLET = 'Wallet'
 }
 
-export default (props: props) => {
-    const dispatch = useDispatch()
+
+export default (props: React.HTMLAttributes<HTMLDivElement>) => {
+
+    const dispatch = useDispatch<AppDispatch>()
     const game = useSelector((state: RootState) => state.game)
     const mainframe = useSelector((state: RootState) => state.mainframe)
     const [ selectedWalletCards, setSelectedWalletCards ] = useState<number[]>([])
@@ -44,11 +44,16 @@ export default (props: props) => {
     const { account } = useEthers()
     const balance = useEtherBalance(account)
 
-    const toggleWalletCard = (number: number) => {
-        if (selectedWalletCards.includes(number)) {
-            setSelectedWalletCards(selectedWalletCards.filter(item=>item!==number))
+    useEffect(()=>{
+        account && dispatch(fetchWalletCards(account))   
+    }, [])
+
+    const toggleCard =(get: number[], set: Function, number: number) =>
+    {
+        if (get.includes(number)) {
+            set(get.filter(item => item !== number))
         } else {
-            setSelectedWalletCards([...selectedWalletCards, number])
+            set([...get, number])
         }
     }
 
@@ -56,19 +61,11 @@ export default (props: props) => {
 
     const selectWalletCards = () => setSelectedWalletCards(game.walletCards.map((item, index) => index))
 
-    const toggleStakeCard = (number: number) => {
-        if (selectedStakeCards.includes(number)) {
-            setSelectedStakeCards(selectedStakeCards.filter(item=>item!==number))
-        } else {
-            setSelectedStakeCards([...selectedStakeCards, number])
-        }
-    }
-
     const resetStakeCards = () => setSelectedStakeCards([])
 
     const selectStakeCards = () => setSelectedStakeCards(
         game.walletCards
-            .filter(card => card.rank === CardRank.POT)
+            .filter(card => card.rank === CardRank.N1)
             .map((item, index) => index)
     )
 
@@ -99,7 +96,7 @@ export default (props: props) => {
                                 <div className={ 'd-desktop' }>
                                     MATIC
                                 </div>
-                                <span className={ 'textPrimary' }>{ balance?._hex && balance?._hex }</span>
+                                <span className={ 'textPrimary' }>{ balance?._hex && ethers.utils.formatEther(balance?._hex).slice(0, 6) }</span>
                             </div>
                         </div>
                         <HeaderButtons>
@@ -172,7 +169,7 @@ export default (props: props) => {
                                         <div className={ css.content }>
                                             <div className={ css.cards }>
                                                 { game.walletCards.length ? (
-                                                    game.walletCards.filter(card => card.rank === CardRank.POT).map((card, index) => (
+                                                    game.walletCards.filter(card => card.rank === CardRank.N1).map((card, index) => (
                                                         <Card
                                                             key={ index }
                                                             className={
@@ -181,7 +178,7 @@ export default (props: props) => {
                                                                     selectedStakeCards.includes(index) && css.cardActive
                                                                 ].join(' ')
                                                             }
-                                                            onClick={ ()=> toggleStakeCard(index) }
+                                                            onClick={ ()=> toggleCard(selectedStakeCards, setSelectedStakeCards, index) }
                                                             rank={ card.rank }
                                                             suit={ card.suit }
                                                         />
@@ -269,7 +266,7 @@ export default (props: props) => {
                                                                 selectedWalletCards.includes(index) && css.cardActive
                                                             ].join(' ')
                                                         }
-                                                        onClick={ ()=> toggleWalletCard(index) }
+                                                        onClick={ ()=> toggleCard(selectedWalletCards, setSelectedWalletCards, index) }
                                                         rank={ card.rank }
                                                         suit={ card.suit }
                                                     />

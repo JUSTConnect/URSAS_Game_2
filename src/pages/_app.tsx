@@ -2,8 +2,6 @@ import '@/styles/globals.css'
 
 import type { AppProps } from 'next/app'
 import { DAppProvider, Config } from '@usedapp/core'
-import { formatEther } from '@ethersproject/units'
-import { getDefaultProvider } from 'ethers'
 
 import { PolygonMumbaiTestnet, PolygonMainnet } from '@/chains/polygon'
 
@@ -22,6 +20,7 @@ const config: Config = {
 
 
 export default function App({ Component, pageProps }: AppProps) {
+
   return (
     <DAppProvider config={config}>
       <Provider store={ store }>

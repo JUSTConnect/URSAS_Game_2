@@ -1,17 +1,15 @@
 import css from './index.module.scss'
 
+import { Table } from '@/types/game'
+
 import Link from 'next/link'
 
-interface TableProps extends React.HTMLAttributes<HTMLDivElement>
+export interface props extends Table, React.HTMLAttributes<HTMLDivElement>
 {
-    tableNumber: number
-    freePlaces?: number
-    gameEnd?: string
-    cooldown?: boolean
     href: number
 }
 
-const Table = (props: TableProps) => {
+export default (props: props) => {
     return (
         <Link
             href={ props.freePlaces===0 ? {} : `/table/${props.href}` }
@@ -59,7 +57,3 @@ const Table = (props: TableProps) => {
         </Link>
     )
 }
-
-
-export default Table
-export type { TableProps }

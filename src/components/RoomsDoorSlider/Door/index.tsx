@@ -1,9 +1,10 @@
 import css from './index.module.scss'
 
-import { useSelector, useDispatch } from 'react-redux'
+import { Room } from '@/types/game'
+
+import { useDispatch } from 'react-redux'
 import Link from 'next/link'
 
-import { RootState } from '@/app/store'
 import { setMintDialog } from '@/features/mainframe/mainframeSlice'
 import Button, {
     Variant as ButtonVariant,
@@ -11,13 +12,11 @@ import Button, {
 } from '@/components/UIButton'
 
 
-interface RoomsDoorProps extends React.HTMLAttributes<HTMLAnchorElement>
+interface RoomsDoorProps extends Room, React.HTMLAttributes<HTMLAnchorElement>
 {
-    level: number
     active: boolean
     go: boolean
     href?: string|null
-    over?: boolean
 }
 
 const RoomsDoor = (props: RoomsDoorProps) => {

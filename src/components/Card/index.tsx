@@ -1,36 +1,10 @@
 import css from './index.module.scss'
 
-enum Rank
-{
-    POT = 'POT',
-    CLOCK = 'CLOCK',
-    ACE = 'A',
-    KING = 'K',
-    QUEEN = 'Q',
-    JACK = 'J',
-    JOKER = 'JO',
-    N10 = '10',
-    N9 = '9',
-    N8 = '8',
-    N7 = '7',
-    N6 = '6',
-    N5 = '5',
-    N4 = '4',
-    N3 = '3',
-    N2 = '2',
-}
-
-enum Suit
-{
-    DIAMOND = 1,
-    HEART = 2,
-    CLUB = 3,
-    SPADE = 4
-}
+import { Suit, Rank, Card } from '@/types/game'
 
 function randomCard():[Rank, Suit] {
-    const ranks = [Rank.POT, Rank.CLOCK, Rank.ACE, Rank.KING, Rank.QUEEN, Rank.JACK, Rank.JOKER, Rank.N10, Rank.N9, Rank.N8, Rank.N7, Rank.N6, Rank.N5, Rank.N4, Rank.N3, Rank.N2]
-    const suits = [Suit.DIAMOND, Suit.HEART, Suit.CLUB, Suit.SPADE]
+    const ranks = Array.from(Array(16)).map(item=>{return Rank[`N${item+1 as Level}`] as Rank})
+    const suits = [Suit.d, Suit.h, Suit.c, Suit.s]
     return [
         ranks[Math.floor(Math.random() * ranks.length)],
         suits[Math.floor(Math.random() * suits.length)]
@@ -38,10 +12,9 @@ function randomCard():[Rank, Suit] {
 }
 
 
-interface props extends React.HTMLAttributes<HTMLButtonElement>
+interface props extends Card, React.HTMLAttributes<HTMLButtonElement>
 {
-    rank: Rank
-    suit: Suit
+    nftId?: number
 }
 
 const suitIcons = {
@@ -52,20 +25,20 @@ const suitIcons = {
 }
 
 const rankIcon = {
-    JO: <img className={ css.rankIcon } src="/assets/images/icons/card-joker.png" alt="joker"/>,
     POT: <img className={ css.rankIcon } src="/assets/images/icons/card-pot.png" alt="pot"/>,
-    CLOCK: <img className={ css.rankIcon } src="/assets/images/icons/card-clock.png" alt="clock"/>
+    CLOCK: <img className={ css.rankIcon } src="/assets/images/icons/card-clock.png" alt="clock"/>,
+    JO: <img className={ css.rankIcon } src="/assets/images/icons/card-joker.png" alt="joker"/>
 }
 
 const suitColors = {
-    red: [Suit.DIAMOND, Suit.HEART],
-    dark: [Suit.CLUB, Suit.SPADE]
+    red: [Suit.d, Suit.h],
+    dark: [Suit.c, Suit.s]
 }
 
 const SpecialRanks = [
-    Rank.POT,
-    Rank.JOKER,
-    Rank.CLOCK
+    Rank.N2,
+    Rank.N3,
+    Rank.N4
 ]
 
 
@@ -100,9 +73,9 @@ export default (props: props) => {
     >
         <span className={ css.inner }>
             {
-                props.rank === Rank.JOKER ||
-                props.rank === Rank.POT ||
-                props.rank === Rank.CLOCK ?
+                props.rank === Rank.N2 ||
+                props.rank === Rank.N3 ||
+                props.rank === Rank.N4 ?
                 (
                     <span className={ css.rankCenter }>
                         {rankIcon[props.rank]}
@@ -110,7 +83,7 @@ export default (props: props) => {
                 ) : (
                     <>
                         <span className={ css.rank}>
-                            { props.rank !== Rank.ACE ? props.rank : 'A' }
+                            { props.rank !== Rank.N1 ? props.rank : 'A' }
                         </span>
                         <span className={ css.suit }>
                             { suitIcons[props.suit] }

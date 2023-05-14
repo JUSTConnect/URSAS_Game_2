@@ -7,7 +7,7 @@ import Button, {
     Color as ButtonColor,
     Size as ButtonSize
 } from '@/components/UIButton'
-import { getContract } from '@/utils/web3'
+import { getMintContract } from '@/utils/web3'
 
 
 interface props extends React.HTMLAttributes<HTMLDivElement>
@@ -20,13 +20,15 @@ interface props extends React.HTMLAttributes<HTMLDivElement>
 export default (props: props) => {
     const [amount, setAmount] = useState<number>(0)
     const [price, setPrice] = useState<number>(0)
-    const [supply, setSupply] = useState<number>(0)
+    const [available, setAvailable] = useState<number>(0)
 
-    const setValues = () => {
-        getContract().viewCurrentRoomSupply(props.level)
-                .then((v: ethers.BigNumber) => setSupply(Number.parseInt(v._hex)))
-        getContract().viewCostForRoom(props.level)
-            .then((v: ethers.BigNumber) => setPrice(Number.parseInt(v._hex)))
+    const setValues = async () => {
+        // let counter = await getMintContract().currentDailyMintCounter(props.level) 
+        // let limit = await getMintContract().dailyMintLimit(props.level)
+        // setAvailable(limit - counter)
+
+        // let price:ethers.BigNumber = await getMintContract().viewCostForRoom(props.level)
+        // setPrice(Number.parseInt(price._hex))
     }
 
     useEffect(() => {
@@ -36,7 +38,7 @@ export default (props: props) => {
     const handle = () => {
         if (Number(amount) > 0)
         {
-            getContract().smartMint(amount, props.level, {gasLimit: 3000000, value: price * amount})
+            getMintContract().smartMint(amount, props.level, {gasLimit: 3000000, value: price * amount})
                 .then(() => {console.log('ok'); setAmount(0)})
                 .catch(() => console.log('cancelled'))
             setValues()
@@ -51,10 +53,10 @@ export default (props: props) => {
                         <span className={ 'textMuted' }>Level</span> {props.level}
                     </div>
                     <div className={ css.infoSection }>
-                        <span className={ 'textMuted' }>Supply</span> { supply }
+                        <span className={ 'textMuted' }>Available</span> { available }
                     </div>
                     <div className={ css.infoSection }>
-                        <span className={ 'textMuted' }>Price</span> { price } MATIC
+                        <span className={ 'textMuted' }>Price</span> { ethers.utils.formatEther(price) } MATIC
                     </div>
                 </div>
                 <input
@@ -75,7 +77,7 @@ export default (props: props) => {
                     placeholder='input amount'
                     min='0'
                     required
-                    disabled={ !Boolean(supply) }
+                    disabled={ !Boolean(available) }
                     value={amount === 0 ? '' : amount}
                 />
                 <Button
@@ -83,7 +85,7 @@ export default (props: props) => {
                     color={ ButtonColor.LIGHT }
                     size={ ButtonSize.SM }
                     className={ css.button }
-                    disabled={ !Boolean(supply) }
+                    disabled={ !Boolean(available) }
                 >
                     { (Number(amount) > 0) ?
                         <div>
