@@ -1,6 +1,6 @@
 import css from './index.module.scss'
 
-import { Table } from '@/types/game'
+import { Table } from '@/lib/types/game'
 
 import Link from 'next/link'
 

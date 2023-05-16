@@ -1,6 +1,6 @@
 import css from './index.module.scss'
 
-import { Room } from '@/types/game'
+import { Room } from '@/lib/types/game'
 
 import { useDispatch } from 'react-redux'
 import Link from 'next/link'

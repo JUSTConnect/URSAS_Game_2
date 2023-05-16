@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PayloadAction, Draft } from '@reduxjs/toolkit'
 import { Card, CardRank, CardSuit } from '@/components/Card'
-import { getMintContract } from '@/utils/web3'
+import { getMintContract } from '@/lib/utils/web3'
 import { BigNumber } from 'ethers'
 
 // example data

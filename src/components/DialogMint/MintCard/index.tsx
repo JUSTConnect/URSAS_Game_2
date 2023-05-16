@@ -7,7 +7,7 @@ import Button, {
     Color as ButtonColor,
     Size as ButtonSize
 } from '@/components/UIButton'
-import { getMintContract } from '@/utils/web3'
+import { getMintContract } from '@/lib/utils/web3'
 
 
 interface props extends React.HTMLAttributes<HTMLDivElement>

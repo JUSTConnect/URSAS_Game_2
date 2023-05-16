@@ -4,7 +4,7 @@ import { ethers } from 'ethers'
 import { useDispatch } from 'react-redux'
 import { useEthers } from '@usedapp/core'
 
-import { getMintContract, getGameContract } from '@/utils/web3'
+import { getMintContract, getGameContract } from '@/lib/utils/web3'
 import { fetchWalletCards } from '@/features/game/gameSlice'
 import { AppDispatch } from '@/app/store'
 

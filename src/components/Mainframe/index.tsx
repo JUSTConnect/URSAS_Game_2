@@ -24,8 +24,8 @@ import DialogMint from '@components/DialogMint'
 //
 import { ethers } from 'ethers'
 
-import ABI from '@contract/abi'
-import ABIGame from '@contract/abi-game'
+import ABI from '@/lib/contract/abi'
+import ABIGame from '@/lib/contract/abi-game'
 //
 
 interface MainframeProps extends React.HTMLAttributes<HTMLDivElement> {

@@ -4,10 +4,10 @@ import { useState } from 'react'
 
 import Text from '@components/Typography'
 import { Variant as text } from '@components/Typography'
-import ABI from '@contract/abi'
-import ABIGame from '@contract/abi-game'
-import { ABIItem } from '@/types/web3'
-import { getMintContract, getGameContract } from '@/utils/web3'
+import ABI from '@/lib/contract/abi'
+import ABIGame from '@/lib/contract/abi-game'
+import { ABIItem } from '@/lib/types/web3'
+import { getMintContract, getGameContract } from '@/lib/utils/web3'
 
 import Card from './CardMethod'
 

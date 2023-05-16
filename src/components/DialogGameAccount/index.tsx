@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import css from './index.module.scss'
 
 import { ethers } from 'ethers'
