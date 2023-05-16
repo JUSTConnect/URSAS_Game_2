@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import css from './index.module.scss'
 
 import { ethers } from 'ethers'
@@ -96,13 +98,13 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                                 <div className={ 'd-desktop' }>
                                     MATIC
                                 </div>
-                                <span className={ 'textPrimary' }>{ balance?._hex && ethers.utils.formatEther(balance?._hex).slice(0, 6) }</span>
+                                <span className={ 'textPrimary' }>{ balance?._hex && Math.round(Number(ethers.utils.formatEther(balance?._hex))*10000)/10000 }</span>
                             </div>
                         </div>
                         <HeaderButtons>
                             <Button
                                 onClick={ () => {
-                                    navigator.clipboard.writeText('DFYrNUgxguiGKmZKdbGgaDFYrNUgxguiGKmZK')
+                                    navigator.clipboard.writeText(account || '')
                                     setAddressCopied(true)
                                     setTimeout(()=>{
                                         setAddressCopied(false)
@@ -168,7 +170,7 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                                         </div>
                                         <div className={ css.content }>
                                             <div className={ css.cards }>
-                                                { game.walletCards.length ? (
+                                                { game.walletCards.filter(card => card.rank === CardRank.N1).length ? (
                                                     game.walletCards.filter(card => card.rank === CardRank.N1).map((card, index) => (
                                                         <Card
                                                             key={ index }
@@ -279,7 +281,7 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                                             ) }
                                         </div>
                                     </div>
-                                    <div className={ css.footer }>
+                                    {/* <div className={ css.footer }>
                                         <button onClick={ selectWalletCards } className={ css.footerButton }>
                                             <span className={ css.footerButtonText }>
                                                 select all
@@ -290,57 +292,57 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                                                 reset all
                                             </span>
                                         </button>
-                                    </div>
+                                    </div> */}
                                 </div>                                                            
                             }
                         </div>
                     </Content>
+                    { mainframe.gameAccountDialog[1] === tabs.STAKE &&
                     <Footer>
-                        <FooterButtons>
-                            { mainframe.gameAccountDialog[1] === tabs.STAKE &&
-                                <Button
+                            <FooterButtons>
+                                    <Button
+                                        color={ ButtonColor.LIGHT }
+                                        size={ ButtonSize.SM }
+                                        fullWidth
+                                        disabled={ !selectedStakeCards.length }
+                                        onClick={ () => {
+                                            dispatch(cardsStake(selectedStakeCards))
+                                            setSelectedStakeCards([])
+                                        } }
+                                    >
+                                        stake
+                                    </Button>
+                                {/* { mainframe.gameAccountDialog[1] == tabs.WALLET &&
+                                    <>
+                                    <Button
                                     color={ ButtonColor.LIGHT }
                                     size={ ButtonSize.SM }
                                     fullWidth
-                                    disabled={ !selectedStakeCards.length }
+                                    disabled={ !selectedWalletCards.length }
                                     onClick={ () => {
-                                        dispatch(cardsStake(selectedStakeCards))
-                                        setSelectedStakeCards([])
-                                    } }
-                                >
-                                    stake
-                                </Button>
-                            }
-                            { mainframe.gameAccountDialog[1] == tabs.WALLET &&
-                                <>
-                                    <Button
-                                        color={ ButtonColor.LIGHT }
-                                        size={ ButtonSize.SM }
-                                        fullWidth
-                                        disabled={ !selectedWalletCards.length }
-                                        onClick={ () => {
-                                            dispatch(cardsRefound(selectedWalletCards))
-                                            setSelectedWalletCards([])
-                                        } }
-                                    >
-                                        refund
-                                    </Button>
-                                    <Button
-                                        color={ ButtonColor.LIGHT }
-                                        size={ ButtonSize.SM }
-                                        fullWidth
-                                        disabled={ !selectedWalletCards.length && !selectedWalletCards.length }
-                                        onClick={ () => {
-                                            dispatch(cardsBurn(selectedWalletCards))
-                                            setSelectedWalletCards([])
-                                        } }
-                                    >
-                                        burn
-                                    </Button>
-                                </>
-                            }
-                        </FooterButtons>
+                                        dispatch(cardsRefound(selectedWalletCards))
+                                                setSelectedWalletCards([])
+                                            } }
+                                            >
+                                            refund
+                                            </Button>
+                                            <Button
+                                            color={ ButtonColor.LIGHT }
+                                            size={ ButtonSize.SM }
+                                            fullWidth
+                                            disabled={ !selectedWalletCards.length && !selectedWalletCards.length }
+                                            onClick={ () => {
+                                                dispatch(cardsBurn(selectedWalletCards))
+                                                setSelectedWalletCards([])
+                                            } }
+                                            >
+                                            burn
+                                            </Button>
+                                            </>
+                                        } */}
+                            </FooterButtons>
                     </Footer>
+                    }
                 </Dialog>
                 <div className={ css.tabs }>
                     <div className={ css.inner }>
@@ -352,7 +354,7 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                                     mainframe.gameAccountDialog[1] == tabs.WALLET && css.tabActive
                                 ].join(' ')
                             }
-                        >
+                            >
                             Wallet
                         </button>
                         <button

@@ -1,7 +1,7 @@
 import css from './index.module.scss'
 
 import { useState, useEffect } from 'react'
-import { ethers } from 'ethers'
+import { BigNumber, ethers } from 'ethers'
 
 import Button, {
     Color as ButtonColor,
@@ -13,35 +13,22 @@ import { getMintContract } from '@/utils/web3'
 interface props extends React.HTMLAttributes<HTMLDivElement>
 {
     level: number
-    price: number
+    price: BigNumber
+    available: number
+    resetValues: Function
 }
 
 
 export default (props: props) => {
     const [amount, setAmount] = useState<number>(0)
-    const [price, setPrice] = useState<number>(0)
-    const [available, setAvailable] = useState<number>(0)
-
-    const setValues = async () => {
-        // let counter = await getMintContract().currentDailyMintCounter(props.level) 
-        // let limit = await getMintContract().dailyMintLimit(props.level)
-        // setAvailable(limit - counter)
-
-        // let price:ethers.BigNumber = await getMintContract().viewCostForRoom(props.level)
-        // setPrice(Number.parseInt(price._hex))
-    }
-
-    useEffect(() => {
-        setValues()
-    }, [])
 
     const handle = () => {
         if (Number(amount) > 0)
         {
-            getMintContract().smartMint(amount, props.level, {gasLimit: 3000000, value: price * amount})
+            getMintContract().smartMint(amount, props.level, {gasLimit: 3000000, value: Number(props.price._hex) * amount})
                 .then(() => {console.log('ok'); setAmount(0)})
                 .catch(() => console.log('cancelled'))
-            setValues()
+            props.resetValues()
         }
     }
 
@@ -53,10 +40,10 @@ export default (props: props) => {
                         <span className={ 'textMuted' }>Level</span> {props.level}
                     </div>
                     <div className={ css.infoSection }>
-                        <span className={ 'textMuted' }>Available</span> { available }
+                        <span className={ 'textMuted' }>Available</span> { props.available }
                     </div>
                     <div className={ css.infoSection }>
-                        <span className={ 'textMuted' }>Price</span> { ethers.utils.formatEther(price) } MATIC
+                        <span className={ 'textMuted' }>Price</span> { props.price ? ethers.utils.formatEther(props.price) : 0 } MATIC
                     </div>
                 </div>
                 <input
@@ -77,7 +64,7 @@ export default (props: props) => {
                     placeholder='input amount'
                     min='0'
                     required
-                    disabled={ !Boolean(available) }
+                    disabled={ !Boolean(props.available) }
                     value={amount === 0 ? '' : amount}
                 />
                 <Button
@@ -85,12 +72,12 @@ export default (props: props) => {
                     color={ ButtonColor.LIGHT }
                     size={ ButtonSize.SM }
                     className={ css.button }
-                    disabled={ !Boolean(available) }
+                    disabled={ !Boolean(props.available) }
                 >
                     { (Number(amount) > 0) ?
                         <div>
                             <div className={ css.buttonCaption }>total amount</div>
-                            { Number(amount) * price } MATIC
+                            { Number(amount) * Number(props.price) } Wei
                         </div>
                     : 'mint'}
                 </Button>

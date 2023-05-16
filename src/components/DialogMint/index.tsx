@@ -1,7 +1,11 @@
 import css from './index.module.scss'
 
+import { BigNumber } from 'ethers'
+
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
+import { getMintContract } from '@/utils/web3'
 import { setMintDialog } from '@/features/mainframe/mainframeSlice'
 import Dialog, {
     Header,
@@ -25,6 +29,20 @@ interface props extends React.HTMLAttributes<HTMLDivElement>
 
 export default (props: props) => {
     const dispatch = useDispatch()
+    const [prices, setPrices] = useState<BigNumber[]>([])
+    const [limits, setLimits] = useState<number[][]>([[], []])
+
+    const setValues = async () => {
+        let prices = await getMintContract().getDataAboutCostsForRooms()
+        let limits = await getMintContract().getDataAboutLimitsForRooms()
+        
+        setLimits(limits)
+        setPrices(prices)
+    }
+
+    useEffect(() => {
+        setValues()
+    }, [])
 
     return (
         <>
@@ -59,8 +77,10 @@ export default (props: props) => {
                             { Array.from(Array(16)).map((item, index) => (
                                 <MintCard
                                     key={ index }
-                                    price={ (index+1) * 2 }
+                                    price={ prices[index] }
+                                    available={ limits[0][15-index] - limits[1][15-index] }
                                     level={16-index}
+                                    resetValues={ setValues }
                                 />
                             )) }
                         </div>

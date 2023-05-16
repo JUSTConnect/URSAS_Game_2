@@ -47,7 +47,7 @@ const SubHeaderTables = (props: SubHeaderTablesProps) => {
               Increase time: <span className={'textPrimary'}>2h</span>
             </div>
             <div>
-              Suit: <span className={'textPrimary'}>HEARTS</span>
+              Suit: <span className={'textPrimary'}>Hearts</span>
             </div>
           </div>
         </Info>

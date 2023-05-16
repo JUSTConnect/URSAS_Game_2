@@ -52,7 +52,7 @@ const SubHeaderTable = (props: SubHeaderTableProps) => {
               Increase time: <span className={'textPrimary'}>2h</span>
             </div>
             <div>
-              Suit: <span className={'textPrimary'}>HEARTS</span>
+              Suit: <span className={'textPrimary'}>Hearts</span>
             </div>
             <div>
               Places: <span className={'textPrimary'}>{ table.stakedPlaces.length }/10</span>

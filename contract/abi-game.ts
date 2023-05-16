@@ -3,16 +3,16 @@ export default [
 		"inputs": [
 			{
 				"internalType": "uint8",
-				"name": "_room",
+				"name": "_roomLevel",
 				"type": "uint8"
 			},
 			{
-				"internalType": "uint24",
-				"name": "_amountTables",
-				"type": "uint24"
+				"internalType": "uint256",
+				"name": "salt",
+				"type": "uint256"
 			}
 		],
-		"name": "bulkCreateTablesInRoom",
+		"name": "BulkClaimTablesInRoom",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -30,35 +30,25 @@ export default [
 				"type": "uint32"
 			},
 			{
-				"internalType": "uint256",
-				"name": "salt",
-				"type": "uint256"
+				"internalType": "uint256[]",
+				"name": "_tokenIds",
+				"type": "uint256[]"
+			}
+		],
+		"name": "BulkEnterInGame",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "_roomLevel",
+				"type": "uint8"
 			}
 		],
 		"name": "claimBlackRoomForAll",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint8",
-				"name": "_roomLevel",
-				"type": "uint8"
-			},
-			{
-				"internalType": "uint32",
-				"name": "_table",
-				"type": "uint32"
-			},
-			{
-				"internalType": "uint256",
-				"name": "salt",
-				"type": "uint256"
-			}
-		],
-		"name": "claimGame",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -94,7 +84,7 @@ export default [
 				"type": "uint256"
 			}
 		],
-		"name": "enterInGame",
+		"name": "leaveGame",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -113,11 +103,11 @@ export default [
 			},
 			{
 				"internalType": "uint256",
-				"name": "_tokenId",
+				"name": "salt",
 				"type": "uint256"
 			}
 		],
-		"name": "leaveGame",
+		"name": "newClaimGame",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -125,19 +115,6 @@ export default [
 	{
 		"inputs": [],
 		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -169,17 +146,12 @@ export default [
 	{
 		"inputs": [
 			{
-				"internalType": "uint8",
-				"name": "_roomLevel",
-				"type": "uint8"
-			},
-			{
-				"internalType": "uint32",
-				"name": "_table",
-				"type": "uint32"
+				"internalType": "uint256",
+				"name": "_value",
+				"type": "uint256"
 			}
 		],
-		"name": "ReductGameTimeForCombinations",
+		"name": "setStakingRateinBlackRoom",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -187,12 +159,12 @@ export default [
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "_value",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
 			}
 		],
-		"name": "setStakingRate",
+		"name": "transferOwnership",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -319,6 +291,19 @@ export default [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "checkTablesClaimReadyForAllRooms",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint8",
@@ -379,6 +364,11 @@ export default [
 						"type": "uint256"
 					},
 					{
+						"internalType": "uint8",
+						"name": "playersNow",
+						"type": "uint8"
+					},
+					{
 						"internalType": "address[10]",
 						"name": "players",
 						"type": "address[10]"
@@ -392,11 +382,6 @@ export default [
 						"internalType": "uint256[4]",
 						"name": "playingSuits",
 						"type": "uint256[4]"
-					},
-					{
-						"internalType": "uint8",
-						"name": "playersNow",
-						"type": "uint8"
 					},
 					{
 						"internalType": "uint256",
@@ -430,25 +415,6 @@ export default [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "_str",
-				"type": "string"
-			}
-		],
-		"name": "getKeccakForLetter",
-		"outputs": [
-			{
-				"internalType": "bytes32",
-				"name": "",
-				"type": "bytes32"
-			}
-		],
-		"stateMutability": "pure",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "uint256",
 				"name": "salt",
 				"type": "uint256"
@@ -466,13 +432,19 @@ export default [
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "getValue",
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "_roomLevel",
+				"type": "uint8"
+			}
+		],
+		"name": "getTablesClaimReadyInRoom",
 		"outputs": [
 			{
-				"internalType": "string",
+				"internalType": "uint256[]",
 				"name": "",
-				"type": "string"
+				"type": "uint256[]"
 			}
 		],
 		"stateMutability": "view",
@@ -534,6 +506,11 @@ export default [
 						"type": "uint256"
 					},
 					{
+						"internalType": "uint8",
+						"name": "playersNow",
+						"type": "uint8"
+					},
+					{
 						"internalType": "address[10]",
 						"name": "players",
 						"type": "address[10]"
@@ -547,11 +524,6 @@ export default [
 						"internalType": "uint256[4]",
 						"name": "playingSuits",
 						"type": "uint256[4]"
-					},
-					{
-						"internalType": "uint8",
-						"name": "playersNow",
-						"type": "uint8"
 					},
 					{
 						"internalType": "uint256",
