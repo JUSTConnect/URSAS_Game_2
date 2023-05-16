@@ -3,7 +3,7 @@ import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { DAppProvider, Config } from '@usedapp/core'
 
-import { PolygonMumbaiTestnet, PolygonMainnet } from '@/chains/polygon'
+import { PolygonMumbaiTestnet, PolygonMainnet } from '@/lib/chains/polygon'
 
 import { store } from '@/app/store'
 import { Provider } from 'react-redux'

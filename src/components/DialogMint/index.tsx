@@ -5,7 +5,7 @@ import { BigNumber } from 'ethers'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { getMintContract } from '@/utils/web3'
+import { getMintContract } from '@/lib/utils/web3'
 import { setMintDialog } from '@/features/mainframe/mainframeSlice'
 import Dialog, {
     Header,

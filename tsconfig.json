@@ -28,8 +28,8 @@
       "@assets/*": [
         "./public/assets/*"
       ],
-      "@contract/*": [
-        "./contract/*"
+      "@lib/*": [
+        "./src/lib/*"
       ],
       "@chains/*": [
         "./chains/*"

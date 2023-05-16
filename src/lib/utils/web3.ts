@@ -1,7 +1,7 @@
 import { ethers } from 'ethers'
 
-import ABI from '@contract/abi'
-import ABIGame from '@contract/abi-game'
+import ABI from '@/lib/contract/abi'
+import ABIGame from '@/lib/contract/abi-game'
 
 const MINT_CONTRACT_ADDRESS = '0xfc9505e56088D6C4D67b36A981C3CEf2f350d6Ed'
 const GAME_CONTRACT_ADDRESS = '0x7d62c3B6cbf92248B3272AA112BEE95f1A02a6d8'

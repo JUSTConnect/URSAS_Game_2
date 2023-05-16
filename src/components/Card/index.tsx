@@ -1,6 +1,6 @@
 import css from './index.module.scss'
 
-import { Suit, Rank, Card } from '@/types/game'
+import { Suit, Rank, Card } from '@/lib/types/game'
 
 function randomCard():[Rank, Suit] {
     const ranks = Array.from(Array(16)).map(item=>{return Rank[`N${item+1 as Level}`] as Rank})

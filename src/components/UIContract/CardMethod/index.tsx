@@ -2,7 +2,7 @@ import css from './index.module.scss'
 
 import { useState, useEffect } from 'react'
 
-import { ABIItem, ABIType } from '@/types/web3'
+import { ABIItem, ABIType } from '@/lib/types/web3'
 
 
 interface props {
