@@ -33,6 +33,7 @@ export default (props: props) => {
     type input = typeof inputs
     const [result, setResult] = useState<string>('')
     const [values, setValues] = useState<input>([])
+    const [value, setValue] = useState<string>('')
 
     useEffect(() => {
         let values = Object()
@@ -58,12 +59,19 @@ export default (props: props) => {
                         { input_types[input.type] === 'checkbox' && input.name }
                     </>
                 )) }
+                { props.item.stateMutability === 'payable' &&
+                    <input
+                        className={ css.input }
+                        placeholder='Value'
+                        type="text"
+                        onInput={ (e) => setValue(e.currentTarget.value) }    
+                    />
+                }
             </div>
             <button
                 className={ css.button }
                 onClick={ () => {
-                    console.log(Object.values(values))
-                    props.getContract()[props.item.name](...Object.values(values), Object.assign({gasLimit: 3000000}, props.item.stateMutability === 'payable' ? {value: 1} : null))
+                    props.getContract()[props.item.name](...Object.values(values), Object.assign({gasLimit: 3000000}, props.item.stateMutability === 'payable' ? {value: value} : null))
                         .then(
                             (i: JSON)=>setResult(JSON.stringify(i, null, 2))
                         )

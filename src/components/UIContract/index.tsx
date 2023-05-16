@@ -1,5 +1,7 @@
 import css from './index.module.scss'
 
+import { useState } from 'react'
+
 import Text from '@components/Typography'
 import { Variant as text } from '@components/Typography'
 import ABI from '@contract/abi'
@@ -10,17 +12,31 @@ import { getMintContract, getGameContract } from '@/utils/web3'
 import Card from './CardMethod'
 
 export default () => {
+    const [showCallers, setShowCallers] = useState<boolean>(true)
+
     return <div className={ css.container }>
         <Text variant={text.h1}>Mint Contract ABI</Text>  
+        <div>
+            <input
+                type="checkbox"
+                className={ css.checkbox }
+                onInput={ (e) => setShowCallers(e.currentTarget.checked) }
+            /> 
+                show callers
+        </div>
         <Text variant={text.h2}>Functions ({ ABI.length })</Text>  
         <div className={ css.section }>
             <div className={ css.cardsMethod }>
                 { (ABI as ABIItem[]).map((item: ABIItem, index) =>
+                    Boolean(showCallers)
+                    ?
                     <Card
                         item={item}
                         getContract={getMintContract}
                         key={index}
                     />
+                    :
+                    <div key={index}>{item.name || '<undefined>'}</div>
                 ) }
             </div>
         </div>
@@ -41,13 +57,19 @@ export default () => {
         <Text variant={text.h2}>Functions ({ ABIGame.length })</Text>  
         <div className={ css.section }>
             <div className={ css.cardsMethod }>
-                { (ABIGame as ABIItem[]).map((item: ABIItem, index) =>
-                    <Card
-                        item={item}
-                        getContract={getGameContract}
-                        key={index}
-                    />
-                ) }
+                {
+                    (ABIGame as ABIItem[]).map((item: ABIItem, index) =>
+                        Boolean(showCallers)
+                        ?
+                        <Card
+                            item={item}
+                            getContract={getGameContract}
+                            key={index}
+                        />
+                        :
+                        <div key={index}>{item.name || '<undefined>'}</div>
+                    )
+                }
             </div>
         </div>
         <Text variant={text.h2}>Errors</Text>  
