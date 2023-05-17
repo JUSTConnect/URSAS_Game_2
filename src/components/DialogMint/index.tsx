@@ -33,11 +33,16 @@ export default (props: props) => {
     const [limits, setLimits] = useState<number[][]>([[], []])
 
     const setValues = async () => {
-        let prices = await getMintContract().getDataAboutCostsForRooms()
-        let limits = await getMintContract().getDataAboutLimitsForRooms()
+        try {
+            let prices: BigNumber[] = await getMintContract().getDataAboutCostsForRooms()
+            let limits: number[][] = await getMintContract().getDataAboutLimitsForRooms()
+
+            setLimits(limits)
+            setPrices(prices)
+        } catch(e) {
+            console.log(`Error in Dialog Mint: ${e}`)   
+        }
         
-        setLimits(limits)
-        setPrices(prices)
     }
 
     useEffect(() => {
@@ -77,7 +82,7 @@ export default (props: props) => {
                             { Array.from(Array(16)).map((item, index) => (
                                 <MintCard
                                     key={ index }
-                                    price={ prices[index] }
+                                    price={ prices[15-index] }
                                     available={ limits[0][15-index] - limits[1][15-index] }
                                     level={16-index}
                                     resetValues={ setValues }

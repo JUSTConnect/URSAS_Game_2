@@ -24,32 +24,45 @@ import Button, {
 } from '@components/UIButton'
 import Card, { CardRank } from '@components/Card'
 import Blur from '../Blur'
+// import Header from '.'
 
 
-enum tabs
-{
+export enum tabs {
     STAKE = 'Stake',
     WALLET = 'Wallet'
 }
 
+export interface state {
+    selectedWalletCards: number[]
+    selectedStakeCards: number[]
+    addressCopied: boolean
+}
 
 export default (props: React.HTMLAttributes<HTMLDivElement>) => {
 
     const dispatch = useDispatch<AppDispatch>()
+
     const game = useSelector((state: RootState) => state.game)
     const mainframe = useSelector((state: RootState) => state.mainframe)
-    const [ selectedWalletCards, setSelectedWalletCards ] = useState<number[]>([])
-    const [ selectedStakeCards, setSelectedStakeCards ] = useState<number[]>([])
-    const [ addressCopied, setAddressCopied ] = useState<boolean>(false)
+
+    const [state, setState] = useState<state>({
+        selectedWalletCards: [],
+        selectedStakeCards: [],
+        addressCopied: false,
+    })
+
+    const [selectedWalletCards, setSelectedWalletCards] = useState<number[]>([])
+    const [selectedStakeCards, setSelectedStakeCards] = useState<number[]>([])
+    const [addressCopied, setAddressCopied] = useState<boolean>(false)
+
     const { account } = useEthers()
     const balance = useEtherBalance(account)
 
-    useEffect(()=>{
-        account && dispatch(fetchWalletCards(account))   
+    useEffect(() => {
+        account && dispatch(fetchWalletCards(account))
     }, [])
 
-    const toggleCard =(get: number[], set: Function, number: number) =>
-    {
+    const toggleCard = (get: number[], set: Function, number: number) => {
         if (get.includes(number)) {
             set(get.filter(item => item !== number))
         } else {
@@ -57,23 +70,22 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
         }
     }
 
-    const resetWalletCards = () => setSelectedWalletCards([])
+    const resetWalletCards = () => setState({ ...state, selectedWalletCards: [] })
+    const selectWalletCards = () => setState({ ...state, selectedWalletCards: game.walletCards.map((item, index) => index) })
 
-    const selectWalletCards = () => setSelectedWalletCards(game.walletCards.map((item, index) => index))
-
-    const resetStakeCards = () => setSelectedStakeCards([])
-
-    const selectStakeCards = () => setSelectedStakeCards(
-        game.walletCards
+    const resetStakeCards = () => setState({ ...state, selectedStakeCards: [] })
+    const selectStakeCards = () => setState({
+        ...state,
+        selectedStakeCards: game.walletCards
             .filter(card => card.rank === CardRank.N1)
             .map((item, index) => index)
-    )
+    })
 
     return (
         <>
             <Blur
-                onClick={ () => dispatch(setGameAccountDialog([false, tabs.WALLET])) }
-                isActive={ mainframe.gameAccountDialog[0] }
+                onClick={() => dispatch(setGameAccountDialog([false, tabs.WALLET]))}
+                isActive={mainframe.gameAccountDialog[0]}
             />
             <div className={
                 [
@@ -81,41 +93,42 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                     mainframe.gameAccountDialog[0] && css.active
                 ].join(' ')
             }>
-                <Dialog className={ [css.dialog, props.className].join(' ') }>
+                <Dialog className={[css.dialog, props.className].join(' ')}>
+                    {/* <Header state={state}/> */}
                     <Header>
-                        <div className={ css.balances }>
-                            <div className={ css.balance }>
-                                <img className={ css.balanceIcon } src="/assets/images/icons/dialog-gameaccount-ursu.png" alt="ursu" />
-                                <div className={ 'd-desktop' }>
+                        <div className={css.balances}>
+                            <div className={css.balance}>
+                                <img className={css.balanceIcon} src="/assets/images/icons/dialog-gameaccount-ursu.png" alt="ursu" />
+                                <div className={'d-desktop'}>
                                     URSU
                                 </div>
-                                <span className={ 'textPrimary' }>12</span>
+                                <span className={'textPrimary'}>12</span>
                             </div>
-                            <div className={ css.balance }>
-                                <img className={ css.balanceIcon } src="/assets/images/icons/dialog-gameaccount-matic.png" alt="matic" />
-                                <div className={ 'd-desktop' }>
+                            <div className={css.balance}>
+                                <img className={css.balanceIcon} src="/assets/images/icons/dialog-gameaccount-matic.png" alt="matic" />
+                                <div className={'d-desktop'}>
                                     MATIC
                                 </div>
-                                <span className={ 'textPrimary' }>{ balance?._hex && Math.round(Number(ethers.utils.formatEther(balance?._hex))*10000)/10000 }</span>
+                                <span className={'textPrimary'}>{balance?._hex && Math.round(Number(ethers.utils.formatEther(balance?._hex)) * 10000) / 10000}</span>
                             </div>
                         </div>
                         <HeaderButtons>
                             <Button
-                                onClick={ () => {
+                                onClick={() => {
                                     navigator.clipboard.writeText(account || '')
                                     setAddressCopied(true)
-                                    setTimeout(()=>{
+                                    setTimeout(() => {
                                         setAddressCopied(false)
                                     }, 3000)
-                                } }
-                                disabled={ addressCopied }
-                                color={ ButtonColor.DARK }
-                                variant={ ButtonVariant.NORMAL }
-                                size={ ButtonSize.SM }
-                                icon={ <i className="fa-solid fa-link"></i> }
+                                }}
+                                disabled={addressCopied}
+                                color={ButtonColor.DARK}
+                                variant={ButtonVariant.NORMAL}
+                                size={ButtonSize.SM}
+                                icon={<i className="fa-solid fa-link"></i>}
                                 iconTablet
                             >
-                                { addressCopied ? (
+                                {addressCopied ? (
                                     <>
                                         <i className="fa-solid fa-check"></i>
                                         &nbsp;
@@ -123,64 +136,64 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                                     </>
                                 ) : (
                                     'copy adress'
-                                ) }
+                                )}
                             </Button>
                             <Button
-                                color={ ButtonColor.DARK }
-                                variant={ ButtonVariant.NORMAL }
-                                size={ ButtonSize.SM }
-                                icon={ <i className="fa-solid fa-repeat"></i> }
+                                color={ButtonColor.DARK}
+                                variant={ButtonVariant.NORMAL}
+                                size={ButtonSize.SM}
+                                icon={<i className="fa-solid fa-repeat"></i>}
                                 iconTablet
                             >
                                 change wallet
                             </Button>
                             <Button
-                                color={ ButtonColor.DARK }
-                                variant={ ButtonVariant.NORMAL }
-                                size={ ButtonSize.SM }
-                                icon={ <i className="fa-solid fa-power-off"></i> }
+                                color={ButtonColor.DARK}
+                                variant={ButtonVariant.NORMAL}
+                                size={ButtonSize.SM}
+                                icon={<i className="fa-solid fa-power-off"></i>}
                                 iconTablet
-                                onClick={ () => dispatch(setDisableWalletModal(true)) }
+                                onClick={() => dispatch(setDisableWalletModal(true))}
                             >
                                 disconnect
                             </Button>
                             <Button
-                                onClick={ () => dispatch(setGameAccountDialog([false, tabs.WALLET])) }
-                                color={ ButtonColor.DARK }
-                                variant={ ButtonVariant.OUTLINE }
-                                size={ ButtonSize.SM }
+                                onClick={() => dispatch(setGameAccountDialog([false, tabs.WALLET]))}
+                                color={ButtonColor.DARK}
+                                variant={ButtonVariant.OUTLINE}
+                                size={ButtonSize.SM}
                             >
                                 <i className="fa-solid fa-arrow-left"></i>
                             </Button>
                         </HeaderButtons>
                     </Header>
                     <Content>
-                        <div className={ css.containers }>
-                            { mainframe.gameAccountDialog[1] === tabs.STAKE &&
+                        <div className={css.containers}>
+                            {mainframe.gameAccountDialog[1] === tabs.STAKE &&
                                 <>
                                     <div className={
                                         [
                                             css.container,
                                         ].join(' ')
                                     }>
-                                        <div className={ css.header }>
+                                        <div className={css.header}>
                                             Wallet account
                                         </div>
-                                        <div className={ css.content }>
-                                            <div className={ css.cards }>
-                                                { game.walletCards.filter(card => card.rank === CardRank.N1).length ? (
+                                        <div className={css.content}>
+                                            <div className={css.cards}>
+                                                {game.walletCards.filter(card => card.rank === CardRank.N1).length ? (
                                                     game.walletCards.filter(card => card.rank === CardRank.N1).map((card, index) => (
                                                         <Card
-                                                            key={ index }
+                                                            key={index}
                                                             className={
                                                                 [
                                                                     css.card,
                                                                     selectedStakeCards.includes(index) && css.cardActive
                                                                 ].join(' ')
                                                             }
-                                                            onClick={ ()=> toggleCard(selectedStakeCards, setSelectedStakeCards, index) }
-                                                            rank={ card.rank }
-                                                            suit={ card.suit }
+                                                            onClick={() => toggleCard(selectedStakeCards, setSelectedStakeCards, index)}
+                                                            rank={card.rank}
+                                                            suit={card.suit}
                                                         />
                                                     ))
                                                 ) : (
@@ -188,17 +201,17 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                                                         <br />
                                                         wallet account doesn{"'"}t have URSAS ace NFT{"'"}s
                                                     </>
-                                                ) }
+                                                )}
                                             </div>
                                         </div>
-                                        <div className={ css.footer }>
-                                            <button onClick={ selectStakeCards } className={ css.footerButton }>
-                                                <span className={ css.footerButtonText }>
+                                        <div className={css.footer}>
+                                            <button onClick={selectStakeCards} className={css.footerButton}>
+                                                <span className={css.footerButtonText}>
                                                     select all
                                                 </span>
                                             </button>
-                                            <button onClick={ resetStakeCards } className={ css.footerButton }>
-                                                <span className={ css.footerButtonText }>
+                                            <button onClick={resetStakeCards} className={css.footerButton}>
+                                                <span className={css.footerButtonText}>
                                                     reset all
                                                 </span>
                                             </button>
@@ -210,18 +223,18 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                                             selectedStakeCards.length && css.disabled
                                         ].join(' ')
                                     }>
-                                        <div className={ css.header }>
+                                        <div className={css.header}>
                                             Game account
                                         </div>
-                                        <div className={ css.content }>
-                                            <div className={ css.cards }>
-                                                { game.gameCards.length ? (
+                                        <div className={css.content}>
+                                            <div className={css.cards}>
+                                                {game.gameCards.length ? (
                                                     game.gameCards.map((card, index) => (
                                                         <Card
-                                                            className={ css.card }
-                                                            key={ index }
-                                                            rank={ card.rank }
-                                                            suit={ card.suit }
+                                                            className={css.card}
+                                                            key={index}
+                                                            rank={card.rank}
+                                                            suit={card.suit}
                                                         />
                                                     ))
                                                 ) : (
@@ -229,54 +242,54 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                                                         <br />
                                                         Game account is empty!
                                                     </>
-                                                ) }
+                                                )}
                                             </div>
                                         </div>
                                     </div>
-                                    { Boolean(selectedStakeCards.length) && Boolean(game.gameCards.length) &&
+                                    {Boolean(selectedStakeCards.length) && Boolean(game.gameCards.length) &&
                                         <Button
-                                            size={ ButtonSize.SM }
-                                            color={ ButtonColor.DARK }
-                                            variant={ ButtonVariant.NORMAL }
-                                            className={ css.arrowFirst }
+                                            size={ButtonSize.SM}
+                                            color={ButtonColor.DARK}
+                                            variant={ButtonVariant.NORMAL}
+                                            className={css.arrowFirst}
                                         >
                                             <i className="fa-solid fa-arrow-right"></i>
                                         </Button>
                                     }
                                 </>
                             }
-                            { mainframe.gameAccountDialog[1] == tabs.WALLET &&
+                            {mainframe.gameAccountDialog[1] == tabs.WALLET &&
                                 <div className={
                                     [
                                         css.container
                                     ].join(' ')
                                 }>
-                                    <div className={ css.header }>
+                                    <div className={css.header}>
                                         Wallet account
                                     </div>
-                                    <div className={ css.content }>
-                                        <div className={ css.cards }>
-                                            { game.walletCards.length ? (
+                                    <div className={css.content}>
+                                        <div className={css.cards}>
+                                            {game.walletCards.length ? (
                                                 game.walletCards.map((card, index) => (
                                                     <Card
-                                                        key={ index }
+                                                        key={index}
                                                         className={
                                                             [
                                                                 css.card,
                                                                 selectedWalletCards.includes(index) && css.cardActive
                                                             ].join(' ')
                                                         }
-                                                        onClick={ ()=> toggleCard(selectedWalletCards, setSelectedWalletCards, index) }
-                                                        rank={ card.rank }
-                                                        suit={ card.suit }
+                                                        onClick={() => toggleCard(selectedWalletCards, setSelectedWalletCards, index)}
+                                                        rank={card.rank}
+                                                        suit={card.suit}
                                                     />
                                                 ))
                                             ) : (
                                                 <>
                                                     <br />
-                                                    wallet account doesn{"'"}t have URSAS NFT{"'"}s { game.gameCards.length ? ':)' : ':('}
+                                                    wallet account doesn{"'"}t have URSAS NFT{"'"}s {game.gameCards.length ? ':)' : ':('}
                                                 </>
-                                            ) }
+                                            )}
                                         </div>
                                     </div>
                                     {/* <div className={ css.footer }>
@@ -291,25 +304,25 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                                             </span>
                                         </button>
                                     </div> */}
-                                </div>                                                            
+                                </div>
                             }
                         </div>
                     </Content>
-                    { mainframe.gameAccountDialog[1] === tabs.STAKE &&
-                    <Footer>
+                    {mainframe.gameAccountDialog[1] === tabs.STAKE &&
+                        <Footer>
                             <FooterButtons>
-                                    <Button
-                                        color={ ButtonColor.LIGHT }
-                                        size={ ButtonSize.SM }
-                                        fullWidth
-                                        disabled={ !selectedStakeCards.length }
-                                        onClick={ () => {
-                                            dispatch(cardsStake(selectedStakeCards))
-                                            setSelectedStakeCards([])
-                                        } }
-                                    >
-                                        stake
-                                    </Button>
+                                <Button
+                                    color={ButtonColor.LIGHT}
+                                    size={ButtonSize.SM}
+                                    fullWidth
+                                    disabled={!selectedStakeCards.length}
+                                    onClick={() => {
+                                        dispatch(cardsStake(selectedStakeCards))
+                                        setSelectedStakeCards([])
+                                    }}
+                                >
+                                    stake
+                                </Button>
                                 {/* { mainframe.gameAccountDialog[1] == tabs.WALLET &&
                                     <>
                                     <Button
@@ -339,24 +352,24 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                                             </>
                                         } */}
                             </FooterButtons>
-                    </Footer>
+                        </Footer>
                     }
                 </Dialog>
-                <div className={ css.tabs }>
-                    <div className={ css.inner }>
+                <div className={css.tabs}>
+                    <div className={css.inner}>
                         <button
-                            onClick={ () => dispatch(setGameAccountDialog([mainframe.gameAccountDialog[0], tabs.WALLET])) }
+                            onClick={() => dispatch(setGameAccountDialog([mainframe.gameAccountDialog[0], tabs.WALLET]))}
                             className={
                                 [
                                     css.tab,
                                     mainframe.gameAccountDialog[1] == tabs.WALLET && css.tabActive
                                 ].join(' ')
                             }
-                            >
+                        >
                             Wallet
                         </button>
                         <button
-                            onClick={ () => dispatch(setGameAccountDialog([mainframe.gameAccountDialog[0], tabs.STAKE])) }
+                            onClick={() => dispatch(setGameAccountDialog([mainframe.gameAccountDialog[0], tabs.STAKE]))}
                             className={
                                 [
                                     css.tab,
@@ -372,5 +385,3 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
         </>
     )
 }
-
-export { tabs }
