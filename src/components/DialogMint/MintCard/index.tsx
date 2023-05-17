@@ -26,7 +26,7 @@ export default (props: props) => {
         if (Number(amount) > 0)
         {
             try {
-                await getMintContract().smartMint(amount, props.level, {gasLimit: 3000000, value: Number(props.price._hex) * amount})
+                await getMintContract().smartMint(amount, props.level, {gasLimit: 6000000, value: Number(props.price._hex) * amount})
                 setAmount(0)
             } catch(e) {
                 console.log(`Error during mint: ${e}`)
