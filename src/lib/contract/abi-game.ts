@@ -1,5 +1,29 @@
 export default [
 	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint8",
@@ -46,22 +70,19 @@ export default [
 				"internalType": "uint8",
 				"name": "_roomLevel",
 				"type": "uint8"
-			}
-		],
-		"name": "claimBlackRoomForAll",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
+			},
 			{
-				"internalType": "uint8",
-				"name": "_room",
-				"type": "uint8"
+				"internalType": "uint32",
+				"name": "_table",
+				"type": "uint32"
+			},
+			{
+				"internalType": "uint256",
+				"name": "salt",
+				"type": "uint256"
 			}
 		],
-		"name": "createTableInRoom",
+		"name": "ClaimSingleGame",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -84,7 +105,7 @@ export default [
 				"type": "uint256"
 			}
 		],
-		"name": "leaveGame",
+		"name": "ForceEnterInGame",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -103,70 +124,150 @@ export default [
 			},
 			{
 				"internalType": "uint256",
-				"name": "salt",
+				"name": "_tokenId",
 				"type": "uint256"
 			}
 		],
-		"name": "newClaimGame",
+		"name": "ForceEnterInGame1",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "previousOwner",
-				"type": "address"
+				"internalType": "uint8",
+				"name": "_room",
+				"type": "uint8"
 			},
 			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
+				"internalType": "uint32",
+				"name": "_table",
+				"type": "uint32"
 			}
 		],
-		"name": "OwnershipTransferred",
-		"type": "event"
-	},
-	{
-		"inputs": [
+		"name": "GetCurrentTableInRoom",
+		"outputs": [
 			{
-				"internalType": "uint256",
-				"name": "_value",
-				"type": "uint256"
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "serialNumber",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "playersNow",
+						"type": "uint8"
+					},
+					{
+						"internalType": "address[10]",
+						"name": "players",
+						"type": "address[10]"
+					},
+					{
+						"internalType": "uint256[10]",
+						"name": "playingTokenIds",
+						"type": "uint256[10]"
+					},
+					{
+						"internalType": "uint256[4]",
+						"name": "playingSuits",
+						"type": "uint256[4]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "currentGameStartedAt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "currentGameFinishedAt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "internalGameReduction",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum Spire.Status",
+						"name": "status",
+						"type": "uint8"
+					}
+				],
+				"internalType": "struct Spire.Table",
+				"name": "",
+				"type": "tuple"
 			}
 		],
-		"name": "setStakingRateinBlackRoom",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
+				"internalType": "uint8",
+				"name": "_room",
+				"type": "uint8"
 			}
 		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"name": "GetWholeRoom",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "serialNumber",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "playersNow",
+						"type": "uint8"
+					},
+					{
+						"internalType": "address[10]",
+						"name": "players",
+						"type": "address[10]"
+					},
+					{
+						"internalType": "uint256[10]",
+						"name": "playingTokenIds",
+						"type": "uint256[10]"
+					},
+					{
+						"internalType": "uint256[4]",
+						"name": "playingSuits",
+						"type": "uint256[4]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "currentGameStartedAt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "currentGameFinishedAt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "internalGameReduction",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum Spire.Status",
+						"name": "status",
+						"type": "uint8"
+					}
+				],
+				"internalType": "struct Spire.Table[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -291,16 +392,29 @@ export default [
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "checkTablesClaimReadyForAllRooms",
-		"outputs": [
+		"inputs": [
 			{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
+				"internalType": "uint8",
+				"name": "_roomLevel",
+				"type": "uint8"
 			}
 		],
-		"stateMutability": "view",
+		"name": "claimBlackRoomForAll",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "_room",
+				"type": "uint8"
+			}
+		],
+		"name": "createTableInRoom",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -345,7 +459,7 @@ export default [
 		"inputs": [
 			{
 				"internalType": "uint8",
-				"name": "_room",
+				"name": "_roomLevel",
 				"type": "uint8"
 			},
 			{
@@ -354,59 +468,49 @@ export default [
 				"type": "uint32"
 			}
 		],
-		"name": "GetCurrentTableInRoom",
+		"name": "forceChangeStatusInRoom",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_who",
+				"type": "address"
+			}
+		],
+		"name": "getActiveTablesForPlayer",
 		"outputs": [
 			{
-				"components": [
-					{
-						"internalType": "uint256",
-						"name": "serialNumber",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint8",
-						"name": "playersNow",
-						"type": "uint8"
-					},
-					{
-						"internalType": "address[10]",
-						"name": "players",
-						"type": "address[10]"
-					},
-					{
-						"internalType": "uint256[10]",
-						"name": "playingTokenIds",
-						"type": "uint256[10]"
-					},
-					{
-						"internalType": "uint256[4]",
-						"name": "playingSuits",
-						"type": "uint256[4]"
-					},
-					{
-						"internalType": "uint256",
-						"name": "currentGameStartedAt",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "currentGameFinishedAt",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "internalGameReduction",
-						"type": "uint256"
-					},
-					{
-						"internalType": "enum Spire.Status",
-						"name": "status",
-						"type": "uint8"
-					}
-				],
-				"internalType": "struct Spire.Table",
+				"internalType": "uint256[10][16]",
 				"name": "",
-				"type": "tuple"
+				"type": "uint256[10][16]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "_roomLevel",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint32",
+				"name": "_table",
+				"type": "uint32"
+			}
+		],
+		"name": "getCurrentStatusForTable",
+		"outputs": [
+			{
+				"internalType": "enum Spire.Status",
+				"name": "",
+				"type": "uint8"
 			}
 		],
 		"stateMutability": "view",
@@ -491,72 +595,6 @@ export default [
 	{
 		"inputs": [
 			{
-				"internalType": "uint8",
-				"name": "_room",
-				"type": "uint8"
-			}
-		],
-		"name": "GetWholeRoom",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "uint256",
-						"name": "serialNumber",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint8",
-						"name": "playersNow",
-						"type": "uint8"
-					},
-					{
-						"internalType": "address[10]",
-						"name": "players",
-						"type": "address[10]"
-					},
-					{
-						"internalType": "uint256[10]",
-						"name": "playingTokenIds",
-						"type": "uint256[10]"
-					},
-					{
-						"internalType": "uint256[4]",
-						"name": "playingSuits",
-						"type": "uint256[4]"
-					},
-					{
-						"internalType": "uint256",
-						"name": "currentGameStartedAt",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "currentGameFinishedAt",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "internalGameReduction",
-						"type": "uint256"
-					},
-					{
-						"internalType": "enum Spire.Status",
-						"name": "status",
-						"type": "uint8"
-					}
-				],
-				"internalType": "struct Spire.Table[]",
-				"name": "",
-				"type": "tuple[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
@@ -571,6 +609,29 @@ export default [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "_roomLevel",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint32",
+				"name": "_table",
+				"type": "uint32"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_tokenIds",
+				"type": "uint256[]"
+			}
+		],
+		"name": "leaveGame",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -600,6 +661,13 @@ export default [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint8",
@@ -616,6 +684,45 @@ export default [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_newTime",
+				"type": "uint256"
+			}
+		],
+		"name": "setBaseGameDuration",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "setStakingRateinBlackRoom",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{

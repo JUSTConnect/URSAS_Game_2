@@ -16,10 +16,10 @@ export interface Table
 
 export enum Rank
 {
-    N1 = 'A',
-    N2 = 'POT',
-    N3 = 'CLOCK',
-    N4 = 'JO',
+    N1 = 'POT',
+    N2 = 'CLOCK',
+    N3 = 'JO',
+    N4 = 'A',
     N5 = 'K',
     N6 = 'Q',
     N7 = 'J',

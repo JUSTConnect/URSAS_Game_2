@@ -8,23 +8,23 @@ import { BigNumber } from 'ethers'
 
 const gameCards = [
   {
-    rank: CardRank.N2,
+    rank: CardRank.N1,
     suit: CardSuit.h
   },
   {
-    rank: CardRank.N2,
+    rank: CardRank.N1,
     suit: CardSuit.h
   },
   {
-    rank: CardRank.N2,
+    rank: CardRank.N1,
     suit: CardSuit.h
   },
   {
-    rank: CardRank.N2,
+    rank: CardRank.N1,
     suit: CardSuit.h
   },
   {
-    rank: CardRank.N2,
+    rank: CardRank.N1,
     suit: CardSuit.h
   },
 
@@ -60,7 +60,7 @@ const initialState: gameState = {
 export const fetchWalletCards = createAsyncThunk(
   'cards/fetch',
   async (address: string) => {
-    let tokens = await getMintContract().tokensOfOwner(address) 
+    let tokens: BigNumber[] = await getMintContract().tokensOfOwner(address) 
     let cards = await Promise.all(tokens.map(async (token: BigNumber) => {
       let level = await getMintContract().viewNFTRoomLevel(token)
       let suit = await getMintContract().suits(token)

@@ -36,9 +36,9 @@ const suitColors = {
 }
 
 const SpecialRanks = [
+    Rank.N1,
     Rank.N2,
-    Rank.N3,
-    Rank.N4
+    Rank.N3
 ]
 
 
@@ -73,9 +73,9 @@ export default (props: props) => {
     >
         <span className={ css.inner }>
             {
+                props.rank === Rank.N1 ||
                 props.rank === Rank.N2 ||
-                props.rank === Rank.N3 ||
-                props.rank === Rank.N4 ?
+                props.rank === Rank.N3 ?
                 (
                     <span className={ css.rankCenter }>
                         {rankIcon[props.rank]}
@@ -83,7 +83,7 @@ export default (props: props) => {
                 ) : (
                     <>
                         <span className={ css.rank}>
-                            { props.rank !== Rank.N1 ? props.rank : 'A' }
+                            { props.rank !== Rank.N4 ? props.rank : 'A' }
                         </span>
                         <span className={ css.suit }>
                             { suitIcons[props.suit] }

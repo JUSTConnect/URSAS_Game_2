@@ -22,12 +22,15 @@ interface props extends React.HTMLAttributes<HTMLDivElement>
 export default (props: props) => {
     const [amount, setAmount] = useState<number>(0)
 
-    const handle = () => {
+    const handle = async () => {
         if (Number(amount) > 0)
         {
-            getMintContract().smartMint(amount, props.level, {gasLimit: 3000000, value: Number(props.price._hex) * amount})
-                .then(() => {console.log('ok'); setAmount(0)})
-                .catch(() => console.log('cancelled'))
+            try {
+                await getMintContract().smartMint(amount, props.level, {gasLimit: 3000000, value: Number(props.price._hex) * amount})
+                setAmount(0)
+            } catch(e) {
+                console.log(`Error during mint: ${e}`)
+            }
             props.resetValues()
         }
     }
