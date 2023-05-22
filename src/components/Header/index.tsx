@@ -82,8 +82,8 @@ const Header = (props: HeaderProps) => {
                     <img className={ 'd-mobile' } src="/assets/images/icons/chair.svg" alt="chair" />
                     <div className={ css.places }>
                         <span className={ ['d-desktop', 'textMuted'].join(' ') }>Places&nbsp;</span>
-                        <Badge loading={game.loadingRooms} mobileTransparrent={ true }>
-                            { table.stakedPlaces.length }/20
+                        <Badge loading={!Boolean(game.walletCards.length)} mobileTransparrent={ true }>
+                            { 0 }/{ game.walletCards.length }
                         </Badge>
                     </div>
                     { game.claim ? (

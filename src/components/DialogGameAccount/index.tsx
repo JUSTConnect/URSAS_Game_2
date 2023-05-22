@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEthers, useEtherBalance } from '@usedapp/core'
 
 import { AppDispatch, RootState } from '@/app/store'
-import { setDisableWalletModal, setGameAccountDialog } from '@/features/mainframe/mainframeSlice'
+import { setDisableWalletModal, setConnectWalletModal, setGameAccountDialog } from '@/features/mainframe/mainframeSlice'
 import { fetchWalletCards } from '@/features/game/gameSlice'
 
-import { cardsRefound, cardsBurn, cardsStake } from '@/features/game/gameSlice'
+import { cardsStake } from '@/features/game/gameSlice'
 import Dialog, {
     Header,
     HeaderButtons,
@@ -144,6 +144,7 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                                 size={ButtonSize.SM}
                                 icon={<i className="fa-solid fa-repeat"></i>}
                                 iconTablet
+                                onClick={ () => dispatch(setConnectWalletModal(true)) }
                             >
                                 change wallet
                             </Button>

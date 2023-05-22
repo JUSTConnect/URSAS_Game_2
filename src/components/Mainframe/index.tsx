@@ -5,9 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEthers } from '@usedapp/core'
 import Head from 'next/head'
 
-import { AppDispatch, RootState } from '@/app/store'
+import { RootState } from '@/app/store'
 import { setActiveHeaderDropdown } from '@/features/mainframe/mainframeSlice'
-import { setContractGame, setContractMint } from '@/features/web3/web3Slice'
 import { setLoadingRooms } from '@/features/game/gameSlice'
 import Blur from '@components/Blur'
 import Sidebar from './Sidebar'
@@ -24,7 +23,7 @@ import DialogMint from '@components/DialogMint'
 //
 import { ethers } from 'ethers'
 
-import ABI from '@/lib/contract/abi'
+import ABI from '@/lib/contract/abi-mint'
 import ABIGame from '@/lib/contract/abi-game'
 //
 
