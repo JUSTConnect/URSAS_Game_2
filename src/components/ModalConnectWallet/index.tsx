@@ -19,6 +19,7 @@ interface props
 type item = {
     logoSrc: string
     name: string
+    type: string
 }
 
 
@@ -27,29 +28,33 @@ const items = {
         {
             logoSrc: '/assets/images/icons/wallet-glow.svg',
             name: 'Glow'
-        },
+
+        } as item,
         {
             logoSrc: '/assets/images/icons/wallet-phantom.svg',
             name: 'Phantom'
-        },
+        } as item,
         {
             logoSrc: '/assets/images/icons/wallet-math-wallet.svg',
             name: 'MathWallet'
-        }
+        } as item
     ],
     Polygon: [
         {
             logoSrc: '/assets/images/icons/wallet-metamask.png',
-            name: 'MetaMask'
-        },
+            name: 'MetaMask',
+            type: 'metamask'
+        } as item,
         {
             logoSrc: '/assets/images/icons/wallet-trustwallet.png',
-            name: 'Trust Wallet'
-        },
+            name: 'Trust Wallet',
+            type: 'coinbase'
+        } as item,
         {
             logoSrc: '/assets/images/icons/wallet-walletconnect.png',
-            name: 'WalletConnect'
-        }
+            name: 'WalletConnect',
+            type: 'walletConnect'
+        } as item
     ]
 }
 
@@ -64,7 +69,7 @@ export default () => {
     const [activeTab, setActiveTab] = useState<Tabs>(Tabs.SOLANA)
     const mainframe = useSelector((state: RootState) => state.mainframe)
     const dispatch = useDispatch<AppDispatch>()
-    const { account, activateBrowserWallet } = useEthers()
+    const { activateBrowserWallet, library } = useEthers()
 
     return (
         <>
@@ -121,8 +126,8 @@ export default () => {
                                     <img className={ css.itemLogo } src={ item.logoSrc } alt="Item Logo" />
                                     { item.name }
                                 </div>
-                                <button onClick={ () => {activateBrowserWallet(); dispatch(setConnectWalletModal(false))} } className={ css.itemButton }>
-                                    detected
+                                <button onClick={ () => {activateBrowserWallet({type: item.type}); dispatch(setConnectWalletModal(false))} } className={ css.itemButton }>
+                                    { activeTab === Tabs.SOLANA ? 'unsupported' : ('detected') }
                                 </button>
                             </div>
                         )) }

@@ -171,6 +171,11 @@ export default [
 						"type": "uint256[10]"
 					},
 					{
+						"internalType": "uint256[10]",
+						"name": "playersTimeMarks",
+						"type": "uint256[10]"
+					},
+					{
 						"internalType": "uint256[4]",
 						"name": "playingSuits",
 						"type": "uint256[4]"
@@ -234,6 +239,11 @@ export default [
 					{
 						"internalType": "uint256[10]",
 						"name": "playingTokenIds",
+						"type": "uint256[10]"
+					},
+					{
+						"internalType": "uint256[10]",
+						"name": "playersTimeMarks",
 						"type": "uint256[10]"
 					},
 					{
@@ -466,6 +476,35 @@ export default [
 				"internalType": "uint32",
 				"name": "_table",
 				"type": "uint32"
+			},
+			{
+				"internalType": "address",
+				"name": "_who",
+				"type": "address"
+			}
+		],
+		"name": "estimateStakingRewardsInBlackRoom",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "_roomLevel",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint32",
+				"name": "_table",
+				"type": "uint32"
 			}
 		],
 		"name": "forceChangeStatusInRoom",
@@ -498,6 +537,25 @@ export default [
 				"internalType": "uint8",
 				"name": "_roomLevel",
 				"type": "uint8"
+			}
+		],
+		"name": "getActiveTablesForRoom",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "_roomLevel",
+				"type": "uint8"
 			},
 			{
 				"internalType": "uint32",
@@ -511,6 +569,92 @@ export default [
 				"internalType": "enum Spire.Status",
 				"name": "",
 				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_player",
+				"type": "address"
+			}
+		],
+		"name": "getIndexOfPlayerInBlackRoom",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "i",
+				"type": "uint256"
+			}
+		],
+		"name": "getIndexOfPlayerInBlackRoom1",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "i",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "_player",
+				"type": "address"
+			}
+		],
+		"name": "getIndexOfPlayerInBlackRoom2",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "_roomLevel",
+				"type": "uint8"
+			},
+			{
+				"internalType": "address",
+				"name": "_player",
+				"type": "address"
+			}
+		],
+		"name": "getPlayingTokenIdsInRoomForPlayer",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
 			}
 		],
 		"stateMutability": "view",
@@ -635,6 +779,40 @@ export default [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "operator",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bytes",
+				"name": "data",
+				"type": "bytes"
+			}
+		],
+		"name": "onERC721Received",
+		"outputs": [
+			{
+				"internalType": "bytes4",
+				"name": "",
+				"type": "bytes4"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "owner",
 		"outputs": [
@@ -658,6 +836,19 @@ export default [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "refundYourNFT",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{

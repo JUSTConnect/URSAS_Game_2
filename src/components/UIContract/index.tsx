@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 import Text from '@components/Typography'
 import { Variant as text } from '@components/Typography'
-import ABI from '@/lib/contract/abi'
+import ABI from '@/lib/contract/abi-mint'
 import ABIGame from '@/lib/contract/abi-game'
 import { ABIItem } from '@/lib/types/web3'
 import { getMintContract, getGameContract } from '@/lib/utils/web3'

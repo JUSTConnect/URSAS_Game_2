@@ -83,7 +83,7 @@ export default (props: props) => {
                                 <MintCard
                                     key={ index }
                                     price={ prices[15-index] }
-                                    available={ limits[0][15-index] - limits[1][15-index] }
+                                    available={ limits[0][15-index] - limits[1][15-index] | 0 }
                                     level={16-index}
                                     resetValues={ setValues }
                                 />
