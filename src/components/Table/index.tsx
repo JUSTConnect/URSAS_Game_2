@@ -1,59 +1,59 @@
 import css from './index.module.scss'
 
-import { Table } from '@/lib/types/game'
-
 import Link from 'next/link'
+import {ethers} from "ethers";
+import {StatusTable, TableData} from "@lib/types/game";
 
-export interface props extends Table, React.HTMLAttributes<HTMLDivElement>
-{
-    href: number
+export interface props extends TableData, React.HTMLAttributes<HTMLDivElement> {
+    index: number
+    id: string
 }
 
 export default (props: props) => {
     return (
-        <Link
-            href={ props.freePlaces===0 ? {} : `/table/${props.href}` }
-            className={
-                [
-                    css.table,
-                    (props.freePlaces || 0) === 0 ? css.disabled : '', props.cooldown ? css.cooldown : ''
-                ].join(' ')
-            }
-        >
-            <div className={ css.bg }>
-                <div className={ css.layer1 }>
-                    <div className={ css.layer2 }>
-                    </div>
-                </div>
-            </div>
-            <div className={ css.info }>
-                <div className={ css.header }>
-                    <span className={ 'textMuted' }>table</span>
-                    <div className={ [css.number, 'fontSpecial'].join(' ') }>
-                        <div className="d-desktop">№ { props.tableNumber }</div>
-                        <div className="d-mobile">Level { props.tableNumber }</div>
-                    </div>
-                </div>
-                <div className={ css.badge }>
-                    { props.cooldown ? (
-                        <span className={ [css.badgeCooldown].join(' ') }>cooldown</span>
-                    ) : props.gameEnd ? (
-                        <>
-                            game end
-                            <div className={ css.number }>
-                                { props.gameEnd }
-                            </div>
-                        </>
-                    ) : Number.isInteger(props.freePlaces) ? (
-                        <>
-                            free places
-                            <div className={ css.free }>
-                                { props.freePlaces }/10
-                            </div>
-                        </>
-                    ) : '' }
-                </div>
-            </div>
-        </Link>
+      <Link
+        href={props.playersNow === 10 ? {} : `/tables/${props.id}/table/${props.index}`}
+        className={
+            [
+                css.table,
+                (props.playersNow) === 10 ? css.disabled : '', props.status === StatusTable.COOLDOWN ? css.cooldown : ''
+            ].join(' ')
+        }
+      >
+          <div className={css.bg}>
+              <div className={css.layer1}>
+                  <div className={css.layer2}>
+                  </div>
+              </div>
+          </div>
+          <div className={css.info}>
+              <div className={css.header}>
+                  <span className={'textMuted'}>table</span>
+                  <div className={[css.number, 'fontSpecial'].join(' ')}>
+                      <div className="d-desktop">№ {props.index}</div>
+                      <div className="d-mobile">Level {props.index}</div>
+                  </div>
+              </div>
+              <div className={css.badge}>
+                  {props.status === StatusTable.COOLDOWN ? (
+                    <span className={[css.badgeCooldown].join(' ')}>cooldown</span>
+                  ) : props.status === StatusTable.PLAYING ? (
+                    <>
+                        game end
+                        <div className={css.number}>
+                            {+ethers.utils.formatEther(props.currentGameFinishedAt) * 1000}
+                        </div>
+                    </>
+                  ) : Number.isInteger(10 - props.playersNow) ? (
+                    <>
+                        free places
+                        <div className={css.free}>
+                            {10 - props.playersNow}/10
+                        </div>
+                    </>
+                  ) : ''}
+              </div>
+          </div>
+      </Link>
     )
 }

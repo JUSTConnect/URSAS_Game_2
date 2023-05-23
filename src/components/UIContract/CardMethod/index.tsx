@@ -86,7 +86,6 @@ export default (props: props) => {
                     props.item.inputs.map(
                         (input) => input.name
                     )
-                    console.log(Object.values(values))
                 } }
             >
                 Debug

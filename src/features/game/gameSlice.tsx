@@ -1,36 +1,41 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import type { PayloadAction, Draft } from '@reduxjs/toolkit'
-import { Card, CardRank, CardSuit } from '@/components/Card'
-import { getMintContract } from '@/lib/utils/web3'
-import { BigNumber } from 'ethers'
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import type {PayloadAction, Draft} from '@reduxjs/toolkit'
+import {Card, CardRank, CardSuit} from '@/components/Card'
+import {BigNumber, ethers} from 'ethers'
+import {getMintContract} from "@lib/utils/web3";
 
 // example data
 
 const gameCards = [
   {
-    rank: CardRank.N1,
-    suit: CardSuit.h
+    rank: CardRank.N2,
+    suit: CardSuit.h,
+    tokenId: '1'
   },
   {
-    rank: CardRank.N1,
-    suit: CardSuit.h
+    rank: CardRank.N2,
+    suit: CardSuit.h,
+    tokenId: '2'
   },
   {
-    rank: CardRank.N1,
-    suit: CardSuit.h
+    rank: CardRank.N2,
+    suit: CardSuit.h,
+    tokenId: '3'
   },
   {
-    rank: CardRank.N1,
-    suit: CardSuit.h
+    rank: CardRank.N2,
+    suit: CardSuit.h,
+    tokenId: '4'
   },
   {
-    rank: CardRank.N1,
-    suit: CardSuit.h
+    rank: CardRank.N2,
+    suit: CardSuit.h,
+    tokenId: '5'
   },
 
 ]
 
-// 
+//
 
 
 export interface gameState {
@@ -43,6 +48,7 @@ export interface gameState {
   gameOver: number
   walletCards: Card[]
   gameCards: Card[]
+  maxAvailableRoom: number
 }
 
 const initialState: gameState = {
@@ -54,17 +60,19 @@ const initialState: gameState = {
   claim: true,
   gameOver: 0,
   walletCards: [],
-  gameCards: gameCards
+  gameCards: gameCards,
+  maxAvailableRoom: 17
 }
 
 export const fetchWalletCards = createAsyncThunk(
   'cards/fetch',
   async (address: string) => {
-    let tokens: BigNumber[] = await getMintContract().tokensOfOwner(address) 
+    let tokens = await getMintContract().tokensOfOwner(address)
     let cards = await Promise.all(tokens.map(async (token: BigNumber) => {
       let level = await getMintContract().viewNFTRoomLevel(token)
       let suit = await getMintContract().suits(token)
-      return [parseInt(level), suit]
+      let tokenId = ethers.utils.formatEther(token)
+      return [parseInt(level), suit, tokenId]
     }))
     return cards
   }
@@ -74,6 +82,9 @@ export const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
+    setWalletCards: () => {
+
+    },
     setLoadingRooms: (state, action: PayloadAction<boolean>) => {
       state.loadingRooms = action.payload
     },
@@ -103,15 +114,24 @@ export const gameSlice = createSlice({
     },
 
     cardsBurn: (state, action: PayloadAction<Draft<number[]>>) => {
-      state.walletCards = state.walletCards.filter((item, index)=> !action.payload.includes(index))
+      state.walletCards = state.walletCards.filter((item, index) => !action.payload.includes(index))
     },
     cardsRefound: (state, action: PayloadAction<Draft<number[]>>) => {
-      state.walletCards = state.walletCards.filter((item, index)=> !(action.payload.includes(index) && state.walletCards[index].rank === CardRank.N1) )
+      state.walletCards = state.walletCards.filter((item, index) => !(action.payload.includes(index) && state.walletCards[index].rank === CardRank.N1))
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchWalletCards.fulfilled, (state, action) => {
-      state.walletCards = action.payload.map(item => Object({rank: CardRank[`N${item[0] as Level}`], suit: CardSuit[item[1]]}))
+      state.walletCards = action.payload.map(item => {
+        if (item[0] < state.maxAvailableRoom) {
+          state.maxAvailableRoom = item[0]
+        }
+        return Object({
+          rank: CardRank[`N${item[0] as Level}`],
+          suit: CardSuit[item[1]],
+          tokenId: item[2]
+        })
+      })
     })
   }
 })
