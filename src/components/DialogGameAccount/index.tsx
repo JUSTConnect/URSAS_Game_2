@@ -185,6 +185,7 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                                                 {game.walletCards.filter(card => card.rank === CardRank.N1).length ? (
                                                     game.walletCards.filter(card => card.rank === CardRank.N1).map((card, index) => (
                                                         <Card
+                                                            tokenId={'1'}
                                                             key={index}
                                                             className={
                                                                 [
@@ -232,6 +233,7 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                                                 {game.gameCards.length ? (
                                                     game.gameCards.map((card, index) => (
                                                         <Card
+                                                            tokenId={'1'}
                                                             className={css.card}
                                                             key={index}
                                                             rank={card.rank}
@@ -273,6 +275,7 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                                             {game.walletCards.length ? (
                                                 game.walletCards.map((card, index) => (
                                                     <Card
+                                                        tokenId={'1'}
                                                         key={index}
                                                         className={
                                                             [
