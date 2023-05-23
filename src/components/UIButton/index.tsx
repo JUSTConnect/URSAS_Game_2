@@ -43,6 +43,7 @@ export default (props: props) => {
     return (
         <button
             onClick={ props.onClick }
+            style={props.disabled ? {opacity: 0.5} : {opacity: 1}}
             className={
             [
                 css.button,

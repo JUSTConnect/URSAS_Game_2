@@ -4,14 +4,14 @@ import Info from './Info'
 
 interface SubHeaderProps extends React.HTMLAttributes<HTMLDivElement>
 {
-    
+
 }
 
 interface SubHeaderButtonProps extends React.HTMLAttributes<HTMLButtonElement>
 {
     active?: boolean,
     keyName?: string,
-    value?: React.ReactElement|string
+    value?: React.ReactElement|string|number
 }
 
 const SubHeaderSection = (props: React.HTMLAttributes<HTMLDivElement>) => {

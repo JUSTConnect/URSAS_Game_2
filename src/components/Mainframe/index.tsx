@@ -40,12 +40,12 @@ const Mainframe = (props: MainframeProps) => {
     const web3 = useSelector((state: RootState) => state.web3)
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        setTimeout(() => {
-            dispatch(setLoadingRooms(false))
-        }, 500)
-        const MINT_CONTRACT_ADDRESS = '0x483841e1b0449ec48781f7f527aaaD1475057223'
-        const GAME_CONTRACT_ADDRESS = '0xC48910a9cE0f432F066E70Aa33b0Ac1dEcD0e9A8'
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(setLoadingRooms(false))
+    }, 500)
+    const MINT_CONTRACT_ADDRESS = '0x71710042fa389d40dA3dfeB63159e8dFBDeFA7b0'
+    const GAME_CONTRACT_ADDRESS = '0xE64F2B941Ba441FD7af0853Efa800Cfdfe0A7C61'
 
         const getContractMint = () => {
             const provider = new ethers.providers.Web3Provider(window.ethereum)

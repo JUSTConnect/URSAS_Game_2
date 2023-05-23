@@ -6,12 +6,38 @@ export interface Room
     over?: boolean
 }
 
+export interface TableCard {
+    level: number,
+    suit: string,
+    tokenId: string
+}
+
+export interface TableData {
+    currentGameFinishedAt: string,
+    currentGameStartedAt: string,
+    internalGameReduction: string,
+    players: string[],
+    playersNow: number,
+    playingSuits: string[],
+    playingTokenIds: string[],
+    serialNumber: string,
+    status: number,
+    cards: TableCard[]
+}
+
 export interface Table
 {
     tableNumber: number
     freePlaces?: number
     gameEnd?: string
     cooldown?: boolean
+}
+
+export enum SuitsGetName {
+    Spades = 0,
+    Heart = 1,
+    Diamond = 2,
+    Club = 3,
 }
 
 export enum Rank
@@ -45,5 +71,12 @@ export enum Suit
 export interface Card
 {
     rank: Rank,
-    suit: Suit
+    suit: Suit,
+    tokenId: string
+}
+
+export enum StatusTable {
+    WAITING = 0,
+    PLAYING = 1,
+    COOLDOWN = 2
 }
