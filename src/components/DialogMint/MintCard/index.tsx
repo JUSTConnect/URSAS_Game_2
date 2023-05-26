@@ -1,8 +1,10 @@
 import css from './index.module.scss'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { BigNumber, ethers } from 'ethers'
+import { useContractFunction } from '@usedapp/core'
 
+import { getMintContractNew } from '@/lib/utils/web3'
 import Button, {
     Color as ButtonColor,
     Size as ButtonSize
@@ -22,11 +24,13 @@ interface props extends React.HTMLAttributes<HTMLDivElement>
 export default (props: props) => {
     const [amount, setAmount] = useState<number>(0)
 
+    const {state, send} = useContractFunction(getMintContract(), 'smartMint')
+
     const handle = async () => {
         if (Number(amount) > 0)
         {
             try {
-                await getMintContract().smartMint(amount, props.level, {gasLimit: 6000000, value: Number(props.price._hex) * amount})
+                send(amount, props.level, {gasLimit: 6000000, value: Number(props.price._hex) * amount})
                 setAmount(0)
             } catch(e) {
                 console.log(`Error during mint: ${e}`)

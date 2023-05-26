@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { ethers } from 'ethers'
 import { useEthers, useEtherBalance } from '@usedapp/core'
 
-import { setDisableWalletModal, setGameAccountDialog } from '@/features/mainframe/mainframeSlice'
+import { setDisableWalletModal, setConnectWalletModal, setGameAccountDialog } from '@/features/mainframe/mainframeSlice'
 
 import { Header, HeaderButtons } from '@components/Dialog'
 import Button, { Size as ButtonSize, Color as ButtonColor, Variant as ButtonVariant } from '@components/UIButton'
@@ -75,6 +75,7 @@ export default (props: props) => {
                     size={ButtonSize.SM}
                     icon={<i className="fa-solid fa-repeat"></i>}
                     iconTablet
+                    onClick={ () => dispatch(setConnectWalletModal(true)) }
                 >
                     change wallet
                 </Button>

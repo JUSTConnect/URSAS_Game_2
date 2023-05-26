@@ -3,7 +3,8 @@ export type ABIType =
     'uint32' |
     'uint8' |
     'address' |
-    'bool'
+    'bool' |
+    'uint256[]'
 
 export interface ABIInput
 {

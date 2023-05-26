@@ -1,8 +1,9 @@
 import css from './index.module.scss'
 
+import { useContractFunction } from '@usedapp/core'
 import { useState, useEffect } from 'react'
 
-import { ABIItem, ABIType } from '@/lib/types/web3'
+import { ABIItem } from '@/lib/types/web3'
 
 
 interface props {
@@ -23,7 +24,8 @@ const input_types = {
     uint32: 'number',
     uint8: 'number',
     address: 'text',
-    bool: 'checkbox'
+    bool: 'checkbox',
+    'uint256[]': 'text'
 }
 
 type input_type = typeof input_types
@@ -34,6 +36,8 @@ export default (props: props) => {
     const [result, setResult] = useState<string>('')
     const [values, setValues] = useState<input>([])
     const [value, setValue] = useState<string>('')
+
+    const {state, send} = useContractFunction(props.getContract(), props.item.name)
 
     useEffect(() => {
         let values = Object()
@@ -48,16 +52,21 @@ export default (props: props) => {
             { props.item.name } ({ props.item.type } - { props.item.stateMutability })
             <div>
                 { props.item.inputs.map((input, index)=>(
-                    <>
+                    <div key={ index }>
                         <input
-                            key={ input.name }
                             type={ input_types[input.type] }
                             placeholder={ `${input.name} (${ input.internalType })` }
                             className={ input_types[input.type] === 'checkbox' ? css.checkbox : css.input }
-                            onInput={ (e) => setValues({...values, [input.name]: e.currentTarget.value}) }
+                            onInput={ (e) => {
+                                if (input.type === 'uint256[]') {
+                                    setValues({...values, [input.name]: e.currentTarget.value.split(',')})
+                                } else {
+                                    setValues({...values, [input.name]: e.currentTarget.value})
+                                }
+                            } }
                         />
                         { input_types[input.type] === 'checkbox' && input.name }
-                    </>
+                    </div>
                 )) }
                 { props.item.stateMutability === 'payable' &&
                     <input
@@ -71,13 +80,7 @@ export default (props: props) => {
             <button
                 className={ css.button }
                 onClick={ () => {
-                    props.getContract()[props.item.name](...Object.values(values), Object.assign({gasLimit: 3000000}, props.item.stateMutability === 'payable' ? {value: value} : null))
-                        .then(
-                            (i: JSON)=>setResult(JSON.stringify(i, null, 2))
-                        )
-                        .catch(
-                            (e: Error) => setResult(e.message)
-                        )
+                    send(...Object.values(values), Object.assign({gasLimit: 3000000}, props.item.stateMutability === 'payable' ? {value: value} : null))
                 } }
             >Submit</button>
             <button
@@ -95,7 +98,7 @@ export default (props: props) => {
             </pre>
             <div className={ css.json }>
                 <pre>
-                    {result}
+                    {state.transaction ? JSON.stringify(state.transaction) : ''}
                 </pre>
             </div>
         </div>

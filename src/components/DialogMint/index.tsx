@@ -2,10 +2,11 @@ import css from './index.module.scss'
 
 import { BigNumber } from 'ethers'
 
+import { useContractFunction } from '@usedapp/core'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { getMintContract } from '@/lib/utils/web3'
+import { getMintContractNew } from '@/lib/utils/web3'
 import { setMintDialog } from '@/features/mainframe/mainframeSlice'
 import Dialog, {
     Header,
@@ -29,20 +30,19 @@ interface props extends React.HTMLAttributes<HTMLDivElement>
 
 export default (props: props) => {
     const dispatch = useDispatch()
-    const [prices, setPrices] = useState<BigNumber[]>([])
-    const [limits, setLimits] = useState<number[][]>([[], []])
+
+    const getPrices = useContractFunction(getMintContractNew(), 'getDataAboutCostsForRooms')
+    const getLimits = useContractFunction(getMintContractNew(), 'getDataAboutLimitsForRooms')
+
+    const prices = getPrices.state.transaction || []
+    const limits = getLimits.state.transaction || [[], []]
 
     const setValues = async () => {
-        try {
-            let prices: BigNumber[] = await getMintContract().getDataAboutCostsForRooms()
-            let limits: number[][] = await getMintContract().getDataAboutLimitsForRooms()
+        getPrices.send()
+        getLimits.send()
 
-            setLimits(limits)
-            setPrices(prices)
-        } catch(e) {
-            console.log(`Error in Dialog Mint: ${e}`)   
-        }
-        
+        console.dir(getPrices.state.transaction)
+        console.dir(getLimits.state.transaction)
     }
 
     useEffect(() => {
@@ -79,15 +79,17 @@ export default (props: props) => {
                     </Header>
                     <Content>
                         <div className={ css.mintCards }>
-                            { Array.from(Array(16)).map((item, index) => (
-                                <MintCard
-                                    key={ index }
-                                    price={ prices[15-index] }
-                                    available={ limits[0][15-index] - limits[1][15-index] | 0 }
-                                    level={16-index}
-                                    resetValues={ setValues }
-                                />
-                            )) }
+                            { Array.isArray(prices) && Array.isArray(limits) ? (
+                                Array.from(Array(16)).map((item, index) => (
+                                    <MintCard
+                                        key={ index }
+                                        price={ prices[15 - index] }
+                                        available={ limits[0][15 - index] - limits[1][15 -index] }
+                                        level={16-index}
+                                        resetValues={ setValues }
+                                    />
+                                ))
+                            ) : ('loading') }
                         </div>
                     </Content>
                 </Dialog>

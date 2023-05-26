@@ -7,7 +7,7 @@ import { Variant as text } from '@components/Typography'
 import ABI from '@/lib/contract/abi-mint'
 import ABIGame from '@/lib/contract/abi-game'
 import { ABIItem } from '@/lib/types/web3'
-import { getMintContract, getGameContract } from '@/lib/utils/web3'
+import { getMintContractNew, getGameContractNew } from '@/lib/utils/web3'
 
 import Card from './CardMethod'
 
@@ -32,7 +32,7 @@ export default () => {
                     ?
                     <Card
                         item={item}
-                        getContract={getMintContract}
+                        getContract={getMintContractNew}
                         key={index}
                     />
                     :
@@ -63,7 +63,7 @@ export default () => {
                         ?
                         <Card
                             item={item}
-                            getContract={getGameContract}
+                            getContract={getGameContractNew}
                             key={index}
                         />
                         :

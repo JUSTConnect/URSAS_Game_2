@@ -9,12 +9,7 @@ const config: Config = {
         [PolygonMumbaiTestnet.chainId]: PolygonMumbaiTestnet.rpcUrl as string,
         [PolygonMainnet.chainId]: PolygonMainnet.rpcUrl as string,
     },
-    networks: [PolygonMumbaiTestnet, PolygonMainnet],
-    connectors: {
-        metamask: new MetamaskConnector(),
-        coinbase: new CoinbaseWalletConnector(),
-        walletConnect: new WalletConnectConnector({ infuraId: 'd8df2cb7844e4a54ab0a782f608749dd' }),
-    },
+    networks: [PolygonMumbaiTestnet, PolygonMainnet]
 }
 
 

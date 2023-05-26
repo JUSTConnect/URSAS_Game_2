@@ -1,31 +1,19 @@
 import css from './index.module.scss'
 
-import { ethers } from 'ethers'
-import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEthers, useEtherBalance } from '@usedapp/core'
+import {useState, useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {useEthers} from '@usedapp/core'
 
-import { AppDispatch, RootState } from '@/app/store'
-import { setDisableWalletModal, setConnectWalletModal, setGameAccountDialog } from '@/features/mainframe/mainframeSlice'
-import { fetchWalletCards } from '@/features/game/gameSlice'
+import {AppDispatch, RootState} from '@/app/store'
+import {setGameAccountDialog} from '@/features/mainframe/mainframeSlice'
+import {fetchWalletCards, cardsStake} from '@/features/game/gameSlice'
 
-import { cardsStake } from '@/features/game/gameSlice'
-import Dialog, {
-    Header,
-    HeaderButtons,
-    Footer,
-    FooterButtons,
-    Content,
-} from '@components/Dialog'
-import Button, {
-    Color as ButtonColor,
-    Variant as ButtonVariant,
-    Size as ButtonSize,
-} from '@components/UIButton'
-import Card, { CardRank } from '@components/Card'
-import Blur from '../Blur'
-// import Header from '.'
+import Blur from '@components/Blur'
+import Card, {CardRank} from '@components/Card'
+import Button, { Color as ButtonColor, Size as ButtonSize, Variant as ButtonVariant} from '@components/UIButton'
+import Dialog, {Content, Footer, FooterButtons} from '@components/Dialog'
 
+import Header from './Header'
 
 export enum tabs {
     STAKE = 'Stake',
@@ -53,10 +41,8 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
 
     const [selectedWalletCards, setSelectedWalletCards] = useState<number[]>([])
     const [selectedStakeCards, setSelectedStakeCards] = useState<number[]>([])
-    const [addressCopied, setAddressCopied] = useState<boolean>(false)
 
     const { account } = useEthers()
-    const balance = useEtherBalance(account)
 
     useEffect(() => {
         account && dispatch(fetchWalletCards(account))
@@ -94,80 +80,8 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                 ].join(' ')
             }>
                 <Dialog className={[css.dialog, props.className].join(' ')}>
-                    {/* <Header state={state}/> */}
-                    <Header>
-                        <div className={css.balances}>
-                            <div className={css.balance}>
-                                <img className={css.balanceIcon} src="/assets/images/icons/dialog-gameaccount-ursu.png" alt="ursu" />
-                                <div className={'d-desktop'}>
-                                    URSU
-                                </div>
-                                <span className={'textPrimary'}>12</span>
-                            </div>
-                            <div className={css.balance}>
-                                <img className={css.balanceIcon} src="/assets/images/icons/dialog-gameaccount-matic.png" alt="matic" />
-                                <div className={'d-desktop'}>
-                                    MATIC
-                                </div>
-                                <span className={'textPrimary'}>{balance?._hex && Math.round(Number(ethers.utils.formatEther(balance?._hex)) * 10000) / 10000}</span>
-                            </div>
-                        </div>
-                        <HeaderButtons>
-                            <Button
-                                onClick={() => {
-                                    navigator.clipboard.writeText(account || '')
-                                    setAddressCopied(true)
-                                    setTimeout(() => {
-                                        setAddressCopied(false)
-                                    }, 3000)
-                                }}
-                                disabled={addressCopied}
-                                color={ButtonColor.DARK}
-                                variant={ButtonVariant.NORMAL}
-                                size={ButtonSize.SM}
-                                icon={<i className="fa-solid fa-link"></i>}
-                                iconTablet
-                            >
-                                {addressCopied ? (
-                                    <>
-                                        <i className="fa-solid fa-check"></i>
-                                        &nbsp;
-                                        copied
-                                    </>
-                                ) : (
-                                    'copy adress'
-                                )}
-                            </Button>
-                            <Button
-                                color={ButtonColor.DARK}
-                                variant={ButtonVariant.NORMAL}
-                                size={ButtonSize.SM}
-                                icon={<i className="fa-solid fa-repeat"></i>}
-                                iconTablet
-                                onClick={ () => dispatch(setConnectWalletModal(true)) }
-                            >
-                                change wallet
-                            </Button>
-                            <Button
-                                color={ButtonColor.DARK}
-                                variant={ButtonVariant.NORMAL}
-                                size={ButtonSize.SM}
-                                icon={<i className="fa-solid fa-power-off"></i>}
-                                iconTablet
-                                onClick={() => dispatch(setDisableWalletModal(true))}
-                            >
-                                disconnect
-                            </Button>
-                            <Button
-                                onClick={() => dispatch(setGameAccountDialog([false, tabs.WALLET]))}
-                                color={ButtonColor.DARK}
-                                variant={ButtonVariant.OUTLINE}
-                                size={ButtonSize.SM}
-                            >
-                                <i className="fa-solid fa-arrow-left"></i>
-                            </Button>
-                        </HeaderButtons>
-                    </Header>
+                    {/* { string(getCards.state.transaction) } */}
+                    <Header state={state} setState={setState}/>
                     <Content>
                         <div className={css.containers}>
                             {mainframe.gameAccountDialog[1] === tabs.STAKE &&

@@ -70,10 +70,11 @@ export const fetchWalletCards = createAsyncThunk(
     let tokens = await getMintContract().tokensOfOwner(address)
     let cards = await Promise.all(tokens.map(async (token: BigNumber) => {
       let level = await getMintContract().viewNFTRoomLevel(token)
-      let suit = await getMintContract().suits(token)
-      let tokenId = ethers.utils.formatEther(token)
-      return [parseInt(level), suit, tokenId]
+      let suit = await getMintContract().suits(token) || 's'
+      let tokenId = token
+      return [parseInt(level), suit, Number(tokenId)]
     }))
+    console.log(cards)
     return cards
   }
 )

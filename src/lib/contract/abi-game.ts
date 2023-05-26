@@ -31,24 +31,6 @@ export default [
 				"type": "uint8"
 			},
 			{
-				"internalType": "uint256",
-				"name": "salt",
-				"type": "uint256"
-			}
-		],
-		"name": "BulkClaimTablesInRoom",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint8",
-				"name": "_roomLevel",
-				"type": "uint8"
-			},
-			{
 				"internalType": "uint32",
 				"name": "_table",
 				"type": "uint32"
@@ -83,52 +65,6 @@ export default [
 			}
 		],
 		"name": "ClaimSingleGame",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint8",
-				"name": "_roomLevel",
-				"type": "uint8"
-			},
-			{
-				"internalType": "uint32",
-				"name": "_table",
-				"type": "uint32"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "ForceEnterInGame",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint8",
-				"name": "_roomLevel",
-				"type": "uint8"
-			},
-			{
-				"internalType": "uint32",
-				"name": "_table",
-				"type": "uint32"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "ForceEnterInGame1",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -607,30 +543,6 @@ export default [
 				"internalType": "address",
 				"name": "",
 				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "i",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "_player",
-				"type": "address"
-			}
-		],
-		"name": "getIndexOfPlayerInBlackRoom2",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
 			}
 		],
 		"stateMutability": "view",

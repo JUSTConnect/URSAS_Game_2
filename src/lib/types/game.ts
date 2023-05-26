@@ -72,6 +72,10 @@ export interface Card
 {
     rank: Rank,
     suit: Suit,
+}
+
+export interface CardNFT extends Card
+{
     tokenId: string
 }
 
