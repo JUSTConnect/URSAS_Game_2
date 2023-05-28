@@ -4,12 +4,14 @@ import {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useEthers} from '@usedapp/core'
 
+import { getCardListUser } from '@/agents/web3/mintContract/cards'
+
 import {AppDispatch, RootState} from '@/app/store'
 import {setGameAccountDialog} from '@/features/mainframe/mainframeSlice'
-import {fetchWalletCards, cardsStake} from '@/features/game/gameSlice'
+import {setWalletCards, cardsStake} from '@/features/game/gameSlice'
 
 import Blur from '@components/Blur'
-import Card, {CardRank} from '@components/Card'
+import Card from '@components/Card'
 import Button, { Color as ButtonColor, Size as ButtonSize, Variant as ButtonVariant} from '@components/UIButton'
 import Dialog, {Content, Footer, FooterButtons} from '@components/Dialog'
 
@@ -45,8 +47,17 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
     const { account } = useEthers()
 
     useEffect(() => {
-        account && dispatch(fetchWalletCards(account))
+        // account && dispatch(fetchWalletCards(account))
+        setValues()
     }, [])
+
+    const setValues = async () => {
+        if (account) {
+            let b = await getCardListUser(account)
+            console.log(b)
+            dispatch(setWalletCards(b))
+        }
+    }
 
     const toggleCard = (get: number[], set: Function, number: number) => {
         if (get.includes(number)) {
@@ -63,7 +74,7 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
     const selectStakeCards = () => setState({
         ...state,
         selectedStakeCards: game.walletCards
-            .filter(card => card.rank === CardRank.N1)
+            .filter(card => card.rank === 1)
             .map((item, index) => index)
     })
 
@@ -96,8 +107,8 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                                         </div>
                                         <div className={css.content}>
                                             <div className={css.cards}>
-                                                {game.walletCards.filter(card => card.rank === CardRank.N1).length ? (
-                                                    game.walletCards.filter(card => card.rank === CardRank.N1).map((card, index) => (
+                                                {game.walletCards.filter(card => card.rank === 1).length ? (
+                                                    game.walletCards.filter(card => card.rank === 1).map((card, index) => (
                                                         <Card
                                                             tokenId={'1'}
                                                             key={index}

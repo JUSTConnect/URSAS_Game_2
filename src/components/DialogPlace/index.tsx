@@ -12,12 +12,8 @@ import {AppDispatch, RootState} from '@/app/store'
 import {
   addBasketPlace,
   clearBasketPlaces,
-  clearStakedPlaces,
-  submitPlaces,
-  removeStakedPlaces,
-  removeBasketPlaces, submitCarts, returnCarts, setStakedPlaces, setBasketTimer,
+  removeBasketPlaces, submitCarts, returnCarts, setBasketTimer,
 } from '@/features/table/tableSlice'
-import {fetchWalletCards} from '@/features/game/gameSlice'
 import Dialog, {
   Header,
   HeaderButtons,
@@ -31,7 +27,7 @@ import Button, {
   Size as ButtonSize,
 } from '@components/UIButton'
 import Blur from '../Blur'
-import Card, {randomCard} from '@components/Card'
+import Card from '@components/Card'
 
 import Place from './Place'
 import PlaceButton from './PlaceButton'
@@ -110,7 +106,7 @@ export default (props: props) => {
                   size={ButtonSize.SM}
                   onClick={() => {
                     setChangeTime(true)
-                    const cartsId = table.basketPlaces.map(({card}) => +card.tokenId * 10 ** 18)
+                    const cartsId = table.basketPlaces.map(({card}) => + card.tokenId * 10 ** 18)
                     dispatch(submitCarts({
                       levelRoom: Number(router.query.room),
                       tableId: Number(router.query.table),

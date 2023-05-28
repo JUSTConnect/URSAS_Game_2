@@ -1,21 +1,22 @@
 import css from './index.module.scss'
 
-import { useState } from 'react'
-import { BigNumber, ethers } from 'ethers'
-import { useContractFunction } from '@usedapp/core'
+import { RoomLevel } from '@/lib/types/game'
 
-import { getMintContractNew } from '@/lib/utils/web3'
+import { useState } from 'react'
+import { ethers } from 'ethers'
+
+import { cardMint } from '@/agents/web3/mintContract/cards'
+
 import Button, {
     Color as ButtonColor,
     Size as ButtonSize
 } from '@/components/UIButton'
-import { getMintContract } from '@/lib/utils/web3'
 
 
 interface props extends React.HTMLAttributes<HTMLDivElement>
 {
-    level: number
-    price: BigNumber
+    level: RoomLevel
+    price: number
     available: number
     resetValues: Function
 }
@@ -24,17 +25,10 @@ interface props extends React.HTMLAttributes<HTMLDivElement>
 export default (props: props) => {
     const [amount, setAmount] = useState<number>(0)
 
-    const {state, send} = useContractFunction(getMintContract(), 'smartMint')
-
     const handle = async () => {
         if (Number(amount) > 0)
         {
-            try {
-                send(amount, props.level, {gasLimit: 6000000, value: Number(props.price._hex) * amount})
-                setAmount(0)
-            } catch(e) {
-                console.log(`Error during mint: ${e}`)
-            }
+            cardMint(props.level, amount).then(c=>console.log(c))
             props.resetValues()
         }
     }

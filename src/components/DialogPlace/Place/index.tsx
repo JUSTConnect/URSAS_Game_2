@@ -1,13 +1,12 @@
 import css from './index.module.scss'
 
-
-import type { Card } from '@/components/Card'
+import { CardNFT } from '@/lib/types/game'
 import Place from '@/components/UIPlace'
 
 interface props extends React.HTMLAttributes<HTMLButtonElement>
 {
     number?: number
-    card?: Card
+    card?: CardNFT
     active?: boolean
 }
 

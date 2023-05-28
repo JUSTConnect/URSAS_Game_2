@@ -13,7 +13,7 @@ import NavigationButton from './NavigationButton'
 import Info from './Info'
 import DoorList from '@components/RoomsDoorList'
 import LoaderLogo from '@components/LoaderLogo'
-import {getRoomInfo} from "@/features/rooms/roomsSlice";
+import { RoomLevel } from '@/lib/types/game'
 
 
 interface RoomsDoorSliderProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -39,7 +39,7 @@ const SliderFragment = (props: SliderFragmentProps) => {
     return (
       <>
           {[...Array(16)].map((item, index) => {
-              let level = index + 1
+              let level: RoomLevel = index + 1 as RoomLevel
               index += props.indexAdd
               return (
                 <div

@@ -25,7 +25,6 @@ import {query} from "@/pages/tables/[room]/table/[table]";
 import {ethers} from "ethers";
 import {getRoomInfo} from "@/features/rooms/roomsSlice";
 import {useEthers} from "@usedapp/core";
-import {CardRank, CardSuit} from "@components/Card";
 import Countdown, {zeroPad} from "react-countdown";
 import {SuitsGetName} from "@lib/types/game";
 
@@ -64,7 +63,7 @@ const SubHeaderTable = (props: SubHeaderTableProps) => {
     dispatch(clearStakedPlaces())
     dispatch(clearBasketPlaces())
     table?.tableData?.cards?.forEach((card, index) => {
-      if (card.level && ethers.constants.AddressZero !== table.tableData.players[index].toLowerCase()) {
+      if (card.rank && ethers.constants.AddressZero !== table.tableData.players[index].toLowerCase()) {
         if (table.tableData.players[index] === account) {
           currentPlace++
           dispatch(addStakedPlace({

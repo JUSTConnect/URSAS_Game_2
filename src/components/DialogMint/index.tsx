@@ -1,12 +1,10 @@
 import css from './index.module.scss'
 
-import { BigNumber } from 'ethers'
-
-import { useContractFunction } from '@usedapp/core'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { getMintContractNew } from '@/lib/utils/web3'
+import { RoomMintData } from '@/agents/web3/mintContract/types'
+
 import { setMintDialog } from '@/features/mainframe/mainframeSlice'
 import Dialog, {
     Header,
@@ -21,6 +19,8 @@ import Button, {
 import Blur from '../Blur'
 import MintCard from './MintCard'
 
+import { getRoomListMintData } from '@/agents/web3/mintContract/rooms'
+import { RoomLevel } from '@/lib/types/game'
 
 
 interface props extends React.HTMLAttributes<HTMLDivElement>
@@ -31,18 +31,11 @@ interface props extends React.HTMLAttributes<HTMLDivElement>
 export default (props: props) => {
     const dispatch = useDispatch()
 
-    const getPrices = useContractFunction(getMintContractNew(), 'getDataAboutCostsForRooms')
-    const getLimits = useContractFunction(getMintContractNew(), 'getDataAboutLimitsForRooms')
-
-    const prices = getPrices.state.transaction || []
-    const limits = getLimits.state.transaction || [[], []]
+    const [mintData, setMintData] = useState<RoomMintData[]|undefined>()
 
     const setValues = async () => {
-        getPrices.send()
-        getLimits.send()
-
-        console.dir(getPrices.state.transaction)
-        console.dir(getLimits.state.transaction)
+        let data = await getRoomListMintData()
+        setMintData(data)
     }
 
     useEffect(() => {
@@ -79,13 +72,13 @@ export default (props: props) => {
                     </Header>
                     <Content>
                         <div className={ css.mintCards }>
-                            { Array.isArray(prices) && Array.isArray(limits) ? (
-                                Array.from(Array(16)).map((item, index) => (
+                            { mintData ? (
+                                mintData.map((item, index) => (
                                     <MintCard
                                         key={ index }
-                                        price={ prices[15 - index] }
-                                        available={ limits[0][15 - index] - limits[1][15 -index] }
-                                        level={16-index}
+                                        price={ item.cost }
+                                        available={ item.available }
+                                        level={ 16-index as RoomLevel }
                                         resetValues={ setValues }
                                     />
                                 ))

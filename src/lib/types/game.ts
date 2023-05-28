@@ -1,15 +1,21 @@
 // TODO Написать интерфейс для игры
 
+export type RoomLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16
+
+export type SuitSymbol = 'd' | 'h' | 'c' | 's' // diamond | heart | club | spade
+
+
+export type RoomLevelArray<T> = [
+    T, T, T, T,
+    T, T, T, T,
+    T, T, T, T,
+    T, T, T, T
+]
+
 export interface Room
 {
-    level: number
+    level: RoomLevel
     over?: boolean
-}
-
-export interface TableCard {
-    level: number,
-    suit: string,
-    tokenId: string
 }
 
 export interface TableData {
@@ -22,7 +28,7 @@ export interface TableData {
     playingTokenIds: string[],
     serialNumber: string,
     status: number,
-    cards: TableCard[]
+    cards: CardNFT[]
 }
 
 export interface Table
@@ -40,38 +46,10 @@ export enum SuitsGetName {
     Club = 3,
 }
 
-export enum Rank
-{
-    N1 = 'POT',
-    N2 = 'CLOCK',
-    N3 = 'JO',
-    N4 = 'A',
-    N5 = 'K',
-    N6 = 'Q',
-    N7 = 'J',
-    N8 = '10',
-    N9 = '9',
-    N10 = '8',
-    N11 = '7',
-    N12 = '6',
-    N13 = '5',
-    N14 = '4',
-    N15 = '3',
-    N16 = '2',
-}
-
-export enum Suit
-{
-    d = 1,
-    h = 2,
-    c = 3,
-    s = 4
-}
-
 export interface Card
 {
-    rank: Rank,
-    suit: Suit,
+    rank: RoomLevel,
+    suit: SuitSymbol,
 }
 
 export interface CardNFT extends Card

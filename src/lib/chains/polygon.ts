@@ -8,7 +8,7 @@ export const PolygonMumbaiTestnet: Chain = {
     multicallAddress: '0x08411ADd0b5AA8ee47563b146743C13b3556c9Cc',
     getExplorerAddressLink: (address: string) => `https://mumbai.polygonscan.com/${address}`,
     getExplorerTransactionLink: (transactionHash: string) => `https://mumbai.polygonscan.com/tx/${transactionHash}`,
-    rpcUrl: 'https://polygon-mumbai.infura.io/v3/4458cf4d1689497b9a38b1d6bbf05e78',
+    rpcUrl: 'https://polygon-mumbai.g.alchemy.com/v2/JNvXIlQ4SQru5Pi2t5zRG8X3O_YsdzyM',
     blockExplorerUrl: 'https://mumbai.polygonscan.com',
     nativeCurrency: {
         name: 'Matic (Mumbai)',

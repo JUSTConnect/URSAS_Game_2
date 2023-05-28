@@ -1,53 +1,18 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import type {PayloadAction, Draft} from '@reduxjs/toolkit'
 
-import type {Card} from '@/components/Card'
+import type Card from '@/components/Card'
 import {PlaceProps} from '@/components/UIPlace'
-import {CardRank, CardSuit} from '@/components/Card'
 // import {Table, TableCard} from "@/types/game";
 import {BigNumber, ethers} from "ethers";
 import {string} from "prop-types";
 import {getGameContract, getMintContract} from "@lib/utils/web3";
-import {Table, TableCard, TableData} from "@lib/types/game";
+import {Table, CardNFT, TableData} from "@lib/types/game";
 
 interface BusyPlaceProps extends PlaceProps {
   number: number,
-  card: Card
+  card: CardNFT
 }
-
-// example data
-const exampleBusyPlaces: BusyPlaceProps[] = [
-  {
-    number: 4,
-    card: {
-      suit: CardSuit.h,
-      rank: CardRank.N10,
-      tokenId: '1'
-    }
-  }
-]
-const exampleStakedPlaces: BusyPlaceProps[] = [
-  {
-    number: 1,
-    card: {
-      suit: CardSuit.h,
-      rank: CardRank.N9,
-      tokenId: '1'
-    }
-  }
-]
-const exampleBasketPlaces: BusyPlaceProps[] = [
-  {
-    number: 2,
-    card: {
-      suit: CardSuit.h,
-      rank: CardRank.N10,
-      tokenId: '1'
-    }
-  }
-]
-
-//
 
 enum PlaceState {
   BUSY = 'busyPlaces',
@@ -127,7 +92,7 @@ const getTableFunction = async (
     tableId
   }: { levelRoom: number, tableId: number }) => {
   const tableData = await getGameContract().GetCurrentTableInRoom(levelRoom, tableId - 1)
-  let cards = await Promise.all<TableCard[]>(tableData.playingTokenIds.map(async (token: BigNumber) => {
+  let cards = await Promise.all<CardNFT[]>(tableData.playingTokenIds.map(async (token: BigNumber) => {
     let level = await getMintContract().viewNFTRoomLevel(token)
     let suit: string = await getMintContract().suits(token)
     let tokenId: string = ethers.utils.formatEther(token)

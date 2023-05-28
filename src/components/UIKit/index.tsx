@@ -19,7 +19,7 @@ import {
     Size as ButtonSize
 } from '@components/UIButton'
 import Place from '@components/UIPlace'
-import Card, { CardRank, CardSuit } from '@components/Card'
+import Card from '@components/Card'
 
 import Dialog, {
     Header as DialogHeader,

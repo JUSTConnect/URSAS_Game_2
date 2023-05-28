@@ -1,7 +1,7 @@
 import css from './index.module.scss'
 import loader from './loader.module.scss'
 
-import type { Card as CardProps } from '@components/Card'
+import { CardNFT } from '@/lib/types/game'
 import Card from '@components/Card'
 
 
@@ -12,7 +12,7 @@ interface props extends React.HTMLAttributes<HTMLButtonElement>
     staked?: boolean
     choosing?: boolean
     basket?: boolean
-    card?: CardProps
+    card?: CardNFT
 }
 
 

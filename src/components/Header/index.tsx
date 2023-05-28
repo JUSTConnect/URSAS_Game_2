@@ -11,7 +11,6 @@ import {setClaim} from '@/features/game/gameSlice'
 import Badge from '@components/UIBadge'
 import Button from '@components/UIButton'
 import Dropdown from '@/components/Header/Dropdown'
-import {Loader} from './Dropdown'
 import HeaderBase, {HeaderSection} from '@/components/HeaderBase'
 import {tabs} from '@components/DialogGameAccount'
 import {AppDispatch} from "@/app/store";

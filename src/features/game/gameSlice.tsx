@@ -1,41 +1,6 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit'
 import type {PayloadAction, Draft} from '@reduxjs/toolkit'
-import {Card, CardRank, CardSuit} from '@/components/Card'
-import {BigNumber, ethers} from 'ethers'
-import {getMintContract} from "@lib/utils/web3";
-
-// example data
-
-const gameCards = [
-  {
-    rank: CardRank.N2,
-    suit: CardSuit.h,
-    tokenId: '1'
-  },
-  {
-    rank: CardRank.N2,
-    suit: CardSuit.h,
-    tokenId: '2'
-  },
-  {
-    rank: CardRank.N2,
-    suit: CardSuit.h,
-    tokenId: '3'
-  },
-  {
-    rank: CardRank.N2,
-    suit: CardSuit.h,
-    tokenId: '4'
-  },
-  {
-    rank: CardRank.N2,
-    suit: CardSuit.h,
-    tokenId: '5'
-  },
-
-]
-
-//
+import { CardNFT } from '@/lib/types/game';
 
 
 export interface gameState {
@@ -46,8 +11,8 @@ export interface gameState {
   loadingTable: boolean
   claim: boolean
   gameOver: number
-  walletCards: Card[]
-  gameCards: Card[]
+  walletCards: CardNFT[]
+  gameCards: CardNFT[]
   maxAvailableRoom: number
 }
 
@@ -60,31 +25,16 @@ const initialState: gameState = {
   claim: true,
   gameOver: 0,
   walletCards: [],
-  gameCards: gameCards,
+  gameCards: [],
   maxAvailableRoom: 17
 }
-
-export const fetchWalletCards = createAsyncThunk(
-  'cards/fetch',
-  async (address: string) => {
-    let tokens = await getMintContract().tokensOfOwner(address)
-    let cards = await Promise.all(tokens.map(async (token: BigNumber) => {
-      let level = await getMintContract().viewNFTRoomLevel(token)
-      let suit = await getMintContract().suits(token) || 's'
-      let tokenId = token
-      return [parseInt(level), suit, Number(tokenId)]
-    }))
-    console.log(cards)
-    return cards
-  }
-)
 
 export const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
-    setWalletCards: () => {
-
+    setWalletCards: (state, action: PayloadAction<CardNFT[]>) => {
+      state.walletCards = action.payload
     },
     setLoadingRooms: (state, action: PayloadAction<boolean>) => {
       state.loadingRooms = action.payload
@@ -108,36 +58,23 @@ export const gameSlice = createSlice({
     cardsStake: (state, action: PayloadAction<Draft<number[]>>) => {
       state.gameCards = [
         ...state.gameCards,
-        ...state.walletCards.filter(card => card.rank === CardRank.N2).filter(
+        ...state.walletCards.filter(card => card.rank === 2).filter(
           (item, index) => action.payload.includes(index)
         )]
-      state.walletCards = state.walletCards.filter(card => card.rank === CardRank.N2).filter((item, index) => !action.payload.includes(index))
+      state.walletCards = state.walletCards.filter(card => card.rank === 2).filter((item, index) => !action.payload.includes(index))
     },
 
     cardsBurn: (state, action: PayloadAction<Draft<number[]>>) => {
       state.walletCards = state.walletCards.filter((item, index) => !action.payload.includes(index))
     },
     cardsRefound: (state, action: PayloadAction<Draft<number[]>>) => {
-      state.walletCards = state.walletCards.filter((item, index) => !(action.payload.includes(index) && state.walletCards[index].rank === CardRank.N1))
+      state.walletCards = state.walletCards.filter((item, index) => !(action.payload.includes(index) && state.walletCards[index].rank === 1))
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(fetchWalletCards.fulfilled, (state, action) => {
-      state.walletCards = action.payload.map(item => {
-        if (item[0] < state.maxAvailableRoom) {
-          state.maxAvailableRoom = item[0]
-        }
-        return Object({
-          rank: CardRank[`N${item[0] as Level}`],
-          suit: CardSuit[item[1]],
-          tokenId: item[2]
-        })
-      })
-    })
-  }
 })
 
 export const {
+  setWalletCards,
   setLoadingRooms,
   setLoadingTables,
   setLoadingTable,

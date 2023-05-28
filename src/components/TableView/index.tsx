@@ -8,12 +8,9 @@ import {RootState} from '@/app/store'
 import DialogPlace from '@components/DialogPlace'
 import Blur from '@components/Blur'
 
-import {CardRank, CardSuit} from '@components/Card'
-import {setChoosingCardPlace, setModalAlert, addBusyPlace} from '@/features/table/tableSlice'
+import {setChoosingCardPlace} from '@/features/table/tableSlice'
 import Place from './Place'
 import Sofa from './Sofa'
-import {BigNumber, ethers} from "ethers";
-import {useEffect, useState} from "react";
 
 
 interface TableViewProps {
