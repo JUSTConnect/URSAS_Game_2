@@ -21,5 +21,5 @@ export const getCardListUser = async function getCardListUser (hash: string) : P
 
 export const cardMint = async (level: RoomLevel, amount: number) => {
     let mintCost = await getRoomDetailMintCost(level)
-    return await getMintContract().smartMint(amount, level, {gasLimit: 3000000, value: mintCost})
+    return await getMintContract().smartMint(amount, level, {gasLimit: 3000000, value: mintCost * amount})
 }

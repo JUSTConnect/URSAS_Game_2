@@ -6,7 +6,7 @@ import { RoomLevel, RoomLevelArray as RLArray } from "@/lib/types/game"
 import { RoomMintData } from "./types"
 
 // комната - стоимость минта 
-export async function getRoomDetailMintCost (level: RoomLevel) : Promise<RLArray<number>> {
+export async function getRoomDetailMintCost (level: RoomLevel) : Promise<number> {
     return await getMintContract().costs(level)
 }
 
