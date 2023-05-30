@@ -14,7 +14,7 @@ import Dropdown from '@/components/Header/Dropdown'
 import HeaderBase, {HeaderSection} from '@/components/HeaderBase'
 import {tabs} from '@components/DialogGameAccount'
 import {AppDispatch} from "@/app/store";
-import {getMyPlayingTables, getRoomInfo} from "@/features/rooms/roomsSlice";
+import {getMyPlayingTables} from "@/features/rooms/roomsSlice";
 import {useRouter} from "next/router";
 import {getPlayingTokenIds} from "@/features/tables/tablesSlice";
 
@@ -35,10 +35,6 @@ const Header = (props: HeaderProps) => {
       dispatch(getMyPlayingTables({levelRoom: Number(currentRoom), account: account}))
     }
   }, [currentRoom, account])
-
-  useEffect(() => {
-    dispatch(getRoomInfo())
-  }, [])
 
   useEffect(() => {
     if (levelRoom && account || currentRoom && account) {

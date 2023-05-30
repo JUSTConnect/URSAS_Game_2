@@ -24,13 +24,13 @@ interface SubHeaderTablesProps {
 }
 
 const SubHeaderTables = (props: SubHeaderTablesProps) => {
-  const dispatch = useDispatch()
   const router = useRouter()
   const {room} = router.query as query
+  const dispatch = useDispatch()
   const game = useSelector((state: RootState) => state.game)
-  const roomData = useSelector((state: RootState) => {
+  const roomCurrent = useSelector((state: RootState) => {
     if (room) {
-      return state.rooms?.roomInfo[room - 1]
+      return state.rooms?.rooms[room - 1]
     }
   })
   const tables = useSelector((state: RootState) => state.tables)
@@ -50,13 +50,13 @@ const SubHeaderTables = (props: SubHeaderTablesProps) => {
         <Info>
           <div className={css.infoContent}>
             <div>
-              Base time: <span className={'textPrimary'}>{roomData?.roomDuration}</span>
+              Base time: <span className={'textPrimary'}>{ roomCurrent?.roomDuration && roomCurrent.roomDuration / 3600}</span>
             </div>
             <div>
-              Increase time: <span className={'textPrimary'}>{roomData?.roomIncreaseCounter}</span>
+              Increase time: <span className={'textPrimary'}>{ roomCurrent?.roomIncreaseCounter && roomCurrent.roomIncreaseCounter / 3600 }</span>
             </div>
             <div>
-              Suit: <span className={'textPrimary'}>{roomData && SuitsGetName[roomData.trump]}</span>
+              Suit: <span className={'textPrimary'}>{roomCurrent && SuitsGetName[1]}</span>
             </div>
           </div>
         </Info>
@@ -75,16 +75,16 @@ const SubHeaderTables = (props: SubHeaderTablesProps) => {
           <>
             <SubHeaderButton onClick={() => dispatch(setFilter(TablesFilter.all))}
                              active={tables?.filter === TablesFilter.all} keyName={'all'}
-                             value={roomData?.allTables.length || 0}/>
+                             value={roomCurrent?.tables.length || 0}/>
             <SubHeaderButton onClick={() => dispatch(setFilter(TablesFilter.empty))}
                              active={tables?.filter === TablesFilter.empty} keyName={'empty'}
-                             value={String(roomData?.allTables.filter(item => item.playersNow < 10).length || 0)}/>
+                             value={roomCurrent?.availableTablesCount || 0}/>
             <SubHeaderButton onClick={() => dispatch(setFilter(TablesFilter.cooldown))}
                              active={tables?.filter === TablesFilter.cooldown} keyName={'сooldown'}
-                             value={String(roomData?.allTables.filter(item => item.status === StatusTable.COOLDOWN).length || 0)}/>
+                             value={String(roomCurrent?.tables.filter(item => item.status === StatusTable.COOLDOWN).length || 0)}/>
             <SubHeaderButton onClick={() => dispatch(setFilter(TablesFilter.gaming))}
                              active={tables?.filter === TablesFilter.gaming} keyName={'gaming'}
-                             value={String(roomData?.allTables.filter(item => item.status === StatusTable.PLAYING).length || 0)}/>
+                             value={String(roomCurrent?.tables.filter(item => item.status === StatusTable.PLAYING).length || 0)}/>
           </>
         )}
       </FlexBox>

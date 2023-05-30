@@ -4,16 +4,17 @@ import sofaBg from '@assets/images/texture/table-sofa-modal.png'
 
 import Image from 'next/image'
 
-import {useState, useEffect} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import {useEthers} from '@usedapp/core'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEthers } from '@usedapp/core'
 
-import {AppDispatch, RootState} from '@/app/store'
+import { AppDispatch, RootState } from '@/app/store'
 import {
   addBasketPlace,
   clearBasketPlaces,
   removeBasketPlaces, submitCarts, returnCarts, setBasketTimer,
 } from '@/features/table/tableSlice'
+import { enterInGameByTokenIds } from '@/agents/web3/gameContract/tables'
 import Dialog, {
   Header,
   HeaderButtons,
@@ -31,8 +32,8 @@ import Card from '@components/Card'
 
 import Place from './Place'
 import PlaceButton from './PlaceButton'
-import {useRouter} from "next/router";
-import Countdown, {zeroPad} from "react-countdown";
+import { useRouter } from "next/router";
+import Countdown, { zeroPad } from "react-countdown";
 
 
 interface props extends React.HTMLAttributes<HTMLDivElement> {
@@ -46,7 +47,7 @@ export default (props: props) => {
   const table = useSelector((state: RootState) => state.table)
   const game = useSelector((state: RootState) => state.game)
   const playingCards = useSelector((state: RootState) => state.tables.playingCards)
-  const {account} = useEthers()
+  const { account } = useEthers()
   const [selectedBasketPlaces, setSelectedBasketPlaces] = useState<number[]>([])
   const [selectedStakedPlaces, setSelectedStakedPlaces] = useState<number[]>([])
   const [submitTimer, setSubmitTimer] = useState<[number, number]>([2, 0])
@@ -81,20 +82,17 @@ export default (props: props) => {
               ) : table.basketPlaces.length ? (
                 <div>
                   Confirm places <span className={'textPrimary'}>
-                  <Countdown
-                    date={timer + 120000}
-                    onComplete={() => {
-                      dispatch(clearBasketPlaces())
-                    }}
-                    renderer={({minutes, seconds}) => (
-                      <>
-                        {zeroPad(minutes)}:{zeroPad(seconds)}
-                      </>
-                    )}/>
-                  {/*{ String(submitTimer[0]).padStart(2, '0') }*/}
-                  {/*:*/}
-                  {/*{ String(submitTimer[1]).padStart(2, '0') }*/}
-                                    </span>
+                    <Countdown
+                      date={timer + 120000}
+                      onComplete={() => {
+                        dispatch(clearBasketPlaces())
+                      }}
+                      renderer={({ minutes, seconds }) => (
+                        <>
+                          {zeroPad(minutes)}:{zeroPad(seconds)}
+                        </>
+                      )} />
+                  </span>
                 </div>
               ) : 'Basket places'
             }
@@ -106,12 +104,15 @@ export default (props: props) => {
                   size={ButtonSize.SM}
                   onClick={() => {
                     setChangeTime(true)
-                    const cartsId = table.basketPlaces.map(({card}) => + card.tokenId * 10 ** 18)
-                    dispatch(submitCarts({
-                      levelRoom: Number(router.query.room),
-                      tableId: Number(router.query.table),
+                    const cartsId = table.basketPlaces.map(({ card }) => + card.tokenId)
+                    console.log(router.query.room)
+                    console.log(router.query.table)
+                    console.log(cartsId)
+                    enterInGameByTokenIds(
+                      Number(router.query.room),
+                      Number(router.query.table) - 1,
                       cartsId
-                    }))
+                    )
                   }}
                 >
                   submit
@@ -133,64 +134,64 @@ export default (props: props) => {
             {table.choosingCardPlace ? (
               <div className={css.cards}>
                 {game.walletCards.map((item, index) => {
-                    if (table.basketPlaces.find((place) => place?.card?.tokenId === item.tokenId) || playingCards.find((tokenId) => tokenId === item.tokenId)) {
-                      return null
-                    }
-                    return (
-                      <Card
-                        key={index}
-                        className={css.card}
-                        rank={item.rank}
-                        suit={item.suit}
-                        tokenId={item.tokenId}
-                        onClick={() => {
-                          if (changeTime) {
-                            setTimer(Date.now())
-                            dispatch(setBasketTimer(Date.now()))
-                          }
-                          setChangeTime(false)
-                          dispatch(
-                            addBasketPlace(
-                              {
-                                number: table.choosingCardPlace,
-                                card: {
-                                  rank: item.rank,
-                                  suit: item.suit,
-                                  tokenId: item.tokenId
-                                }
-                              }
-                            )
-                          )
-                        }}
-                      />
-                    )
+                  if (table.basketPlaces.find((place) => place?.card?.tokenId === item.tokenId) || playingCards.find((tokenId) => tokenId === item.tokenId)) {
+                    return null
                   }
+                  return (
+                    <Card
+                      key={index}
+                      className={css.card}
+                      rank={item.rank}
+                      suit={item.suit}
+                      tokenId={item.tokenId}
+                      onClick={() => {
+                        if (changeTime) {
+                          setTimer(Date.now())
+                          dispatch(setBasketTimer(Date.now()))
+                        }
+                        setChangeTime(false)
+                        dispatch(
+                          addBasketPlace(
+                            {
+                              number: table.choosingCardPlace,
+                              card: {
+                                rank: item.rank,
+                                suit: item.suit,
+                                tokenId: item.tokenId
+                              }
+                            }
+                          )
+                        )
+                      }}
+                    />
+                  )
+                }
                 )}
               </div>
             ) : table.stakedPlaces.length || table.basketPlaces.length ? (
               <div className={css.places}>
                 {table.basketPlaces.map((place, index) => {
-                    return (
-                      <Place
-                        key={index}
-                        number={place.number}
-                        card={place.card ? {
-                          rank: place.card.rank,
-                          suit: place.card.suit,
-                          tokenId: place?.card?.tokenId
-                        } : undefined}
-                        active={selectedBasketPlaces.includes(place.number || 0)}
-                        onClick={
-                          () =>
-                            selectedBasketPlaces.includes(place.number || 0)
-                              ?
-                              setSelectedBasketPlaces(selectedBasketPlaces.filter(number => number !== place.number))
-                              :
-                              setSelectedBasketPlaces([...selectedBasketPlaces, place.number || 0])
-                        }
-                      />
-                    )
-                  }
+                  return (
+                    <Place
+                      key={index}
+                      number={place.number}
+                      card={place.card ? {
+                        rank: place.card.rank,
+                        suit: place.card.suit,
+                        tokenId: place?.card?.tokenId
+                      } : undefined}
+                      active={selectedBasketPlaces.includes(place.number || 0)}
+                      onClick={
+                        () =>
+                          selectedBasketPlaces.includes(place.number || 0)
+                            ?
+                            setSelectedBasketPlaces(selectedBasketPlaces.filter(number => number !== place.number))
+                            :
+                            setSelectedBasketPlaces([...selectedBasketPlaces, place.number || 0])
+                      }
+                    />
+                  )
+                }
                 )}
                 {Boolean(table.basketPlaces.length) && (
                   <PlaceButton active={selectedBasketPlaces.length} onClick={() => {
@@ -205,10 +206,10 @@ export default (props: props) => {
                 )}
                 {Boolean(table.stakedPlaces.length) && (
                   <PlaceButton active={table.loadingButton ? 0 : selectedStakedPlaces.length} onClick={() => {
-                    const cartsId = table.stakedPlaces.filter(({card}, index) => {
+                    const cartsId = table.stakedPlaces.filter(({ card }, index) => {
                       if (selectedStakedPlaces.includes(index + 1))
-                        return +card.tokenId * 10 ** 18
-                    }).map(({card}) => +card.tokenId * 10 ** 18)
+                        return card.tokenId
+                    }).map(({ card }) => +card.tokenId)
                     dispatch(returnCarts({
                       levelRoom: Number(router.query.room),
                       tableId: Number(router.query.table),
@@ -216,32 +217,30 @@ export default (props: props) => {
                     })).finally(() => {
                       setSelectedStakedPlaces([])
                     })
-                    // dispatch(removeStakedPlaces(selectedStakedPlaces))
-                    // setSelectedStakedPlaces([])
                   }}>
                     return
                   </PlaceButton>
                 )}
                 {table.stakedPlaces.map((place, index) => (
-                    <Place
-                      key={index}
-                      number={place.number}
-                      card={place.card ? {
-                        rank: place.card.rank,
-                        suit: place.card.suit,
-                        tokenId: place.card.tokenId
-                      } : undefined}
-                      active={selectedStakedPlaces.includes(place.number)}
-                      onClick={
-                        () =>
-                          selectedStakedPlaces.includes(place.number)
-                            ?
-                            setSelectedStakedPlaces(selectedStakedPlaces.filter(number => number !== place.number))
-                            :
-                            setSelectedStakedPlaces([...selectedStakedPlaces, place.number || 0])
-                      }
-                    />
-                  )
+                  <Place
+                    key={index}
+                    number={place.number}
+                    card={place.card ? {
+                      rank: place.card.rank,
+                      suit: place.card.suit,
+                      tokenId: place.card.tokenId
+                    } : undefined}
+                    active={selectedStakedPlaces.includes(place.number)}
+                    onClick={
+                      () =>
+                        selectedStakedPlaces.includes(place.number)
+                          ?
+                          setSelectedStakedPlaces(selectedStakedPlaces.filter(number => number !== place.number))
+                          :
+                          setSelectedStakedPlaces([...selectedStakedPlaces, place.number || 0])
+                    }
+                  />
+                )
                 )}
               </div>
             ) : (
@@ -272,7 +271,7 @@ export default (props: props) => {
                 {Boolean(table.stakedPlaces.length) &&
                   <Button
                     onClick={() => {
-                      const cartsId = table.stakedPlaces.map(({card}) => +card.tokenId * 10 ** 18)
+                      const cartsId = table.stakedPlaces.map(({ card }) => +card.tokenId * 10 ** 18)
                       dispatch(returnCarts({
                         levelRoom: Number(router.query.room),
                         tableId: Number(router.query.table),
@@ -285,7 +284,7 @@ export default (props: props) => {
                     variant={ButtonVariant.NORMAL}
                     fullWidth
                   >
-                    <img className={css.footerButtonIcon} src="/assets/images/icons/clear.png" alt="Icon"/>
+                    <img className={css.footerButtonIcon} src="/assets/images/icons/clear.png" alt="Icon" />
                     &nbsp;
                     return all
                   </Button>
@@ -301,7 +300,7 @@ export default (props: props) => {
                     variant={ButtonVariant.NORMAL}
                     fullWidth
                   >
-                    <img className={css.footerButtonIcon} src="/assets/images/icons/return.png" alt="Icon"/>
+                    <img className={css.footerButtonIcon} src="/assets/images/icons/return.png" alt="Icon" />
                     &nbsp;
                     clear all
                   </Button>

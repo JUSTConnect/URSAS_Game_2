@@ -5,9 +5,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEthers } from '@usedapp/core'
 import Head from 'next/head'
 
+import { Room } from '@/agents/web3'
+import { RoomLevel } from '@/lib/types/game'
+
 import { RootState } from '@/app/store'
+import { getRoomDetail } from '@/agents/web3/gameContract/rooms'
 import { setActiveHeaderDropdown } from '@/features/mainframe/mainframeSlice'
 import { setLoadingRooms } from '@/features/game/gameSlice'
+import { setRooms } from '@/features/rooms/roomsSlice'
+
 import Blur from '@components/Blur'
 import Sidebar from './Sidebar'
 import Header from '@/components/Header'
@@ -20,44 +26,32 @@ import DialogGameAccount from '@components/DialogGameAccount'
 import DialogGameInfo, { typePrize } from '@components/DialogGameInfo'
 import DialogMint from '@components/DialogMint'
 
-//
-import { ethers } from 'ethers'
-
-import ABI from '@/lib/contract/abi-mint'
-import ABIGame from '@/lib/contract/abi-game'
-//
 
 interface MainframeProps extends React.HTMLAttributes<HTMLDivElement> {
     subHeader?: JSX.Element
     dialogLayer1?: JSX.Element
-    dialogLayer2?: JSX.Element    
+    dialogLayer2?: JSX.Element
     connected?: boolean
 }
 
 const Mainframe = (props: MainframeProps) => {
     const { account } = useEthers()
     const mainframe = useSelector((state: RootState) => state.mainframe)
-    const web3 = useSelector((state: RootState) => state.web3)
     const dispatch = useDispatch()
 
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch(setLoadingRooms(false))
-    }, 500)
-    const MINT_CONTRACT_ADDRESS = '0x71710042fa389d40dA3dfeB63159e8dFBDeFA7b0'
-    const GAME_CONTRACT_ADDRESS = '0xE64F2B941Ba441FD7af0853Efa800Cfdfe0A7C61'
+    useEffect(() => {
+        setTimeout(() => {
+            dispatch(setLoadingRooms(false))
+        }, 500)
 
-        const getContractMint = () => {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            const erc20 = new ethers.Contract(MINT_CONTRACT_ADDRESS, ABI, provider);
-            return erc20.connect(provider.getSigner())
+        const fetchData = async () => {
+            let rooms = await Promise.all(Array.from(Array(16)).map(async (i, index) => {
+                return await getRoomDetail(index + 1 as RoomLevel)
+            }))
+            return rooms as unknown as Room[]
         }
 
-        const getContractGame = () => {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            const erc20 = new ethers.Contract(GAME_CONTRACT_ADDRESS, ABIGame, provider)
-            return erc20.connect(provider.getSigner())
-        }
+        fetchData().then(c => {dispatch(setRooms(c)); console.log(c)})    
     }, [])
 
     return (
@@ -66,7 +60,7 @@ const Mainframe = (props: MainframeProps) => {
                 <title>Poker Rooms</title>
             </Head>
             <div className={css.layout}>
-                <div className={ css.inner }>
+                <div className={css.inner}>
 
                     <HeaderMobile />
                     <Sidebar />
@@ -75,14 +69,14 @@ const Mainframe = (props: MainframeProps) => {
                     <div className={css.layer1}>
                         <Header />
 
-                        <div className={ css.inner }>
+                        <div className={css.inner}>
 
                             {/* LAYER 2 */}
-                            <div className={ css.layer2 }>
+                            <div className={css.layer2}>
                                 {props.subHeader}
-                                <div className={ css.inner }>
+                                <div className={css.inner}>
                                     <div className={css.main}>
-                                        { props.children }
+                                        {props.children}
                                     </div>
                                 </div>
                                 <Blur
@@ -91,10 +85,10 @@ const Mainframe = (props: MainframeProps) => {
                                     }
                                     onClick={() => dispatch(setActiveHeaderDropdown(0))}
                                 />
-                                { props.dialogLayer2 }
-                                { Boolean(account) &&
+                                {props.dialogLayer2}
+                                {Boolean(account) &&
                                     <>
-                                        <DialogGameAccount/>
+                                        <DialogGameAccount />
                                         <DialogGameInfo
                                             data={
                                                 {
@@ -102,9 +96,9 @@ const Mainframe = (props: MainframeProps) => {
                                                     result: 1
                                                 }
                                             }
-                                            active={ mainframe.gameInfoDialog }
+                                            active={mainframe.gameInfoDialog}
                                         />
-                                        <DialogMint active={ mainframe.mintDialog }/>
+                                        <DialogMint active={mainframe.mintDialog} />
                                     </>
                                 }
                             </div>
@@ -112,9 +106,9 @@ const Mainframe = (props: MainframeProps) => {
                         </div>
 
                         <Blur
-                            isActive={ mainframe.layer1Blured }
+                            isActive={mainframe.layer1Blured}
                         />
-                        { props.dialogLayer1 }
+                        {props.dialogLayer1}
 
                     </div>
 

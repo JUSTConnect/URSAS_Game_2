@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit'
 import type {PayloadAction, Draft} from '@reduxjs/toolkit'
 import { CardNFT } from '@/lib/types/game';
+import { Season } from '@/agents/web3';
 
 
 export interface gameState {
@@ -14,6 +15,7 @@ export interface gameState {
   walletCards: CardNFT[]
   gameCards: CardNFT[]
   maxAvailableRoom: number
+  season?: Season
 }
 
 const initialState: gameState = {
@@ -26,13 +28,17 @@ const initialState: gameState = {
   gameOver: 0,
   walletCards: [],
   gameCards: [],
-  maxAvailableRoom: 17
+  maxAvailableRoom: 17,
+  season: undefined 
 }
 
 export const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
+    setSeason: (state, action: PayloadAction<Season>) => {
+      state.season = action.payload
+    },
     setWalletCards: (state, action: PayloadAction<CardNFT[]>) => {
       state.walletCards = action.payload
     },
@@ -74,6 +80,7 @@ export const gameSlice = createSlice({
 })
 
 export const {
+  setSeason,
   setWalletCards,
   setLoadingRooms,
   setLoadingTables,

@@ -8,7 +8,6 @@ import {setLoadingTables, setCurrentRoom, setCurrentGame} from '@/features/game/
 import Mainframe from '@components/Mainframe'
 import SubHeaderTables from '@components/SubHeaderTables'
 import TableList from '@components/TableList'
-import {getRoomInfo} from "@/features/rooms/roomsSlice";
 import {AppDispatch} from "@/app/store";
 
 

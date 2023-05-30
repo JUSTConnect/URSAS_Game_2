@@ -54,7 +54,6 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
     const setValues = async () => {
         if (account) {
             let b = await getCardListUser(account)
-            console.log(b)
             dispatch(setWalletCards(b))
         }
     }
@@ -77,6 +76,8 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
             .filter(card => card.rank === 1)
             .map((item, index) => index)
     })
+
+    console.log(game.walletCards)
 
     return (
         <>

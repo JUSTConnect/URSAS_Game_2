@@ -23,7 +23,6 @@ import Button, {
 import {useRouter} from "next/router";
 import {query} from "@/pages/tables/[room]/table/[table]";
 import {ethers} from "ethers";
-import {getRoomInfo} from "@/features/rooms/roomsSlice";
 import {useEthers} from "@usedapp/core";
 import Countdown, {zeroPad} from "react-countdown";
 import {SuitsGetName} from "@lib/types/game";
@@ -40,71 +39,14 @@ const SubHeaderTable = (props: SubHeaderTableProps) => {
   const game = useSelector((state: RootState) => state.game)
   const table = useSelector((state: RootState) => state.table)
   const [infoActive, setInfoActive] = useState<boolean>(false)
-  const roomData = useSelector((state: RootState) => state.rooms?.roomInfo[15])
-  const {account} = useEthers()
-
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     tableId && levelRoom && dispatch(getTable({levelRoom, tableId}))
-  //   }, 5000)
-  //
-  //   return function () {
-  //     clearInterval(intervalId);
-  //   };
-  // }, [])
 
   useEffect(() => {
     tableId && levelRoom && dispatch(getTable({levelRoom, tableId}))
   }, [tableId, levelRoom])
 
   useEffect(() => {
-    let currentPlace = 0
-    dispatch(clearBusyPlaces())
-    dispatch(clearStakedPlaces())
-    dispatch(clearBasketPlaces())
-    table?.tableData?.cards?.forEach((card, index) => {
-      if (card.rank && ethers.constants.AddressZero !== table.tableData.players[index].toLowerCase()) {
-        if (table.tableData.players[index] === account) {
-          currentPlace++
-          dispatch(addStakedPlace({
-            number: currentPlace,
-            card: {
-              // @ts-ignore
-              rank: CardRank[`N${card.level}`],
-              // @ts-ignore
-              suit: CardSuit[card.suit],
-              tokenId: card.tokenId
-            }
-          }))
-        } else {
-          currentPlace++
-          dispatch(addBusyPlace({
-            number: currentPlace,
-            card: {
-              // @ts-ignore
-              rank: CardRank[`N${card.level}`],
-              // @ts-ignore
-              suit: CardSuit[card.suit],
-              tokenId: card.tokenId
-            }
-          }))
-        }
-      }
-    })
-  }, [table.tableData])
-
-  useEffect(() => {
-    return function () {
-      dispatch(clearBusyPlaces())
-      dispatch(clearStakedPlaces())
-      dispatch(clearBasketPlaces())
-      dispatch(clearTable())
-    }
   }, [])
 
-  const countTakenPlaces = () => {
-    return 10 - (table.basketPlaces.length + table.busyPlaces.length + table.stakedPlaces.length)
-  }
 
   return <SubHeader>
     <SubHeaderSection>
@@ -122,17 +64,17 @@ const SubHeaderTable = (props: SubHeaderTableProps) => {
         <Info>
           <div className={css.infoContent}>
             <div>
-              Base time: <span className={'textPrimary'}>{roomData?.roomDuration || 0}</span>
+              Base time: <span className={'textPrimary'}>24H</span>
             </div>
             <div>
-              Increase time: <span className={'textPrimary'}>{roomData?.roomIncreaseCounter || 0}</span>
+              Increase time: <span className={'textPrimary'}>2H</span>
             </div>
             <div>
-              Suit: <span className={'textPrimary'}>{roomData && SuitsGetName[roomData.trump] || '-'}</span>
+              Suit: <span className={'textPrimary'}>HEARTS</span>
             </div>
             <div>
               Places: <span
-              className={'textPrimary'}>{table?.tableData?.players?.filter((player: string) => player !== ethers.constants.AddressZero).length}/10</span>
+              className={'textPrimary'}>0/10</span>
             </div>
           </div>
         </Info>

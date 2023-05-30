@@ -10,27 +10,24 @@ import LoaderLogo from '@components/LoaderLogo'
 import {StatusTable} from "@lib/types/game";
 
 
-// interface TableListProps extends React.HTMLAttributes<HTMLDivElement>
-// {
-//
-// }
-
-
 const TableList = ({id}: any) => {
     const game = useSelector((state: RootState) => state.game)
     const tablesState = useSelector((state: RootState) => state.tables)
     const tables = useSelector((state: RootState) => {
         if (id) {
-            return state.rooms?.roomInfo[id - 1]?.allTables
+            return state.rooms?.rooms[id - 1]?.tables
         }
+        return []
     })
 
-    const filteredPlaces = () => {
+    const filteredTables = () => {
         switch (tablesState.filter) {
             case TablesFilter.all:
                 return tables
             case TablesFilter.empty:
-                return tables?.filter(place => place.playersNow === 0)
+                return tables?.filter(
+                    table => table.placesAvailable === 10
+                )
             case TablesFilter.cooldown:
                 return tables?.filter(place => place.status === StatusTable.COOLDOWN)
             case TablesFilter.gaming:
@@ -47,7 +44,7 @@ const TableList = ({id}: any) => {
           </div>
         ) : (
           <div className={css.tableList}>
-              {filteredPlaces()?.map((place, index) => <Table key={index} id={id} {...place} index={index + 1}/>)}
+              {filteredTables()?.map((table, index) => <Table key={index} id={id}  index={index + 1} {...table}/>)}
           </div>
         )}
     </>
