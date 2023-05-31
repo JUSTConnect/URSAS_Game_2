@@ -202,10 +202,6 @@
         font-size: 16px;
     }
 
-    &:hover
-    {
-        opacity: .7;
-    }
     &Active
     {
         outline: 3px solid #EFB23D;
@@ -214,6 +210,11 @@
         {
             outline: 2px solid #EFB23D;                
         }
+    }
+    &Disabled
+    {
+        pointer-events: none;
+        opacity: .5;
     }
 }
 
@@ -291,6 +292,12 @@
             {
                 background: #313B52;
             }
+        }
+
+        &Disabled
+        {
+            opacity: 0.5;
+            pointer-events: none;
         }
 
         &:hover

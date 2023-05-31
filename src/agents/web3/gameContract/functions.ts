@@ -1,6 +1,7 @@
 import { RoomLevel } from "@/lib/types/game";
 import { getGameContract } from "@/lib/utils/web3";
 import { BigNumber } from "ethers";
+import delay from 'delay';
 
 export type GetWholeRoomResponse = Array<{
     currentGameFinishedAt: BigNumber
@@ -16,22 +17,52 @@ export type GetWholeRoomResponse = Array<{
 }>
 
 export async function GetWholeRoom(roomNumber: RoomLevel): Promise<GetWholeRoomResponse> {
-    return await getGameContract().GetWholeRoom(roomNumber)
+    while (true) {
+        try {
+            return await getGameContract().GetWholeRoom(roomNumber) 
+        } catch {
+            delay(1000)
+        }
+    }
 }
 
 
 export async function currentRoomGameDuration(roomNumber: RoomLevel): Promise<BigNumber> {
-    return await getGameContract().currentRoomGameDuration(roomNumber)
+    while (true) {
+        try {
+            return await getGameContract().currentRoomGameDuration(roomNumber)
+        } catch {
+            delay(1000)
+        }
+    }
 }
 
 export async function roomGameDurationIncreaseCounter(roomNumber: RoomLevel): Promise<number> {
-    return await getGameContract().roomGameDurationIncreaseCounter(roomNumber)
+    while (true) {
+        try {
+            return await getGameContract().roomGameDurationIncreaseCounter(roomNumber)
+        } catch {
+            delay(1000)
+        }
+    }
 }
 
-export async function trump() : Promise<BigNumber> {
-    return await getGameContract().trump()
+export async function trump() : Promise<0|1|2|3> {
+    while (true) {
+        try {
+            return await getGameContract().trump()
+        } catch {
+            delay(1000)
+        }
+    }
 }
 
 export async function bulkEnterInGame(roomLevel: Number, tableIndex: Number, tokenIds: Number[]) {
-    return await getGameContract().BulkEnterInGame(roomLevel, tableIndex, tokenIds, {gasLimit: 3000000})
+    while (true) {
+        try {
+            return await getGameContract().BulkEnterInGame(roomLevel, tableIndex, tokenIds, {gasLimit: 3000000})
+        } catch {
+            delay(1000)
+        }
+    }
 }

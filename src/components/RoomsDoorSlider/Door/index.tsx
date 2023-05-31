@@ -2,9 +2,10 @@ import css from './index.module.scss'
 
 import { Room } from '@/lib/types/game'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
 
+import { RootState } from '@/app/store'
 import { setMintDialog } from '@/features/mainframe/mainframeSlice'
 import Button, {
     Variant as ButtonVariant,
@@ -21,9 +22,12 @@ interface RoomsDoorProps extends Room, React.HTMLAttributes<HTMLAnchorElement>
 
 const RoomsDoor = (props: RoomsDoorProps) => {
     const dispatch = useDispatch()
+    const game = useSelector((state: RootState) => state.game)
+    const available = game.walletCards.map(card=>card.rank).includes(props.level)
+
     return (
-        <div className={ css.container }>
-            <Link onClick={ props.onClick } href={ !props.over ? props.href || {} : {} } className={ [css.door, props.active ? css.active : '', props.over ? css.doorOver : ''].join(' ') }>
+        <div className={ [css.container].join(' ') }>
+            <Link onClick={ available ? props.onClick : () => {} } href={ available ? props.href || {} : {} } className={ [css.door, props.active ? css.active : '', props.over ? css.doorOver : ''].join(' ') }>
                 <img className={ [css.texture, css.textureActive].join(' ') } src="/assets/images/texture/door-active.png" alt="Door" />
                 <img className={ css.texture } src="/assets/images/texture/door.png" alt="Door" />
                 <div className={ css.info }>

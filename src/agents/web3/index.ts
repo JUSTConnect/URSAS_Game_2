@@ -1,7 +1,7 @@
 import { SuitSymbol } from "@/lib/types/game"
 
 export type Season = {
-    trump: number
+    trump: 0|1|2|3
 }
 
 export type Room = {
@@ -23,7 +23,7 @@ export type Table = {
 
 export type Player = {
     address: string
-    tokenId: number
+    tokenId: Number
     suit?: SuitSymbol
     timemark: number
 }

@@ -11,6 +11,8 @@ import { RoomLevel } from '@/lib/types/game'
 import { RootState } from '@/app/store'
 import { getRoomDetail } from '@/agents/web3/gameContract/rooms'
 import { setActiveHeaderDropdown } from '@/features/mainframe/mainframeSlice'
+import { setSeason } from '@/features/game/gameSlice'
+import { getSeasonDetail } from '@/agents/web3/gameContract/season'
 import { setLoadingRooms } from '@/features/game/gameSlice'
 import { setRooms } from '@/features/rooms/roomsSlice'
 
@@ -45,13 +47,14 @@ const Mainframe = (props: MainframeProps) => {
         }, 500)
 
         const fetchData = async () => {
+            dispatch(setSeason(await getSeasonDetail()))
             let rooms = await Promise.all(Array.from(Array(16)).map(async (i, index) => {
                 return await getRoomDetail(index + 1 as RoomLevel)
             }))
             return rooms as unknown as Room[]
         }
 
-        fetchData().then(c => {dispatch(setRooms(c)); console.log(c)})    
+        fetchData().then(c => dispatch(setRooms(c)))    
     }, [])
 
     return (

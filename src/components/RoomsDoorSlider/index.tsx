@@ -108,7 +108,6 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
 
     return (
         <>
-            { rooms.rooms.length }
             <div className={
                 [
                     css.container,

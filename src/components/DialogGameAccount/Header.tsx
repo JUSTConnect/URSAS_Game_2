@@ -52,7 +52,7 @@ export default (props: props) => {
                             props.setState({...props.state, addressCopied: false})
                         }, 3000)
                     }}
-                    disabled={props.state.addressCopied}
+                    disabled={Boolean(props.state.addressCopied)}
                     color={ButtonColor.DARK}
                     variant={ButtonVariant.NORMAL}
                     size={ButtonSize.SM}

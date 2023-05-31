@@ -2,8 +2,6 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import type {PayloadAction, Draft} from '@reduxjs/toolkit'
 
 import type {props as Table} from '@/components/Table'
-import {BigNumber, ethers} from "ethers";
-import {getGameContract} from "@lib/utils/web3";
 
 const examplePlaces: Table[] = [
   {
@@ -57,19 +55,6 @@ const initialState: tablesState = {
   playingCards: []
 }
 
-export const getAllRoomTables = createAsyncThunk('roomTables/fetch', async (levelRoom: number) => {
-  const tables = await getGameContract().GetWholeRoom(levelRoom)
-  return tables
-})
-
-export const getPlayingTokenIds = createAsyncThunk('allTokenIds/fetch', async (
-  {levelRoom, account}: { levelRoom: number, account: string }
-) => {
-  const playingCards = await getGameContract().getPlayingTokenIdsInRoomForPlayer(levelRoom, account)
-  return playingCards.map((card: BigNumber) => ethers.utils.formatEther(card))
-})
-
-
 export const tablesSlice = createSlice({
   name: 'game',
   initialState,
@@ -78,13 +63,6 @@ export const tablesSlice = createSlice({
       state.filter = action.payload
     },
   },
-  extraReducers: builder => {
-    builder.addCase(getAllRoomTables.fulfilled, (state, action) => {
-      state.places = action.payload
-    }).addCase(getPlayingTokenIds.fulfilled, (state, action) => {
-      state.playingCards = action.payload
-    })
-  }
 })
 
 export const {

@@ -4,28 +4,15 @@ import {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
 import {AppDispatch, RootState} from '@/app/store'
-import {
-  addBusyPlace,
-  addStakedPlace, clearBasketPlaces, clearBusyPlaces, clearStakedPlaces, clearTable,
-  getTable,
-  setBusyPlaces,
-  setChoosingCardPlace,
-  setStakedPlaces
-} from '@/features/table/tableSlice'
-import Badge from '@components/Badge'
+import { clearBasketPlaces, setChoosingCardPlace } from '@/features/table/tableSlice'
 import SubHeader, {SubHeaderSection, Buttons} from '@components/SubHeader'
 import {Info} from '@components/SubHeader'
-import Button, {
-  Variant as ButtonVariant,
-  Size as ButtonSize,
-  Color as ButtonColor
-} from '@components/UIButton'
+import Button, { Variant as ButtonVariant, Size as ButtonSize, Color as ButtonColor } from '@components/UIButton'
 import {useRouter} from "next/router";
 import {query} from "@/pages/tables/[room]/table/[table]";
-import {ethers} from "ethers";
-import {useEthers} from "@usedapp/core";
 import Countdown, {zeroPad} from "react-countdown";
-import {SuitsGetName} from "@lib/types/game";
+
+import { SuitsGetName } from '@/lib/types/game'
 
 interface SubHeaderTableProps {
   modalActive: boolean
@@ -37,12 +24,9 @@ const SubHeaderTable = (props: SubHeaderTableProps) => {
   const router = useRouter()
   const {table: tableId, room: levelRoom} = router.query as query
   const game = useSelector((state: RootState) => state.game)
+  const rooms = useSelector((state: RootState) => state.rooms)
   const table = useSelector((state: RootState) => state.table)
   const [infoActive, setInfoActive] = useState<boolean>(false)
-
-  useEffect(() => {
-    tableId && levelRoom && dispatch(getTable({levelRoom, tableId}))
-  }, [tableId, levelRoom])
 
   useEffect(() => {
   }, [])
@@ -64,17 +48,17 @@ const SubHeaderTable = (props: SubHeaderTableProps) => {
         <Info>
           <div className={css.infoContent}>
             <div>
-              Base time: <span className={'textPrimary'}>24H</span>
+              Base time: <span className={'textPrimary'}>{ rooms.rooms.length && levelRoom && tableId && rooms.rooms[levelRoom].roomDuration / 3600 }h</span>
             </div>
             <div>
-              Increase time: <span className={'textPrimary'}>2H</span>
+              Increase time: <span className={'textPrimary'}>{ rooms.rooms.length && levelRoom && tableId && rooms.rooms[levelRoom].roomIncreaseCounter / 3600 }h</span>
             </div>
             <div>
-              Suit: <span className={'textPrimary'}>HEARTS</span>
+              Suit: <span className={'textPrimary'}>{ game?.season && SuitsGetName[game.season.trump] }</span>
             </div>
             <div>
               Places: <span
-              className={'textPrimary'}>0/10</span>
+              className={'textPrimary'}>{ rooms.rooms.length && levelRoom && tableId && (10 - rooms.rooms[levelRoom-1].tables[tableId-1].placesAvailable) }/10</span>
             </div>
           </div>
         </Info>

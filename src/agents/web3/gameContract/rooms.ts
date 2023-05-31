@@ -1,6 +1,4 @@
-import { getGameContract } from "@/lib/utils/web3"
-
-import { Room, Table, Player } from ".."
+import { Room, Table } from ".."
 
 import * as gameFunctions from './functions'
 import type * as gameTypes from './functions'

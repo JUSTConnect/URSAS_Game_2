@@ -1,16 +1,21 @@
 import css from './index.module.css'
 
+import { useEffect } from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {useRouter} from 'next/router'
 import {useEthers} from '@usedapp/core'
 
 import {RootState} from '@/app/store'
+import { SuitSymbol } from '@/lib/types/game'
+import { getCardDetailSuit } from '@/agents/web3/mintContract/cards'
 import DialogPlace from '@components/DialogPlace'
 import Blur from '@components/Blur'
 
+import { RoomLevel } from '@/lib/types/game'
 import {setChoosingCardPlace} from '@/features/table/tableSlice'
 import Place from './Place'
 import Sofa from './Sofa'
+import { useState } from 'react'
 
 
 interface TableViewProps {
@@ -21,39 +26,40 @@ interface TableViewProps {
 
 const TableView = (props: TableViewProps) => {
   const router = useRouter()
+  const { room, table } = router.query
   const dispatch = useDispatch()
   const game = useSelector((state: RootState) => state.game)
-  const table = useSelector((state: RootState) => state.table)
+  const rooms = useSelector((state: RootState) => state.rooms)
+  const tableStore = useSelector((state: RootState) => state.table)
   const {account} = useEthers()
+  const [suits, setSuits] = useState<[number, SuitSymbol][]|undefined>()
 
-  // if (table.players.filter((player: string) => player !== ethers.constants.AddressZero && player.toLowerCase() !== account?.toLowerCase()).length) {
-  //   router.push(`/tables/${game.currentRoom}`)
-  // }
+  const returnTable = () => {
+    if (room && rooms.rooms.length) {
+      return rooms.rooms[Number(room) - 1].tables[Number(table)-1]
+    }
+  }
+
+  const setValues = () => {
+    const fetchData = async () => {
+      let tokenIds = returnTable()?.players.map(player => player.tokenId) 
+      if (tokenIds) {
+        let suits = await Promise.all(tokenIds.map(async tokenId=> [tokenId, (await getCardDetailSuit(tokenId)) || 's']))
+        setSuits(suits as [number, SuitSymbol][])
+        console.log(suits)
+        console.log(await getCardDetailSuit(16))
+      }
+    }
+    fetchData()
+  }
+
+  useEffect(() => {
+    setValues()
+  }, [returnTable()?.players])
 
   const handleClickPlace = (place: number) => {
     props.setModalActive(true)
     dispatch(setChoosingCardPlace(place))
-
-    // setTimeout(() => {
-    //   dispatch(
-    //     addBusyPlace({
-    //       number: number,
-    //       card: {
-    //         rank: CardRank.N1,
-    //         suit: CardSuit.d
-    //       }
-    //     })
-    //   )
-    //   if (!table.basketPlaces.map(place => place.number).includes(number)) {
-    //     dispatch(setModalAlert('Your seat has been taken, please select another!'))
-    //     setTimeout(() => dispatch(setModalAlert('')), 5000)
-    //   }
-    // }, 10000)
-  }
-
-  const returnTable = () => {
-    if (table?.tableData?.cards?.length) return table?.tableData?.cards
-    return [...Array(10)]
   }
 
   return <div className={css.tableView}>
@@ -65,30 +71,42 @@ const TableView = (props: TableViewProps) => {
         </div>
       </div>
       <img className={css.cocaCola} src="/assets/images/texture/table-coca-cola.png" alt="Coca Cola"/>
-      {returnTable()?.map((item, index) => {
+      { (returnTable()?.players && suits?.length) ? returnTable()?.players.map((player, index) => {
         return (
           <div key={index}>
             <Sofa
               number={index + 1}
-              active={table.stakedPlaces.map(item => item.number).includes(index + 1)}
+              active={Boolean(player.tokenId) }
             />
             <Place
               number={index + 1}
               className={css[`place${index + 1}`]}
-              basket={table.basketPlaces.map(item => item.number).includes(index + 1)}
-              staked={table.stakedPlaces.map(item => item.number).includes(index + 1)}
-              loading={!item}
+              basket={tableStore.basketPlaces.map(item => item.number).includes(index + 1)}
+              staked={game.walletCards.map(card=>card.tokenId).includes(player.tokenId)}
+              // loading={true}
               // choosing={table.choosingCardPlace === index + 1}
               onClick={() => handleClickPlace(index + 1)}
-              card={(!game.loadingTable && [...table.stakedPlaces, ...table.busyPlaces, ...table.basketPlaces].filter(item => item.number === index + 1)[0]) ? {
-                rank: [...table.stakedPlaces, ...table.busyPlaces, ...table.basketPlaces].filter(item => item.number === index + 1)[0].card.rank,
-                suit: [...table.stakedPlaces, ...table.busyPlaces, ...table.basketPlaces].filter(item => item.number === index + 1)[0].card.suit,
-                tokenId: [...table.stakedPlaces, ...table.busyPlaces, ...table.basketPlaces].filter(item => item.number === index + 1)[0].card.tokenId
+              card={suits && Number(player.tokenId) ? {
+                rank: Number(room),
+                suit: suits.find(suit => suit[0] === player.tokenId)[1] as unknown as RoomLevel,
+                tokenId: player.tokenId,
+                playing: true
               } : undefined}
             />
           </div>
         )
-      })}
+      }) : Array.from(Array(10)).map((i, index)=>(
+        <div key={index}>
+          <Sofa
+            number={index + 1}
+          />
+          <Place
+            number={index + 1}
+            className={css[`place${index + 1}`]}
+            loading={true}
+          />
+        </div>
+      ))}
     </div>
     <Blur
       isActive={props.modalActive}

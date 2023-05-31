@@ -14,9 +14,7 @@ import Dropdown from '@/components/Header/Dropdown'
 import HeaderBase, {HeaderSection} from '@/components/HeaderBase'
 import {tabs} from '@components/DialogGameAccount'
 import {AppDispatch} from "@/app/store";
-import {getMyPlayingTables} from "@/features/rooms/roomsSlice";
 import {useRouter} from "next/router";
-import {getPlayingTokenIds} from "@/features/tables/tablesSlice";
 
 interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
 }
@@ -32,20 +30,17 @@ const Header = (props: HeaderProps) => {
 
   useEffect(() => {
     if (currentRoom && account) {
-      dispatch(getMyPlayingTables({levelRoom: Number(currentRoom), account: account}))
     }
   }, [currentRoom, account])
 
   useEffect(() => {
     if (levelRoom && account || currentRoom && account) {
-      dispatch(getPlayingTokenIds({levelRoom: Number(levelRoom || currentRoom), account}))
     }
   }, [levelRoom, account, currentRoom, table])
 
   const game = useSelector((state: RootState) => state.game)
   const playingTablesId = useSelector((state: RootState) => state.rooms.playingTablesId)
   const mainframe = useSelector((state: RootState) => state.mainframe)
-  const amountPlayingCards = useSelector((state: RootState) => state.tables.playingCards.filter(card => +card !== 0).length)
   const maxRoom = useSelector((state: RootState) => state.game.maxAvailableRoom)
 
   return <HeaderBase>
@@ -105,8 +100,8 @@ const Header = (props: HeaderProps) => {
           <img className={'d-mobile'} src="/assets/images/icons/chair.svg" alt="chair"/>
           <div className={css.places}>
             <span className={['d-desktop', 'textMuted'].join(' ')}>Places&nbsp;</span>
-            <Badge loading={game.loadingRooms} mobileTransparrent={true}>
-              {amountPlayingCards}/{game.walletCards.length}
+            <Badge loading={!Boolean(game.walletCards.length)} mobileTransparrent={true}>
+              {game.walletCards.filter(card=>card.playing).length}/{game.walletCards.length}
             </Badge>
           </div>
           {game.claim ? (

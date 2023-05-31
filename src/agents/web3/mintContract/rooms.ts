@@ -1,24 +1,24 @@
 import { BigNumber } from "ethers"
 
-import { getMintContract } from "@/lib/utils/web3"
 import { RoomLevel, RoomLevelArray as RLArray } from "@/lib/types/game"
 
+import * as mintFunctions from './functions'
 import { RoomMintData } from "./types"
 
 // комната - стоимость минта 
 export async function getRoomDetailMintCost (level: RoomLevel) : Promise<number> {
-    return await getMintContract().costs(level)
+    return await mintFunctions.costs(level)
 }
 
 // комнаты - стоимость минта
 export async function getRoomListMintCost () : Promise<RLArray<number>> {
-    let costs: RLArray<BigNumber> = await getMintContract().getDataAboutCostsForRooms()   
+    let costs: RLArray<BigNumber> = await mintFunctions.getDataAboutCostsForRooms()   
     return costs.map((i: BigNumber) => Number(i)).reverse() as RLArray<number>
 }
 
 // комнаты - дневной лимит и счётчик
 export async function getRoomListMintSupplyNMinted() : Promise<[RLArray<number>, RLArray<number>]> {
-    let result: [RLArray<number>, RLArray<number>] = await getMintContract().getDataAboutLimitsForRooms()
+    let result: [RLArray<number>, RLArray<number>] = await mintFunctions.getDataAboutLimitsForRooms()
     return [[...result[0]].reverse(), [...result[1]].reverse()] as [RLArray<number>, RLArray<number>]
 }
 

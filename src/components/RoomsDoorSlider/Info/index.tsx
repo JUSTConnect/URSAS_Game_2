@@ -2,15 +2,10 @@ import css from './index.module.css'
 import {SuitsGetName} from "@lib/types/game";
 import { Room } from '@/agents/web3';
 
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-import { AppDispatch, RootState } from '@/app/store';
-import { getSeasonDetail, getSeasonDetailTrump } from '@/agents/web3/gameContract/season';
-import { setSeason } from '@/features/game/gameSlice';
-import { isNumber, isUndefined } from 'util';
-import { NumericLiteral } from 'typescript';
+import { RootState } from '@/app/store';
+
 
 interface props {
     roomsInfo: Room
@@ -18,16 +13,8 @@ interface props {
 }
 
 export default ({roomsInfo, hidden}: props) => {
-    const dispatch = useDispatch<AppDispatch>()
 
     const season = useSelector((state: RootState) => state.game)
-
-    useEffect(() => {
-        const fetchData = async () => {
-            dispatch(setSeason(await getSeasonDetail()))
-        }
-        fetchData()
-    }, [])
 
     return <div className={[css.info, hidden ? css.infoHidden : ''].join(' ')}>
         <img className={css.bg} src="/assets/images/texture/rooms-info.png" alt="Rooms info"/>

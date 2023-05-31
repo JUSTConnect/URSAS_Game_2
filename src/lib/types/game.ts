@@ -54,7 +54,8 @@ export interface Card
 
 export interface CardNFT extends Card
 {
-    tokenId: string
+    tokenId: Number
+    playing?: Boolean
 }
 
 export enum StatusTable {

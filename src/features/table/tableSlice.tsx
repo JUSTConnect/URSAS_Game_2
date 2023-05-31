@@ -1,13 +1,8 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit'
 import type {PayloadAction, Draft} from '@reduxjs/toolkit'
 
-import type Card from '@/components/Card'
 import {PlaceProps} from '@/components/UIPlace'
-// import {Table, TableCard} from "@/types/game";
-import {BigNumber, ethers} from "ethers";
-import {string} from "prop-types";
-import {getGameContract, getMintContract} from "@lib/utils/web3";
-import {Table, CardNFT, TableData} from "@lib/types/game";
+import {CardNFT, TableData} from "@lib/types/game";
 
 interface BusyPlaceProps extends PlaceProps {
   number: number,
@@ -86,67 +81,6 @@ const clearDecorator = (stateArray: PlaceState) => {
   }
 }
 
-const getTableFunction = async (
-  {
-    levelRoom,
-    tableId
-  }: { levelRoom: number, tableId: number }) => {
-  const tableData = await getGameContract().GetCurrentTableInRoom(levelRoom, tableId - 1)
-  let cards = await Promise.all<CardNFT[]>(tableData.playingTokenIds.map(async (token: BigNumber) => {
-    let level = await getMintContract().viewNFTRoomLevel(token)
-    let suit: string = await getMintContract().suits(token)
-    let tokenId: string = ethers.utils.formatEther(token)
-    return {
-      level: parseInt(level),
-      suit,
-      tokenId
-    }
-  }))
-  return {
-    currentGameFinishedAt: ethers.utils.formatEther(tableData.currentGameFinishedAt),
-    currentGameStartedAt: ethers.utils.formatEther(tableData.currentGameStartedAt),
-    internalGameReduction: ethers.utils.formatEther(tableData.internalGameReduction),
-    players: tableData.players,
-    playersNow: tableData.playersNow,
-    playingSuits: tableData.playingSuits.map((suit: BigNumber) => ethers.utils.formatEther(suit)),
-    playingTokenIds: tableData.playingTokenIds.map((token: BigNumber) => ethers.utils.formatEther(token)),
-    serialNumber: ethers.utils.formatEther(tableData.serialNumber),
-    status: tableData.status,
-    cards
-  }
-}
-
-export const getTable = createAsyncThunk('table/fetch', getTableFunction)
-
-export const submitCarts = createAsyncThunk('submitSubmit/fetch', async (
-  {
-    levelRoom,
-    tableId,
-    cartsId
-  }: { levelRoom: number, tableId: number, cartsId: number[] }
-) => {
-  const transaction = await getGameContract().BulkEnterInGame(levelRoom, tableId - 1, cartsId)
-  return await transaction.wait().then(async (receipt: any) => {
-    if (receipt && receipt.status == 1) {
-      return await getTableFunction({tableId, levelRoom})
-    }
-  })
-})
-
-export const returnCarts = createAsyncThunk('return/fetch', async (
-  {
-    levelRoom,
-    tableId,
-    cartsId
-  }: { levelRoom: number, tableId: number, cartsId: number[] }) => {
-  const transaction = await getGameContract().leaveGame(levelRoom, tableId - 1, cartsId)
-  return await transaction.wait().then(async (receipt: any) => {
-    if (receipt && receipt.status == 1) {
-      return await getTableFunction({tableId, levelRoom})
-    }
-  })
-})
-
 export const tableSlice = createSlice({
   name: 'game',
   initialState,
@@ -184,34 +118,6 @@ export const tableSlice = createSlice({
     setModalAlert: (state, action: PayloadAction<string>) => {
       state.modalAlert = action.payload
     },
-  },
-  extraReducers: builder => {
-    builder.addCase(getTable.fulfilled, (state, action) => {
-      state.tableData = action.payload
-      state.timer = 0
-    })
-      .addCase(returnCarts.fulfilled, (state, action) => {
-        state.tableData = action.payload
-        state.loadingButton = false
-        state.timer = 0
-      }).addCase(returnCarts.pending, (state) => {
-      state.loadingButton = true
-      state.timer = 0
-    }).addCase(returnCarts.rejected, (state) => {
-      state.loadingButton = false
-      state.timer = 0
-    })
-      .addCase(submitCarts.fulfilled, (state, action) => {
-        state.tableData = action.payload
-        state.loadingButton = false
-        state.timer = 0
-      }).addCase(submitCarts.pending, (state) => {
-      state.loadingButton = true
-      state.timer = 0
-    }).addCase(submitCarts.rejected, (state) => {
-      state.loadingButton = false
-      state.timer = 0
-    })
   }
 })
 

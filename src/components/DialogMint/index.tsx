@@ -39,7 +39,7 @@ export default (props: props) => {
     }
 
     useEffect(() => {
-        setValues()
+        setTimeout(setValues, 2000)
     }, [])
 
     return (

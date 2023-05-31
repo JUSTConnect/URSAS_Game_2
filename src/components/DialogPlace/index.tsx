@@ -5,34 +5,19 @@ import sofaBg from '@assets/images/texture/table-sofa-modal.png'
 import Image from 'next/image'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux'
-import { useEthers } from '@usedapp/core'
 
 import { AppDispatch, RootState } from '@/app/store'
-import {
-  addBasketPlace,
-  clearBasketPlaces,
-  removeBasketPlaces, submitCarts, returnCarts, setBasketTimer,
-} from '@/features/table/tableSlice'
+import { addBasketPlace, clearBasketPlaces, removeBasketPlaces, setBasketPlaces, setBasketTimer} from '@/features/table/tableSlice'
 import { enterInGameByTokenIds } from '@/agents/web3/gameContract/tables'
-import Dialog, {
-  Header,
-  HeaderButtons,
-  Footer,
-  FooterButtons,
-  Content,
-} from '@components/Dialog'
-import Button, {
-  Color as ButtonColor,
-  Variant as ButtonVariant,
-  Size as ButtonSize,
-} from '@components/UIButton'
-import Blur from '../Blur'
+import Dialog, { Header, HeaderButtons, Footer, FooterButtons, Content} from '@components/Dialog'
+import Button, {Color as ButtonColor, Variant as ButtonVariant, Size as ButtonSize} from '@components/UIButton'
+import Blur from '@components/Blur'
 import Card from '@components/Card'
 
 import Place from './Place'
 import PlaceButton from './PlaceButton'
-import { useRouter } from "next/router";
 import Countdown, { zeroPad } from "react-countdown";
 
 
@@ -43,14 +28,12 @@ interface props extends React.HTMLAttributes<HTMLDivElement> {
 
 export default (props: props) => {
   const router = useRouter()
+  const {room} = router.query
   const dispatch = useDispatch<AppDispatch>()
   const table = useSelector((state: RootState) => state.table)
   const game = useSelector((state: RootState) => state.game)
-  const playingCards = useSelector((state: RootState) => state.tables.playingCards)
-  const { account } = useEthers()
   const [selectedBasketPlaces, setSelectedBasketPlaces] = useState<number[]>([])
   const [selectedStakedPlaces, setSelectedStakedPlaces] = useState<number[]>([])
-  const [submitTimer, setSubmitTimer] = useState<[number, number]>([2, 0])
   const [timer, setTimer] = useState(0)
   const [changeTime, setChangeTime] = useState(true)
 
@@ -105,14 +88,12 @@ export default (props: props) => {
                   onClick={() => {
                     setChangeTime(true)
                     const cartsId = table.basketPlaces.map(({ card }) => + card.tokenId)
-                    console.log(router.query.room)
-                    console.log(router.query.table)
-                    console.log(cartsId)
                     enterInGameByTokenIds(
                       Number(router.query.room),
                       Number(router.query.table) - 1,
                       cartsId
                     )
+                    setBasketPlaces([])
                   }}
                 >
                   submit
@@ -133,12 +114,10 @@ export default (props: props) => {
           >
             {table.choosingCardPlace ? (
               <div className={css.cards}>
-                {game.walletCards.map((item, index) => {
-                  if (table.basketPlaces.find((place) => place?.card?.tokenId === item.tokenId) || playingCards.find((tokenId) => tokenId === item.tokenId)) {
-                    return null
-                  }
+                {game.walletCards.filter(card => card.rank === Number(room) && !card.playing).map((item, index) => {
                   return (
                     <Card
+                      playing={item.playing}
                       key={index}
                       className={css.card}
                       rank={item.rank}
@@ -157,7 +136,7 @@ export default (props: props) => {
                               card: {
                                 rank: item.rank,
                                 suit: item.suit,
-                                tokenId: item.tokenId
+                                tokenId: item.tokenId,
                               }
                             }
                           )
@@ -205,19 +184,7 @@ export default (props: props) => {
                   </PlaceButton>
                 )}
                 {Boolean(table.stakedPlaces.length) && (
-                  <PlaceButton active={table.loadingButton ? 0 : selectedStakedPlaces.length} onClick={() => {
-                    const cartsId = table.stakedPlaces.filter(({ card }, index) => {
-                      if (selectedStakedPlaces.includes(index + 1))
-                        return card.tokenId
-                    }).map(({ card }) => +card.tokenId)
-                    dispatch(returnCarts({
-                      levelRoom: Number(router.query.room),
-                      tableId: Number(router.query.table),
-                      cartsId
-                    })).finally(() => {
-                      setSelectedStakedPlaces([])
-                    })
-                  }}>
+                  <PlaceButton active={table.loadingButton ? 0 : selectedStakedPlaces.length} onClick={() => {}}>
                     return
                   </PlaceButton>
                 )}
@@ -272,12 +239,6 @@ export default (props: props) => {
                   <Button
                     onClick={() => {
                       const cartsId = table.stakedPlaces.map(({ card }) => +card.tokenId * 10 ** 18)
-                      dispatch(returnCarts({
-                        levelRoom: Number(router.query.room),
-                        tableId: Number(router.query.table),
-                        cartsId
-                      }))
-                      // dispatch(clearStakedPlaces())
                     }}
                     color={ButtonColor.DARK}
                     size={ButtonSize.SM}

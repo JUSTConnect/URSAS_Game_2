@@ -47,9 +47,9 @@ export default (props: props) => {
                   ) : props.status === StatusTable.PLAYING ? (
                     <>
                         game end
-                        <div className={css.number}>
+                        {/* <div className={css.number}>
                             {+ethers.utils.formatEther(props.currentGameFinishedAt) * 1000}
-                        </div>
+                        </div> */}
                     </>
                   ) : Number.isInteger(props.placesAvailable) ? (
                     <>
