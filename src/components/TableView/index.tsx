@@ -71,7 +71,7 @@ const TableView = (props: TableViewProps) => {
         </div>
       </div>
       <img className={css.cocaCola} src="/assets/images/texture/table-coca-cola.png" alt="Coca Cola"/>
-      { (returnTable()?.players && suits?.length) ? returnTable()?.players.map((player, index) => {
+      { (suits && returnTable()?.players && suits?.length) ? returnTable()?.players.map((player, index) => {
         return (
           <div key={index}>
             <Sofa
@@ -87,8 +87,8 @@ const TableView = (props: TableViewProps) => {
               // choosing={table.choosingCardPlace === index + 1}
               onClick={() => handleClickPlace(index + 1)}
               card={suits && Number(player.tokenId) ? {
-                rank: Number(room),
-                suit: suits.find(suit => suit[0] === player.tokenId)[1] as unknown as RoomLevel,
+                rank: Number(room) as RoomLevel,
+                suit: 's',
                 tokenId: player.tokenId,
                 playing: true
               } : undefined}
