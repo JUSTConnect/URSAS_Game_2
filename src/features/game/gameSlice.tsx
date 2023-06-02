@@ -61,6 +61,9 @@ export const gameSlice = createSlice({
     setClaim: (state, action: PayloadAction<boolean>) => {
       state.claim = action.payload
     },
+    setGameOver: (state, action: PayloadAction<number>) => {
+      state.gameOver = action.payload
+    },
 
     cardsStake: (state, action: PayloadAction<Draft<number[]>>) => {
       state.gameCards = [
@@ -74,7 +77,7 @@ export const gameSlice = createSlice({
     cardsBurn: (state, action: PayloadAction<Draft<number[]>>) => {
       state.walletCards = state.walletCards.filter((item, index) => !action.payload.includes(index))
     },
-    cardsRefound: (state, action: PayloadAction<Draft<number[]>>) => {
+    cardsRefund: (state, action: PayloadAction<Draft<number[]>>) => {
       state.walletCards = state.walletCards.filter((item, index) => !(action.payload.includes(index) && state.walletCards[index].rank === 1))
     },
   },
@@ -89,9 +92,10 @@ export const {
   setCurrentRoom,
   setCurrentGame,
   setClaim,
+  setGameOver,
 
   cardsBurn,
-  cardsRefound,
+  cardsRefund,
   cardsStake,
 } = gameSlice.actions
 export default gameSlice.reducer

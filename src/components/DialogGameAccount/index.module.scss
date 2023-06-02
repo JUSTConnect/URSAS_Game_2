@@ -31,6 +31,13 @@
     transform: translate(0);
 }
 
+.gameOverButtons
+{
+    display: flex;
+    gap: 16px;
+    margin-left: 14px;
+}
+
 .dialog
 {
     height: 100%;

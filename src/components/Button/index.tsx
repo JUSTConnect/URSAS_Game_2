@@ -13,6 +13,7 @@ const Button = (props: ButtonProps) => {
             css.button,
             props.primary ? css.buttonPrimary : '', props.className
         ].join(' ') }
+        style={props.style}
     >
         <div className={ [css.text, 'fixMargin'].join(' ') }>
             { props.children }

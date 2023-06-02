@@ -12,7 +12,7 @@ import DialogPlace from '@components/DialogPlace'
 import Blur from '@components/Blur'
 
 import { RoomLevel } from '@/lib/types/game'
-import {setChoosingCardPlace} from '@/features/table/tableSlice'
+import {addStakedPlace, setChoosingCardPlace} from '@/features/table/tableSlice'
 import Place from './Place'
 import Sofa from './Sofa'
 import { useState } from 'react'
@@ -72,11 +72,20 @@ const TableView = (props: TableViewProps) => {
       </div>
       <img className={css.cocaCola} src="/assets/images/texture/table-coca-cola.png" alt="Coca Cola"/>
       { (suits && returnTable()?.players && suits?.length) ? returnTable()?.players.map((player, index) => {
+        if (player.address === account) {dispatch(addStakedPlace({
+          number: index+1,
+          card: {
+            rank: Number(room) as RoomLevel,
+            suit: 's',
+            tokenId: player.tokenId,
+          }
+        }))}
         return (
           <div key={index}>
             <Sofa
               number={index + 1}
               active={Boolean(player.tokenId) }
+              // active={!!game.walletCards.find(card=>card.tokenId === player.tokenId)}
             />
             <Place
               number={index + 1}
@@ -90,6 +99,13 @@ const TableView = (props: TableViewProps) => {
                 rank: Number(room) as RoomLevel,
                 suit: 's',
                 tokenId: player.tokenId,
+                playing: true
+              } : tableStore.basketPlaces.map(item => item.number).includes(index + 1) ? {
+                rank: Number(room) as RoomLevel,
+                suit: 's',
+                tokenId: tableStore.basketPlaces.map(item => {
+                  if (item.number) return item.card.tokenId
+                })[0] || 0,
                 playing: true
               } : undefined}
             />

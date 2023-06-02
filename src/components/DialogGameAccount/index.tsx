@@ -1,161 +1,174 @@
 import css from './index.module.scss'
 
-import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEthers } from '@usedapp/core'
+import {useState, useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {useEthers} from '@usedapp/core'
 
-import { getCardListUser } from '@/agents/web3/mintContract/cards'
+import {cardBurn, cardRefund, getCardListUser} from '@/agents/web3/mintContract/cards'
 
-import { AppDispatch, RootState } from '@/app/store'
-import { setGameAccountDialog } from '@/features/mainframe/mainframeSlice'
-import { setWalletCards, cardsStake } from '@/features/game/gameSlice'
+import {AppDispatch, RootState} from '@/app/store'
+import {setGameAccountDialog} from '@/features/mainframe/mainframeSlice'
+import {setWalletCards, cardsStake, cardsBurn} from '@/features/game/gameSlice'
 
 import Blur from '@components/Blur'
-import Dialog, { Content, Footer, FooterButtons } from '@components/Dialog'
+import Dialog, {Content, Footer, FooterButtons} from '@components/Dialog'
 
 import Header from './Header'
 import TabStake from './TabStake'
 import TabWallet from './TabWallet'
+import Button from "@components/Button";
 
 export enum tabs {
-    STAKE = 'Stake',
-    WALLET = 'Wallet'
+  STAKE = 'Stake',
+  WALLET = 'Wallet'
 }
 
 export interface state {
-    selectedWalletCardIds: Number[]
-    selectedStakeCardIds: Number[]
-    addressCopied: Boolean
+  selectedWalletCardIds: Number[]
+  selectedStakeCardIds: Number[]
+  addressCopied: Boolean
 }
 
 export default (props: React.HTMLAttributes<HTMLDivElement>) => {
 
-    const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>()
 
-    const mainframe = useSelector((state: RootState) => state.mainframe)
-    const game = useSelector((state: RootState) => state.game)
+  const mainframe = useSelector((state: RootState) => state.mainframe)
+  const game = useSelector((state: RootState) => state.game)
 
-    const [state, setState] = useState<state>({
-        selectedWalletCardIds: [],
-        selectedStakeCardIds: [],
-        addressCopied: false,
-    })
+  const [state, setState] = useState<state>({
+    selectedWalletCardIds: [],
+    selectedStakeCardIds: [],
+    addressCopied: false,
+  })
 
-    const { account } = useEthers()
+  const {account} = useEthers()
 
-    useEffect(() => {
-        setTimeout(setValues, 1000)
-    }, [])
+  useEffect(() => {
+    setTimeout(setValues, 1000)
+  }, [])
 
-    const setValues = async () => {
-        if (account) {
-            let b = await getCardListUser(account)
-            dispatch(setWalletCards(b))
-        }
+  const setValues = async () => {
+    if (account) {
+      let b = await getCardListUser(account)
+      dispatch(setWalletCards(b))
     }
+  }
 
-    return (
-        <>
-            <Blur
-                onClick={() => dispatch(setGameAccountDialog([false, tabs.WALLET]))}
-                isActive={mainframe.gameAccountDialog[0]}
-            />
-            <div className={
-                [
-                    css.wrapper,
-                    mainframe.gameAccountDialog[0] && css.active
-                ].join(' ')
-            }>
-                <Dialog className={[css.dialog, props.className].join(' ')}>
-                    <Header state={state} setState={setState} />
-                    <Content>
-                        <div className={css.containers}>
-                            {mainframe.gameAccountDialog[1] === tabs.STAKE &&
-                                <TabStake state={state} setState={setState} />
-                            }
-                            {mainframe.gameAccountDialog[1] == tabs.WALLET &&
-                                <TabWallet state={state} setState={setState} />
-                            }
-                        </div>
-                    </Content>
-                    {mainframe.gameAccountDialog[1] === tabs.STAKE &&
-                        <>
-                            {/* <Footer>
-                                <FooterButtons>
-                                </FooterButtons>
-                            </Footer> */}
-                            {/* <Button
-                                color={ButtonColor.LIGHT}
-                                size={ButtonSize.SM}
-                                fullWidth
-                                disabled={!selectedStakeCards.length}
-                                onClick={() => {
-                                    dispatch(cardsStake(selectedStakeCards))
-                                    setSelectedStakeCards([])
-                                }}
-                            >
-                                stake
-                            </Button> */}
-                            {/* {mainframe.gameAccountDialog[1] == tabs.WALLET &&
-                                <>
-                                    <Button
-                                        color={ButtonColor.LIGHT}
-                                        size={ButtonSize.SM}
-                                        fullWidth
-                                        disabled={!selectedWalletCards.length}
-                                        onClick={() => {
-                                            dispatch(cardsRefound(selectedWalletCards))
-                                            setSelectedWalletCards([])
-                                        }}
-                                    >
-                                        refund
-                                    </Button>
-                                    <Button
-                                        color={ButtonColor.LIGHT}
-                                        size={ButtonSize.SM}
-                                        fullWidth
-                                        disabled={!selectedWalletCards.length && !selectedWalletCards.length}
-                                        onClick={() => {
-                                            dispatch(cardsBurn(selectedWalletCards))
-                                            setSelectedWalletCards([])
-                                        }}
-                                    >
-                                        burn
-                                    </Button>
-                                </>
-                            } */}
-                        </>
-                    }
-                </Dialog>
-                <div className={css.tabs}>
-                    <div className={css.inner}>
-                        <button
-                            onClick={() => dispatch(setGameAccountDialog([mainframe.gameAccountDialog[0], tabs.WALLET]))}
-                            className={
-                                [
-                                    css.tab,
-                                    mainframe.gameAccountDialog[1] == tabs.WALLET && css.tabActive
-                                ].join(' ')
-                            }
-                        >
-                            Wallet
-                        </button>
-                        <button
-                            onClick={() => dispatch(setGameAccountDialog([mainframe.gameAccountDialog[0], tabs.STAKE]))}
-                            className={
-                                [
-                                    css.tab,
-                                    !Boolean(game.walletCards.filter(card => card.rank===1).length) && css.tabDisabled,
-                                    mainframe.gameAccountDialog[1] == tabs.STAKE && css.tabActive
-                                ].join(' ')
-                            }
-                        >
-                            { !Boolean(game.walletCards.filter(card => card.rank===1).length) && <><i className="fa-solid fa-lock"></i>&nbsp;</> }
-                            Stake
-                        </button>
-                    </div>
-                </div>
+  return (
+    <>
+      <Blur
+        onClick={() => dispatch(setGameAccountDialog([false, tabs.WALLET]))}
+        isActive={mainframe.gameAccountDialog[0]}
+      />
+      <div className={
+        [
+          css.wrapper,
+          mainframe.gameAccountDialog[0] && css.active
+        ].join(' ')
+      }>
+        <Dialog className={[css.dialog, props.className].join(' ')}>
+          <Header state={state} setState={setState}/>
+          <Content>
+            <div className={css.containers}>
+              {mainframe.gameAccountDialog[1] === tabs.STAKE &&
+                <TabStake state={state} setState={setState}/>
+              }
+              {mainframe.gameAccountDialog[1] == tabs.WALLET &&
+                <TabWallet state={state} setState={setState}/>
+              }
             </div>
-        </>
-    )
+          </Content>
+          {/*{mainframe.gameAccountDialog[1] === tabs.STAKE &&*/}
+          {1 + 1 == 2 &&
+            <>
+              <Footer>
+                <FooterButtons>
+                  {/*<Button*/}
+                  {/*  color={ButtonColor.LIGHT}*/}
+                  {/*  size={ButtonSize.SM}*/}
+                  {/*  fullWidth*/}
+                  {/*  disabled={!selectedStakeCards.length}*/}
+                  {/*  onClick={() => {*/}
+                  {/*    dispatch(cardsStake(selectedStakeCards))*/}
+                  {/*    setSelectedStakeCards([])*/}
+                  {/*  }}*/}
+                  {/*>*/}
+                  {/*  stake*/}
+                  {/*</Button>*/}
+                  {mainframe.gameAccountDialog[1] == tabs.WALLET && !!game.gameOver &&
+                    <>
+                      <Button
+                        style={{width: '50%'}}
+                        onClick={() => {
+                          cardRefund(state.selectedWalletCardIds)
+                        }
+                        }
+                        // color={ButtonColor.LIGHT}
+                        // size={ButtonSize.SM}
+                        // fullWidth
+                        // disabled={!selectedWalletCards.length}
+                        // onClick={() => {
+                        //   dispatch(cardsRefound(selectedWalletCards))
+                        //   setSelectedWalletCards([])
+                        //}}
+                      >
+                        refund
+                      </Button>
+                      <Button
+                        style={{width: '50%'}}
+                        onClick={() => {
+                          cardBurn(state.selectedWalletCardIds)
+                        }
+                        }
+                        //color={ButtonColor.LIGHT}
+                        //size={ButtonSize.SM}
+                        //fullWidth
+                        //disabled={!selectedWalletCards.length && !selectedWalletCards.length}
+                        //onClick={() => {
+                        //  dispatch(cardsBurn(selectedWalletCards))
+                        //  setSelectedWalletCards([])
+                        //}}
+                      >
+                        burn
+                      </Button>
+                    </>
+                  }
+                </FooterButtons>
+              </Footer>
+            </>
+          }
+        </Dialog>
+        <div className={css.tabs}>
+          <div className={css.inner}>
+            <button
+              onClick={() => dispatch(setGameAccountDialog([mainframe.gameAccountDialog[0], tabs.WALLET]))}
+              className={
+                [
+                  css.tab,
+                  mainframe.gameAccountDialog[1] == tabs.WALLET && css.tabActive
+                ].join(' ')
+              }
+            >
+              Wallet
+            </button>
+            <button
+              onClick={() => dispatch(setGameAccountDialog([mainframe.gameAccountDialog[0], tabs.STAKE]))}
+              className={
+                [
+                  css.tab,
+                  !Boolean(game.walletCards.filter(card => card.rank === 1).length) && css.tabDisabled,
+                  mainframe.gameAccountDialog[1] == tabs.STAKE && css.tabActive
+                ].join(' ')
+              }
+            >
+              {!Boolean(game.walletCards.filter(card => card.rank === 1).length) && <><i
+                className="fa-solid fa-lock"></i>&nbsp;</>}
+              Stake
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  )
 }

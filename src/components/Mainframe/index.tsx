@@ -11,7 +11,7 @@ import { RoomLevel } from '@/lib/types/game'
 import { RootState } from '@/app/store'
 import { getRoomDetail } from '@/agents/web3/gameContract/rooms'
 import { setActiveHeaderDropdown } from '@/features/mainframe/mainframeSlice'
-import { setSeason } from '@/features/game/gameSlice'
+import {setGameOver, setSeason} from '@/features/game/gameSlice'
 import { getSeasonDetail } from '@/agents/web3/gameContract/season'
 import { setLoadingRooms } from '@/features/game/gameSlice'
 import { setRooms } from '@/features/rooms/roomsSlice'
@@ -54,7 +54,12 @@ const Mainframe = (props: MainframeProps) => {
             return rooms as unknown as Room[]
         }
 
-        fetchData().then(c => dispatch(setRooms(c)))    
+        fetchData().then(c => {
+            if (c[0].availableTablesCount === 0){
+                // dispatch(setGameOver(1))
+            }
+            dispatch(setRooms(c))
+        })
     }, [])
 
     return (

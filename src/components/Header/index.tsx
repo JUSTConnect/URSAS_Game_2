@@ -127,10 +127,10 @@ const Header = (props: HeaderProps) => {
                     04:51
                   </div>
                 </div>
-                <div className={css.gameOverButtons}>
-                  <Button minWidth>REFOUND</Button>
-                  <Button minWidth>BURN</Button>
-                </div>
+                {/*<div className={css.gameOverButtons}>*/}
+                {/*  <Button minWidth>REFOUND</Button>*/}
+                {/*  <Button minWidth>BURN</Button>*/}
+                {/*</div>*/}
               </div>
             </>
           ) : ''}
