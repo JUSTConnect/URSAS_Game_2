@@ -58,7 +58,6 @@ export default (props: props) => {
               }
               onClick={() => {
                 toggleWalletCard(card.tokenId);
-                console.log(props.state.selectedWalletCardIds)
               }}
               {...card}
             />

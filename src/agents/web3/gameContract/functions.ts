@@ -74,3 +74,19 @@ export async function leaveGame(roomLevel: Number, tableIndex: Number, tokenIds:
     console.log(e)
   }
 }
+
+export async function getActiveTablesForPlayer(account: string) {
+  try {
+    return await getGameContract().getActiveTablesForPlayer(account)
+  } catch (e: any) {
+    console.log(e)
+  }
+}
+
+export async function claimSingleGame(roomLevel: Number, tableIndex: Number, salt: Number) {
+  try {
+    return await getGameContract().ClaimSingleGame(roomLevel, tableIndex, salt)
+  } catch (e: any) {
+    console.log(e)
+  }
+}

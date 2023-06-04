@@ -15,6 +15,7 @@ import HeaderBase, {HeaderSection} from '@/components/HeaderBase'
 import {tabs} from '@components/DialogGameAccount'
 import {AppDispatch} from "@/app/store";
 import {useRouter} from "next/router";
+import {claimSingleGame} from "@/agents/web3/gameContract/tables";
 
 interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
 }
@@ -94,7 +95,7 @@ const Header = (props: HeaderProps) => {
         </HeaderSection>
         <HeaderSection>
           {game.claim ? (
-            <Button className={'d-mobile'} onClick={() => dispatch(setClaim(false))}>&nbsp;CLAIM&nbsp;</Button>
+            <Button className={'d-mobile'} onClick={() => claimSingleGame()}>&nbsp;CLAIM&nbsp;</Button>
           ) : ''}
           &nbsp;
           <img className={'d-mobile'} src="/assets/images/icons/chair.svg" alt="chair"/>
@@ -105,7 +106,7 @@ const Header = (props: HeaderProps) => {
             </Badge>
           </div>
           {game.claim ? (
-            <Button className={'d-desktop'} minWidth={true} onClick={() => dispatch(setClaim(false))}>CLAIM</Button>
+            <Button className={'d-desktop'} minWidth={true} onClick={() => claimSingleGame()}>CLAIM</Button>
           ) : ''}
           {game.gameOver ? (
             <>
