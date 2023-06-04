@@ -19,23 +19,23 @@ const DoorList = (props: DoorListProps) => {
 
     return <div className={ css.container }>
         <div className={ css.doorItemList }>
-            <Item
-                level={1}
-                go={ Boolean(account) && props.currentDoor === 1 }
-                onClick={ ()=> props.setCurrentDoor(1) }
-            />
-            <Item
-                level={2}
-                over={ Boolean(account) &&  true}
-                go={ Boolean(account) && props.currentDoor === 2 }
-                onClick={ ()=> props.setCurrentDoor(2) }
-            />
-            { [...Array(14)].map((item, index)=>{
+            {/*<Item*/}
+            {/*    level={1}*/}
+            {/*    go={ Boolean(account) && props.currentDoor === 1 }*/}
+            {/*    onClick={ ()=> props.setCurrentDoor(1) }*/}
+            {/*/>*/}
+            {/*<Item*/}
+            {/*    level={2}*/}
+            {/*    over={ Boolean(account) &&  true}*/}
+            {/*    go={ Boolean(account) && props.currentDoor === 2 }*/}
+            {/*    onClick={ ()=> props.setCurrentDoor(2) }*/}
+            {/*/>*/}
+            { [...Array(16)].map((item, index)=>{
                 return <Item
-                    level={index + 3}
-                    go={ Boolean(account) && props.currentDoor === index+3 }
+                    level={index + 1}
+                    go={ Boolean(account) && props.currentDoor === index+1 }
                     key={index}
-                    onClick={ ()=> props.setCurrentDoor(index+3) }
+                    onClick={ ()=> props.setCurrentDoor(index+1) }
                 />
             }) }
         </div> 
