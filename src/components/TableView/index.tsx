@@ -46,7 +46,6 @@ const TableView = (props: TableViewProps) => {
       if (tokenIds) {
         let suits = await Promise.all(tokenIds.map(async tokenId=> [tokenId, (await getCardDetailSuit(tokenId)) || 's']))
         setSuits(suits as [number, SuitSymbol][])
-        console.log(suits)
         console.log(await getCardDetailSuit(16))
       }
     }

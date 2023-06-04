@@ -8,7 +8,7 @@ import {cardBurn, cardRefund, getCardListUser} from '@/agents/web3/mintContract/
 
 import {AppDispatch, RootState} from '@/app/store'
 import {setGameAccountDialog} from '@/features/mainframe/mainframeSlice'
-import {setWalletCards, cardsStake, cardsBurn} from '@/features/game/gameSlice'
+import {setWalletCards, cardsStake, cardsBurn, setMaxAvailableRoom} from '@/features/game/gameSlice'
 
 import Blur from '@components/Blur'
 import Dialog, {Content, Footer, FooterButtons} from '@components/Dialog'
@@ -51,6 +51,8 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
   const setValues = async () => {
     if (account) {
       let b = await getCardListUser(account)
+      const maxAvailableRoom = Math.min.apply(null, b.map((card) => card.rank))
+      dispatch(setMaxAvailableRoom(maxAvailableRoom))
       dispatch(setWalletCards(b))
     }
   }

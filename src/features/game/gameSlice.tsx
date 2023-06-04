@@ -43,6 +43,9 @@ export const gameSlice = createSlice({
       state.walletCards = action.payload
       state.walletCards.sort((a, b) => a.rank - b.rank)
     },
+    setMaxAvailableRoom: (state, action: PayloadAction<number>) => {
+      state.maxAvailableRoom = action.payload
+    },
     setLoadingRooms: (state, action: PayloadAction<boolean>) => {
       state.loadingRooms = action.payload
     },
@@ -86,6 +89,7 @@ export const gameSlice = createSlice({
 export const {
   setSeason,
   setWalletCards,
+  setMaxAvailableRoom,
   setLoadingRooms,
   setLoadingTables,
   setLoadingTable,

@@ -35,8 +35,6 @@ export default (props: props) => {
 
   const resetStakeCards = () => props.setState({...props.state, selectedWalletCards: []})
 
-  console.log(game.walletCards)
-
   return <div className={
     [
       css.container

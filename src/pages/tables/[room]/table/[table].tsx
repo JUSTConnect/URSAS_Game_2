@@ -8,6 +8,7 @@ import Mainframe from '@components/Mainframe'
 
 import SubHeaderTable from '@components/SubHeaderTable'
 import TableView from '@components/TableView'
+import {clearStakedPlaces} from "@/features/table/tableSlice";
 
 
 export interface query {
@@ -22,6 +23,13 @@ export default function Home() {
   const dispatch = useDispatch()
 
   const [modalActive, setModalActive] = useState(false)
+
+  useEffect(() => {
+    dispatch(clearStakedPlaces())
+    return function () {
+      dispatch(clearStakedPlaces())
+    }
+  }, [])
 
   useEffect(() => {
     setTimeout(() => {

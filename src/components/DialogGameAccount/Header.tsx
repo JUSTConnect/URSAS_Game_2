@@ -2,7 +2,7 @@ import css from './index.module.scss'
 
 import { useDispatch } from 'react-redux'
 import { ethers } from 'ethers'
-import { useEthers, useEtherBalance, TestBNB } from '@usedapp/core'
+import {useEthers, useEtherBalance} from '@usedapp/core'
 
 import { setDisableWalletModal, setConnectWalletModal, setGameAccountDialog } from '@/features/mainframe/mainframeSlice'
 
@@ -24,7 +24,6 @@ export default (props: props) => {
 
     const { account } = useEthers()
     const balance = useEtherBalance(account)
-    console.log(balance)
 
     return (
         <Header>
