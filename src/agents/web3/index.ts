@@ -11,6 +11,11 @@ export type Room = {
     roomIncreaseCounter: number
 }
 
+export type ActiveTable = {
+    roomLevel: number
+    tablesId: number[]
+}
+
 export type Table = {
     currentGameFinishedAt: number
     currentGameStartedAt: number

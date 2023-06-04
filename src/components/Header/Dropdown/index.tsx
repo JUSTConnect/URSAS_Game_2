@@ -17,7 +17,7 @@ type controller = {
 interface DropdownProps extends HTMLAttributes<HTMLDivElement> {
     text: ReactElement
     badgeValue: number | string
-    values: Array<Array<Number>> | null
+    values: Array<Number> | null
     dropdownId: number
     controller?: controller
     rooms?: boolean
@@ -94,14 +94,14 @@ const Dropdown = (props: DropdownProps) => {
                 {props.tables ? (
                   <>
                       {props.values?.map((item, index) => {
-                          return <Link key={index} href={`/tables/${props?.currentRoom}/table/${+item[0] + 1}`} style={{textDecoration: "none"}}
+                          return <Link key={index} href={`/tables/${props?.currentRoom}/table/${+item + 1}`} style={{textDecoration: "none"}}
                                        onClick={() => {
                                            dispatch(setActiveHeaderDropdown(
                                              mainframe.activeHeaderDropdown === props.dropdownId ? 0 : props.dropdownId
                                            ))
                                        }}>
                               <div className={css.dataItem}>
-                                  <><span className={'textMuted'}>Table</span> <span className={'fixNumber'}>№</span>{+item[0] + 1}</>
+                                  <><span className={'textMuted'}>Table</span> <span className={'fixNumber'}>№</span>{+item + 1}</>
                               </div>
                           </Link>
                       })}

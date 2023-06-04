@@ -1,12 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit'
 import type {PayloadAction, Draft} from '@reduxjs/toolkit'
 import {CardNFT} from '@/lib/types/game';
-import {Season} from '@/agents/web3';
-
-export interface tablesClaim {
-  roomLevel: number
-  tablesId: number[]
-}
+import {ActiveTable, Room, Season} from '@/agents/web3';
 
 export interface gameState {
   currentGame: number
@@ -20,7 +15,7 @@ export interface gameState {
   gameCards: CardNFT[]
   maxAvailableRoom: number
   season?: Season
-  tablesClaimReady: tablesClaim[]
+  tablesClaimReady: ActiveTable[]
 }
 
 const initialState: gameState = {
@@ -73,8 +68,18 @@ export const gameSlice = createSlice({
     setGameOver: (state, action: PayloadAction<number>) => {
       state.gameOver = action.payload
     },
-    setTablesClaimReady: (state, action: PayloadAction<tablesClaim[]>) => {
-      state.tablesClaimReady = action.payload
+    setTablesClaimReady: (state, action: PayloadAction<{ tables: ActiveTable[], rooms: Room[] }>) => {
+      // state.tablesClaimReady = action.payload.tables.map((tables, index) => {
+      //   const tablesId = tables.tablesId.map(tableIndex => {
+      //     if (action.payload.rooms[index]?.tables[tableIndex]?.currentGameStartedAt > 0) {
+      //       return tableIndex
+      //     }
+      //   })
+      //   return {
+      //     roomLevel: tables.roomLevel,
+      //     tablesId
+      //   }
+      // })
     },
 
     cardsStake: (state, action: PayloadAction<Draft<number[]>>) => {

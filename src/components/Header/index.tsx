@@ -22,6 +22,7 @@ interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
 
 const Header = (props: HeaderProps) => {
   const [gameOverShow, setGameOverShow] = useState(true)
+  const [playingTablesId, setPlayingTablesId] = useState<number[]>([])
   const [currentRoom, setCurrentRoom] = useState<null | string>(null)
   const dispatch = useDispatch<AppDispatch>()
   const {account} = useEthers()
@@ -40,9 +41,15 @@ const Header = (props: HeaderProps) => {
   }, [levelRoom, account, currentRoom, table])
 
   const game = useSelector((state: RootState) => state.game)
-  const playingTablesId = useSelector((state: RootState) => state.rooms.playingTablesId)
+  const playingRooms = useSelector((state: RootState) => state.rooms.playingTablesId)
   const mainframe = useSelector((state: RootState) => state.mainframe)
   const maxRoom = useSelector((state: RootState) => state.game.maxAvailableRoom)
+
+  useEffect(() => {
+    if (currentRoom) {
+      setPlayingTablesId(playingRooms?.find(({roomLevel}) => roomLevel === +currentRoom)?.tablesId || [])
+    }
+  }, [currentRoom])
 
   return <HeaderBase>
     {account ? (
@@ -77,14 +84,14 @@ const Header = (props: HeaderProps) => {
               <Dropdown
                 loading={game.loadingRooms}
                 values={
-                  playingTablesId?.length && currentRoom ? [...Array(playingTablesId)] : null
+                  playingTablesId?.length && currentRoom ? playingTablesId || null : null
                 }
                 currentRoom={currentRoom}
                 tables={true}
                 dropdownId={2}
                 text={
                   <>
-                    <span className={'d-desktop'}>Tables</span>
+                    <span className={'d-desktop'}>Table</span>
                     <img className={'d-mobile'} src="/assets/images/icons/table.svg" alt=""/>
                   </>
                 }

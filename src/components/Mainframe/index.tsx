@@ -14,7 +14,7 @@ import {setActiveHeaderDropdown} from '@/features/mainframe/mainframeSlice'
 import {setClaim, setGameOver, setSeason, setTablesClaimReady} from '@/features/game/gameSlice'
 import {getSeasonDetail} from '@/agents/web3/gameContract/season'
 import {setLoadingRooms} from '@/features/game/gameSlice'
-import {setRooms} from '@/features/rooms/roomsSlice'
+import {setPlayingTablesId, setRooms} from '@/features/rooms/roomsSlice'
 
 import Blur from '@components/Blur'
 import Sidebar from './Sidebar'
@@ -27,7 +27,7 @@ import ModalDisableWallet from '@components/ModalDisableWallet'
 import DialogGameAccount from '@components/DialogGameAccount'
 import DialogGameInfo, {typePrize} from '@components/DialogGameInfo'
 import DialogMint from '@components/DialogMint'
-import {getTablesClaimReady} from "@/agents/web3/gameContract/tables";
+import {getPlayingTablesInAllRooms} from "@/agents/web3/gameContract/tables";
 
 
 interface MainframeProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -68,10 +68,11 @@ const Mainframe = (props: MainframeProps) => {
 
   useEffect(() => {
     if (account && rooms?.length) {
-      getTablesClaimReady(account, rooms).then((data) => {
-        if (data.length > 0) {
+      getPlayingTablesInAllRooms(account).then((tables) => {
+        if (tables.length > 0) {
           dispatch(setClaim(true))
-          dispatch(setTablesClaimReady(data))
+          dispatch(setPlayingTablesId(tables))
+          dispatch(setTablesClaimReady({tables, rooms}))
         }
       })
     }

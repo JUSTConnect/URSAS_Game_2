@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import { Table as TableData } from '@/agents/web3';
+import {ActiveTable, Table as TableData} from '@/agents/web3';
 import { Room as RoomInfo } from '@/agents/web3';
 import type {PayloadAction} from '@reduxjs/toolkit'
 
@@ -16,7 +16,7 @@ export interface roomsState {
     rooms: RoomInfo[]
     roomsLoading: boolean
     roomInfo: IRoomsInfo[]
-    playingTablesId: number[]
+    playingTablesId: ActiveTable[]
 }
 
 const initialState: roomsState = {
@@ -33,11 +33,15 @@ export const roomsSlice = createSlice({
         setRooms: (state, action: PayloadAction<RoomInfo[]>) => {
             state.rooms = action.payload
         },
+        setPlayingTablesId: (state, action: PayloadAction<ActiveTable[]>) => {
+            state.playingTablesId = action.payload
+        }
     }
 })
 
 export const {
-    setRooms
+    setRooms,
+    setPlayingTablesId
 } = roomsSlice.actions
 
 export default roomsSlice.reducer
