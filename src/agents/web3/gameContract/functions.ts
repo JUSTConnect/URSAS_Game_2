@@ -83,9 +83,17 @@ export async function getActiveTablesForPlayer(account: string) {
   }
 }
 
-export async function claimSingleGame(roomLevel: Number, tableIndex: Number, salt: Number) {
+export async function claimReadyTablesInRoom(roomLevel: Number, salt: Number) {
   try {
-    return await getGameContract().ClaimSingleGame(roomLevel, tableIndex, salt)
+    return await getGameContract().claimReadyTablesInRoom(roomLevel, salt)
+  } catch (e: any) {
+    console.log(e)
+  }
+}
+
+export async function isTableClaimReady (roomLevel: Number, tableIndex: Number) {
+  try {
+    return await getGameContract().isTableClaimReady (roomLevel, tableIndex)
   } catch (e: any) {
     console.log(e)
   }

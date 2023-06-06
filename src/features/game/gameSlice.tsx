@@ -42,6 +42,7 @@ export const gameSlice = createSlice({
     },
     setWalletCards: (state, action: PayloadAction<CardNFT[]>) => {
       state.walletCards = action.payload
+      console.log(action.payload)
       state.walletCards.sort((a, b) => a.rank - b.rank)
     },
     setMaxAvailableRoom: (state, action: PayloadAction<number>) => {
@@ -68,18 +69,8 @@ export const gameSlice = createSlice({
     setGameOver: (state, action: PayloadAction<number>) => {
       state.gameOver = action.payload
     },
-    setTablesClaimReady: (state, action: PayloadAction<{ tables: ActiveTable[], rooms: Room[] }>) => {
-      // state.tablesClaimReady = action.payload.tables.map((tables, index) => {
-      //   const tablesId = tables.tablesId.map(tableIndex => {
-      //     if (action.payload.rooms[index]?.tables[tableIndex]?.currentGameStartedAt > 0) {
-      //       return tableIndex
-      //     }
-      //   })
-      //   return {
-      //     roomLevel: tables.roomLevel,
-      //     tablesId
-      //   }
-      // })
+    setTablesClaimReady: (state, action: PayloadAction<{ roomLevel: number, tablesId: number[] }[]>) => {
+      state.tablesClaimReady = action.payload
     },
 
     cardsStake: (state, action: PayloadAction<Draft<number[]>>) => {

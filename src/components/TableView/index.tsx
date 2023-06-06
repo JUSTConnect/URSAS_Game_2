@@ -42,7 +42,7 @@ const TableView = (props: TableViewProps) => {
 
   const setValues = () => {
     const fetchData = async () => {
-      let tokenIds = returnTable()?.players.map(player => player.tokenId) 
+      let tokenIds = returnTable()?.players.map(player => player.tokenId)
       if (tokenIds) {
         let suits = await Promise.all(tokenIds.map(async tokenId=> [tokenId, (await getCardDetailSuit(tokenId)) || 's']))
         setSuits(suits as [number, SuitSymbol][])
@@ -53,6 +53,7 @@ const TableView = (props: TableViewProps) => {
   }
 
   useEffect(() => {
+    console.log(rooms.rooms)
     setValues()
   }, [returnTable()?.players])
 

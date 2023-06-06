@@ -1,6 +1,8 @@
 import * as gameFunctions from './functions'
 import {BigNumber, ethers} from "ethers";
 import {ActiveTable, Room} from "@/agents/web3";
+import {getRoomDetail} from "@/agents/web3/gameContract/rooms";
+import {RoomLevel} from "@lib/types/game";
 
 export async function enterInGameByTokenIds(roomLevel: number, tableIndex: number, tokenIds: number[]) {
   return await gameFunctions.advancedBulkEnterInGame(roomLevel, tableIndex, tokenIds)
@@ -31,6 +33,28 @@ export async function getPlayingTablesInAllRooms(account: string) {
   return roomsClaim as unknown as ActiveTable[]
 }
 
-export async function claimSingleGame() {
-  // return await gameFunctions.claimSingleGame(16, 1, 0)
+export async function getClaimTablesReady(tables: ActiveTable[], rooms: Room[]) {
+  const claimTablesReady = await Promise.all(tables.map(async (tables, index) => {
+    const tablesId = await Promise.all(tables.tablesId.map(async (tableIndex) => {
+      if (rooms[index]?.tables[tableIndex]?.currentGameStartedAt > 0) {
+        const isTableClaimReady = await gameFunctions.isTableClaimReady(tables.roomLevel, tableIndex)
+        // false?????????
+        if (!isTableClaimReady) {
+          return tableIndex
+        }
+      }
+    })).then((data) => data.filter(table => table !== undefined))
+    if (tablesId.length) {
+      return {
+        roomLevel: tables.roomLevel,
+        tablesId: tablesId.filter(table => table !== undefined)
+      }
+    }
+  })).then((data) => data.filter(tables => tables !== undefined))
+
+  return claimTablesReady as unknown as {roomLevel: number, tablesId: number[]}[]
+}
+
+export async function claimSingleGame(roomLevel: number) {
+  return await gameFunctions.claimReadyTablesInRoom(roomLevel, 0)
 }
