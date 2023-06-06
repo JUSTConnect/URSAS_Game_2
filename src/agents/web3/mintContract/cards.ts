@@ -46,9 +46,9 @@ export const cardBurn = async (tokenId: any) => {
   }
 }
 
-export const cardRefund = async (tokenId: any) => {
+export const cardRefund = async (tokenId: Number[]) => {
   try {
-    await getGameContract().refundYourNFT(tokenId[0], {gasLimit: 3000000})
+    await getGameContract().refundYourNFT(tokenId, {gasLimit: 3000000})
   } catch (e) {
     console.log(e)
   }

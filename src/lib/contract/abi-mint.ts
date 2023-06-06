@@ -197,6 +197,19 @@ export default [
 		"type": "event"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "decrNFTRoomLevel",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -304,7 +317,43 @@ export default [
 				"type": "bool"
 			}
 		],
+		"name": "setIsCommon",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "_value",
+				"type": "bool"
+			}
+		],
 		"name": "setNotTransferable",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_value",
+				"type": "string"
+			}
+		],
+		"name": "setSuit",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

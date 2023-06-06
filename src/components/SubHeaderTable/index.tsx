@@ -48,10 +48,10 @@ const SubHeaderTable = (props: SubHeaderTableProps) => {
         <Info>
           <div className={css.infoContent}>
             <div>
-              Base time: <span className={'textPrimary'}>{ rooms.rooms.length && levelRoom && tableId && rooms.rooms[levelRoom].roomDuration / 3600 }h</span>
+              Base time: <span className={'textPrimary'}>{ rooms.rooms.length && levelRoom && tableId && rooms.rooms[levelRoom - 1].roomDuration / 3600 }h</span>
             </div>
             <div>
-              Increase time: <span className={'textPrimary'}>{ rooms.rooms.length && levelRoom && tableId && rooms.rooms[levelRoom].roomIncreaseCounter / 3600 }h</span>
+              Increase time: <span className={'textPrimary'}>{ rooms.rooms.length && levelRoom && tableId && rooms.rooms[levelRoom - 1].roomIncreaseCounter / 3600 }h</span>
             </div>
             <div>
               Suit: <span className={'textPrimary'}>{ game?.season && SuitsGetName[game.season.trump] }</span>

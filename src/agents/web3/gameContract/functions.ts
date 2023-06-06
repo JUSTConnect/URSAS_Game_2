@@ -57,10 +57,10 @@ export async function trump(): Promise<0 | 1 | 2 | 3> {
   }
 }
 
-export async function bulkEnterInGame(roomLevel: Number, tableIndex: Number, tokenIds: Number[]) {
+export async function advancedBulkEnterInGame(roomLevel: Number, tableIndex: Number, tokenIds: Number[]) {
   // while (true) {
   try {
-    return await getGameContract().BulkEnterInGame(roomLevel, tableIndex, tokenIds, {gasLimit: 3000000})
+    return await getGameContract().advancedBulkEnterInGame(roomLevel, tableIndex, tokenIds, {gasLimit: 3000000})
   } catch {
     delay(1000)
   }

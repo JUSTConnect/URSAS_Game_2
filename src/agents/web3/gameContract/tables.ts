@@ -3,7 +3,7 @@ import {BigNumber, ethers} from "ethers";
 import {ActiveTable, Room} from "@/agents/web3";
 
 export async function enterInGameByTokenIds(roomLevel: number, tableIndex: number, tokenIds: number[]) {
-  return await gameFunctions.bulkEnterInGame(roomLevel, tableIndex, tokenIds)
+  return await gameFunctions.advancedBulkEnterInGame(roomLevel, tableIndex, tokenIds)
 }
 
 export async function removeInGameByTokenIds(roomLevel: number, tableIndex: number, tokenIds: number[]) {
@@ -13,7 +13,6 @@ export async function removeInGameByTokenIds(roomLevel: number, tableIndex: numb
 export async function getPlayingTablesInAllRooms(account: string) {
   // получить все столы(можно узнать занятые юзером столы не проходя через массив мест каждого стола)
   const rooms: BigNumber[][] = await gameFunctions.getActiveTablesForPlayer(account)
-  console.log(rooms)
   const roomsClaim = rooms.map((tables, roomIndex) => {
     // массив индексов столов на которых играет юзер
     const tablesId = tables.map((table, tableIndex) => {

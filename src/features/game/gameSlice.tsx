@@ -25,7 +25,7 @@ const initialState: gameState = {
   loadingTables: true,
   loadingTable: true,
   claim: false,
-  gameOver: 0,
+  gameOver: 1,
   walletCards: [],
   gameCards: [],
   maxAvailableRoom: 17,

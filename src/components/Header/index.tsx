@@ -68,7 +68,7 @@ const Header = (props: HeaderProps) => {
               <Dropdown
                 loading={game.loadingRooms}
                 values={
-                  [...Array(17 - maxRoom)]
+                  [...Array(17 - Number(maxRoom))]
                 }
                 rooms={true}
                 dropdownId={1}
@@ -109,7 +109,7 @@ const Header = (props: HeaderProps) => {
           <div className={css.places}>
             <span className={['d-desktop', 'textMuted'].join(' ')}>Places&nbsp;</span>
             <Badge loading={!Boolean(game.walletCards.length)} mobileTransparrent={true}>
-              {game.walletCards.filter(card=>card.playing).length}/{game.walletCards.length}
+              {game.walletCards.filter(card => card.playing).length}/{game.walletCards.length}
             </Badge>
           </div>
           {game.claim ? (
