@@ -59,7 +59,7 @@ const Mainframe = (props: MainframeProps) => {
 
     fetchData().then(c => {
       if (c[0].availableTablesCount === 0) {
-        dispatch(setGameOver(1))
+        // dispatch(setGameOver(1))
       }
 
       dispatch(setRooms(c))

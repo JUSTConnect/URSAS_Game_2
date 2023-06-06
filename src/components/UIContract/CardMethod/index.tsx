@@ -31,7 +31,7 @@ const input_types = {
 type input_type = typeof input_types
 
 export default (props: props) => {
-    const inputs = props.item.inputs.map(item=>item.name)
+    const inputs = props.item.inputs?.map(item=>item.name)
     type input = typeof inputs
     const [result, setResult] = useState<string>('')
     const [values, setValues] = useState<input>([])
@@ -42,7 +42,7 @@ export default (props: props) => {
     useEffect(() => {
         let values = Object()
 
-        props.item.inputs.forEach(input => {
+        props.item.inputs?.forEach(input => {
             values[input.name] = ''
         })
         setValues(values)
@@ -51,7 +51,7 @@ export default (props: props) => {
         <div className={ css.card }>
             { props.item.name } ({ props.item.type } - { props.item.stateMutability })
             <div>
-                { props.item.inputs.map((input, index)=>(
+                { props.item.inputs?.map((input, index)=>(
                     <div key={ index }>
                         <input
                             type={ input_types[input.type] }
@@ -86,7 +86,7 @@ export default (props: props) => {
             <button
                 className={ css.button }
                 onClick={ () => {
-                    props.item.inputs.map(
+                    props.item.inputs?.map(
                         (input) => input.name
                     )
                 } }
