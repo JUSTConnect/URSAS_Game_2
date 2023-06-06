@@ -102,7 +102,9 @@ const Header = (props: HeaderProps) => {
         </HeaderSection>
         <HeaderSection>
           {game.claim ? (
-            <Button className={'d-mobile'} onClick={() => claimSingleGame()}>&nbsp;CLAIM&nbsp;</Button>
+            <Button className={'d-mobile'} onClick={() => {
+              // claimSingleGame()
+            }}>&nbsp;CLAIM&nbsp;</Button>
           ) : ''}
           &nbsp;
           <img className={'d-mobile'} src="/assets/images/icons/chair.svg" alt="chair"/>
@@ -113,7 +115,9 @@ const Header = (props: HeaderProps) => {
             </Badge>
           </div>
           {game.claim ? (
-            <Button className={'d-desktop'} minWidth={true} onClick={() => claimSingleGame()}>CLAIM</Button>
+            <Button className={'d-desktop'} minWidth={true} onClick={() => {
+              // claimSingleGame()
+            }}>CLAIM</Button>
           ) : ''}
           {game.gameOver ? (
             <>
