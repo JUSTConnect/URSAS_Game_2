@@ -118,6 +118,10 @@ export const tableSlice = createSlice({
     setModalAlert: (state, action: PayloadAction<string>) => {
       state.modalAlert = action.payload
     },
+
+    setLoaderButton: (state, action: PayloadAction<boolean>) => {
+      state.loadingButton = action.payload
+}
   }
 })
 
@@ -139,6 +143,7 @@ export const {
   clearBasketPlaces,
   clearTable,
 
+  setLoaderButton,
   setBasketTimer,
   setModalAlert,
   setChoosingCardPlace,

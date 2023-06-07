@@ -14,7 +14,7 @@ import {
   clearBasketPlaces,
   removeBasketPlaces,
   setBasketPlaces,
-  setBasketTimer
+  setBasketTimer, setLoaderButton
 } from '@/features/table/tableSlice'
 import {enterInGameByTokenIds, removeInGameByTokenIds} from '@/agents/web3/gameContract/tables'
 import Dialog, {Header, HeaderButtons, Footer, FooterButtons, Content} from '@components/Dialog'
@@ -25,6 +25,7 @@ import Card from '@components/Card'
 import Place from './Place'
 import PlaceButton from './PlaceButton'
 import Countdown, {zeroPad} from "react-countdown";
+import {setRefetch} from "@/features/mainframe/mainframeSlice";
 
 
 interface props extends React.HTMLAttributes<HTMLDivElement> {
@@ -93,12 +94,19 @@ export default (props: props) => {
                   size={ButtonSize.SM}
                   onClick={() => {
                     setChangeTime(true)
+                    dispatch(setLoaderButton(true))
                     const cartsId = table.basketPlaces.map(({card}) => +card.tokenId)
                     enterInGameByTokenIds(
                       Number(router.query.room),
                       Number(router.query.table) - 1,
                       cartsId
-                    )
+                    ).then((data) => {
+                      if (data) {
+                        dispatch(setRefetch(true))
+                      }
+                    }).finally(() => {
+                      dispatch(setLoaderButton(false))
+                    })
                     // setBasketPlaces([])
                   }}
                 >
@@ -194,12 +202,18 @@ export default (props: props) => {
                 )}
                 {Boolean(table.stakedPlaces.length) && (
                   <PlaceButton active={table.loadingButton ? 0 : selectedStakedPlaces.length} onClick={() => {
+                    dispatch(setLoaderButton(true))
                     const cartsId = table.stakedPlaces.filter(({card}, index) => {
                       if (selectedStakedPlaces.includes(index + 1))
                         return true
                     }).map(({card}) => +card.tokenId)
-                    removeInGameByTokenIds(Number(router.query.room),
-                      Number(router.query.table) - 1, cartsId)
+                    removeInGameByTokenIds(Number(router.query.room), Number(router.query.table) - 1, cartsId).then((data) => {
+                      if (data) {
+                        dispatch(setRefetch(true))
+                      }
+                    }).finally(() => {
+                      dispatch(setLoaderButton(false))
+                    })
                   }}>
                     return
                   </PlaceButton>
@@ -253,8 +267,16 @@ export default (props: props) => {
               <FooterButtons>
                 {Boolean(table.stakedPlaces.length) &&
                   <Button
-                    onClick={() => {
-                      const cartsId = table.stakedPlaces.map(({card}) => +card.tokenId * 10 ** 18)
+                    onClick={async () => {
+                      dispatch(setLoaderButton(true))
+                      const cartsId = table.stakedPlaces.map(({card}) => +card.tokenId)
+                      removeInGameByTokenIds(Number(router.query.room), Number(router.query.table) - 1, cartsId).then((data) => {
+                        if (data) {
+                          dispatch(setRefetch(true))
+                        }
+                      }).finally(() => {
+                        dispatch(setLoaderButton(false))
+                      })
                     }}
                     color={ButtonColor.DARK}
                     size={ButtonSize.SM}

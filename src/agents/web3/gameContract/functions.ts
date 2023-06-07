@@ -60,7 +60,15 @@ export async function trump(): Promise<0 | 1 | 2 | 3> {
 export async function advancedBulkEnterInGame(roomLevel: Number, tableIndex: Number, tokenIds: Number[]) {
   // while (true) {
   try {
-    return await getGameContract().advancedBulkEnterInGame(roomLevel, tableIndex, tokenIds, {gasLimit: 3000000})
+    const transaction = await getGameContract().advancedBulkEnterInGame(roomLevel, tableIndex, tokenIds, {gasLimit: 3000000})
+    return await transaction.wait().then(async (receipt: any) => {
+      if (receipt && receipt.status == 1) {
+        return true
+      }
+    }).catch((e: any) => {
+      console.log(e)
+      return false
+    })
   } catch {
     delay(1000)
   }
@@ -69,7 +77,15 @@ export async function advancedBulkEnterInGame(roomLevel: Number, tableIndex: Num
 
 export async function leaveGame(roomLevel: Number, tableIndex: Number, tokenIds: Number[]) {
   try {
-    return await getGameContract().leaveGame(roomLevel, tableIndex, tokenIds)
+    const transaction = await getGameContract().leaveGame(roomLevel, tableIndex, tokenIds)
+    return await transaction.wait().then(async (receipt: any) => {
+      if (receipt && receipt.status == 1) {
+        return true
+      }
+    }).catch((e: any) => {
+      console.log(e)
+      return false
+    })
   } catch (e: any) {
     console.log(e)
   }
@@ -85,15 +101,15 @@ export async function getActiveTablesForPlayer(account: string) {
 
 export async function claimReadyTablesInRoom(roomLevel: Number, salt: Number) {
   try {
-    return await getGameContract().claimReadyTablesInRoom(roomLevel, salt)
+    return await getGameContract().claimReadyTablesInRoom(roomLevel, salt, {gasLimit: 3000000})
   } catch (e: any) {
     console.log(e)
   }
 }
 
-export async function isTableClaimReady (roomLevel: Number, tableIndex: Number) {
+export async function isTableClaimReady(roomLevel: Number, tableIndex: Number) {
   try {
-    return await getGameContract().isTableClaimReady (roomLevel, tableIndex)
+    return await getGameContract().isTableClaimReady(roomLevel, tableIndex)
   } catch (e: any) {
     console.log(e)
   }

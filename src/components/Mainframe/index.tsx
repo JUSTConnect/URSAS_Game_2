@@ -10,7 +10,7 @@ import {RoomLevel} from '@/lib/types/game'
 
 import {RootState} from '@/app/store'
 import {getRoomDetail} from '@/agents/web3/gameContract/rooms'
-import {setActiveHeaderDropdown} from '@/features/mainframe/mainframeSlice'
+import {setActiveHeaderDropdown, setRefetch} from '@/features/mainframe/mainframeSlice'
 import {setClaim, setGameOver, setSeason, setTablesClaimReady} from '@/features/game/gameSlice'
 import {getSeasonDetail} from '@/agents/web3/gameContract/season'
 import {setLoadingRooms} from '@/features/game/gameSlice'
@@ -44,27 +44,31 @@ const Mainframe = (props: MainframeProps) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(setLoadingRooms(false))
-    }, 500)
+    if (mainframe.refetch) {
+      setTimeout(() => {
+        dispatch(setLoadingRooms(false))
+      }, 500)
 
-    const fetchData = async () => {
-      dispatch(setSeason(await getSeasonDetail()))
-      let rooms = await Promise.all(Array.from(Array(16)).map(async (i, index) => {
-        return await getRoomDetail(index + 1 as RoomLevel)
-      }))
+      const fetchData = async () => {
+        dispatch(setSeason(await getSeasonDetail()))
+        let rooms = await Promise.all(Array.from(Array(16)).map(async (i, index) => {
+          return await getRoomDetail(index + 1 as RoomLevel)
+        }))
 
-      return rooms as unknown as Room[]
-    }
-
-    fetchData().then(c => {
-      if (c[0].availableTablesCount === 0) {
-        // dispatch(setGameOver(1))
+        return rooms as unknown as Room[]
       }
 
-      dispatch(setRooms(c))
-    })
-  }, [])
+      fetchData().then(c => {
+        if (c[0].availableTablesCount === 0) {
+          dispatch(setGameOver(1))
+        }
+
+        dispatch(setRooms(c))
+      })
+    }
+
+    dispatch(setRefetch(false))
+  }, [mainframe.refetch])
 
   useEffect(() => {
     if (account && rooms?.length) {
@@ -72,7 +76,6 @@ const Mainframe = (props: MainframeProps) => {
         if (tables.length > 0) {
           dispatch(setPlayingTablesId(tables))
           getClaimTablesReady(tables, rooms).then((data) => {
-            console.log(data)
             if (data.length) {
               dispatch(setClaim(true))
               dispatch(setTablesClaimReady(data))
@@ -81,6 +84,7 @@ const Mainframe = (props: MainframeProps) => {
         }
       })
     }
+    dispatch(setRefetch(false))
   }, [account, rooms])
 
   return (

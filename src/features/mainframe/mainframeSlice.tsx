@@ -15,6 +15,7 @@ export interface mainframeState {
     gameAccountDialog: [boolean, dialogGameAccountTabs]
     gameInfoDialog: boolean
     mintDialog: boolean
+    refetch: boolean
 }
 
 const initialState: mainframeState = {
@@ -27,7 +28,8 @@ const initialState: mainframeState = {
     activeHeaderDropdown: 0,
     gameAccountDialog: [false, dialogGameAccountTabs.WALLET],
     gameInfoDialog: false,
-    mintDialog: false
+    mintDialog: false,
+    refetch: true
 }
 
 export const mainframeSlice = createSlice({
@@ -76,6 +78,9 @@ export const mainframeSlice = createSlice({
 
             state.layer2Blured = false
             state.activeHeaderDropdown = 0
+        },
+        setRefetch: (state, action: PayloadAction<boolean>) => {
+            state.refetch = action.payload
         }
     }
 })
@@ -87,6 +92,7 @@ export const {
     setActiveHeaderDropdown,
     setGameAccountDialog,
     setGameInfoDialog,
-    setMintDialog
+    setMintDialog,
+    setRefetch
 } = mainframeSlice.actions
 export default mainframeSlice.reducer

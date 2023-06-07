@@ -15,7 +15,7 @@ import HeaderBase, {HeaderSection} from '@/components/HeaderBase'
 import {tabs} from '@components/DialogGameAccount'
 import {AppDispatch} from "@/app/store";
 import {useRouter} from "next/router";
-import {claimSingleGame} from "@/agents/web3/gameContract/tables";
+import {claim} from "@/agents/web3/gameContract/tables";
 
 interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
 }
@@ -29,6 +29,7 @@ const Header = (props: HeaderProps) => {
   const router = useRouter()
   const levelRoom = router?.query?.room || 0
   const table = useSelector((state: RootState) => state.table.tableData)
+  const gameTablesClaim = useSelector((state: RootState) => state.game.tablesClaimReady)
 
   useEffect(() => {
     if (currentRoom && account) {
@@ -116,7 +117,7 @@ const Header = (props: HeaderProps) => {
           </div>
           {game.claim ? (
             <Button className={'d-desktop'} minWidth={true} onClick={() => {
-              // claimSingleGame()
+              claim(gameTablesClaim)
             }}>CLAIM</Button>
           ) : ''}
           {game.gameOver ? (

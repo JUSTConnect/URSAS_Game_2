@@ -8,6 +8,7 @@ import Mainframe from '@components/Mainframe'
 import SubHeaderRooms from '@components/SubHeaderRooms'
 import RoomsDoorSlider from '@components/RoomsDoorSlider'
 import {getGameContract} from "@lib/utils/web3";
+import LoaderScreen from "@components/LoaderScreen";
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -22,6 +23,7 @@ export default function Home() {
 
   return (
     <>
+      <LoaderScreen/>
       <Head>
         <title>Poker Rooms</title>
       </Head>

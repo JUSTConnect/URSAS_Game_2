@@ -13,9 +13,9 @@ export async function removeInGameByTokenIds(roomLevel: number, tableIndex: numb
 }
 
 export async function getPlayingTablesInAllRooms(account: string) {
-  // получить все столы(можно узнать занятые юзером столы не проходя через массив мест каждого стола)
+  // получить все столы(можно узнать занятые юзером столы не проходя по массиву мест каждого стола)
   const rooms: BigNumber[][] = await gameFunctions.getActiveTablesForPlayer(account)
-  const roomsClaim = rooms.map((tables, roomIndex) => {
+  const roomsClaim = rooms?.map((tables, roomIndex) => {
     // массив индексов столов на которых играет юзер
     const tablesId = tables.map((table, tableIndex) => {
       const isActive = !!Number(ethers.utils.formatEther(table))
@@ -29,7 +29,7 @@ export async function getPlayingTablesInAllRooms(account: string) {
       roomLevel: roomIndex + 1,
       tablesId
     }
-  }).filter(tables => tables !== undefined)
+  }).filter(tables => tables !== undefined) || []
   return roomsClaim as unknown as ActiveTable[]
 }
 
@@ -38,7 +38,6 @@ export async function getClaimTablesReady(tables: ActiveTable[], rooms: Room[]) 
     const tablesId = await Promise.all(tables.tablesId.map(async (tableIndex) => {
       if (rooms[index]?.tables[tableIndex]?.currentGameStartedAt > 0) {
         const isTableClaimReady = await gameFunctions.isTableClaimReady(tables.roomLevel, tableIndex)
-        // false?????????
         if (!isTableClaimReady) {
           return tableIndex
         }
@@ -52,9 +51,11 @@ export async function getClaimTablesReady(tables: ActiveTable[], rooms: Room[]) 
     }
   })).then((data) => data.filter(tables => tables !== undefined))
 
-  return claimTablesReady as unknown as {roomLevel: number, tablesId: number[]}[]
+  return claimTablesReady as unknown as { roomLevel: number, tablesId: number[] }[]
 }
 
-export async function claimSingleGame(roomLevel: number) {
-  return await gameFunctions.claimReadyTablesInRoom(roomLevel, 0)
+export async function claim(roomLevels: ActiveTable[]) {
+  roomLevels.map(async ({roomLevel}) => {
+    await gameFunctions.claimReadyTablesInRoom(roomLevel, 111)
+  })
 }

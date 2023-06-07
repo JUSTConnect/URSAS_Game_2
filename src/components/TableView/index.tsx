@@ -53,7 +53,6 @@ const TableView = (props: TableViewProps) => {
   }
 
   useEffect(() => {
-    console.log(rooms.rooms)
     setValues()
   }, [returnTable()?.players])
 

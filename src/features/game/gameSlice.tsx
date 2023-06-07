@@ -41,8 +41,8 @@ export const gameSlice = createSlice({
       state.season = action.payload
     },
     setWalletCards: (state, action: PayloadAction<CardNFT[]>) => {
-      state.walletCards = action.payload
       console.log(action.payload)
+      state.walletCards = action.payload
       state.walletCards.sort((a, b) => a.rank - b.rank)
     },
     setMaxAvailableRoom: (state, action: PayloadAction<number>) => {

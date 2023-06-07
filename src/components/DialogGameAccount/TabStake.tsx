@@ -1,14 +1,16 @@
 import css from './index.module.scss'
 
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 
-import {RootState} from '@/app/store'
+import {AppDispatch, RootState} from '@/app/store'
 
 import Button, {Size as ButtonSize, Variant as ButtonVariant, Color as ButtonColor} from '@components/UIButton'
 import Card from '@components/Card'
 
 import {state} from '.'
 import {enterInGameByTokenIds} from "@/agents/web3/gameContract/tables";
+import {useState} from "react";
+import {setLoaderButton} from "@/features/table/tableSlice";
 
 
 interface props {
@@ -18,6 +20,8 @@ interface props {
 
 export default (props: props) => {
   const game = useSelector((state: RootState) => state.game)
+  const [loader, setLoader] = useState(false)
+  const dispatch = useDispatch<AppDispatch>()
 
   const toggleStakeCard = (tokenId: Number) => {
     props.setState({
@@ -33,7 +37,6 @@ export default (props: props) => {
     selectedStakeCardIds: game.walletCards
       .filter(card => card.rank === 1)
       .map(card => {
-        console.log(card.tokenId)
         return card.tokenId
       })
   })
@@ -118,12 +121,17 @@ export default (props: props) => {
     </div>
     {Boolean(props.state.selectedStakeCardIds.length) &&
       <Button
+        disabled={loader}
         size={ButtonSize.SM}
         color={ButtonColor.DARK}
         variant={ButtonVariant.NORMAL}
         className={css.arrowFirst}
         onClick={() => {
-          enterInGameByTokenIds(1, 0, props.state.selectedStakeCardIds as number[])
+          setLoader(true)
+          enterInGameByTokenIds(1, 0, props.state.selectedStakeCardIds as number[]).finally(() => {
+            dispatch(setLoaderButton(false))
+            setLoader(false)
+          })
         }
         }
       >
