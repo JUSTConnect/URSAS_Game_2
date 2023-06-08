@@ -71,16 +71,16 @@ export default (props: props) => {
       </div>
     </div>
     <div className={css.footer}>
-      <button onClick={selectWalletCards} className={css.footerButton}>
-                <span className={css.footerButtonText}>
-                    select all
-                </span>
-      </button>
-      <button onClick={resetStakeCards} className={css.footerButton}>
-                <span className={css.footerButtonText}>
-                    reset all
-                </span>
-      </button>
+      {/*<button onClick={selectWalletCards} className={css.footerButton}>*/}
+      {/*          <span className={css.footerButtonText}>*/}
+      {/*              select all*/}
+      {/*          </span>*/}
+      {/*</button>*/}
+      {/*<button onClick={resetStakeCards} className={css.footerButton}>*/}
+      {/*          <span className={css.footerButtonText}>*/}
+      {/*              reset all*/}
+      {/*          </span>*/}
+      {/*</button>*/}
     </div>
     {/*<div className={css.gameOverButtons}>*/}
     {/*</div>*/}

@@ -59,3 +59,7 @@ export async function claim(roomLevels: ActiveTable[]) {
     await gameFunctions.claimReadyTablesInRoom(roomLevel, 111)
   })
 }
+
+export async function getCurrentTableGameEnd(roomLevel: Number, tableIndex: Number) {
+  return await gameFunctions.getTimeWhenTableIsClaimReady(roomLevel, tableIndex)
+}

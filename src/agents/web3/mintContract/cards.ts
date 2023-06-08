@@ -40,7 +40,15 @@ export const cardMint = async (level: RoomLevel, amount: number) => {
 
 export const cardBurn = async (tokenId: any) => {
   try {
-    await getMintContract().burn(tokenId[0])
+    const transaction = await getMintContract().burn(tokenId[0])
+    return await transaction.wait().then(async (receipt: any) => {
+      if (receipt && receipt.status == 1) {
+        return true
+      }
+    }).catch((e: any) => {
+      console.log(e)
+      return false
+    })
   } catch (e) {
     console.log(e)
   }
@@ -48,7 +56,15 @@ export const cardBurn = async (tokenId: any) => {
 
 export const cardRefund = async (tokenId: Number[]) => {
   try {
-    await getGameContract().refundYourNFT(tokenId, {gasLimit: 3000000})
+    const transaction = await getGameContract().refundYourNFT(tokenId, {gasLimit: 3000000})
+    return await transaction.wait().then(async (receipt: any) => {
+      if (receipt && receipt.status == 1) {
+        return true
+      }
+    }).catch((e: any) => {
+      console.log(e)
+      return false
+    })
   } catch (e) {
     console.log(e)
   }

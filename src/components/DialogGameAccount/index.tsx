@@ -7,7 +7,7 @@ import {useEthers} from '@usedapp/core'
 import {cardBurn, cardRefund, getCardListUser} from '@/agents/web3/mintContract/cards'
 
 import {AppDispatch, RootState} from '@/app/store'
-import {setGameAccountDialog} from '@/features/mainframe/mainframeSlice'
+import {setGameAccountDialog, setRefetch} from '@/features/mainframe/mainframeSlice'
 import {setWalletCards, cardsStake, cardsBurn, setMaxAvailableRoom} from '@/features/game/gameSlice'
 
 import Blur from '@components/Blur'
@@ -35,6 +35,7 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
 
   const mainframe = useSelector((state: RootState) => state.mainframe)
   const game = useSelector((state: RootState) => state.game)
+  const [loader, setLoader] = useState(false)
 
   const [state, setState] = useState<state>({
     selectedWalletCardIds: [],
@@ -46,7 +47,7 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
 
   useEffect(() => {
     setTimeout(setValues, 1000)
-  }, [])
+  }, [mainframe.refetch])
 
   const setValues = async () => {
     if (account) {
@@ -103,11 +104,16 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                   {mainframe.gameAccountDialog[1] == tabs.WALLET && !!game.gameOver &&
                     <>
                       <Button
-                        style={{width: '50%'}}
+                        style={loader ? {width: '50%', opacity: '0.5'} : {width: '50%'}}
                         onClick={() => {
-                          cardRefund(state.selectedWalletCardIds)
-                        }
-                        }
+                          setLoader(true)
+                          cardRefund(state.selectedWalletCardIds).finally(() => {
+                            console.log('render')
+                            setLoader(false)
+                            dispatch(setRefetch(true))
+                          })
+                        }}
+                        disabled={loader}
                         // color={ButtonColor.LIGHT}
                         // size={ButtonSize.SM}
                         // fullWidth
@@ -120,11 +126,16 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                         refund
                       </Button>
                       <Button
-                        style={{width: '50%'}}
+                        style={loader ? {width: '50%', opacity: '0.5'} : {width: '50%'}}
                         onClick={() => {
-                          cardBurn(state.selectedWalletCardIds)
-                        }
-                        }
+                          setLoader(true)
+                          cardBurn(state.selectedWalletCardIds).finally(() => {
+                            console.log('render')
+                            setLoader(false)
+                            dispatch(setRefetch(true))
+                          })
+                        }}
+                        disabled={loader}
                         //color={ButtonColor.LIGHT}
                         //size={ButtonSize.SM}
                         //fullWidth

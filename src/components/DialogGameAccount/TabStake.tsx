@@ -11,6 +11,7 @@ import {state} from '.'
 import {enterInGameByTokenIds} from "@/agents/web3/gameContract/tables";
 import {useState} from "react";
 import {setLoaderButton} from "@/features/table/tableSlice";
+import {setRefetch} from "@/features/mainframe/mainframeSlice";
 
 
 interface props {
@@ -20,7 +21,7 @@ interface props {
 
 export default (props: props) => {
   const game = useSelector((state: RootState) => state.game)
-  const [loader, setLoader] = useState(false)
+  const loader = useSelector((state: RootState) => state.table.loadingButton)
   const dispatch = useDispatch<AppDispatch>()
 
   const toggleStakeCard = (tokenId: Number) => {
@@ -127,11 +128,10 @@ export default (props: props) => {
         variant={ButtonVariant.NORMAL}
         className={css.arrowFirst}
         onClick={() => {
-          setLoader(true)
-          enterInGameByTokenIds(1, 0, props.state.selectedStakeCardIds as number[]).finally(() => {
-            dispatch(setLoaderButton(false))
-            setLoader(false)
-          })
+          dispatch(setLoaderButton(true))
+          enterInGameByTokenIds(1, 0, props.state.selectedStakeCardIds as number[]).then(() => {
+            dispatch(setRefetch(true))
+          }).catch(() => dispatch(setLoaderButton(true)))
         }
         }
       >

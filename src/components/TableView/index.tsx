@@ -1,21 +1,21 @@
 import css from './index.module.css'
 
-import { useEffect } from 'react'
+import {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {useRouter} from 'next/router'
 import {useEthers} from '@usedapp/core'
 
 import {RootState} from '@/app/store'
-import { SuitSymbol } from '@/lib/types/game'
-import { getCardDetailSuit } from '@/agents/web3/mintContract/cards'
+import {SuitSymbol} from '@/lib/types/game'
+import {getCardDetailSuit} from '@/agents/web3/mintContract/cards'
 import DialogPlace from '@components/DialogPlace'
 import Blur from '@components/Blur'
 
-import { RoomLevel } from '@/lib/types/game'
-import {addStakedPlace, setChoosingCardPlace} from '@/features/table/tableSlice'
+import {RoomLevel} from '@/lib/types/game'
+import {addStakedPlace, clearBasketPlaces, clearStakedPlaces, setChoosingCardPlace} from '@/features/table/tableSlice'
 import Place from './Place'
 import Sofa from './Sofa'
-import { useState } from 'react'
+import {useState} from 'react'
 
 
 interface TableViewProps {
@@ -26,17 +26,17 @@ interface TableViewProps {
 
 const TableView = (props: TableViewProps) => {
   const router = useRouter()
-  const { room, table } = router.query
+  const {room, table} = router.query
   const dispatch = useDispatch()
   const game = useSelector((state: RootState) => state.game)
   const rooms = useSelector((state: RootState) => state.rooms)
   const tableStore = useSelector((state: RootState) => state.table)
   const {account} = useEthers()
-  const [suits, setSuits] = useState<[number, SuitSymbol][]|undefined>()
+  const [suits, setSuits] = useState<[number, SuitSymbol][] | undefined>()
 
   const returnTable = () => {
     if (room && rooms.rooms.length) {
-      return rooms.rooms[Number(room) - 1].tables[Number(table)-1]
+      return rooms.rooms[Number(room) - 1].tables[Number(table) - 1]
     }
   }
 
@@ -44,7 +44,7 @@ const TableView = (props: TableViewProps) => {
     const fetchData = async () => {
       let tokenIds = returnTable()?.players.map(player => player.tokenId)
       if (tokenIds) {
-        let suits = await Promise.all(tokenIds.map(async tokenId=> [tokenId, (await getCardDetailSuit(tokenId)) || 's']))
+        let suits = await Promise.all(tokenIds.map(async tokenId => [tokenId, (await getCardDetailSuit(tokenId)) || 's']))
         setSuits(suits as [number, SuitSymbol][])
         console.log(await getCardDetailSuit(16))
       }
@@ -53,6 +53,8 @@ const TableView = (props: TableViewProps) => {
   }
 
   useEffect(() => {
+    dispatch(clearStakedPlaces())
+    dispatch(clearBasketPlaces())
     setValues()
   }, [returnTable()?.players])
 
@@ -70,27 +72,31 @@ const TableView = (props: TableViewProps) => {
         </div>
       </div>
       <img className={css.cocaCola} src="/assets/images/texture/table-coca-cola.png" alt="Coca Cola"/>
-      { (suits && returnTable()?.players && suits?.length) ? returnTable()?.players.map((player, index) => {
-        if (player.address === account) {dispatch(addStakedPlace({
-          number: index+1,
-          card: {
-            rank: Number(room) as RoomLevel,
-            suit: 's',
-            tokenId: player.tokenId,
-          }
-        }))}
+      {(suits && returnTable()?.players && suits?.length) ? returnTable()?.players.map((player, index) => {
+        if (player.address === account) {
+          dispatch(addStakedPlace({
+            number: index + 1,
+            card: {
+              rank: Number(room) as RoomLevel,
+              suit: 's',
+              tokenId: player.tokenId,
+            }
+          }))
+        }
+
+
         return (
           <div key={index}>
             <Sofa
               number={index + 1}
-              active={Boolean(player.tokenId) }
+              active={Boolean(player.tokenId)}
               // active={!!game.walletCards.find(card=>card.tokenId === player.tokenId)}
             />
             <Place
               number={index + 1}
               className={css[`place${index + 1}`]}
               basket={tableStore.basketPlaces.map(item => item.number).includes(index + 1)}
-              staked={game.walletCards.map(card=>card.tokenId).includes(player.tokenId)}
+              staked={game.walletCards.map(card => card.tokenId).includes(player.tokenId)}
               // loading={true}
               // choosing={table.choosingCardPlace === index + 1}
               onClick={() => handleClickPlace(index + 1)}
@@ -110,7 +116,7 @@ const TableView = (props: TableViewProps) => {
             />
           </div>
         )
-      }) : Array.from(Array(10)).map((i, index)=>(
+      }) : Array.from(Array(10)).map((i, index) => (
         <div key={index}>
           <Sofa
             number={index + 1}

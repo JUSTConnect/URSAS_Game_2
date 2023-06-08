@@ -77,7 +77,7 @@ export async function advancedBulkEnterInGame(roomLevel: Number, tableIndex: Num
 
 export async function leaveGame(roomLevel: Number, tableIndex: Number, tokenIds: Number[]) {
   try {
-    const transaction = await getGameContract().leaveGame(roomLevel, tableIndex, tokenIds)
+    const transaction = await getGameContract().leaveGame(roomLevel, tableIndex, tokenIds, {gasLimit: 3000000})
     return await transaction.wait().then(async (receipt: any) => {
       if (receipt && receipt.status == 1) {
         return true
@@ -110,6 +110,22 @@ export async function claimReadyTablesInRoom(roomLevel: Number, salt: Number) {
 export async function isTableClaimReady(roomLevel: Number, tableIndex: Number) {
   try {
     return await getGameContract().isTableClaimReady(roomLevel, tableIndex)
+  } catch (e: any) {
+    console.log(e)
+  }
+}
+
+export async function amountPlayersUntilCurrentRaffle() {
+  try {
+    return await getGameContract().amountPlayersUntilCurrentRaffle()
+  } catch (e: any) {
+    console.log(e)
+  }
+}
+
+export async function getTimeWhenTableIsClaimReady(roomLevel: Number, tableIndex: Number) {
+  try {
+    return await getGameContract().getTimeWhenTableIsClaimReady(roomLevel, tableIndex)
   } catch (e: any) {
     console.log(e)
   }

@@ -28,6 +28,7 @@ import DialogGameAccount from '@components/DialogGameAccount'
 import DialogGameInfo, {typePrize} from '@components/DialogGameInfo'
 import DialogMint from '@components/DialogMint'
 import {getClaimTablesReady, getPlayingTablesInAllRooms} from "@/agents/web3/gameContract/tables";
+import {setLoaderButton} from "@/features/table/tableSlice";
 
 
 interface MainframeProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -62,12 +63,13 @@ const Mainframe = (props: MainframeProps) => {
         if (c[0].availableTablesCount === 0) {
           dispatch(setGameOver(1))
         }
-
+        console.log(c)
         dispatch(setRooms(c))
       })
     }
 
     dispatch(setRefetch(false))
+    dispatch(setLoaderButton(false))
   }, [mainframe.refetch])
 
   useEffect(() => {
