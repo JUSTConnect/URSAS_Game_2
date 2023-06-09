@@ -34,9 +34,9 @@ export default ({roomsInfo, hidden}: props) => {
             <div>
                 <div className={css.key}>time game</div>
                 <div className={css.value}>
-                    {roomsInfo?.roomDuration && roomsInfo.roomDuration / 3600}
+                    {!!roomsInfo?.roomDuration && roomsInfo.roomDuration / 3600}
                     +
-                    {roomsInfo?.roomIncreaseCounter && roomsInfo.roomIncreaseCounter / 3600}</div>
+                    {!!roomsInfo?.roomIncreaseCounter && Math.floor(roomsInfo.roomIncreaseCounter / 3600)}</div>
             </div>
         </div>
     </div>

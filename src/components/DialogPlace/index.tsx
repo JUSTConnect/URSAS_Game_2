@@ -129,7 +129,6 @@ export default (props: props) => {
             {table.choosingCardPlace ? (
               <div className={css.cards}>
                 {game.walletCards.filter(card => card.rank === Number(room) && !card.playing).map((item, index) => {
-                    console.log(item)
                     if (table.basketPlaces.find((place) => place.card.tokenId === item.tokenId)) {
                       return null
                     }

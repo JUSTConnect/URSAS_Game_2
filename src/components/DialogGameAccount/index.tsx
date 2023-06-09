@@ -108,7 +108,6 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                         onClick={() => {
                           setLoader(true)
                           cardRefund(state.selectedWalletCardIds).finally(() => {
-                            console.log('render')
                             setLoader(false)
                             dispatch(setRefetch(true))
                           })
@@ -130,7 +129,6 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                         onClick={() => {
                           setLoader(true)
                           cardBurn(state.selectedWalletCardIds).finally(() => {
-                            console.log('render')
                             setLoader(false)
                             dispatch(setRefetch(true))
                           })

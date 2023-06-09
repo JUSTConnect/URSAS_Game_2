@@ -62,14 +62,15 @@ export default (props: props) => {
               game end
               <div className={css.number}>
                 <Countdown
-                  date={time}
+                  date={time || 1}
                   renderer={({hours, minutes, completed}) => {
                     if (completed) {
-                      return "00:00";
+                      return <span>00:00</span>;
                     } else {
                       return <span>{zeroPad(hours)}:{zeroPad(minutes)}</span>;
                     }
                   }}
+                  autoStart={true}
                 />
               </div>
             </>

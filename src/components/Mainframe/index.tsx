@@ -63,7 +63,6 @@ const Mainframe = (props: MainframeProps) => {
         if (c[0].availableTablesCount === 0) {
           dispatch(setGameOver(1))
         }
-        console.log(c)
         dispatch(setRooms(c))
       })
     }

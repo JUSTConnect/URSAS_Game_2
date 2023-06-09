@@ -41,7 +41,6 @@ export const gameSlice = createSlice({
       state.season = action.payload
     },
     setWalletCards: (state, action: PayloadAction<CardNFT[]>) => {
-      console.log(action.payload)
       state.walletCards = action.payload
       state.walletCards.sort((a, b) => a.rank - b.rank)
     },

@@ -5,7 +5,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import {useEthers} from '@usedapp/core'
 
 import type {RootState} from '@/app/store'
-import {setConnectWalletModal, setDisableWalletModal} from '@/features/mainframe/mainframeSlice'
+import {setConnectWalletModal, setDisableWalletModal, setRefetch} from '@/features/mainframe/mainframeSlice'
 import {setGameAccountDialog} from '@/features/mainframe/mainframeSlice'
 import {setClaim} from '@/features/game/gameSlice'
 import Badge from '@components/UIBadge'
@@ -24,6 +24,7 @@ const Header = (props: HeaderProps) => {
   const [gameOverShow, setGameOverShow] = useState(true)
   const [playingTablesId, setPlayingTablesId] = useState<number[]>([])
   const [currentRoom, setCurrentRoom] = useState<null | string>(null)
+  const [loader, setLoader] = useState(false)
   const dispatch = useDispatch<AppDispatch>()
   const {account} = useEthers()
   const router = useRouter()
@@ -64,12 +65,13 @@ const Header = (props: HeaderProps) => {
                   className={[css.walletButton, 'd-mobile'].join(' ')}>
             <i className="fa-solid fa-wallet"></i>
           </Button>
-          {game.gameOver === 0 && maxRoom !== 17 ? (
+          {maxRoom !== 17 ? (
+            // {game.gameOver === 0 && maxRoom !== 17 ? (
             <>
               <Dropdown
                 loading={game.loadingRooms}
                 values={
-                  [...Array(17 - Number(maxRoom))]
+                  [...Array(16 - Number(maxRoom))]
                 }
                 rooms={true}
                 dropdownId={1}
@@ -103,8 +105,14 @@ const Header = (props: HeaderProps) => {
         </HeaderSection>
         <HeaderSection>
           {game.claim ? (
-            <Button className={'d-mobile'} onClick={() => {
-              // claimSingleGame()
+            <Button disabled={loader} className={'d-mobile'} onClick={() => {
+              setLoader(true)
+              claim(gameTablesClaim).then(() => {
+                setLoader(false)
+                dispatch(setRefetch(true))
+              }).catch(() => {
+                setLoader(false)
+              })
             }}>&nbsp;CLAIM&nbsp;</Button>
           ) : ''}
           &nbsp;
@@ -116,8 +124,14 @@ const Header = (props: HeaderProps) => {
             </Badge>
           </div>
           {game.claim ? (
-            <Button className={'d-desktop'} minWidth={true} onClick={() => {
-              claim(gameTablesClaim)
+            <Button disabled={loader} className={'d-desktop'} minWidth={true} onClick={() => {
+              setLoader(true)
+              claim(gameTablesClaim).then(() => {
+                setLoader(false)
+                dispatch(setRefetch(true))
+              }).catch(() => {
+                setLoader(false)
+              })
             }}>CLAIM</Button>
           ) : ''}
           {game.gameOver ? (

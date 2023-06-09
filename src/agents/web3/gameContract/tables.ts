@@ -38,7 +38,7 @@ export async function getClaimTablesReady(tables: ActiveTable[], rooms: Room[]) 
     const tablesId = await Promise.all(tables.tablesId.map(async (tableIndex) => {
       if (rooms[index]?.tables[tableIndex]?.currentGameStartedAt > 0) {
         const isTableClaimReady = await gameFunctions.isTableClaimReady(tables.roomLevel, tableIndex)
-        if (!isTableClaimReady) {
+        if (isTableClaimReady) {
           return tableIndex
         }
       }
@@ -55,11 +55,27 @@ export async function getClaimTablesReady(tables: ActiveTable[], rooms: Room[]) 
 }
 
 export async function claim(roomLevels: ActiveTable[]) {
-  roomLevels.map(async ({roomLevel}) => {
-    await gameFunctions.claimReadyTablesInRoom(roomLevel, 111)
-  })
+  const transactionArray: any[] = []
+  await Promise.all(roomLevels.map(async ({roomLevel}) => {
+    const transaction = await gameFunctions.claimReadyTablesInRoom(roomLevel, 111)
+    transactionArray.push(transaction)
+  }))
+  return await Promise.all(transactionArray.map(async (transaction: any) => {
+    await transaction?.wait().then(async (receipt: any) => {
+      if (receipt && receipt.status == 1) {
+        return true
+      }
+    }).catch((e: any) => {
+      console.log(e)
+      return false
+    })
+  }))
 }
 
 export async function getCurrentTableGameEnd(roomLevel: Number, tableIndex: Number) {
   return await gameFunctions.getTimeWhenTableIsClaimReady(roomLevel, tableIndex)
+}
+
+export async function getAmountPlayersInBlackRoom() {
+  return await gameFunctions.amountPlayersUntilCurrentRaffle()
 }
