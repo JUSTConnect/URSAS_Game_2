@@ -8,7 +8,7 @@ export async function getRoomDetailTableList (roomNumber: RoomLevel) {
     let roomTables = await gameFunctions.GetWholeRoom(roomNumber)
     return roomTables.map(
         function (table: gameTypes.GetWholeRoomResponse[0]) : Table {
-            let players = table.players.map(
+            let players = table.players?.map(
                 (address: string, index: number) => {
                     return {
                         address: address,
