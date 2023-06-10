@@ -38,47 +38,51 @@ interface MainframeProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const Mainframe = (props: MainframeProps) => {
-  const {account} = useEthers()
+  const {account, active} = useEthers()
   const mainframe = useSelector((state: RootState) => state.mainframe)
   const rooms = useSelector((state: RootState) => state.rooms.rooms)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (mainframe.refetch) {
-
-      const fetchData = async () => {
-        dispatch(setSeason(await getSeasonDetail()))
-        let roomsArray = await Promise.all(Array.from(Array(16)).map(async (i, index) => {
-          return await getRoomDetail(index + 1 as RoomLevel)
-        }))
-
-        dispatch(setRooms(roomsArray as unknown as Room[]))
+    if (active) {
+      if (mainframe.refetch) {
+  
+        const fetchData = async () => {
+          dispatch(setSeason(await getSeasonDetail()))
+          let roomsArray = await Promise.all(Array.from(Array(16)).map(async (i, index) => {
+            return await getRoomDetail(index + 1 as RoomLevel)
+          }))
+  
+          dispatch(setRooms(roomsArray as unknown as Room[]))
+        }
+  
+        fetchData()
+  
       }
-
-      fetchData()
-
+  
+      dispatch(setRefetch(false))
+      dispatch(setLoaderButton(false))
     }
-
-    dispatch(setRefetch(false))
-    dispatch(setLoaderButton(false))
-  }, [mainframe.refetch])
+  }, [mainframe.refetch, active])
 
   useEffect(() => {
-    if (account && rooms?.length) {
-      getPlayingTablesInAllRooms(account).then((tables) => {
-        if (tables.length > 0) {
-          dispatch(setPlayingTablesId(tables))
-          getClaimTablesReady(tables, rooms).then((data) => {
-            if (data.length) {
-              dispatch(setClaim(true))
-              dispatch(setTablesClaimReady(data))
-            }
-          })
-        }
-      })
+    if (active) {
+      if (account && rooms?.length) {
+        getPlayingTablesInAllRooms(account).then((tables) => {
+          if (tables.length > 0) {
+            dispatch(setPlayingTablesId(tables))
+            getClaimTablesReady(tables, rooms).then((data) => {
+              if (data.length) {
+                dispatch(setClaim(true))
+                dispatch(setTablesClaimReady(data))
+              }
+            })
+          }
+        })
+      }
+      dispatch(setRefetch(false))
     }
-    dispatch(setRefetch(false))
-  }, [account, rooms])
+  }, [account, rooms, active])
 
   return (
     <>

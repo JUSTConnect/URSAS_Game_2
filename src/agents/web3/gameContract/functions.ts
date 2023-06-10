@@ -22,10 +22,9 @@ async function testDecorator(name: String, func: Function, args: any[]) {
       return await func(...args)
     } catch (e: any) {
       if (e.error?.code === '-32603') {
-        console.log('Game Contract:', name)
-        console.dir(e)
         delay(1000)
       } else {
+        console.log(window.ethereum.providers.length)
         console.log('Game Contract:', name)
         console.dir(e)
         return
@@ -44,11 +43,11 @@ export async function currentRoomGameDuration(roomNumber: RoomLevel): Promise<Bi
 }
 
 export async function roomGameDurationIncreaseCounter(roomNumber: RoomLevel): Promise<number> {
-  return testDecorator('roomGameDurationIncreaseCounter', getGameContract().roomGameDurationCounter, [roomNumber])
+  return testDecorator('roomGameDurationIncreaseCounter', getGameContract().roomGameDurationIncreaseCounter, [roomNumber])
 }
 
 export async function trump(): Promise<0 | 1 | 2 | 3> {
-  return testDecorator('trump', getGameContract().currentRoomGameDuration, [])
+  return testDecorator('trump', getGameContract().trump, [])
 }
 
 export async function advancedBulkEnterInGame(roomLevel: Number, tableIndex: Number, tokenIds: Number[]) {
