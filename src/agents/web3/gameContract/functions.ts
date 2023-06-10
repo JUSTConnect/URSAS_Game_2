@@ -26,6 +26,8 @@ async function testDecorator(name: String, func: Function, args: any[]) {
         console.dir(e)
         delay(1000)
       } else {
+        console.log('Game Contract:', name)
+        console.dir(e)
         return
       }
     }
