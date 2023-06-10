@@ -66,7 +66,6 @@ export async function claim(roomLevels: ActiveTable[]) {
         return true
       }
     }).catch((e: any) => {
-      console.log(e)
       return false
     })
   }))

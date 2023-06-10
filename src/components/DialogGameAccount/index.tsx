@@ -52,6 +52,8 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
   const setValues = async () => {
     if (account) {
       let b = await getCardListUser(account)
+      // DISABLED
+      // let b: [] = []
       if (b.length > 0) {
         const maxAvailableRoom = Math.min.apply(null, b.map((card) => card.rank))
         dispatch(setMaxAvailableRoom(maxAvailableRoom))

@@ -15,14 +15,12 @@ export interface IRoomsInfo {
 export interface roomsState {
     rooms: RoomInfo[]
     roomsLoading: boolean
-    roomInfo: IRoomsInfo[]
     playingTablesId: ActiveTable[]
 }
 
 const initialState: roomsState = {
     rooms: [],
     roomsLoading: false,
-    roomInfo: [],
     playingTablesId: []
 }
 

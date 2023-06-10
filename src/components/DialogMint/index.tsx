@@ -35,6 +35,8 @@ export default (props: props) => {
 
     const setValues = async () => {
         let data = await getRoomListMintData()
+        // DISABLED
+        // let data: [] = []
         setMintData(data)
     }
 

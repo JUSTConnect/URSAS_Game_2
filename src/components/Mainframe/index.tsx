@@ -13,7 +13,6 @@ import {getRoomDetail} from '@/agents/web3/gameContract/rooms'
 import {setActiveHeaderDropdown, setRefetch} from '@/features/mainframe/mainframeSlice'
 import {setClaim, setGameOver, setSeason, setTablesClaimReady} from '@/features/game/gameSlice'
 import {getSeasonDetail} from '@/agents/web3/gameContract/season'
-import {setLoadingRooms} from '@/features/game/gameSlice'
 import {setPlayingTablesId, setRooms} from '@/features/rooms/roomsSlice'
 
 import Blur from '@components/Blur'
@@ -46,25 +45,18 @@ const Mainframe = (props: MainframeProps) => {
 
   useEffect(() => {
     if (mainframe.refetch) {
-      setTimeout(() => {
-        dispatch(setLoadingRooms(false))
-      }, 500)
 
       const fetchData = async () => {
         dispatch(setSeason(await getSeasonDetail()))
-        let rooms = await Promise.all(Array.from(Array(16)).map(async (i, index) => {
+        let roomsArray = await Promise.all(Array.from(Array(16)).map(async (i, index) => {
           return await getRoomDetail(index + 1 as RoomLevel)
         }))
 
-        return rooms as unknown as Room[]
+        dispatch(setRooms(roomsArray as unknown as Room[]))
       }
 
-      fetchData().then(c => {
-        if (c[0].availableTablesCount === 0) {
-          dispatch(setGameOver(1))
-        }
-        dispatch(setRooms(c))
-      })
+      fetchData()
+
     }
 
     dispatch(setRefetch(false))

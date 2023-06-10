@@ -28,7 +28,7 @@ export default (props: props) => {
     const handle = async () => {
         if (Number(amount) > 0)
         {
-            cardMint(props.level, amount).then(c=>console.log(c))
+            cardMint(props.level, amount)
             props.resetValues()
         }
     }

@@ -111,7 +111,7 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
             <div className={
                 [
                     css.container,
-                    game.loadingRooms && css.containerLoading
+                    !rooms.rooms.length && css.containerLoading
                 ].join(' ')
             }>
                 <div
@@ -153,7 +153,7 @@ const RoomsDoorSlider = (props: RoomsDoorSliderProps) => {
                     hidden={props.mode === 'list' ? !currentDoorList : props.mode === 'list'}
                 />
             </div>
-            {game.loadingRooms &&
+            {!rooms.rooms.length &&
                 <div className={css.loader}>
                     <LoaderLogo />
                 </div>

@@ -4,72 +4,47 @@ import delay from "delay"
 import { RoomLevel, SuitSymbol } from "@/lib/types/game"
 import { RoomLevelArray as RLArray } from "@/lib/types/game"
 
-export async function tokensOfOwner(hash: String) : Promise<BigNumber[]> {
+async function testDecorator(name: String, func: Function, args: any[])
+{
     while (true) {
         try {
-            return await getMintContract().tokensOfOwner(hash)
-        } catch {
-            delay(1000)
+            return await func(...args)
+        } catch (e: any) {
+            if (e.error?.code==='-32603') {
+                console.log('MintContract:', name)
+                console.dir(e)
+                delay(1000)
+            } else {
+                return
+            }
         }
     }
+}
+
+export async function tokensOfOwner(hash: String) : Promise<BigNumber[]> {
+    return await testDecorator('tokensOfOwner', getMintContract().tokensOfOwner, [hash])
 }
 
 export async function suits(tokedId: Number) : Promise<SuitSymbol> {
-    while (true) {
-        try {
-            return await getMintContract().suits(tokedId)
-        } catch {
-            delay(1000)
-        }
-    }
+    return await testDecorator('suits', getMintContract().suits, [tokedId])
 }
 
 export async function NFTRoomLevel(tokenId: Number) : Promise<RoomLevel> {
-    while (true) {
-        try {
-            return await getMintContract().NFTRoomLevel(tokenId)
-        } catch {
-            delay(1000)
-        }
-    }
+    return await testDecorator('NFTRoomLevel', getMintContract().NFTRoomLevel, [tokenId])
 }
 
 export async function viewNotTransferable(tokenId: Number) : Promise<Boolean> {
-    while (true) {
-        try {
-            return await getMintContract().viewNotTransferable(tokenId)
-        } catch {
-            delay(1000)
-        }
-    }
+    return await testDecorator('viewNotTransferable', getMintContract().viewNotTransferable, [tokenId])
 }
 
 export async function getDataAboutCostsForRooms() : Promise<RLArray<BigNumber>> {
-    while (true) {
-        try {
-            return await getMintContract().getDataAboutCostsForRooms()
-        } catch {
-            delay(1000)
-        }
-    }
+    return await testDecorator('getDataAboutCostsForRooms', getMintContract().getDataAboutCostsForRooms, [])
 }
 
 export async function getDataAboutLimitsForRooms() : Promise<[RLArray<number>, RLArray<number>]> {
-    while (true) {
-        try {
-            return await getMintContract().getDataAboutLimitsForRooms()
-        } catch {
-            delay(1000)
-        }
-    }
+    return await testDecorator('getDataAboutLimitsForRooms', getMintContract().getDataAboutLimitsForRooms, [])    
 }
 
 export async function costs(level: RoomLevel) : Promise<number> {
-    while (true) {
-        try {
-            return await getMintContract().costs(level)
-        } catch {
-            delay(1000)
-        }
-    }
+    return await testDecorator('costs', getMintContract().costs, [level])        
 }

@@ -51,7 +51,7 @@ export default (props: props) => {
               key={card.tokenId as number}
               className={
                 [
-                  !game.gameOver && css.cardDisabled,
+                  !game.gameOver && card.playing && css.cardDisabled,
                   css.card,
                   props.state.selectedWalletCardIds.includes(card.tokenId) && css.cardActive
                 ].join(' ')

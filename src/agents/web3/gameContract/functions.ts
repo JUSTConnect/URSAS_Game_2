@@ -1,6 +1,6 @@
-import {RoomLevel} from "@/lib/types/game";
-import {getGameContract} from "@/lib/utils/web3";
-import {BigNumber} from "ethers";
+import { RoomLevel } from "@/lib/types/game";
+import { getGameContract, getMintContract } from "@/lib/utils/web3";
+import { BigNumber } from "ethers";
 import delay from 'delay';
 
 export type GetWholeRoomResponse = Array<{
@@ -16,68 +16,46 @@ export type GetWholeRoomResponse = Array<{
   status: 0 | 1 | 2 // waiting players, playing, cooldown
 }>
 
-export async function GetWholeRoom(roomNumber: RoomLevel): Promise<GetWholeRoomResponse> {
+async function testDecorator(name: String, func: Function, args: any[]) {
   while (true) {
     try {
-      return await getGameContract().GetWholeRoom(roomNumber)
-    } catch {
-      delay(1000)
+      return await func(...args)
+    } catch (e: any) {
+      if (e.error?.code === '-32603') {
+        console.log('Game Contract:', name)
+        console.dir(e)
+        delay(1000)
+      } else {
+        return
+      }
     }
   }
+}
+
+export async function GetWholeRoom(roomNumber: RoomLevel): Promise<GetWholeRoomResponse> {
+  return testDecorator('GetWholeRoom', getGameContract().GetWholeRoom, [roomNumber])
 }
 
 
 export async function currentRoomGameDuration(roomNumber: RoomLevel): Promise<BigNumber> {
-  while (true) {
-    try {
-      return await getGameContract().currentRoomGameDuration(roomNumber)
-    } catch {
-      delay(1000)
-    }
-  }
+  return testDecorator('currentRoomGameDuration', getGameContract().currentRoomGameDuration, [roomNumber])
 }
 
 export async function roomGameDurationIncreaseCounter(roomNumber: RoomLevel): Promise<number> {
-  while (true) {
-    try {
-      return await getGameContract().roomGameDurationIncreaseCounter(roomNumber)
-    } catch {
-      delay(1000)
-    }
-  }
+  return testDecorator('roomGameDurationIncreaseCounter', getGameContract().roomGameDurationCounter, [roomNumber])
 }
 
 export async function trump(): Promise<0 | 1 | 2 | 3> {
-  while (true) {
-    try {
-      return await getGameContract().trump()
-    } catch {
-      delay(1000)
-    }
-  }
+  return testDecorator('trump', getGameContract().currentRoomGameDuration, [])
 }
 
 export async function advancedBulkEnterInGame(roomLevel: Number, tableIndex: Number, tokenIds: Number[]) {
-  // while (true) {
-  try {
-    const transaction = await getGameContract().advancedBulkEnterInGame(roomLevel, tableIndex, tokenIds, {gasLimit: 3000000})
-    return await transaction.wait().then(async (receipt: any) => {
-      if (receipt && receipt.status == 1) {
-        return true
-      }
-    }).catch((e: any) => {
-      console.log(e)
-      return false
-    })
-  } catch {
-    delay(1000)
-  }
-  // }
+  return testDecorator('advancedBulkEnterInGame', getGameContract().advancedBulkEnterInGame, [roomLevel, tableIndex, tokenIds])
 }
 
 export async function leaveGame(roomLevel: Number, tableIndex: Number, tokenIds: Number[]) {
   try {
-    const transaction = await getGameContract().leaveGame(roomLevel, tableIndex, tokenIds, {gasLimit: 3000000})
+    const transaction = await getGameContract().leaveGame(roomLevel, tableIndex, tokenIds, { gasLimit: 3000000 })
     return await transaction.wait().then(async (receipt: any) => {
       if (receipt && receipt.status == 1) {
         return true
@@ -92,41 +70,21 @@ export async function leaveGame(roomLevel: Number, tableIndex: Number, tokenIds:
 }
 
 export async function getActiveTablesForPlayer(account: string) {
-  try {
-    return await getGameContract().getActiveTablesForPlayer(account)
-  } catch (e: any) {
-    console.log(e)
-  }
+  return testDecorator('getActiveTablesForPlayer', getGameContract().getActiveTablesForPlayer, [account])
 }
 
 export async function claimReadyTablesInRoom(roomLevel: Number, salt: Number) {
-  try {
-    return await getGameContract().claimReadyTablesInRoom(roomLevel, salt, {gasLimit: 3000000})
-  } catch (e: any) {
-    console.log(e)
-  }
+  return testDecorator('claimReadyTablesInRoom', getGameContract().claimReadyTablesInRoom, [roomLevel, salt])
 }
 
 export async function isTableClaimReady(roomLevel: Number, tableIndex: Number) {
-  try {
-    return await getGameContract().isTableClaimReady(roomLevel, tableIndex)
-  } catch (e: any) {
-    console.log(e)
-  }
+  return testDecorator('isTableClaimReady', getGameContract().isTableClaimReady, [roomLevel, tableIndex])
 }
 
 export async function amountPlayersUntilCurrentRaffle() {
-  try {
-    return await getGameContract().amountPlayersUntilCurrentRaffle()
-  } catch (e: any) {
-    console.log(e)
-  }
+  return testDecorator('amountPlayersUntilCurrentRaffle', getGameContract().amountPlayersUntilCurrentRaffle, [])
 }
 
 export async function getTimeWhenTableIsClaimReady(roomLevel: Number, tableIndex: Number) {
-  try {
-    return await getGameContract().getTimeWhenTableIsClaimReady(roomLevel, tableIndex)
-  } catch (e: any) {
-    console.log(e)
-  }
+  return testDecorator('getTimeWhenTableIsClaimReady', getGameContract().getTimeWhenTablesIsClaimReady, [roomLevel, tableIndex])
 }
