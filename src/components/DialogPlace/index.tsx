@@ -102,6 +102,10 @@ export default (props: props) => {
                       cartsId
                     ).then((data) => {
                       if (data) {
+                        //очистка после баскета карт которые играют после сабмита
+                        // @ts-ignore
+                        dispatch(setBasketPlaces([...table.basketPlaces.filter((item) => !cartsId.find((card) => card === item.card.tokenId))]))
+                        dispatch(setRefetch(true))
                         dispatch(setRefetch(true))
                       }
                     }).finally(() => {

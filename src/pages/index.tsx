@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <>
-      {/*<LoaderScreen/>*/}
+      <LoaderScreen/>
       <Head>
         <title>Poker Rooms</title>
       </Head>

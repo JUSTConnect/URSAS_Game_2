@@ -480,6 +480,25 @@ export default [
 	{
 		"inputs": [
 			{
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"name": "dayTimestamps",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256",
 				"name": "_tokenId",
 				"type": "uint256"
@@ -606,19 +625,106 @@ export default [
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256[]",
-				"name": "_tokenIds",
-				"type": "uint256[]"
-			}
-		],
-		"name": "getBulkSuitsForCards",
+		"inputs": [],
+		"name": "getCurrentDay",
 		"outputs": [
 			{
-				"internalType": "string[]",
+				"internalType": "uint256",
 				"name": "",
-				"type": "string[]"
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getCurrentDay1",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getCurrentDay2",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_1",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_2",
+				"type": "uint256"
+			}
+		],
+		"name": "getCurrentDay3",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_1",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_2",
+				"type": "uint256"
+			}
+		],
+		"name": "getCurrentDay4",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "_roomLevel",
+				"type": "uint8"
+			}
+		],
+		"name": "getCurrentLimitInRoom",
+		"outputs": [
+			{
+				"internalType": "uint32",
+				"name": "",
+				"type": "uint32"
 			}
 		],
 		"stateMutability": "view",
@@ -650,6 +756,30 @@ export default [
 				"internalType": "uint32[16]",
 				"name": "",
 				"type": "uint32[16]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "increasedminutes",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -718,8 +848,51 @@ export default [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "_roomLevel",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_day",
+				"type": "uint256"
+			}
+		],
+		"name": "isDayInRoomIncreased",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "lastBurnedTokenId",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"name": "lastRegisterDayInRoom",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -773,6 +946,48 @@ export default [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "_roomLevel",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_day",
+				"type": "uint256"
+			}
+		],
+		"name": "newAdjustSupply",
+		"outputs": [
+			{
+				"internalType": "uint32",
+				"name": "",
+				"type": "uint32"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint32",
+				"name": "_mintAmount",
+				"type": "uint32"
+			},
+			{
+				"internalType": "uint8",
+				"name": "_roomLevel",
+				"type": "uint8"
+			}
+		],
+		"name": "newSmartMint",
+		"outputs": [],
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -911,6 +1126,24 @@ export default [
 			}
 		],
 		"name": "setApprovalForAll",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "_roomLevel",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_day",
+				"type": "uint256"
+			}
+		],
+		"name": "setIncreaseDay",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -1175,6 +1408,35 @@ export default [
 				"internalType": "string",
 				"name": "",
 				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "_tokenIds",
+				"type": "uint256[]"
+			}
+		],
+		"name": "viewCardsInfo",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "",
+				"type": "string[]"
+			},
+			{
+				"internalType": "bool[]",
+				"name": "",
+				"type": "bool[]"
 			}
 		],
 		"stateMutability": "view",

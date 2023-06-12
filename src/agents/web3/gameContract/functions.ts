@@ -1,6 +1,6 @@
-import { RoomLevel } from "@/lib/types/game";
-import { getGameContract, getMintContract } from "@/lib/utils/web3";
-import { BigNumber } from "ethers";
+import {RoomLevel} from "@/lib/types/game";
+import {getGameContract, getMintContract} from "@/lib/utils/web3";
+import {BigNumber} from "ethers";
 import delay from 'delay';
 
 export type GetWholeRoomResponse = Array<{
@@ -56,7 +56,7 @@ export async function advancedBulkEnterInGame(roomLevel: Number, tableIndex: Num
 
 export async function leaveGame(roomLevel: Number, tableIndex: Number, tokenIds: Number[]) {
   try {
-    const transaction = await getGameContract().leaveGame(roomLevel, tableIndex, tokenIds, { gasLimit: 3000000 })
+    const transaction = await getGameContract().leaveGame(roomLevel, tableIndex, tokenIds, {gasLimit: 3000000})
     return await transaction.wait().then(async (receipt: any) => {
       if (receipt && receipt.status == 1) {
         return true
@@ -75,7 +75,7 @@ export async function getActiveTablesForPlayer(account: string) {
 }
 
 export async function claimReadyTablesInRoom(roomLevel: Number, salt: Number) {
-  return testDecorator('claimReadyTablesInRoom', getGameContract().claimReadyTablesInRoom, [roomLevel, salt])
+  return testDecorator('claimReadyTablesInRoom', getGameContract().claimReadyTablesInRoom, [roomLevel, salt, {gasLimit: 3000000}])
 }
 
 export async function isTableClaimReady(roomLevel: Number, tableIndex: Number) {

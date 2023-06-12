@@ -53,7 +53,7 @@ const TableView = (props: TableViewProps) => {
 
   useEffect(() => {
     dispatch(clearStakedPlaces())
-    dispatch(clearBasketPlaces())
+    // dispatch(clearBasketPlaces())
     setValues()
   }, [returnTable()?.players])
 

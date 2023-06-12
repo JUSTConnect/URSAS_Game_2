@@ -130,8 +130,13 @@ export default (props: props) => {
         onClick={() => {
           dispatch(setLoaderButton(true))
           enterInGameByTokenIds(1, 0, props.state.selectedStakeCardIds as number[]).then(() => {
+            resetStakeCards()
+            dispatch(setLoaderButton(false))
             dispatch(setRefetch(true))
-          }).catch(() => dispatch(setLoaderButton(true)))
+          }).catch(() => {
+            resetStakeCards()
+            dispatch(setLoaderButton(false))
+          })
         }
         }
       >
