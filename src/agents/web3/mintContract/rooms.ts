@@ -18,8 +18,12 @@ export async function getRoomListMintCost () : Promise<RLArray<number>> {
 
 // комнаты - дневной лимит и счётчик
 export async function getRoomListMintSupplyNMinted() : Promise<[RLArray<number>, RLArray<number>]> {
+  try {
     let result: [RLArray<number>, RLArray<number>] = await mintFunctions.getDataAboutLimitsForRooms()
     return [[...result[0]].reverse(), [...result[1]].reverse()] as [RLArray<number>, RLArray<number>]
+  } catch (e) {
+
+  }
 }
 
 // комнаты - доступно минтов

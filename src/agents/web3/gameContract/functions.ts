@@ -24,7 +24,7 @@ async function testDecorator(name: String, func: Function, args: any[]) {
       if (e.error?.code === '-32603') {
         delay(1000)
       } else {
-        console.log(window.ethereum.providers.length)
+        console.log(window.ethereum.providers?.length)
         console.log('Game Contract:', name)
         console.dir(e)
         return

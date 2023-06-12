@@ -10,7 +10,7 @@ import * as mintFunctions from './functions'
 
 export async function getCardListUser(hash: string): Promise<CardNFT[]> {
   let cardIds = await mintFunctions.tokensOfOwner(hash)
-  return await Promise.all(cardIds.map(async (cardId: BigNumber) => {
+  return await Promise.all(cardIds?.map(async (cardId: BigNumber) => {
     let suit = await getCardDetailSuit(Number(cardId))
     return {
       tokenId: Number(cardId),

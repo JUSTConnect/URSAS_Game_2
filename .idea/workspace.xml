@@ -5,33 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f4f9e497-93f5-4199-81e5-87ead6165df1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pages/tables/[room]/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/tables/[room]/table/[table].tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DialogPlace/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DialogPlace/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Header/Dropdown/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header/Dropdown/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Mainframe/Sidebar/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Mainframe/Sidebar/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/RoomsDoorSlider/Info/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RoomsDoorSlider/Info/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/RoomsDoorSlider/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RoomsDoorSlider/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/SubHeader/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SubHeader/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/agents/web3/gameContract/functions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/web3/gameContract/functions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/agents/web3/mintContract/cards.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/web3/mintContract/cards.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/agents/web3/mintContract/rooms.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/web3/mintContract/rooms.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/SubHeaderTable/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SubHeaderTable/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/SubHeaderTables/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SubHeaderTables/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Table/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Table/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TableList/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TableList/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TableView/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TableView/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UIContract/CardMethod/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UIContract/CardMethod/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/config/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/game/gameSlice.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/game/gameSlice.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/rooms/roomsSlice.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/rooms/roomsSlice.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/table/tableSlice.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/table/tableSlice.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/tables/tablesSlice.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/tables/tablesSlice.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/types/game.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/types/game.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/table/[id].tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/tables/[id].tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,19 +30,19 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;H:\\dishH\\work\\pocker\\node_modules\\typescript\\lib&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "ts.external.directory.path": "H:\\dishH\\work\\URSAS_Game\\node_modules\\typescript\\lib"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
