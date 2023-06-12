@@ -51,7 +51,7 @@ export async function trump(): Promise<0 | 1 | 2 | 3> {
 }
 
 export async function advancedBulkEnterInGame(roomLevel: Number, tableIndex: Number, tokenIds: Number[]) {
-  return testDecorator('advancedBulkEnterInGame', getGameContract().advancedBulkEnterInGame, [roomLevel, tableIndex, tokenIds])
+  return testDecorator('advancedBulkEnterInGame', getGameContract().advancedBulkEnterInGame, [roomLevel, tableIndex, tokenIds, {gasLimit: 3000000}])
 }
 
 export async function leaveGame(roomLevel: Number, tableIndex: Number, tokenIds: Number[]) {
