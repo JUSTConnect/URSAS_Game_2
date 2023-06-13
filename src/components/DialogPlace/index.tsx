@@ -26,6 +26,7 @@ import Place from './Place'
 import PlaceButton from './PlaceButton'
 import Countdown, {zeroPad} from "react-countdown";
 import {setRefetch} from "@/features/mainframe/mainframeSlice";
+import {StatusTable} from "@lib/types/game";
 
 
 interface props extends React.HTMLAttributes<HTMLDivElement> {
@@ -35,7 +36,7 @@ interface props extends React.HTMLAttributes<HTMLDivElement> {
 
 export default (props: props) => {
   const router = useRouter()
-  const {room} = router.query
+  const {room, table: tableIndex} = router.query
   const dispatch = useDispatch<AppDispatch>()
   const table = useSelector((state: RootState) => state.table)
   const game = useSelector((state: RootState) => state.game)
@@ -43,6 +44,13 @@ export default (props: props) => {
   const [selectedStakedPlaces, setSelectedStakedPlaces] = useState<number[]>([])
   const [timer, setTimer] = useState(0)
   const [changeTime, setChangeTime] = useState(true)
+  const rooms = useSelector((state: RootState) => state.rooms)
+
+  const returnTable = () => {
+    if (room && rooms.rooms.length) {
+      return rooms.rooms[Number(room) - 1].tables[Number(tableIndex) - 1]
+    }
+  }
 
   useEffect(() => {
     if (!table.timer) {
@@ -204,7 +212,7 @@ export default (props: props) => {
                     clear
                   </PlaceButton>
                 )}
-                {Boolean(table.stakedPlaces.length) && (
+                {Boolean(table.stakedPlaces.length) && returnTable()?.status !== StatusTable.PLAYING && (
                   <PlaceButton active={table.loadingButton ? 0 : selectedStakedPlaces.length} onClick={() => {
                     dispatch(setLoaderButton(true))
                     const cartsId = table.stakedPlaces.filter(({card}, index) => {
@@ -269,7 +277,7 @@ export default (props: props) => {
           {Boolean(table.stakedPlaces.length || table.basketPlaces.length) && !table.choosingCardPlace &&
             <Footer>
               <FooterButtons>
-                {Boolean(table.stakedPlaces.length) &&
+                {Boolean(table.stakedPlaces.length) && returnTable()?.status !== StatusTable.PLAYING &&
                   <Button
                     onClick={async () => {
                       dispatch(setLoaderButton(true))

@@ -51,7 +51,7 @@ export async function getRoomDetail (roomNumber: RoomLevel) : Promise<Room[]> {
         roomIncreaseCounter: await getRoomDetailGameDurationIncreaseCounter(roomNumber),
         availableTablesCount: 
             tables
-                .map(
+                ?.map(
                     table => table.players
                         // получить id токенов мест
                         .map(a=>Boolean(a.tokenId))

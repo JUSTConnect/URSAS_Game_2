@@ -46,20 +46,22 @@ const Mainframe = (props: MainframeProps) => {
   useEffect(() => {
     if (active) {
       if (mainframe.refetch) {
-  
+        dispatch(setClaim(false))
+        dispatch(setTablesClaimReady([]))
+
         const fetchData = async () => {
           dispatch(setSeason(await getSeasonDetail()))
           let roomsArray = await Promise.all(Array.from(Array(16)).map(async (i, index) => {
             return await getRoomDetail(index + 1 as RoomLevel)
           }))
-  
+
           dispatch(setRooms(roomsArray as unknown as Room[]))
         }
-  
+
         fetchData()
-  
+
       }
-  
+
       dispatch(setRefetch(false))
       dispatch(setLoaderButton(false))
     }

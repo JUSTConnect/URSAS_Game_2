@@ -51,7 +51,15 @@ export async function trump(): Promise<0 | 1 | 2 | 3> {
 }
 
 export async function advancedBulkEnterInGame(roomLevel: Number, tableIndex: Number, tokenIds: Number[]) {
-  return testDecorator('advancedBulkEnterInGame', getGameContract().advancedBulkEnterInGame, [roomLevel, tableIndex, tokenIds, {gasLimit: 3000000}])
+  const transaction = await testDecorator('advancedBulkEnterInGame', getGameContract().advancedBulkEnterInGame, [roomLevel, tableIndex, tokenIds, {gasLimit: 3000000}])
+  return await transaction?.wait().then(async (receipt: any) => {
+    if (receipt && receipt.status == 1) {
+      return true
+    }
+  }).catch((e: any) => {
+    console.log(e)
+    return false
+  })
 }
 
 export async function leaveGame(roomLevel: Number, tableIndex: Number, tokenIds: Number[]) {
