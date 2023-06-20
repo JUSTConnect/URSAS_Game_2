@@ -77,7 +77,7 @@ const SubHeaderTable = (props: SubHeaderTableProps) => {
             }}
             renderer={({minutes, seconds}) => (
               <>
-                {zeroPad(minutes)}:{zeroPad(seconds)}
+                {' ' + zeroPad(minutes)}:{zeroPad(seconds)}
               </>
             )}/>
           </span>

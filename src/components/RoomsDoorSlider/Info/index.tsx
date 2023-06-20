@@ -21,7 +21,7 @@ export default ({roomsInfo, hidden}: props) => {
         <div className={css.section}>
             <div>
                 <div className={css.key}>available tables</div>
-                <div className={css.value}>{roomsInfo?.tables.length}</div>
+                <div className={css.value}>{roomsInfo?.tables?.length}</div>
             </div>
             <div>
                 <div className={css.key}>empty tables</div>
