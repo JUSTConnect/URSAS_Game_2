@@ -287,11 +287,6 @@ export default [
 				"internalType": "uint8",
 				"name": "_roomLevel",
 				"type": "uint8"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_day",
-				"type": "uint256"
 			}
 		],
 		"name": "adjustSupply",
@@ -488,30 +483,6 @@ export default [
 				"internalType": "uint8",
 				"name": "",
 				"type": "uint8"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "dayIncreased",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint8",
-				"name": "",
-				"type": "uint8"
 			}
 		],
 		"name": "dayTimestamps",
@@ -667,6 +638,80 @@ export default [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "getCurrentDay1",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getCurrentDay2",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_1",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_2",
+				"type": "uint256"
+			}
+		],
+		"name": "getCurrentDay3",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_1",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_2",
+				"type": "uint256"
+			}
+		],
+		"name": "getCurrentDay4",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint8",
@@ -711,6 +756,30 @@ export default [
 				"internalType": "uint32[16]",
 				"name": "",
 				"type": "uint32[16]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "increasedminutes",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -874,6 +943,30 @@ export default [
 				"internalType": "string",
 				"name": "",
 				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "_roomLevel",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_day",
+				"type": "uint256"
+			}
+		],
+		"name": "newAdjustSupply",
+		"outputs": [
+			{
+				"internalType": "uint32",
+				"name": "",
+				"type": "uint32"
 			}
 		],
 		"stateMutability": "view",
@@ -1107,6 +1200,24 @@ export default [
 		"name": "setSuit",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint32",
+				"name": "_mintAmount",
+				"type": "uint32"
+			},
+			{
+				"internalType": "uint8",
+				"name": "_roomLevel",
+				"type": "uint8"
+			}
+		],
+		"name": "smartMint",
+		"outputs": [],
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
