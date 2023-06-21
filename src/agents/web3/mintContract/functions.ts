@@ -48,3 +48,7 @@ export async function getDataAboutLimitsForRooms() : Promise<[RLArray<number>, R
 export async function costs(level: RoomLevel) : Promise<number> {
     return await testDecorator('costs', getMintContract().costs, [level])        
 }
+
+export async function viewCardsInfo(cardIds: BigNumber[]){
+    return await testDecorator('viewCardsInfo', getMintContract().viewCardsInfo, [cardIds])
+}

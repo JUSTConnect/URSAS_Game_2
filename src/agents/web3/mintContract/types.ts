@@ -1,5 +1,5 @@
 export interface RoomMintData
 {
-    cost: number
-    available: number
+    cost: number | null
+    available: number | null
 }

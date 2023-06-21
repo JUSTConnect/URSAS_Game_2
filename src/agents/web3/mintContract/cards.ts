@@ -7,6 +7,39 @@ import {getRoomDetailMintCost} from "./rooms"
 
 import * as mintFunctions from './functions'
 
+export async function getCardListUserNew(hash: string): Promise<CardNFT[]> {
+  try {
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    console.log('sdlfkjsdflkjfldkjfslkfjsdlfkjsdfkljsdf')
+    let ids = await mintFunctions.tokensOfOwner(hash)
+    console.log(ids, 'ids')
+    if (ids) {
+      let data = await mintFunctions.viewCardsInfo(ids)
+      console.log(data, 'data')
+      return ids.map((id, index) => Object({
+        tokenId: Number(id),
+        rank: Number(data[0][index]),
+        suit: data[1][index] ? data[1][index] : 's',
+        playing: data[2][index]
+      }))
+    } else return []
+  } catch (e) {
+    console.log(e, 'error')
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    let ids = await mintFunctions.tokensOfOwner(hash)
+    if (ids) {
+      let data = await mintFunctions.viewCardsInfo(ids)
+      console.log(data)
+      return ids.map((id, index) => Object({
+        tokenId: Number(id),
+        rank: Number(data[0][index]),
+        suit: data[1][index] ? data[1][index] : 's',
+        playing: data[2][index]
+      }))
+    } else return []
+    // return []
+  }
+}
 
 export async function getCardListUser(hash: string): Promise<CardNFT[]> {
   let cardIds = await mintFunctions.tokensOfOwner(hash)

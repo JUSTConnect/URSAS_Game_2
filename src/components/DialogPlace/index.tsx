@@ -45,6 +45,7 @@ export default (props: props) => {
   const [timer, setTimer] = useState(0)
   const [changeTime, setChangeTime] = useState(true)
   const rooms = useSelector((state: RootState) => state.rooms)
+  const [clearBasketIds, setClearBasketIds] = useState<any>([])
 
   const returnTable = () => {
     if (room && rooms.rooms.length) {
@@ -57,6 +58,13 @@ export default (props: props) => {
       setChangeTime(true)
     }
   }, [table])
+
+  useEffect(() => {
+    console.log(table.basketPlaces, 'basketplaces')
+    // @ts-ignore
+    dispatch(setBasketPlaces([...table.basketPlaces.filter((item) => !clearBasketIds.find((card) => card === item.card.tokenId))]))
+  }, [clearBasketIds])
+
 
   return (
     <>
@@ -104,15 +112,20 @@ export default (props: props) => {
                     setChangeTime(true)
                     dispatch(setLoaderButton(true))
                     const cartsId = table.basketPlaces.map(({card}) => +card.tokenId)
+                    console.log(cartsId, 'cartsid')
                     enterInGameByTokenIds(
                       Number(router.query.room),
                       Number(router.query.table) - 1,
                       cartsId
                     ).then((data) => {
                       if (data) {
+                        setClearBasketIds(cartsId)
+                        // console.log(table.basketPlaces, 'bb')
                         //очистка карт в корзине которые играют после сабмита
+                        // console.log([...table.basketPlaces.filter((item) => !cartsId.find((card) => card === item.card.tokenId))], 'basket')
+
                         // @ts-ignore
-                        dispatch(setBasketPlaces([...table.basketPlaces.filter((item) => !cartsId.find((card) => card === item.card.tokenId))]))
+                        // dispatch(setBasketPlaces([...table.basketPlaces.filter((item) => !cartsId.find((card) => card === item.card.tokenId))]))
                         dispatch(setRefetch(true))
                         dispatch(setRefetch(true))
                       }

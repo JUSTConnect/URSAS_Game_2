@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useEthers} from '@usedapp/core'
 
-import {cardBurn, cardRefund, getCardListUser} from '@/agents/web3/mintContract/cards'
+import {cardBurn, cardRefund, getCardListUser, getCardListUserNew} from '@/agents/web3/mintContract/cards'
 
 import {AppDispatch, RootState} from '@/app/store'
 import {setGameAccountDialog, setRefetch} from '@/features/mainframe/mainframeSlice'
@@ -51,13 +51,12 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
 
   const setValues = async () => {
     if (account) {
-      let b = await getCardListUser(account)
-      // DISABLED
-      // let b: [] = []
+      let b = await getCardListUserNew(account)
       if (b.length > 0) {
         const maxAvailableRoom = Math.min.apply(null, b.map((card) => card.rank))
         dispatch(setMaxAvailableRoom(maxAvailableRoom))
       }
+      console.log(b)
       dispatch(setWalletCards(b))
     }
   }

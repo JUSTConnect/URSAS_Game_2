@@ -35,8 +35,6 @@ export default (props: props) => {
 
     const setValues = async () => {
         let data = await getRoomListMintData()
-        // DISABLED
-        // let data: [] = []
         setMintData(data)
     }
 
@@ -78,8 +76,8 @@ export default (props: props) => {
                                 mintData.map((item, index) => (
                                     <MintCard
                                         key={ index }
-                                        price={ item.cost }
-                                        available={ item.available }
+                                        price={ item.cost || 0}
+                                        available={ item.available || 0 }
                                         level={ 16-index as RoomLevel }
                                         resetValues={ setValues }
                                     />

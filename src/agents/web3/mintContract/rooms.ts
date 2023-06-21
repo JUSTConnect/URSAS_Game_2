@@ -11,9 +11,9 @@ export async function getRoomDetailMintCost (level: RoomLevel) : Promise<number>
 }
 
 // комнаты - стоимость минта
-export async function getRoomListMintCost () : Promise<RLArray<number>> {
+export async function getRoomListMintCost () : Promise<RLArray<number|null>> {
     let costs: RLArray<BigNumber> = await mintFunctions.getDataAboutCostsForRooms()   
-    return costs.map((i: BigNumber) => Number(i)).reverse() as RLArray<number>
+    return costs ? costs.map((i: BigNumber) => Number(i)).reverse() as RLArray<number> : Array.from(Array(16)).map(()=>null) as RLArray<null>
 }
 
 // комнаты - дневной лимит и счётчик
