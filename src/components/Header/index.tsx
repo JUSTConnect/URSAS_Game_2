@@ -50,8 +50,10 @@ const Header = (props: HeaderProps) => {
   useEffect(() => {
     if (currentRoom) {
       setPlayingTablesId(playingRooms?.find(({roomLevel}) => roomLevel === +currentRoom)?.tablesId || [])
+      console.log(playingRooms?.find(({roomLevel}) => roomLevel === +currentRoom))
     }
   }, [currentRoom])
+
 
   return <HeaderBase>
     {account ? (
@@ -65,7 +67,7 @@ const Header = (props: HeaderProps) => {
                   className={[css.walletButton, 'd-mobile'].join(' ')}>
             <i className="fa-solid fa-wallet"></i>
           </Button>
-          {/* {maxRoom !== 17 ? (
+          {maxRoom !== 17 ? (
             // {game.gameOver === 0 && maxRoom !== 17 ? (
             <>
               <Dropdown
@@ -101,7 +103,7 @@ const Header = (props: HeaderProps) => {
                 badgeValue={currentRoom && playingTablesId?.length || '-'}
               />
             </>
-          ) : ''} */}
+          ) : ''}
         </HeaderSection>
         <HeaderSection>
           {game.claim ? (

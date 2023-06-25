@@ -10,12 +10,9 @@ import * as mintFunctions from './functions'
 export async function getCardListUserNew(hash: string): Promise<CardNFT[]> {
   try {
     await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log('sdlfkjsdflkjfldkjfslkfjsdlfkjsdfkljsdf')
     let ids = await mintFunctions.tokensOfOwner(hash)
-    console.log(ids, 'ids')
     if (ids) {
       let data = await mintFunctions.viewCardsInfo(ids)
-      console.log(data, 'data')
       return ids.map((id, index) => Object({
         tokenId: Number(id),
         rank: Number(data[0][index]),
@@ -29,7 +26,6 @@ export async function getCardListUserNew(hash: string): Promise<CardNFT[]> {
     let ids = await mintFunctions.tokensOfOwner(hash)
     if (ids) {
       let data = await mintFunctions.viewCardsInfo(ids)
-      console.log(data)
       return ids.map((id, index) => Object({
         tokenId: Number(id),
         rank: Number(data[0][index]),

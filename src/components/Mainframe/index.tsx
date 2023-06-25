@@ -1,6 +1,6 @@
 import css from './index.module.scss'
 
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useEthers} from '@usedapp/core'
 import Head from 'next/head'
@@ -43,9 +43,12 @@ const Mainframe = (props: MainframeProps) => {
   const rooms = useSelector((state: RootState) => state.rooms.rooms)
   const dispatch = useDispatch()
 
+  const [firstFetch, setFirstFetch] = useState(true)
+
   useEffect(() => {
     if (active) {
-      if (mainframe.refetch) {
+      if (mainframe.refetch || firstFetch) {
+        setFirstFetch(false)
         dispatch(setClaim(false))
         dispatch(setTablesClaimReady([]))
 
@@ -57,9 +60,7 @@ const Mainframe = (props: MainframeProps) => {
 
           dispatch(setRooms(roomsArray as unknown as Room[]))
         }
-
         fetchData()
-
       }
 
       dispatch(setRefetch(false))

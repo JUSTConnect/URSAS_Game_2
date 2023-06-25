@@ -13,6 +13,7 @@ import {query} from "@/pages/tables/[room]/table/[table]";
 import Countdown, {zeroPad} from "react-countdown";
 
 import {SuitsGetName} from '@/lib/types/game'
+import {formatTime} from "@lib/utils/formatTime";
 
 interface SubHeaderTableProps {
   modalActive: boolean
@@ -49,11 +50,11 @@ const SubHeaderTable = (props: SubHeaderTableProps) => {
           <div className={css.infoContent}>
             <div>
               Base time: <span
-              className={'textPrimary'}>{rooms.rooms.length && levelRoom && tableId && Math.floor(rooms.rooms[levelRoom - 1].roomDuration / 3600)}h</span>
+              className={'textPrimary'}>{rooms.rooms.length && levelRoom && tableId && formatTime(rooms.rooms[levelRoom - 1].roomDuration)}</span>
             </div>
             <div>
               Increase time: <span
-              className={'textPrimary'}>{rooms.rooms.length && levelRoom && tableId && Math.floor(rooms.rooms[levelRoom - 1].roomIncreaseCounter / 3600) || 0}h</span>
+              className={'textPrimary'}>{rooms.rooms.length && levelRoom && tableId && formatTime(rooms.rooms[levelRoom - 1].roomIncreaseCounter) || 0}</span>
             </div>
             <div>
               Suit: <span className={'textPrimary'}>{game?.season && SuitsGetName[game.season.trump]}</span>

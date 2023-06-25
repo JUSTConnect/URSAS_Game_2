@@ -8,12 +8,14 @@ import { useEthers } from '@usedapp/core'
 
 import { RootState } from '@/app/store'
 import { setCurrentRoom } from '@/features/game/gameSlice'
-import { setGameAccountDialog } from '@/features/mainframe/mainframeSlice'
+import {setGameAccountDialog, setRefetch} from '@/features/mainframe/mainframeSlice'
 
 import {tabs as gameAccountDialogTabs} from '@components/DialogGameAccount'
 
 
 import Door from './Door'
+import {enterInGameByTokenIds} from "@/agents/web3/gameContract/tables";
+import {setLoaderButton} from "@/features/table/tableSlice";
 
 interface SliderFragmentProps {
     indexAdd: number
@@ -29,6 +31,7 @@ interface SliderFragmentProps {
 export default (props: SliderFragmentProps) => {
     const dispatch = useDispatch<AppDispatch>()
     const {account} = useEthers()
+    const firstRoomCards = useSelector((state: RootState) => state.game.walletCards.filter(card => card.rank === 1 && !card.playing))
 
     return (
       <>
@@ -89,9 +92,19 @@ export default (props: SliderFragmentProps) => {
                   }
                 >
                     <Door
-                      href={Boolean(account) && index === props.selectedDoor ? `/tables/${level}` : null}
+                      href={Boolean(account) && index === props.selectedDoor && level !== 1 ? `/tables/${level}` : null}
                       active={Boolean(account) && index === props.selectedDoor}
-                      onClick={level === 1 ? () => dispatch(setGameAccountDialog([true, gameAccountDialogTabs.STAKE])) : () => {
+                      onClick={level === 1 ? () => {
+                          dispatch(setGameAccountDialog([true, gameAccountDialogTabs.STAKE]))
+                          if (firstRoomCards.length) {
+                              enterInGameByTokenIds(1, 0, firstRoomCards.map(card => card.tokenId) as number[]).then(() => {
+                                  dispatch(setLoaderButton(false))
+                                  dispatch(setRefetch(true))
+                              }).catch(() => {
+                                  dispatch(setLoaderButton(false))
+                              })
+                          }
+                      } : () => {
                       }}
                       level={level}
                       go={false}

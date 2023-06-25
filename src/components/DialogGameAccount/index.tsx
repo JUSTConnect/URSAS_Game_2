@@ -17,6 +17,8 @@ import Header from './Header'
 import TabStake from './TabStake'
 import TabWallet from './TabWallet'
 import Button from "@components/Button";
+import {setLoaderButton} from "@/features/table/tableSlice";
+import {enterInGameByTokenIds} from "@/agents/web3/gameContract/tables";
 
 export enum tabs {
   STAKE = 'Stake',
@@ -56,10 +58,20 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
         const maxAvailableRoom = Math.min.apply(null, b.map((card) => card.rank))
         dispatch(setMaxAvailableRoom(maxAvailableRoom))
       }
-      console.log(b)
       dispatch(setWalletCards(b))
     }
   }
+
+  const selectStakeCards = () => setState({
+    ...state,
+    selectedStakeCardIds: game.walletCards
+      .filter(card => card.rank === 1)
+      .map(card => {
+        return card.tokenId
+      })
+  })
+
+  const resetStakeCards = () => setState({...state, selectedStakeCardIds: []})
 
   return (
     <>
@@ -85,23 +97,33 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
               }
             </div>
           </Content>
-          {/*{mainframe.gameAccountDialog[1] === tabs.STAKE &&*/}
           {1 + 1 == 2 &&
             <>
               <Footer>
                 <FooterButtons>
-                  {/*<Button*/}
-                  {/*  color={ButtonColor.LIGHT}*/}
-                  {/*  size={ButtonSize.SM}*/}
-                  {/*  fullWidth*/}
-                  {/*  disabled={!selectedStakeCards.length}*/}
-                  {/*  onClick={() => {*/}
-                  {/*    dispatch(cardsStake(selectedStakeCards))*/}
-                  {/*    setSelectedStakeCards([])*/}
-                  {/*  }}*/}
-                  {/*>*/}
-                  {/*  stake*/}
-                  {/*</Button>*/}
+                  {mainframe.gameAccountDialog[1] === tabs.STAKE &&
+                    <Button
+                      style={loader || !state.selectedStakeCardIds.length ? {
+                        width: '100%',
+                        opacity: '0.5'
+                      } : {width: '100%'}}
+                      disabled={loader || !state.selectedStakeCardIds.length}
+                      onClick={() => {
+                        setLoader(true)
+                        enterInGameByTokenIds(1, 0, state.selectedStakeCardIds as number[]).then(() => {
+                          resetStakeCards()
+                          setLoader(false)
+                          dispatch(setRefetch(true))
+                        }).catch(() => {
+                          resetStakeCards()
+                          setLoader(false)
+                        })
+                      }
+                      }
+                    >
+                      stake
+                    </Button>
+                  }
                   {mainframe.gameAccountDialog[1] == tabs.WALLET && !!game.gameOver &&
                     <>
                       <Button

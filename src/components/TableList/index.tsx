@@ -11,43 +11,43 @@ import {StatusTable} from "@lib/types/game";
 
 
 const TableList = ({id}: any) => {
-    const game = useSelector((state: RootState) => state.game)
-    const tablesState = useSelector((state: RootState) => state.tables)
-    const tables = useSelector((state: RootState) => {
-        if (id) {
-            return state.rooms?.rooms[id - 1]?.tables
-        }
-        return []
-    })
-
-    const filteredTables = () => {
-        switch (tablesState.filter) {
-            case TablesFilter.all:
-                return tables
-            case TablesFilter.empty:
-                return tables?.filter(
-                    table => table.placesAvailable === 10
-                )
-            case TablesFilter.cooldown:
-                return tables?.filter(place => place.status === StatusTable.COOLDOWN)
-            case TablesFilter.gaming:
-                return tables?.filter(place => place.status === StatusTable.PLAYING)
-            default:
-                return []
-        }
+  const game = useSelector((state: RootState) => state.game)
+  const tablesState = useSelector((state: RootState) => state.tables)
+  const tables = useSelector((state: RootState) => {
+    if (id) {
+      return state.rooms?.rooms[id - 1]?.tables
     }
+    return []
+  })
 
-    return <>
-        {game.loadingTables ? (
-          <div className={css.loader}>
-              <LoaderLogo/>
-          </div>
-        ) : (
-          <div className={css.tableList}>
-              {filteredTables()?.map((table, index) => <Table key={index} id={id}  index={index + 1} {...table}/>)}
-          </div>
-        )}
-    </>
+  const filteredTables = () => {
+    switch (tablesState.filter) {
+      case TablesFilter.all:
+        return tables
+      case TablesFilter.empty:
+        return tables?.filter(
+          table => table.status === StatusTable.WAITING
+        )
+      case TablesFilter.cooldown:
+        return tables?.filter(place => place.status === StatusTable.COOLDOWN)
+      case TablesFilter.gaming:
+        return tables?.filter(place => place.status === StatusTable.PLAYING)
+      default:
+        return []
+    }
+  }
+
+  return <>
+    {game.loadingTables ? (
+      <div className={css.loader}>
+        <LoaderLogo/>
+      </div>
+    ) : (
+      <div className={css.tableList}>
+        {filteredTables()?.map((table, index) => <Table key={index} id={id} index={index + 1} {...table}/>)}
+      </div>
+    )}
+  </>
 }
 
 

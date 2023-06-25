@@ -7,11 +7,13 @@ import {AppDispatch, RootState} from '@/app/store'
 import Button, {Size as ButtonSize, Variant as ButtonVariant, Color as ButtonColor} from '@components/UIButton'
 import Card from '@components/Card'
 
-import {state} from '.'
+import {state, tabs} from '.'
 import {enterInGameByTokenIds} from "@/agents/web3/gameContract/tables";
 import {useState} from "react";
 import {setLoaderButton} from "@/features/table/tableSlice";
 import {setRefetch} from "@/features/mainframe/mainframeSlice";
+import {Footer, FooterButtons} from "@components/Dialog";
+import {cardBurn, cardRefund} from "@/agents/web3/mintContract/cards";
 
 
 interface props {
@@ -120,28 +122,28 @@ export default (props: props) => {
         </div>
       </div>
     </div>
-    {Boolean(props.state.selectedStakeCardIds.length) &&
-      <Button
-        disabled={loader}
-        size={ButtonSize.SM}
-        color={ButtonColor.DARK}
-        variant={ButtonVariant.NORMAL}
-        className={css.arrowFirst}
-        onClick={() => {
-          dispatch(setLoaderButton(true))
-          enterInGameByTokenIds(1, 0, props.state.selectedStakeCardIds as number[]).then(() => {
-            resetStakeCards()
-            dispatch(setLoaderButton(false))
-            dispatch(setRefetch(true))
-          }).catch(() => {
-            resetStakeCards()
-            dispatch(setLoaderButton(false))
-          })
-        }
-        }
-      >
-        <i className="fa-solid fa-arrow-right"></i>
-      </Button>
-    }
+    {/*{Boolean(props.state.selectedStakeCardIds.length) &&*/}
+    {/*  <Button*/}
+    {/*    disabled={loader}*/}
+    {/*    size={ButtonSize.SM}*/}
+    {/*    color={ButtonColor.DARK}*/}
+    {/*    variant={ButtonVariant.NORMAL}*/}
+    {/*    className={css.arrowFirst}*/}
+    {/*    onClick={() => {*/}
+    {/*      dispatch(setLoaderButton(true))*/}
+    {/*      enterInGameByTokenIds(1, 0, props.state.selectedStakeCardIds as number[]).then(() => {*/}
+    {/*        resetStakeCards()*/}
+    {/*        dispatch(setLoaderButton(false))*/}
+    {/*        dispatch(setRefetch(true))*/}
+    {/*      }).catch(() => {*/}
+    {/*        resetStakeCards()*/}
+    {/*        dispatch(setLoaderButton(false))*/}
+    {/*      })*/}
+    {/*    }*/}
+    {/*    }*/}
+    {/*  >*/}
+    {/*    <i className="fa-solid fa-arrow-right"></i>*/}
+    {/*  </Button>*/}
+    {/*}*/}
   </>
 }

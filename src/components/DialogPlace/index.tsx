@@ -60,10 +60,10 @@ export default (props: props) => {
   }, [table])
 
   useEffect(() => {
-    console.log(table.basketPlaces, 'basketplaces')
     // @ts-ignore
     dispatch(setBasketPlaces([...table.basketPlaces.filter((item) => !clearBasketIds.find((card) => card === item.card.tokenId))]))
   }, [clearBasketIds])
+
 
 
   return (
@@ -112,7 +112,6 @@ export default (props: props) => {
                     setChangeTime(true)
                     dispatch(setLoaderButton(true))
                     const cartsId = table.basketPlaces.map(({card}) => +card.tokenId)
-                    console.log(cartsId, 'cartsid')
                     enterInGameByTokenIds(
                       Number(router.query.room),
                       Number(router.query.table) - 1,

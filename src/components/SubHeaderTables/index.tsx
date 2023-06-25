@@ -18,6 +18,7 @@ import Button, {
 import {useRouter} from "next/router";
 import {query} from "@/pages/tables/[room]";
 import {StatusTable, SuitsGetName} from "@lib/types/game";
+import {formatTime} from "@lib/utils/formatTime";
 
 interface SubHeaderTablesProps {
 
@@ -50,10 +51,11 @@ const SubHeaderTables = (props: SubHeaderTablesProps) => {
         <Info>
           <div className={css.infoContent}>
             <div>
-              Base time: <span className={'textPrimary'}>{ !!roomCurrent && Math.floor(roomCurrent?.roomDuration / 3600)}</span>
+              Base time: <span className={'textPrimary'}>{!!roomCurrent && formatTime(roomCurrent.roomDuration)}</span>
             </div>
             <div>
-              Increase time: <span className={'textPrimary'}>{ roomCurrent && Math.floor(roomCurrent.roomDuration / 3600) }</span>
+              Increase time: <span
+              className={'textPrimary'}>{roomCurrent && formatTime(roomCurrent.roomIncreaseCounter)}</span>
             </div>
             <div>
               Suit: <span className={'textPrimary'}>{game.season && SuitsGetName[game.season?.trump]}</span>
@@ -75,16 +77,16 @@ const SubHeaderTables = (props: SubHeaderTablesProps) => {
           <>
             <SubHeaderButton onClick={() => dispatch(setFilter(TablesFilter.all))}
                              active={tables?.filter === TablesFilter.all} keyName={'all'}
-                             value={roomCurrent?.tables.length || 0}/>
+                             value={roomCurrent?.tables?.length || 0}/>
             <SubHeaderButton onClick={() => dispatch(setFilter(TablesFilter.empty))}
                              active={tables?.filter === TablesFilter.empty} keyName={'empty'}
-                             value={roomCurrent?.availableTablesCount || 0}/>
+                             value={String(roomCurrent?.tables?.filter(item => item.status === StatusTable.WAITING).length || 0)}/>
             <SubHeaderButton onClick={() => dispatch(setFilter(TablesFilter.cooldown))}
                              active={tables?.filter === TablesFilter.cooldown} keyName={'сooldown'}
-                             value={String(roomCurrent?.tables.filter(item => item.status === StatusTable.COOLDOWN).length || 0)}/>
+                             value={String(roomCurrent?.tables?.filter(item => item.status === StatusTable.COOLDOWN).length || 0)}/>
             <SubHeaderButton onClick={() => dispatch(setFilter(TablesFilter.gaming))}
                              active={tables?.filter === TablesFilter.gaming} keyName={'gaming'}
-                             value={String(roomCurrent?.tables.filter(item => item.status === StatusTable.PLAYING).length || 0)}/>
+                             value={String(roomCurrent?.tables?.filter(item => item.status === StatusTable.PLAYING).length || 0)}/>
           </>
         )}
       </FlexBox>

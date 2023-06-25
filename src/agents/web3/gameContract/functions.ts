@@ -95,5 +95,5 @@ export async function amountPlayersUntilCurrentRaffle() {
 }
 
 export async function getTimeWhenTableIsClaimReady(roomLevel: Number, tableIndex: Number) {
-  return testDecorator('getTimeWhenTableIsClaimReady', getGameContract().getTimeWhenTablesIsClaimReady, [roomLevel, tableIndex])
+  return testDecorator('getTimeWhenTableIsClaimReady', getGameContract().getTimeWhenTableIsClaimReady, [roomLevel, tableIndex])
 }

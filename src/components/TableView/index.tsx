@@ -40,6 +40,12 @@ const TableView = (props: TableViewProps) => {
     }
   }
 
+  useEffect(() => {
+    if (returnTable()?.placesAvailable === 0) {
+      router.push(`/tables/${room}`)
+    }
+  }, [rooms])
+
   const setValues = () => {
     const fetchData = async () => {
       let tokenIds = returnTable()?.players.map(player => player.tokenId)
@@ -82,7 +88,6 @@ const TableView = (props: TableViewProps) => {
             }
           }))
         }
-
 
         return (
           <div key={index}>

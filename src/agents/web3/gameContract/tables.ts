@@ -42,7 +42,7 @@ export async function getClaimTablesReady(tables: ActiveTable[], rooms: Room[]) 
           return tableIndex
         }
       }
-    })).then((data) => data.filter(table => table !== undefined))
+    })).then((data) => data.filter(table => table !== undefined)).catch(() => [])
     if (tablesId.length) {
       return {
         roomLevel: tables.roomLevel,

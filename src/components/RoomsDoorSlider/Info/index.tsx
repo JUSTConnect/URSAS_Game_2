@@ -5,14 +5,16 @@ import { Room } from '@/agents/web3';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '@/app/store';
+import {formatTime} from "@lib/utils/formatTime";
 
 
 interface props {
     roomsInfo: Room
     hidden?: boolean
+    room: number
 }
 
-export default ({roomsInfo, hidden}: props) => {
+export default ({roomsInfo, hidden, room}: props) => {
 
     const season = useSelector((state: RootState) => state.game)
 
@@ -27,6 +29,7 @@ export default ({roomsInfo, hidden}: props) => {
                 <div className={css.key}>empty tables</div>
                 <div className={css.value}>{roomsInfo?.availableTablesCount}</div>
             </div>
+            { room !== 0 && <>
             <div>
                 <div className={css.key}>suit</div>
                 <div className={css.value}>{ season.season && SuitsGetName[season.season.trump] }</div>
@@ -34,10 +37,12 @@ export default ({roomsInfo, hidden}: props) => {
             <div>
                 <div className={css.key}>time game</div>
                 <div className={css.value}>
-                    {!!roomsInfo?.roomDuration && Math.floor(roomsInfo.roomDuration / 3600)}
+                    {(!!roomsInfo?.roomDuration && formatTime(roomsInfo.roomDuration)) || '0s'}
                     +
-                    {!!roomsInfo?.roomIncreaseCounter && Math.floor(roomsInfo.roomIncreaseCounter / 3600) || 0}</div>
+                    {(!!roomsInfo?.roomIncreaseCounter && formatTime(roomsInfo.roomIncreaseCounter)) || '0s'}</div>
             </div>
+                </>
+            }
         </div>
     </div>
 }
