@@ -12,17 +12,20 @@ interface props {
 
 
 export default (props: props) => {
-  const [amount, setAmount] = useState(0)
-  const firstTable = useSelector((state: RootState) => state.rooms?.rooms[0]?.tables[0])
+  const [stakingProgress, setStakingProgress] = useState(0)
+  const rooms = useSelector((state: RootState) => state.rooms?.rooms)
   useEffect(() => {
-    getAmountPlayersInBlackRoom().then((data) => {
-      setAmount(Number(ethers.utils.formatEther(data)))
-    }).catch((e: any) => {
-      console.log(e)
+    getAmountPlayersInBlackRoom().then((amount) => {
+      if (amount && rooms?.length && rooms[0]?.tables?.length) {
+        const firstTable = rooms[0]?.tables[0]?.players?.length
+        if (firstTable) {
+          const stakingProgress = (100 / amount) * firstTable
+          setStakingProgress(stakingProgress)
+        }
+      }
     })
-  }, [])
+  }, [rooms])
 
-  const stakingProgress = amount === 0 ? 0 : (100 / amount * firstTable?.players?.length) > 100 ? 100 : (100 / amount * firstTable?.players?.length)
 
   return (
     <div className={css.loader} style={{width: `${stakingProgress}%`}}>

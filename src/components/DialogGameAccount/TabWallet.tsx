@@ -6,34 +6,46 @@ import {RootState} from '@/app/store'
 
 import Card from '@components/Card'
 
-import {state} from '.'
+import {selectedWalletCardState, state} from '.'
 import Button from "@components/UIButton";
 import {Footer, FooterButtons} from "@components/Dialog";
+import {Dispatch, SetStateAction, useEffect} from "react";
 
 
 interface props {
   state: state
-  setState: Function
+  setState: Dispatch<SetStateAction<state>>
 }
 
 export default (props: props) => {
   const game = useSelector((state: RootState) => state.game)
 
-  const toggleWalletCard = (tokenId: Number) => {
+  const toggleWalletCard = (card: selectedWalletCardState) => {
     props.setState({
       ...props.state,
-      selectedWalletCardIds: props.state.selectedWalletCardIds.includes(tokenId)
-        ? props.state.selectedWalletCardIds.filter(i => i !== tokenId)
-        : [...props.state.selectedWalletCardIds, tokenId]
+      selectedWalletCard: props.state.selectedWalletCard.find(walletCard => walletCard.id === card.id)
+        ? props.state.selectedWalletCard.filter(i => i.id !== card.id)
+        : [...props.state.selectedWalletCard, card]
     })
   }
 
+  console.log(props.state.selectedWalletCard)
+
   const selectWalletCards = () => props.setState({
     ...props.state,
-    selectedWalletCards: game.walletCards.map(card => card.tokenId)
+    selectedWalletCard: game.walletCards.map(card => {
+      return {id: card.tokenId, suit: card.suit}
+    })
   })
 
-  const resetStakeCards = () => props.setState({...props.state, selectedWalletCards: []})
+  const resetStakeCards = () => {
+    console.log('click')
+    props.setState({...props.state, selectedWalletCard: []})
+  }
+
+  useEffect(() => {
+    return resetStakeCards
+  }, [])
 
   return <div className={
     [
@@ -53,11 +65,11 @@ export default (props: props) => {
                 [
                   !game.gameOver && card.playing && css.cardDisabled,
                   css.card,
-                  props.state.selectedWalletCardIds.includes(card.tokenId) && css.cardActive
+                  props.state.selectedWalletCard.find(walletCard => walletCard.id === card.tokenId) && css.cardActive
                 ].join(' ')
               }
               onClick={() => {
-                toggleWalletCard(card.tokenId);
+                toggleWalletCard({id: card.tokenId, suit: card.suit});
               }}
               {...card}
             />
@@ -71,16 +83,16 @@ export default (props: props) => {
       </div>
     </div>
     <div className={css.footer}>
-      {/*<button onClick={selectWalletCards} className={css.footerButton}>*/}
-      {/*          <span className={css.footerButtonText}>*/}
-      {/*              select all*/}
-      {/*          </span>*/}
-      {/*</button>*/}
-      {/*<button onClick={resetStakeCards} className={css.footerButton}>*/}
-      {/*          <span className={css.footerButtonText}>*/}
-      {/*              reset all*/}
-      {/*          </span>*/}
-      {/*</button>*/}
+      <button onClick={selectWalletCards} className={css.footerButton}>
+                <span className={css.footerButtonText}>
+                    select all
+                </span>
+      </button>
+      <button onClick={resetStakeCards} className={css.footerButton}>
+                <span className={css.footerButtonText}>
+                    reset all
+                </span>
+      </button>
     </div>
     {/*<div className={css.gameOverButtons}>*/}
     {/*</div>*/}

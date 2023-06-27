@@ -9,7 +9,7 @@ import Card from '@components/Card'
 
 import {state, tabs} from '.'
 import {enterInGameByTokenIds} from "@/agents/web3/gameContract/tables";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {setLoaderButton} from "@/features/table/tableSlice";
 import {setRefetch} from "@/features/mainframe/mainframeSlice";
 import {Footer, FooterButtons} from "@components/Dialog";
@@ -38,13 +38,17 @@ export default (props: props) => {
   const selectStakeCards = () => props.setState({
     ...props.state,
     selectedStakeCardIds: game.walletCards
-      .filter(card => card.rank === 1)
+      .filter(card => card.rank === 1 && !card.playing)
       .map(card => {
         return card.tokenId
       })
   })
 
   const resetStakeCards = () => props.setState({...props.state, selectedStakeCardIds: []})
+
+  useEffect(() => {
+    return resetStakeCards
+  }, [])
 
   return <>
     <div className={
@@ -81,18 +85,18 @@ export default (props: props) => {
           )}
         </div>
       </div>
-      {/*<div className={css.footer}>*/}
-      {/*    <button onClick={selectStakeCards} className={css.footerButton}>*/}
-      {/*        <span className={css.footerButtonText}>*/}
-      {/*            select all*/}
-      {/*        </span>*/}
-      {/*    </button>*/}
-      {/*    <button onClick={resetStakeCards} className={css.footerButton}>*/}
-      {/*        <span className={css.footerButtonText}>*/}
-      {/*            reset all*/}
-      {/*        </span>*/}
-      {/*    </button>*/}
-      {/*</div>*/}
+      <div className={css.footer}>
+        <button onClick={selectStakeCards} className={css.footerButton}>
+              <span className={css.footerButtonText}>
+                  select all
+              </span>
+        </button>
+        <button onClick={resetStakeCards} className={css.footerButton}>
+              <span className={css.footerButtonText}>
+                  reset all
+              </span>
+        </button>
+      </div>
     </div>
     <div className={
       [

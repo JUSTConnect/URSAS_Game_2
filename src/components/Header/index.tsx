@@ -73,7 +73,7 @@ const Header = (props: HeaderProps) => {
               <Dropdown
                 loading={game.loadingRooms}
                 values={
-                  [...Array(16 - Number(maxRoom))]
+                  [...Array(15)]
                 }
                 rooms={true}
                 dropdownId={1}

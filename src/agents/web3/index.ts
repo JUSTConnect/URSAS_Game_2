@@ -30,5 +30,5 @@ export type Player = {
     address: string
     tokenId: Number
     suit?: SuitSymbol
-    timemark: number
+    // timemark: number
 }

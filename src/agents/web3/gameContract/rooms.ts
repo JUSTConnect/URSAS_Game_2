@@ -12,8 +12,8 @@ export async function getRoomDetailTableList (roomNumber: RoomLevel) {
                 (address: string, index: number) => {
                     return {
                         address: address,
-                        tokenId: Number(table.playingTokenIds[index]),
-                        timemark: Number(table.playersTimeMarks[index])
+                        tokenId: Number(table.playingTokenIds[index])
+                        // timemark: Number(table.playersTimeMarks[index])
                     }
                 }
             )

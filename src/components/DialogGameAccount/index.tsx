@@ -19,14 +19,20 @@ import TabWallet from './TabWallet'
 import Button from "@components/Button";
 import {setLoaderButton} from "@/features/table/tableSlice";
 import {enterInGameByTokenIds} from "@/agents/web3/gameContract/tables";
+import {SuitSymbol} from "@lib/types/game";
 
 export enum tabs {
   STAKE = 'Stake',
   WALLET = 'Wallet'
 }
 
+export interface selectedWalletCardState {
+  id: Number
+  suit: SuitSymbol
+}
+
 export interface state {
-  selectedWalletCardIds: Number[]
+  selectedWalletCard: selectedWalletCardState[]
   selectedStakeCardIds: Number[]
   addressCopied: Boolean
 }
@@ -40,7 +46,7 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
   const [loader, setLoader] = useState(false)
 
   const [state, setState] = useState<state>({
-    selectedWalletCardIds: [],
+    selectedWalletCard: [],
     selectedStakeCardIds: [],
     addressCopied: false,
   })
@@ -71,7 +77,13 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
       })
   })
 
-  const resetStakeCards = () => setState({...state, selectedStakeCardIds: []})
+  const resetStakeCards = () => setState({...state, selectedStakeCardIds: [], selectedWalletCard: []})
+
+  useEffect(() => {
+    if (!mainframe.gameAccountDialog[0]) {
+      resetStakeCards()
+    }
+  }, [mainframe.gameAccountDialog[0]])
 
   return (
     <>
@@ -127,15 +139,19 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                   {mainframe.gameAccountDialog[1] == tabs.WALLET && !!game.gameOver &&
                     <>
                       <Button
-                        style={loader ? {width: '50%', opacity: '0.5'} : {width: '50%'}}
+                        style={loader || !state.selectedWalletCard.length || state.selectedWalletCard.find(card => card.suit !== 's') ? {
+                          width: '50%',
+                          opacity: '0.5'
+                        } : {width: '50%'}}
                         onClick={() => {
                           setLoader(true)
-                          cardRefund(state.selectedWalletCardIds).finally(() => {
+                          cardRefund(state.selectedWalletCard.map(card => card.id)).finally(() => {
                             setLoader(false)
+                            resetStakeCards()
                             dispatch(setRefetch(true))
                           })
                         }}
-                        disabled={loader}
+                        disabled={loader || !state.selectedWalletCard.length || !!state.selectedWalletCard.find(card => card.suit !== 's')}
                         // color={ButtonColor.LIGHT}
                         // size={ButtonSize.SM}
                         // fullWidth
@@ -148,15 +164,16 @@ export default (props: React.HTMLAttributes<HTMLDivElement>) => {
                         refund
                       </Button>
                       <Button
-                        style={loader ? {width: '50%', opacity: '0.5'} : {width: '50%'}}
+                        style={loader || !state.selectedWalletCard.length ? {width: '50%', opacity: '0.5'} : {width: '50%'}}
                         onClick={() => {
                           setLoader(true)
-                          cardBurn(state.selectedWalletCardIds).finally(() => {
+                          cardBurn(state.selectedWalletCard.map(card => card.id)).finally(() => {
                             setLoader(false)
+                            resetStakeCards()
                             dispatch(setRefetch(true))
                           })
                         }}
-                        disabled={loader}
+                        disabled={loader || !state.selectedWalletCard.length}
                         //color={ButtonColor.LIGHT}
                         //size={ButtonSize.SM}
                         //fullWidth

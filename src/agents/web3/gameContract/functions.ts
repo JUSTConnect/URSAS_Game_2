@@ -90,8 +90,8 @@ export async function isTableClaimReady(roomLevel: Number, tableIndex: Number) {
   return testDecorator('isTableClaimReady', getGameContract().isTableClaimReady, [roomLevel, tableIndex])
 }
 
-export async function amountPlayersUntilCurrentRaffle() {
-  return testDecorator('amountPlayersUntilCurrentRaffle', getGameContract().amountPlayersUntilCurrentRaffle, [])
+export async function blackTable() {
+  return testDecorator('amountPlayersUntilCurrentRaffle', getGameContract().blackTable, [])
 }
 
 export async function getTimeWhenTableIsClaimReady(roomLevel: Number, tableIndex: Number) {

@@ -64,10 +64,10 @@ export async function getCardDetailTransferable(tokenId: Number) {
 
 export const cardMint = async (level: RoomLevel, amount: number) => {
   let mintCost = await getRoomDetailMintCost(level)
-  return await getMintContract().smartMint(amount, level, {gasLimit: 3000000, value: mintCost * amount})
+  return await getMintContract().newSmartMint(amount, level, {gasLimit: 3000000, value: mintCost * amount})
 }
 
-export const cardBurn = async (tokenId: any) => {
+export const cardBurn = async (tokenId: Number[]) => {
   try {
     const transaction = await getMintContract().burn(tokenId[0])
     return await transaction.wait().then(async (receipt: any) => {

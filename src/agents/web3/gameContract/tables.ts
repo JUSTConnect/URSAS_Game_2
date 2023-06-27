@@ -76,5 +76,10 @@ export async function getCurrentTableGameEnd(roomLevel: Number, tableIndex: Numb
 }
 
 export async function getAmountPlayersInBlackRoom() {
-  return await gameFunctions.amountPlayersUntilCurrentRaffle()
+  try {
+    const blackTable = await gameFunctions.blackTable()
+    return Number(ethers.utils.formatEther(blackTable.amountPlayersUntilCurrentRaffle)) * 10 ** 18
+  } catch (e) {
+    return null
+  }
 }
