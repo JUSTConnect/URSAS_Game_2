@@ -19,6 +19,7 @@ const TableList = ({id}: any) => {
     }
     return []
   })
+  const isSpadesForCooldown = useSelector((state: RootState) => !!state.game.walletCards?.find(card => card.suit === 's' && card.rank === id))
 
   const filteredTables = () => {
     switch (tablesState.filter) {
@@ -44,7 +45,8 @@ const TableList = ({id}: any) => {
       </div>
     ) : (
       <div className={css.tableList}>
-        {filteredTables()?.map((table, index) => <Table key={index} id={id} index={index + 1} {...table}/>)}
+        {filteredTables()?.map((table, index) => <Table key={index} id={id} index={index + 1} {...table}
+                                                        isSpadesForCooldown={isSpadesForCooldown}/>)}
       </div>
     )}
   </>

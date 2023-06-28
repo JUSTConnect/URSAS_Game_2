@@ -10,10 +10,13 @@ import {query} from '@/pages/tables/[room]';
 import {useEffect, useState} from "react";
 import {getCurrentTableGameEnd} from "@/agents/web3/gameContract/tables";
 import Countdown, {zeroPad} from "react-countdown";
+import {useSelector} from "react-redux";
+import {RootState} from "@/app/store";
 
 export interface props extends Table, React.HTMLAttributes<HTMLDivElement> {
   index: number
   id: string
+  isSpadesForCooldown: boolean
 }
 
 export default (props: props) => {
@@ -39,6 +42,7 @@ export default (props: props) => {
           props.placesAvailable === 0 ? css.disabled : '', props.status === StatusTable.COOLDOWN ? css.cooldown : ''
         ].join(' ')
       }
+      onClick={(e) => props.status === StatusTable.COOLDOWN && !props.isSpadesForCooldown && e.preventDefault()}
     >
       <div className={css.bg}>
         <div className={css.layer1}>

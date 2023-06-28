@@ -16,11 +16,18 @@ import {addStakedPlace, clearBasketPlaces, clearStakedPlaces, setChoosingCardPla
 import Place from './Place'
 import Sofa from './Sofa'
 import {useState} from 'react'
+import {ethers} from "ethers";
 
 
 interface TableViewProps {
   modalActive: boolean
   setModalActive: Function
+}
+
+interface TableCards {
+  address: string
+  tokenId: number
+  suit: SuitSymbol
 }
 
 
@@ -33,12 +40,33 @@ const TableView = (props: TableViewProps) => {
   const tableStore = useSelector((state: RootState) => state.table)
   const {account} = useEthers()
   const [suits, setSuits] = useState<[number, SuitSymbol][] | undefined>()
+  const [isGoingStake, setIsGoingStake] = useState<number[] | Number[]>([])
+
+  const [cardsSuit, setCardsSuit] = useState<SuitSymbol[]>([])
 
   const returnTable = () => {
     if (room && rooms.rooms.length) {
       return rooms.rooms[Number(room) - 1].tables[Number(table) - 1]
     }
   }
+
+  const getCardsSuit = async () => {
+    if (returnTable()) {
+      // @ts-ignore
+      const cards = await Promise.all(returnTable().players.map(async (card) => {
+        if (ethers.constants.AddressZero === card.address) {
+          return 's'
+        }
+        const suit = await getCardDetailSuit(card.tokenId)
+        return suit
+      }))
+      setCardsSuit(cards as SuitSymbol[])
+    }
+  }
+
+  useEffect(() => {
+
+  }, [returnTable()?.players])
 
   useEffect(() => {
     if (returnTable()?.placesAvailable === 0) {
@@ -58,7 +86,8 @@ const TableView = (props: TableViewProps) => {
   }
 
   useEffect(() => {
-    dispatch(clearStakedPlaces())
+    setCardsSuit([])
+    getCardsSuit().finally(() => dispatch(clearStakedPlaces()))
     // dispatch(clearBasketPlaces())
     setValues()
   }, [returnTable()?.players])
@@ -77,13 +106,13 @@ const TableView = (props: TableViewProps) => {
         </div>
       </div>
       <img className={css.cocaCola} src="/assets/images/texture/table-coca-cola.png" alt="Coca Cola"/>
-      {(suits && returnTable()?.players && suits?.length) ? returnTable()?.players.map((player, index) => {
+      {(suits && returnTable()?.players && suits?.length && cardsSuit.length) ? returnTable()?.players.map((player, index) => {
         if (player.address === account) {
           dispatch(addStakedPlace({
             number: index + 1,
             card: {
               rank: Number(room) as RoomLevel,
-              suit: 's',
+              suit: cardsSuit[index],
               tokenId: player.tokenId,
             }
           }))
@@ -106,12 +135,12 @@ const TableView = (props: TableViewProps) => {
               onClick={() => handleClickPlace(index + 1)}
               card={suits && Number(player.tokenId) ? {
                 rank: Number(room) as RoomLevel,
-                suit: 's',
+                suit: cardsSuit[index],
                 tokenId: player.tokenId,
                 playing: true
               } : tableStore.basketPlaces.map(item => item.number).includes(index + 1) ? {
                 rank: Number(room) as RoomLevel,
-                suit: 's',
+                suit: tableStore.basketPlaces.find(item => item.number === index + 1)?.card.suit || 's',
                 tokenId: tableStore.basketPlaces.map(item => {
                   if (item.number) return item.card.tokenId
                 })[0] || 0,
@@ -142,6 +171,8 @@ const TableView = (props: TableViewProps) => {
     />
     {account &&
       <DialogPlace
+        setIsGoingStake={setIsGoingStake}
+        isGoingStake={isGoingStake}
         active={props.modalActive}
         setActive={props.setModalActive}
       />

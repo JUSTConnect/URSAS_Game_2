@@ -50,7 +50,6 @@ const Header = (props: HeaderProps) => {
   useEffect(() => {
     if (currentRoom) {
       setPlayingTablesId(playingRooms?.find(({roomLevel}) => roomLevel === +currentRoom)?.tablesId || [])
-      console.log(playingRooms?.find(({roomLevel}) => roomLevel === +currentRoom))
     }
   }, [currentRoom])
 

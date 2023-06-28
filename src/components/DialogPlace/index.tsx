@@ -4,7 +4,7 @@ import sofaBg from '@assets/images/texture/table-sofa-modal.png'
 
 import Image from 'next/image'
 
-import {useState, useEffect} from 'react'
+import {useState, useEffect, Dispatch, SetStateAction} from 'react'
 import {useRouter} from "next/router";
 import {useDispatch, useSelector} from 'react-redux'
 
@@ -27,11 +27,14 @@ import PlaceButton from './PlaceButton'
 import Countdown, {zeroPad} from "react-countdown";
 import {setRefetch} from "@/features/mainframe/mainframeSlice";
 import {StatusTable} from "@lib/types/game";
+import loader from "@components/UIPlace/loader.module.scss";
 
 
 interface props extends React.HTMLAttributes<HTMLDivElement> {
   active: boolean
   setActive: Function
+  setIsGoingStake: Dispatch<SetStateAction<number[] | Number[]>>
+  isGoingStake: number[] | Number[]
 }
 
 export default (props: props) => {
@@ -64,8 +67,6 @@ export default (props: props) => {
     dispatch(setBasketPlaces([...table.basketPlaces.filter((item) => !clearBasketIds.find((card) => card === item.card.tokenId))]))
   }, [clearBasketIds])
 
-
-
   return (
     <>
       <Blur
@@ -92,6 +93,7 @@ export default (props: props) => {
                       date={timer + 120000}
                       onComplete={() => {
                         dispatch(clearBasketPlaces())
+                        setChangeTime(true)
                       }}
                       renderer={({minutes, seconds}) => (
                         <>
@@ -105,13 +107,14 @@ export default (props: props) => {
             <HeaderButtons>
               {Boolean(table.basketPlaces.length) && !table.choosingCardPlace &&
                 <Button
-                  disabled={table.loadingButton}
+                  // disabled={table.loadingButton}
                   color={ButtonColor.LIGHT}
                   size={ButtonSize.SM}
                   onClick={() => {
                     setChangeTime(true)
                     dispatch(setLoaderButton(true))
-                    const cartsId = table.basketPlaces.map(({card}) => +card.tokenId)
+                    const cartsId = table.basketPlaces.map(({card}) => +card.tokenId).filter(cardId => !props.isGoingStake.find(id => cardId === id))
+                    props.setIsGoingStake(prevState => [...prevState, ...cartsId])
                     enterInGameByTokenIds(
                       Number(router.query.room),
                       Number(router.query.table) - 1,
@@ -119,19 +122,13 @@ export default (props: props) => {
                     ).then((data) => {
                       if (data) {
                         setClearBasketIds(cartsId)
-                        // console.log(table.basketPlaces, 'bb')
-                        //очистка карт в корзине которые играют после сабмита
-                        // console.log([...table.basketPlaces.filter((item) => !cartsId.find((card) => card === item.card.tokenId))], 'basket')
-
-                        // @ts-ignore
-                        // dispatch(setBasketPlaces([...table.basketPlaces.filter((item) => !cartsId.find((card) => card === item.card.tokenId))]))
                         dispatch(setRefetch(true))
                         dispatch(setRefetch(true))
                       }
                     }).finally(() => {
                       dispatch(setLoaderButton(false))
+                      props.setIsGoingStake(prevState => [...prevState.filter(cardId => !cartsId.find(id => id === cardId))])
                     })
-                    // setBasketPlaces([])
                   }}
                 >
                   submit
@@ -158,8 +155,8 @@ export default (props: props) => {
                     }
                     return (
                       <Card
-                        playing={item.playing}
                         key={index}
+                        playing={item.playing}
                         className={css.card}
                         rank={item.rank}
                         suit={item.suit}
@@ -192,24 +189,45 @@ export default (props: props) => {
               <div className={css.places}>
                 {table.basketPlaces.map((place, index) => {
                     return (
-                      <Place
+                      <div
                         key={index}
-                        number={place.number}
-                        card={place.card ? {
-                          rank: place.card.rank,
-                          suit: place.card.suit,
-                          tokenId: place?.card?.tokenId
-                        } : undefined}
-                        active={selectedBasketPlaces.includes(place.number || 0)}
-                        onClick={
-                          () =>
-                            selectedBasketPlaces.includes(place.number || 0)
-                              ?
-                              setSelectedBasketPlaces(selectedBasketPlaces.filter(number => number !== place.number))
-                              :
-                              setSelectedBasketPlaces([...selectedBasketPlaces, place.number || 0])
+                        style={{position: "relative"}}
+                      >
+                        {!!props.isGoingStake.find(card => place.card.tokenId === card) &&
+                          <div style={{
+                            position: "absolute",
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            zIndex: 1
+                          }}>
+                            <div className={loader.loader}>
+                              <span></span>
+                            </div>
+                          </div>
                         }
-                      />
+                        <div
+                          style={!!props.isGoingStake.find(card => place.card.tokenId === card) ? {opacity: '0.3'} : {}}>
+                          <Place
+                            key={index}
+                            number={place.number}
+                            card={place.card ? {
+                              rank: place.card.rank,
+                              suit: place.card.suit,
+                              tokenId: place?.card?.tokenId
+                            } : undefined}
+                            active={selectedBasketPlaces.includes(place.number || 0)}
+                            onClick={
+                              () =>
+                                selectedBasketPlaces.includes(place.number || 0)
+                                  ?
+                                  setSelectedBasketPlaces(selectedBasketPlaces.filter(number => number !== place.number))
+                                  :
+                                  setSelectedBasketPlaces([...selectedBasketPlaces, place.number || 0])
+                            }
+                          />
+                        </div>
+                      </div>
                     )
                   }
                 )}
@@ -286,7 +304,8 @@ export default (props: props) => {
               </div>
             )}
           </Content>
-          {Boolean(table.stakedPlaces.length || table.basketPlaces.length) && !table.choosingCardPlace &&
+          {
+            Boolean(table.stakedPlaces.length || table.basketPlaces.length) && !table.choosingCardPlace &&
             <Footer>
               <FooterButtons>
                 {Boolean(table.stakedPlaces.length) && returnTable()?.status !== StatusTable.PLAYING &&

@@ -29,8 +29,6 @@ export default (props: props) => {
     })
   }
 
-  console.log(props.state.selectedWalletCard)
-
   const selectWalletCards = () => props.setState({
     ...props.state,
     selectedWalletCard: game.walletCards.map(card => {
@@ -39,7 +37,6 @@ export default (props: props) => {
   })
 
   const resetStakeCards = () => {
-    console.log('click')
     props.setState({...props.state, selectedWalletCard: []})
   }
 

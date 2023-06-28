@@ -46,6 +46,13 @@ export enum SuitsGetName {
     Club = 3,
 }
 
+export enum SuitsFilter {
+    Heart = 0,
+    Club = 1,
+    Diamond = 2,
+    Spades = 3,
+}
+
 export interface Card
 {
     rank: RoomLevel,
